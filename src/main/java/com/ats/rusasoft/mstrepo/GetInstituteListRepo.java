@@ -8,9 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import com.ats.rusasoft.model.GetInstituteList;
 
 public interface GetInstituteListRepo extends JpaRepository<GetInstituteList, Integer> {
-@Query(value=" SELECT institute_id, institute_name,principal_name,email,contact_no from m_institute WHERE is_active=1 AND del_status=1", nativeQuery=true)
+@Query(value=" SELECT institute_id, institute_name,principal_name,email,contact_no from m_institute,t_user_login WHERE is_active=1 "
+		+ " AND del_status=1 AND t_user_login.reg_primary_key=institute_id  ", nativeQuery=true)
 	
 	List<GetInstituteList> getAllInstituteList();
 
+@Query(value=" SELECT institute_id, institute_name,principal_name,email,contact_no from m_institute,t_user_login WHERE is_active=1 AND del_status=1 "
+		+ " AND t_user_login.reg_primary_key!=institute_id ", nativeQuery=true)
+
+List<GetInstituteList> getAllPendingInstituteList();
 
 }
