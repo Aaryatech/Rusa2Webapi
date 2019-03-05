@@ -28,6 +28,9 @@ public class UserLogin {
 
 		private String exVar1;
 		private String exVar2;
+		
+		
+		
 		public int getUserId() {
 			return userId;
 		}
