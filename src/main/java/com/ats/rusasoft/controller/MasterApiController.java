@@ -71,6 +71,7 @@ public class MasterApiController {
 				princi.setPhoneNo(insResp.getContactNo());
 				princi.setPrincipalId(0);
 				princi.setPrincipalName(insResp.getPrincipalName());
+				princi.setIsEnroll(0);
 				pincipalRepo.saveAndFlush(princi);
 				
 			}else {

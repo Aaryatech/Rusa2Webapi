@@ -23,6 +23,19 @@ public class Principal {
 	private String email;
 	
 	private int instituteId;
+	
+	private int isEnroll;
+	
+	
+	
+
+	public int getIsEnroll() {
+		return isEnroll;
+	}
+
+	public void setIsEnroll(int isEnroll) {
+		this.isEnroll = isEnroll;
+	}
 
 	public int getPrincipalId() {
 		return principalId;
@@ -67,7 +80,7 @@ public class Principal {
 	@Override
 	public String toString() {
 		return "Principal [principalId=" + principalId + ", principalName=" + principalName + ", phoneNo=" + phoneNo
-				+ ", email=" + email + ", instituteId=" + instituteId + "]";
+				+ ", email=" + email + ", instituteId=" + instituteId + ", isEnroll=" + isEnroll + "]";
 	}
 	
 	
