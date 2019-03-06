@@ -26,6 +26,9 @@ public class GetUserDetail {
 	private int userInstituteId;
 	
 	private int isEnroll;
+	
+	private int deptId;
+	
 
 	public int getUserDetailId() {
 		return userDetailId;
@@ -90,12 +93,28 @@ public class GetUserDetail {
 	public void setIsEnroll(int isEnroll) {
 		this.isEnroll = isEnroll;
 	}
+	
+	
+
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
 
 	@Override
 	public String toString() {
 		return "GetUserDetail [userDetailId=" + userDetailId + ", subUserName=" + subUserName + ", userConNumber="
 				+ userConNumber + ", userEmail=" + userEmail + ", userDesnId=" + userDesnId + ", userQualId="
-				+ userQualId + ", userInstituteId=" + userInstituteId + ", isEnroll=" + isEnroll + "]";
+				+ userQualId + ", userInstituteId=" + userInstituteId + ", isEnroll=" + isEnroll + ", deptId=" + deptId
+				+ ", getUserDetailId()=" + getUserDetailId() + ", getSubUserName()=" + getSubUserName()
+				+ ", getUserConNumber()=" + getUserConNumber() + ", getUserEmail()=" + getUserEmail()
+				+ ", getUserDesnId()=" + getUserDesnId() + ", getUserQualId()=" + getUserQualId()
+				+ ", getUserInstituteId()=" + getUserInstituteId() + ", getIsEnroll()=" + getIsEnroll()
+				+ ", getDeptId()=" + getDeptId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 	
