@@ -1,35 +1,101 @@
 package com.ats.rusasoft.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 
+
+@Entity
 public class LoginResponse {
 	
-	UserLogin user;
+	    @Id
+	    private int userId;
+		
+		private int userType;
+		
+		private String userName;
+		private String pass;
+		private int isBlock;
+		private int regPrimaryKey;
+		private int roleId;
+		
+        @Transient
+		GetUserDetail getData;
+
+		public int getUserId() {
+			return userId;
+		}
+
+		public void setUserId(int userId) {
+			this.userId = userId;
+		}
+
+		public int getUserType() {
+			return userType;
+		}
+
+		public void setUserType(int userType) {
+			this.userType = userType;
+		}
+
+		public String getUserName() {
+			return userName;
+		}
+
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
+
+		public String getPass() {
+			return pass;
+		}
+
+		public void setPass(String pass) {
+			this.pass = pass;
+		}
+
+		public int getIsBlock() {
+			return isBlock;
+		}
+
+		public void setIsBlock(int isBlock) {
+			this.isBlock = isBlock;
+		}
+
+		public int getRegPrimaryKey() {
+			return regPrimaryKey;
+		}
+
+		public void setRegPrimaryKey(int regPrimaryKey) {
+			this.regPrimaryKey = regPrimaryKey;
+		}
+
+		public int getRoleId() {
+			return roleId;
+		}
+
+		public void setRoleId(int roleId) {
+			this.roleId = roleId;
+		}
+
+		public GetUserDetail getGetData() {
+			return getData;
+		}
+
+		public void setGetData(GetUserDetail getData) {
+			this.getData = getData;
+		}
+
+		@Override
+		public String toString() {
+			return "LoginResponse [userId=" + userId + ", userType=" + userType + ", userName=" + userName + ", pass="
+					+ pass + ", isBlock=" + isBlock + ", regPrimaryKey=" + regPrimaryKey + ", roleId=" + roleId
+					+ ", getData=" + getData + "]";
+		}
+		
 	
-	ErrorMessage errorMessage;
-
-	public UserLogin getUser() {
-		return user;
-	}
-
-	public void setUser(UserLogin user) {
-		this.user = user;
-	}
-
-	public ErrorMessage getErrorMessage() {
-		return errorMessage;
-	}
-
-	public void setErrorMessage(ErrorMessage errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	@Override
-	public String toString() {
-		return "LoginResponse [user=" + user + ", errorMessage=" + errorMessage + ", getUser()=" + getUser()
-				+ ", getErrorMessage()=" + getErrorMessage() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
-	}
-	
+        
+        
 	
 	
 	

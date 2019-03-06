@@ -12,8 +12,5 @@ public interface UserService extends JpaRepository<UserLogin, Integer>  {
 	
 	/*public UserLogin findUserByUserName(String userName,String pass,int isBlock);*/
 	
-         @Query(value=" SELECT * from t_user_login WHERE "
-		+ " user_name=:username AND pass=:pass AND is_block=:isBlock ", nativeQuery=true)
-	UserLogin getUser(@Param("username") String userName  ,@Param("pass") String pass,@Param("isBlock") int isBlock);
 
 }
