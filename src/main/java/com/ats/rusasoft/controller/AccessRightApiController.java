@@ -20,7 +20,7 @@ import com.ats.rusasoft.repository.AccessRight.AssignRoleDetailListRepository;
 
 @RestController
 public class AccessRightApiController {
-
+ 
 	@Autowired
 	AccessRightService accessRightService;
 
