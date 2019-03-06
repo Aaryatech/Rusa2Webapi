@@ -21,8 +21,8 @@ import com.ats.rusasoft.mstrepo.UserService;
 public class RestApiController {
 	
 
-	@Autowired
-    UserService userServices;
+/*	@Autowired
+    UserService userServices;*/
 	
 	@Autowired
     LoginResponseRepo logRes;
@@ -31,7 +31,7 @@ public class RestApiController {
     GetUserDataRepo userDataRepo;
 	
 	
-	// UserLogin of AdminPanel
+
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	
 	public @ResponseBody LoginResponse loginUser(@RequestParam("username") String userName,
@@ -40,6 +40,13 @@ public class RestApiController {
 		System.err.println("inside loginUser ");
 		LoginResponse loginResponse = logRes.getUser(userName, pass,isBlock);
 		System.err.println("User data is"+loginResponse.toString());
+		int typeId=loginResponse.getUserType();
+		
+		if(typeId == 1) 
+		{
+		     GetUserDetail userDetail = userDataRepo.getUserDetails();
+		      System.err.println("User data is"+userDetail.toString());
+		}
 		
 		return loginResponse;
 

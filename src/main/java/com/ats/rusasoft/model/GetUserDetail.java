@@ -1,6 +1,7 @@
 package com.ats.rusasoft.model;
 
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,10 +9,11 @@ import javax.persistence.Id;
 @Entity
 public class GetUserDetail {
 	
+
 	@Id
-	private int userDeatilId;
+	private int userDetailId;
 	
-	private String userName1;
+	private String subUserName;
 	
 	private String userConNumber;
 	
@@ -20,18 +22,27 @@ public class GetUserDetail {
 	private int userDesnId;
 	
 	private int userQualId;
-
 	
+	private int userInstituteId;
+	
+	private int isEnroll;
 
-	public int getUserDeatilId() {
-		return userDeatilId;
+	public int getUserDetailId() {
+		return userDetailId;
 	}
 
-	public void setUserDeatilId(int userDeatilId) {
-		this.userDeatilId = userDeatilId;
+	public void setUserDetailId(int userDetailId) {
+		this.userDetailId = userDetailId;
 	}
 
-	
+	public String getSubUserName() {
+		return subUserName;
+	}
+
+	public void setSubUserName(String subUserName) {
+		this.subUserName = subUserName;
+	}
+
 	public String getUserConNumber() {
 		return userConNumber;
 	}
@@ -64,20 +75,32 @@ public class GetUserDetail {
 		this.userQualId = userQualId;
 	}
 
-	public String getUserName1() {
-		return userName1;
+	public int getUserInstituteId() {
+		return userInstituteId;
 	}
 
-	public void setUserName1(String userName1) {
-		this.userName1 = userName1;
+	public void setUserInstituteId(int userInstituteId) {
+		this.userInstituteId = userInstituteId;
+	}
+
+	public int getIsEnroll() {
+		return isEnroll;
+	}
+
+	public void setIsEnroll(int isEnroll) {
+		this.isEnroll = isEnroll;
 	}
 
 	@Override
 	public String toString() {
-		return "GetUserDetail [userDeatilId=" + userDeatilId + ", userName1=" + userName1 + ", userConNumber="
+		return "GetUserDetail [userDetailId=" + userDetailId + ", subUserName=" + subUserName + ", userConNumber="
 				+ userConNumber + ", userEmail=" + userEmail + ", userDesnId=" + userDesnId + ", userQualId="
-				+ userQualId + "]";
+				+ userQualId + ", userInstituteId=" + userInstituteId + ", isEnroll=" + isEnroll + "]";
 	}
+
+	
+
+
 
 	
 

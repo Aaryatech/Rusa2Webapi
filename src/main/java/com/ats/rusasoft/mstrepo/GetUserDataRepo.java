@@ -8,8 +8,9 @@ import com.ats.rusasoft.model.GetUserDetail;
 
 public interface GetUserDataRepo extends JpaRepository<GetUserDetail, Integer>
 {
-    @Query(value="  ", nativeQuery=true)
-    GetUserDetail getUserDetails(@Param("typeId") int typeId);
+    @Query(value=" SELECT p.principal_id as userDetailId,p.principal_name as userName1,p.phone_no as userConNumber,"
+    		+ "p.email as userEmail from m_principal p ", nativeQuery=true)
+    GetUserDetail getUserDetails();
 	
 
 }
