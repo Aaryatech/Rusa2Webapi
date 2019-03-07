@@ -20,4 +20,9 @@ public interface InstituteRepo extends JpaRepository<Institute, Integer> {
 	
 	Institute findByInstituteId(int instituteId);
 	
+	
+	List<Institute> findByContactNoAndEmail(String contactNo,String email );
+	
+	List<Institute> findByContactNoAndEmailAndInstituteIdNot(String contactNo,String email,int instId );
+	
 }

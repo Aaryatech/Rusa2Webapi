@@ -273,6 +273,14 @@ public class MasterApiController {
 		return info;
 
 	}
+	
+	@RequestMapping(value = { "/getIns" }, method = RequestMethod.POST)
+	public @ResponseBody int getIns(@RequestParam String conNo,@RequestParam String email) {
+		
+		List<Institute> instList=instituteRepo.findByContactNoAndEmailAndInstituteIdNot(conNo, email, 1);//instituteRepo.findByContactNoAndEmail(conNo, email);
+		return instList.size();
+		
+	}
 
 	@RequestMapping(value = { "/saveInstitute" }, method = RequestMethod.POST)
 	public @ResponseBody Institute saveInstitute(@RequestBody Institute institute) {
