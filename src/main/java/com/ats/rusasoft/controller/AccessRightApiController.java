@@ -1,5 +1,6 @@
 package com.ats.rusasoft.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import com.ats.rusasoft.accessrights.AccessRightModuleList;
 import com.ats.rusasoft.accessrights.AccessRightService;
 import com.ats.rusasoft.accessrights.AssignRoleDetailList;
 import com.ats.rusasoft.master.repo.CreatedRoleList;
+import com.ats.rusasoft.model.UserList;
+import com.ats.rusasoft.mstrepo.UserService;
+import com.ats.rusasoft.repository.UserListRepository;
 import com.ats.rusasoft.repository.AccessRight.AssignRoleDetailListRepository;
 //import com.shivshambhuwebapi.service.UserService;
 
@@ -30,9 +34,12 @@ public class AccessRightApiController {
 	@Autowired
 	AssignRoleDetailListRepository assignRoleDetailListRepository;
 
-	//@Autowired
-//	private UserService userService;
-
+	 @Autowired
+ 	private UserListRepository userListRepository;
+	 
+	 @Autowired 
+	 UserService userServices;
+ 
 	
 	@RequestMapping(value = { "/deleteRole" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteRole(@RequestParam int roleId) {
@@ -122,5 +129,64 @@ public class AccessRightApiController {
 	public String getRoleJson(@RequestParam("userId") int userId) {
 
 		return accessRightService.getRoleJson(userId);
+	}
+	
+	@RequestMapping(value = { "/getAllUserList" }, method = RequestMethod.POST)
+	public @ResponseBody List<UserList> getAllUserList(@RequestParam("instituteId") int instituteId) {
+		
+		List<UserList> userlist = new ArrayList<>();
+		
+		try {
+			
+			userlist= userListRepository.getuserList(instituteId);
+			 
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return userlist;
+ 
+		 
+	} 
+	
+	@RequestMapping(value = { "/updateRoleOfUser" }, method = RequestMethod.POST)
+	@ResponseBody
+	public Info updateRoleOfUser(@RequestParam("id") int id,@RequestParam("roleId") int roleId) {
+
+		Info info = new Info();
+		try {
+			
+			int update =userServices.updateRoleId(roleId,id);
+			info.setError(false);
+			info.setMessage("update");
+		 
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+		
+	}
+	
+	@RequestMapping(value = { "/getRoleByRoleId" }, method = RequestMethod.POST)
+	@ResponseBody
+	public AssignRoleDetailList getRoleByRoleId( @RequestParam("roleId") int roleId) {
+
+		AssignRoleDetailList role = new AssignRoleDetailList();
+		try {
+			
+			role =assignRoleDetailListRepository.findByRoleId(roleId);
+			 
+		 
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			 
+		}
+		return role;
+		
 	}
 }
