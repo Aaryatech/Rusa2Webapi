@@ -492,7 +492,7 @@ public class MasterApiController {
 				info.setError(true);
 				info.setMsg("failed");
 
-			}
+			} 
 		} catch (Exception e) {
 
 			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
