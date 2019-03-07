@@ -148,6 +148,33 @@ public class MasterApiController {
 		return hodListByInstId;
 
 	}
+	
+	@RequestMapping(value = { "/deleteHods" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteHods(@RequestParam List<String> hodIdList) {
+
+		Info info = new Info();
+		try {
+			int res = hodRepo.deleteHods(hodIdList);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteHods  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 
 	// getQuolifications
 	@Autowired
