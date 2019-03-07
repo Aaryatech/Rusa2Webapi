@@ -23,4 +23,6 @@ public interface AssignRoleDetailListRepository extends JpaRepository<AssignRole
 	@Transactional	@Query("Update AssignRoleDetailList  SET del_status=1 WHERE role_id=:roleId")
 	int deleteRole(@Param("roleId") int roleId);
 
+	AssignRoleDetailList findByRoleId(int roleId);
+
 }
