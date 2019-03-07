@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoft.common.Commons;
 import com.ats.rusasoft.model.GetInstituteList;
+import com.ats.rusasoft.model.Hod;
+import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.Principal;
@@ -38,12 +42,13 @@ public class LibraryApiController {
 				libResp = libRepo.saveAndFlush(librarian);
 
 				System.err.println("New librarian Insert  New Principal");
-
+				String userName = Commons.getAlphaNumericString(7);
 				UserLogin ul = new UserLogin();
-				
+				String pass = Commons.getAlphaNumericString(7);
+				System.err.println("pass is "+pass);
 				ul.setUserType(7);
-				ul.setPass("123");
-				ul.setUserName(libResp.getLibrarianName());
+				ul.setPass(pass);
+				ul.setUserName(userName);
 				ul.setIsBlock(1);
 				ul.setRegPrimaryKey(libResp.getLibrarianId());
 				ul.setRoleId(1);
@@ -57,17 +62,20 @@ public class LibraryApiController {
 			} else {
 				libResp = libRepo.saveAndFlush(librarian);
 
-				System.err.println("Old  librarian Old   User  update if any");
 				/*
-				 * Principal princi = pincipalRepo.findByInstituteId(insResp.getInstituteId());
+				 * System.err.println("Old  librarian Old   User  update if any"); UserLogin ul
+				 * =userRepo.findByRegPrimaryKey(libResp.getLibrarianId());
 				 * 
-				 * princi.setEmail(insResp.getEmail());
-				 * princi.setInstituteId(insResp.getInstituteId());
-				 * princi.setPhoneNo(insResp.getContactNo());
-				 * princi.setPrincipalName(insResp.getPrincipalName());
-				 * pincipalRepo.saveAndFlush(princi);
+				 * ul.setUserType(7);
+				 * 
+				 * ul.setUserName(libResp.getLibrarianName()); ul.setIsBlock(1);
+				 * //ul.setRegPrimaryKey(7); ul.setRoleId(1); ul.setExInt1(1); ul.setExInt2(1);
+				 * ul.setExVar1("NA"); ul.setExVar2("NA");
+				 * 
+				 * 
+				 * userRepo.saveAndFlush(ul);
 				 */
-
+				
 			}
 
 		} catch (Exception e) {
@@ -78,21 +86,69 @@ public class LibraryApiController {
 		return librarian;
 
 	}
-	/*
-	 * @RequestMapping(value = { "/getAllLibrarian" }, method = RequestMethod.GET)
-	 * public @ResponseBody List<Librarian> getAllInstitutes() {
-	 * 
-	 * List<Librarian> insResp = new ArrayList<>();
-	 * 
-	 * try { insResp = libRepo.getAllLibList();
-	 * 
-	 * } catch (Exception e) {
-	 * System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
-	 * e.printStackTrace(); }
-	 * 
-	 * return insResp;
-	 * 
-	 * }
-	 * 
-	 */
+	
+	@RequestMapping(value = { "/getLibrarianByLibId" }, method = RequestMethod.POST)
+	public @ResponseBody Librarian getLibrarianByLibId(@RequestParam int libId) {
+
+		Librarian libResp = null;
+
+		try {
+			libResp = libRepo.findByLibrarianId(libId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getDept  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return libResp;
+	}
+
+	
+	  @RequestMapping(value = { "/getAllLibrarianByInstituteId" }, method = RequestMethod.POST)
+	  public @ResponseBody List<Librarian> getAllLibrarian(@RequestParam int instId) {
+	  
+	  List<Librarian> libResp = new ArrayList<>();
+	  
+	  try { 
+		  libResp = libRepo.getAllLibList(instId);
+		  System.err.println("lib are" + libResp.toString());
+	  
+	  } catch (Exception e) {
+	  System.err.println("Exce in getAllLibrarian Librarian " + e.getMessage());
+	  e.printStackTrace(); }
+	  
+	  return libResp;
+	  
+	  }
+	  
+		@RequestMapping(value = { "/deleteLibrarians" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteInstitutes(@RequestParam List<String> libIdList) {
+
+			Info info = new Info();
+			try {
+				int res = libRepo.deleteLibrarians(libIdList);
+
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			return info;
+
+		}
+
+	  
+	 
 }

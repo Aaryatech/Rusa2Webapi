@@ -1,7 +1,7 @@
 package com.ats.rusasoft.common;
 
 public class Commons {
-	public String getAlphaNumericString(int n) 
+	public  static String getAlphaNumericString(int n) 
 	{ 
 
 		// chose a Character random from this String 

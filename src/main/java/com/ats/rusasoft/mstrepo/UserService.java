@@ -26,6 +26,8 @@ public interface UserService extends JpaRepository<UserLogin, Integer>  {
 	@Modifying
 	@Query(value="UPDATE t_user_login SET role_id=:roleId WHERE user_id=:userId ",nativeQuery=true)
 	int updateRoleId(@Param("roleId")int roleId,@Param("userId") int userId);
+
+	UserLogin findByRegPrimaryKey(int librarianId);
 	
 	
 }
