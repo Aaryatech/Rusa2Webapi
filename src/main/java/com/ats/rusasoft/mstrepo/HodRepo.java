@@ -10,6 +10,6 @@ public interface HodRepo extends JpaRepository<Hod, Integer> {
 	
 	Hod findByHodId(int hodId);
 	
-	List<Hod> findByInstituteIdAndIsActiveAndDelStatus(int instId,int isActive,int delStatus);
+	List<Hod> findByInstituteIdAndIsActiveAndDelStatusOrderByHodIdDesc(int instId,int isActive,int delStatus);
 
 }

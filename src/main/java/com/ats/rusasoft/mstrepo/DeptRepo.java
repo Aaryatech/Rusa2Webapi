@@ -14,7 +14,7 @@ import com.ats.rusasoft.model.Dept;
 public interface DeptRepo extends JpaRepository<Dept, Integer> {
 	
 	
-	List<Dept> findByDelStatusAndIsActiveAndInstituteId(int delStatus, int isActive,int instId);
+	List<Dept> findByDelStatusAndIsActiveAndInstituteIdOrderByDeptIdDesc(int delStatus, int isActive,int instId);
 	
 	Dept findBydeptId(int deptId);
 	

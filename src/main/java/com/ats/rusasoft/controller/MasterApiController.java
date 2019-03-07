@@ -1,7 +1,10 @@
 package com.ats.rusasoft.controller;
 
 import java.security.SecureRandom;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -104,7 +107,7 @@ public class MasterApiController {
 		List<Hod> hodListByInstId = new ArrayList<>();
 
 		try {
-			hodListByInstId =hodRepo.findByInstituteIdAndIsActiveAndDelStatus(instId, 1, 1);
+			hodListByInstId =hodRepo.findByInstituteIdAndIsActiveAndDelStatusOrderByHodIdDesc(instId, 1, 1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllDeptList  " + e.getMessage());
@@ -174,7 +177,7 @@ public class MasterApiController {
 		List<Dept> insResp = new ArrayList<>();
 
 		try {
-			insResp = deptRepo.findByDelStatusAndIsActiveAndInstituteId(1, 1, instId);
+			insResp = deptRepo.findByDelStatusAndIsActiveAndInstituteIdOrderByDeptIdDesc(1, 1, instId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllDeptList  " + e.getMessage());
@@ -348,7 +351,7 @@ public class MasterApiController {
 	UserService userServiceRepo;
 
 	@RequestMapping(value = { "/approveInstitutes" }, method = RequestMethod.POST)
-	public @ResponseBody Info approveInstitutes(@RequestParam List<Integer> instIdList) {
+	public @ResponseBody Info approveInstitutes(@RequestParam List<Integer> instIdList,@RequestParam int aprUserId) {
 
 		Info info = new Info();
 		try {
@@ -381,8 +384,17 @@ public class MasterApiController {
 				UserLogin userRes = userServiceRepo.save(user);
 
 				Institute insResp = null;
-
-				insResp = instituteRepo.findByInstituteId(user.getRegPrimaryKey());
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Calendar cal = Calendar.getInstance();
+				String curDateTime = dateFormat.format(cal.getTime());
+				
+				insResp = instituteRepo.findByInstituteId(userRes.getExInt2());
+				
+				insResp.setCheckerUserId(aprUserId);
+				insResp.setCheckerDatetime(curDateTime);
+				instituteRepo.save(insResp);
+				
 
 				final String emailSMTPserver = "smtp.gmail.com";
 				final String emailSMTPPort = "587";
