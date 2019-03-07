@@ -13,13 +13,15 @@ import com.ats.rusasoft.mstrepo.UserService;
 @RestController
 public class UserLoginRestController {
 
-	@Autowired UserService userrepo;
-	
-	@RequestMapping(value= {"/insertNewUser"}, method=RequestMethod.POST)
-	public @ResponseBody UserLogin insertNewIqac(@RequestBody UserLogin user){
-		
-		return userrepo.save(user);
-		
-	}
+	/*
+	 * @Autowired UserService userrepo;
+	 * 
+	 * @RequestMapping(value= {"/insertNewUser"}, method=RequestMethod.POST)
+	 * public @ResponseBody UserLogin insertNewIqac(@RequestBody UserLogin user){
+	 * 
+	 * return userrepo.save(user);
+	 * 
+	 * }
+	 */
 	
 }
