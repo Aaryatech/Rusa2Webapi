@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoft.model.Dept;
+import com.ats.rusasoft.model.GetHod;
 import com.ats.rusasoft.model.GetInstituteList;
 import com.ats.rusasoft.model.Hod;
 import com.ats.rusasoft.model.Info;
@@ -25,6 +26,7 @@ import com.ats.rusasoft.model.Principal;
 import com.ats.rusasoft.model.Quolification;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.mstrepo.DeptRepo;
+import com.ats.rusasoft.mstrepo.GetHodRepo;
 import com.ats.rusasoft.mstrepo.GetInstituteListRepo;
 import com.ats.rusasoft.mstrepo.HodRepo;
 import com.ats.rusasoft.mstrepo.InstituteRepo;
@@ -73,7 +75,36 @@ public class MasterApiController {
 		Hod hodRes = null;
 
 		try {
+			
+			if(hod.getHodId()==0) {
 			hodRes = hodRepo.save(hod);
+			
+			UserLogin user = new UserLogin();
+
+			String userName = getAlphaNumericString(7);
+			String pass = getAlphaNumericString(7);
+			System.err.println("username  " + userName + "\n  pass  " + pass);
+
+			user.setExInt1(0);
+			user.setExInt2(0);
+			user.setExVar1("Na");
+			user.setExVar2("Na");
+			user.setIsBlock(1);
+			user.setPass(pass);
+			
+			user.setRegPrimaryKey(hodRes.getHodId());// principla primary key
+
+			user.setExInt2(hodRes.getInstituteId()); //
+			user.setRoleId(0);
+			user.setUserName(userName);
+			user.setUserType(3);// 3 for hod user Default
+
+			UserLogin userRes = userServiceRepo.save(user);
+			}else {
+				
+				hodRes = hodRepo.save(hod);
+			}
+			
 
 		} catch (Exception e) {
 			System.err.println("Exce in saving saveHod " + e.getMessage());
@@ -82,7 +113,6 @@ public class MasterApiController {
 		}
 		return hodRes;
 	}
-
 	@RequestMapping(value = { "/getHod" }, method = RequestMethod.POST)
 	public @ResponseBody Hod getHod(@RequestParam int hodId) {
 
@@ -100,14 +130,15 @@ public class MasterApiController {
 	}
 
 	// 
-	
-	@RequestMapping(value = { "/getHodListByInstId" }, method = RequestMethod.POST)
-	public @ResponseBody List<Hod> getHodListByInstId(@RequestParam int instId) {
+	@Autowired GetHodRepo getHodRepo;
 
-		List<Hod> hodListByInstId = new ArrayList<>();
+	@RequestMapping(value = { "/getHodListByInstId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetHod> getHodListByInstId(@RequestParam int instId) {
+
+		List<GetHod> hodListByInstId = new ArrayList<>();
 
 		try {
-			hodListByInstId =hodRepo.findByInstituteIdAndIsActiveAndDelStatusOrderByHodIdDesc(instId, 1, 1);
+			hodListByInstId =getHodRepo.getHodListByInstId(instId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllDeptList  " + e.getMessage());
@@ -379,7 +410,7 @@ public class MasterApiController {
 				user.setExInt2(instIdList.get(i)); //
 				user.setRoleId(0);
 				user.setUserName(userName);
-				user.setUserType(1);// 1 for Institute user Default
+				user.setUserType(1);// 2 for Principal user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
 
