@@ -10,7 +10,10 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.ats.rusasoft.model.Info;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate; 
+import com.ats.rusasoft.model.Info; 
 
 public class EmailUtility {
 	
@@ -76,5 +79,34 @@ public class EmailUtility {
 		return info;
 		
 	}
+	
+	public static Info sendMsg(String userName,String pass, String phoneNo) {
+			
+			Info info=new Info();
+			
+			try {
+				   
+				RestTemplate restTemplate = new RestTemplate();
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("authkey", "74499AcqeCdljW5ae561dd");
+				map.add("mobiles", phoneNo);
+				map.add("message", "RUSA CREDENTIAL Your User Name :" + userName +" Your Password :" + pass +" Plz Dont Share To Any One ");
+				map.add("sender", "ESYRTO");
+				map.add("route", "4");
+				map.add("country", "91");
+				String response = restTemplate.postForObject("http://control.bestsms.co.in/api/sendhttp.php", map, String.class);
+				
+				info.setError(false);
+				info.setMsg(response);
+			  
+			}catch (Exception e) {
+				
+				info.setError(true);
+				info.setMsg("email_exce");
+			}
+			
+			return info;
+			
+		}
 
 }

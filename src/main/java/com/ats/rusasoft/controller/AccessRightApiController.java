@@ -15,6 +15,7 @@ import com.ats.rusasoft.accessrights.AccessRightModule;
 import com.ats.rusasoft.accessrights.AccessRightModuleList;
 import com.ats.rusasoft.accessrights.AccessRightService;
 import com.ats.rusasoft.accessrights.AssignRoleDetailList;
+import com.ats.rusasoft.common.EmailUtility;
 import com.ats.rusasoft.master.repo.CreatedRoleList;
 import com.ats.rusasoft.model.UserList;
 import com.ats.rusasoft.mstrepo.UserService;
@@ -188,5 +189,20 @@ public class AccessRightApiController {
 		}
 		return role;
 		
+	}
+	
+	@RequestMapping(value = { "/sendMsg" }, method = RequestMethod.GET)
+	public @ResponseBody com.ats.rusasoft.model.Info sendMsg() {
+
+		com.ats.rusasoft.model.Info info = null;
+		
+		 try {
+			 
+			 info = EmailUtility.sendMsg("akshay", "@ksh@y", "7588519473");
+			 
+		 }catch(Exception e) {
+			 e.printStackTrace();
+		 }
+		return info;
 	}
 }
