@@ -25,4 +25,14 @@ public interface LibrarianRepo extends JpaRepository<Librarian, Integer> {
 	@Modifying
 	@Query(value="UPDATE m_librarian_reg SET del_status=0 WHERE librarian_id IN (:libIdList) ",nativeQuery=true)
 	int deleteLibrarians(@Param("libIdList") List<String> libIdList);
+	
+	
+
+	List<Librarian> findByContactNoAndDelStatus(String contactNo, int delStatus);
+
+	List<Librarian> findByContactNoAndDelStatusAndLibrarianIdNot(String contactNo, int delStatus, int librarianId);
+
+	List<Librarian> findByEmailAndDelStatus(String email, int delStatus);
+
+	List<Librarian> findByEmailAndDelStatusAndLibrarianIdNot(String email, int delStatus, int librarianId);
 }

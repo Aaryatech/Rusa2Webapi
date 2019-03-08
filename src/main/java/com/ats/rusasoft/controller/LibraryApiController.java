@@ -194,7 +194,7 @@ public class LibraryApiController {
 					ul.setUserName(userName);
 					ul.setIsBlock(1);
 					ul.setRegPrimaryKey(studResp.getStudentId());
-					ul.setRoleId(1);
+					ul.setRoleId(0);
 					ul.setExInt1(1);
 					ul.setExInt2(1);
 					ul.setExVar1("NA");

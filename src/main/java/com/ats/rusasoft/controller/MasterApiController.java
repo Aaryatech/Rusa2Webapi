@@ -35,6 +35,7 @@ import com.ats.rusasoft.mstrepo.GetHodRepo;
 import com.ats.rusasoft.mstrepo.GetInstituteListRepo;
 import com.ats.rusasoft.mstrepo.HodRepo;
 import com.ats.rusasoft.mstrepo.InstituteRepo;
+import com.ats.rusasoft.mstrepo.LibrarianRepo;
 import com.ats.rusasoft.mstrepo.PrincipalRepo;
 import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
@@ -69,6 +70,9 @@ public class MasterApiController {
 	@Autowired
 	PrincipalRepo pincipalRepo;
 
+	@Autowired
+	LibrarianRepo libRepo;
+	
 	@Autowired
 	DeptRepo deptRepo;
 
@@ -192,6 +196,43 @@ public class MasterApiController {
 				info.setMsg("unique");
 			}
 		}
+		
+		else if (tableId == 4) {
+			System.err.println("inside lib info check");
+
+			List<Librarian> libList = new ArrayList<>();
+
+			if (valueType == 1) {
+				System.err.println("Its Contact No check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					libList = libRepo.findByContactNoAndDelStatus(inputValue.trim(), 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					libList = libRepo.findByContactNoAndDelStatusAndLibrarianIdNot(inputValue.trim(), 1, primaryKey);
+				}
+
+			} else if (valueType == 2) {
+				System.err.println("Its Email check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					libList = libRepo.findByEmailAndDelStatus(inputValue, 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					libList = libRepo.findByEmailAndDelStatusAndLibrarianIdNot(inputValue.trim(), 1, primaryKey);
+				}
+
+			}
+
+			if (libList.size() > 0) {
+				info.setError(true);
+				info.setMsg("duplicate");
+			} else {
+				info.setError(false);
+				info.setMsg("unique");
+			}
+		}
+		
 
 		return info;
 
