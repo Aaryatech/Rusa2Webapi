@@ -12,15 +12,25 @@ import org.springframework.data.repository.query.Param;
 import com.ats.rusasoft.model.Hod;
 
 public interface HodRepo extends JpaRepository<Hod, Integer> {
-	
+
 	Hod findByHodId(int hodId);
-	
-	List<Hod> findByInstituteIdAndIsActiveAndDelStatusOrderByHodIdDesc(int instId,int isActive,int delStatus);
-	
-	
+
+	List<Hod> findByInstituteIdAndIsActiveAndDelStatusOrderByHodIdDesc(int instId, int isActive, int delStatus);
+
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE m_hod SET del_status=0 WHERE hod_id IN (:hodIdList) ",nativeQuery=true)
+	@Query(value = "UPDATE m_hod SET del_status=0 WHERE hod_id IN (:hodIdList) ", nativeQuery = true)
 	int deleteHods(@Param("hodIdList") List<String> hodIdList);
+
+	List<Hod> findByContactNoAndDelStatusAndIsActive(String contactNo, int delStatus, int isActive);
+
+	List<Hod> findByContactNoAndDelStatusAndIsActiveAndHodIdNot(String contactNo, int delStatus, int isActive,
+			int hodId);
+
+	List<Hod> findByEmailAndDelStatusAndIsActive(String email, int delStatus, int isActive);
+
+	List<Hod> findByEmailAndDelStatusAndIsActiveAndHodIdNot(String email, int delStatus, int isActive, int hodId);
+	
+	
 
 }

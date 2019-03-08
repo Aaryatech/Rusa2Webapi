@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoft.model.AccOfficer;
 import com.ats.rusasoft.model.Dept;
 import com.ats.rusasoft.model.GetHod;
 import com.ats.rusasoft.model.GetInstituteList;
@@ -25,6 +26,7 @@ import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.Principal;
 import com.ats.rusasoft.model.Quolification;
 import com.ats.rusasoft.model.UserLogin;
+import com.ats.rusasoft.mstrepo.AccOfficerRepo;
 import com.ats.rusasoft.mstrepo.DeptRepo;
 import com.ats.rusasoft.mstrepo.GetHodRepo;
 import com.ats.rusasoft.mstrepo.GetInstituteListRepo;
@@ -69,42 +71,169 @@ public class MasterApiController {
 	@Autowired
 	HodRepo hodRepo;
 
+	@RequestMapping(value = { "/checkUniqueField" }, method = RequestMethod.POST)
+	public @ResponseBody Info checkUniqueField(@RequestParam String inputValue, @RequestParam int valueType,
+			@RequestParam int tableId, @RequestParam int isEditCall, @RequestParam int primaryKey) {
+
+		Info info = new Info();
+		// tableId 1 for Institute tableId 2 for Hod for Sachin 
+		
+		if (tableId == 1) {
+			List<Institute> instList = new ArrayList<>();
+
+			if (valueType == 1) {
+				System.err.println("Its Contact No check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					instList = instituteRepo.findByContactNo(inputValue.trim());
+				} else {
+					System.err.println("Its Edit Record ");
+					instList = instituteRepo.findByContactNoAndInstituteIdNot(inputValue.trim(), primaryKey);
+				}
+
+			} else if (valueType == 2) {
+				System.err.println("Its Email check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					instList = instituteRepo.findByEmail(inputValue);
+				} else {
+					System.err.println("Its Edit Record ");
+					instList = instituteRepo.findByEmailAndInstituteIdNot(inputValue.trim(), primaryKey);
+				}
+
+			}
+
+			if (instList.size() > 0) {
+				info.setError(true);
+				info.setMsg("duplicate");
+			} else {
+				info.setError(false);
+				info.setMsg("unique");
+			}
+
+		}
+
+		else if (tableId == 2) {
+
+			List<Hod> hodList = new ArrayList<>();
+
+			if (valueType == 1) {
+				System.err.println("Its Contact No check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					hodList = hodRepo.findByContactNoAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					hodList = hodRepo.findByContactNoAndDelStatusAndIsActiveAndHodIdNot(inputValue.trim(), 1, 1, primaryKey);
+				}
+
+			} else if (valueType == 2) {
+				System.err.println("Its Email check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					hodList = hodRepo.findByEmailAndDelStatusAndIsActive(inputValue, 1, 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					hodList = hodRepo.findByEmailAndDelStatusAndIsActiveAndHodIdNot(inputValue.trim(), 1, 1, primaryKey);
+				}
+
+			}
+			
+			if (hodList.size() > 0) {
+				info.setError(true);
+				info.setMsg("duplicate");
+			} else {
+				info.setError(false);
+				info.setMsg("unique");
+			}
+		}
+
+		return info;
+
+	}
+	
+	@Autowired AccOfficerRepo accOfficerRepo;
+	
+	@RequestMapping(value = { "/saveAccOfficer" }, method = RequestMethod.POST)
+	public @ResponseBody AccOfficer saveAccOfficer(@RequestBody AccOfficer accOff) {
+
+		AccOfficer acOfRes = null;
+
+		try {
+
+			if (accOff.getOfficerId() == 0) {
+				acOfRes = accOfficerRepo.save(accOff);
+
+				UserLogin user = new UserLogin();
+
+				String userName = getAlphaNumericString(7);
+				String pass = getAlphaNumericString(7);
+				System.err.println("username  " + userName + "\n  pass  " + pass);
+
+				user.setExInt1(0);
+				user.setExInt2(0);
+				user.setExVar1("Na");
+				user.setExVar2("Na");
+				user.setIsBlock(1);
+				user.setPass(pass);
+
+				user.setRegPrimaryKey(acOfRes.getOfficerId());// principla primary key
+
+				user.setExInt2(acOfRes.getInstituteId()); //
+				user.setRoleId(0);
+				user.setUserName(userName);
+				user.setUserType(5);// 5 for acc Officer user Default
+
+				UserLogin userRes = userServiceRepo.save(user);
+			} else {
+
+				acOfRes = accOfficerRepo.save(accOff);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in saving saveAccOff " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return acOfRes;
+	}
+	
+
 	@RequestMapping(value = { "/saveHod" }, method = RequestMethod.POST)
 	public @ResponseBody Hod saveInstitute(@RequestBody Hod hod) {
 
 		Hod hodRes = null;
 
 		try {
-			
-			if(hod.getHodId()==0) {
-			hodRes = hodRepo.save(hod);
-			
-			UserLogin user = new UserLogin();
 
-			String userName = getAlphaNumericString(7);
-			String pass = getAlphaNumericString(7);
-			System.err.println("username  " + userName + "\n  pass  " + pass);
+			if (hod.getHodId() == 0) {
+				hodRes = hodRepo.save(hod);
 
-			user.setExInt1(0);
-			user.setExInt2(0);
-			user.setExVar1("Na");
-			user.setExVar2("Na");
-			user.setIsBlock(1);
-			user.setPass(pass);
-			
-			user.setRegPrimaryKey(hodRes.getHodId());// principla primary key
+				UserLogin user = new UserLogin();
 
-			user.setExInt2(hodRes.getInstituteId()); //
-			user.setRoleId(0);
-			user.setUserName(userName);
-			user.setUserType(3);// 3 for hod user Default
+				String userName = getAlphaNumericString(7);
+				String pass = getAlphaNumericString(7);
+				System.err.println("username  " + userName + "\n  pass  " + pass);
 
-			UserLogin userRes = userServiceRepo.save(user);
-			}else {
-				
+				user.setExInt1(0);
+				user.setExInt2(0);
+				user.setExVar1("Na");
+				user.setExVar2("Na");
+				user.setIsBlock(1);
+				user.setPass(pass);
+
+				user.setRegPrimaryKey(hodRes.getHodId());// principla primary key
+
+				user.setExInt2(hodRes.getInstituteId()); //
+				user.setRoleId(0);
+				user.setUserName(userName);
+				user.setUserType(3);// 3 for hod user Default
+
+				UserLogin userRes = userServiceRepo.save(user);
+			} else {
+
 				hodRes = hodRepo.save(hod);
 			}
-			
 
 		} catch (Exception e) {
 			System.err.println("Exce in saving saveHod " + e.getMessage());
@@ -113,6 +242,7 @@ public class MasterApiController {
 		}
 		return hodRes;
 	}
+
 	@RequestMapping(value = { "/getHod" }, method = RequestMethod.POST)
 	public @ResponseBody Hod getHod(@RequestParam int hodId) {
 
@@ -129,8 +259,9 @@ public class MasterApiController {
 		return deptRes;
 	}
 
-	// 
-	@Autowired GetHodRepo getHodRepo;
+	//
+	@Autowired
+	GetHodRepo getHodRepo;
 
 	@RequestMapping(value = { "/getHodListByInstId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetHod> getHodListByInstId(@RequestParam int instId) {
@@ -138,7 +269,7 @@ public class MasterApiController {
 		List<GetHod> hodListByInstId = new ArrayList<>();
 
 		try {
-			hodListByInstId =getHodRepo.getHodListByInstId(instId);
+			hodListByInstId = getHodRepo.getHodListByInstId(instId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllDeptList  " + e.getMessage());
@@ -148,7 +279,7 @@ public class MasterApiController {
 		return hodListByInstId;
 
 	}
-	
+
 	@RequestMapping(value = { "/deleteHods" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteHods(@RequestParam List<String> hodIdList) {
 
@@ -272,14 +403,6 @@ public class MasterApiController {
 
 		return info;
 
-	}
-	
-	@RequestMapping(value = { "/getIns" }, method = RequestMethod.POST)
-	public @ResponseBody int getIns(@RequestParam String conNo,@RequestParam String email) {
-		
-		List<Institute> instList=instituteRepo.findByContactNoAndEmailAndInstituteIdNot(conNo, email, 1);//instituteRepo.findByContactNoAndEmail(conNo, email);
-		return instList.size();
-		
 	}
 
 	@RequestMapping(value = { "/saveInstitute" }, method = RequestMethod.POST)
@@ -417,7 +540,7 @@ public class MasterApiController {
 	UserService userServiceRepo;
 
 	@RequestMapping(value = { "/approveInstitutes" }, method = RequestMethod.POST)
-	public @ResponseBody Info approveInstitutes(@RequestParam List<Integer> instIdList,@RequestParam int aprUserId) {
+	public @ResponseBody Info approveInstitutes(@RequestParam List<Integer> instIdList, @RequestParam int aprUserId) {
 
 		Info info = new Info();
 		try {
@@ -450,17 +573,16 @@ public class MasterApiController {
 				UserLogin userRes = userServiceRepo.save(user);
 
 				Institute insResp = null;
-				
+
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
 				String curDateTime = dateFormat.format(cal.getTime());
-				
+
 				insResp = instituteRepo.findByInstituteId(userRes.getExInt2());
-				
+
 				insResp.setCheckerUserId(aprUserId);
 				insResp.setCheckerDatetime(curDateTime);
 				instituteRepo.save(insResp);
-				
 
 				final String emailSMTPserver = "smtp.gmail.com";
 				final String emailSMTPPort = "587";
@@ -499,19 +621,8 @@ public class MasterApiController {
 					mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 					mimeMessage.setSubject(subject);
 					mimeMessage.setText(mes);
-					// mimeMessage.setContent(1, "JJJ");
 					mimeMessage.setText(" User Name " + userRes.getUserName() + "\n Password " + userRes.getPass());
-					// mimeMessage.setFileName(filename);
-
-					BodyPart mbodypart = new MimeBodyPart();
-					Multipart multipart = new MimeMultipart();
-					// DataSource source = new FileDataSource(filename);
-					// mbodypart.setDataHandler(new DataHandler(source));
-					// mbodypart.setFileName(filename);
-					// multipart.addBodyPart(mbodypart);
-					// mimeMessage.setContent(multipart);
-					// billHeadId = 0;
-					// pdfCustId = 0;
+				
 					Transport.send(mimeMessage);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -527,7 +638,7 @@ public class MasterApiController {
 				info.setError(true);
 				info.setMsg("failed");
 
-			}  
+			}
 		} catch (Exception e) {
 
 			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
