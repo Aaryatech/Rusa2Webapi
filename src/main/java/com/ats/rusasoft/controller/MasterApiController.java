@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.common.EmailUtility;
 import com.ats.rusasoft.model.AccOfficer;
 import com.ats.rusasoft.model.Dept;
+import com.ats.rusasoft.model.GetAccOfficer;
 import com.ats.rusasoft.model.GetHod;
 import com.ats.rusasoft.model.GetInstituteList;
 import com.ats.rusasoft.model.Hod;
@@ -31,6 +32,7 @@ import com.ats.rusasoft.model.Student;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.mstrepo.AccOfficerRepo;
 import com.ats.rusasoft.mstrepo.DeptRepo;
+import com.ats.rusasoft.mstrepo.GetAccOfficerRepo;
 import com.ats.rusasoft.mstrepo.GetHodRepo;
 import com.ats.rusasoft.mstrepo.GetInstituteListRepo;
 import com.ats.rusasoft.mstrepo.HodRepo;
@@ -240,6 +242,8 @@ public class MasterApiController {
 
 	@Autowired
 	AccOfficerRepo accOfficerRepo;
+	
+	@Autowired GetAccOfficerRepo getGetAccOfficerRepo;
 
 	@RequestMapping(value = { "/saveAccOfficer" }, method = RequestMethod.POST)
 	public @ResponseBody AccOfficer saveAccOfficer(@RequestBody AccOfficer accOff) {
@@ -285,6 +289,26 @@ public class MasterApiController {
 		return acOfRes;
 	}
 
+	
+	//getAccOffList
+	@RequestMapping(value = { "/getAccOffList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetAccOfficer> getAccOffList(@RequestParam int instId) {
+
+		List<GetAccOfficer> accOffListByInstId = new ArrayList<>();
+
+		try {
+			accOffListByInstId = getGetAccOfficerRepo.getGetAccOfficer(instId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAccOffList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return accOffListByInstId;
+
+	}
+
+	
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static	String senderPassword = "atsinfosoft@123";
 	static String mailsubject = " RUSA Login Credentials ";
