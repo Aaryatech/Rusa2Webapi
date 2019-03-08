@@ -23,8 +23,10 @@ import com.ats.rusasoft.model.GetInstituteList;
 import com.ats.rusasoft.model.Hod;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.Institute;
+import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.Principal;
 import com.ats.rusasoft.model.Quolification;
+import com.ats.rusasoft.model.Student;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.mstrepo.AccOfficerRepo;
 import com.ats.rusasoft.mstrepo.DeptRepo;
@@ -34,6 +36,7 @@ import com.ats.rusasoft.mstrepo.HodRepo;
 import com.ats.rusasoft.mstrepo.InstituteRepo;
 import com.ats.rusasoft.mstrepo.PrincipalRepo;
 import com.ats.rusasoft.mstrepo.QuolificationRepo;
+import com.ats.rusasoft.mstrepo.StudentRepo;
 import com.ats.rusasoft.mstrepo.UserService;
 
 import javax.activation.DataHandler;
@@ -70,6 +73,10 @@ public class MasterApiController {
 
 	@Autowired
 	HodRepo hodRepo;
+	
+	@Autowired
+	StudentRepo studRepo;
+	
 
 	@RequestMapping(value = { "/checkUniqueField" }, method = RequestMethod.POST)
 	public @ResponseBody Info checkUniqueField(@RequestParam String inputValue, @RequestParam int valueType,
@@ -147,6 +154,44 @@ public class MasterApiController {
 				info.setMsg("unique");
 			}
 		}
+		
+		else if (tableId == 3) {
+			System.err.println("inside stud info check");
+
+			List<Student> studList = new ArrayList<>();
+
+			if (valueType == 1) {
+				System.err.println("Its Contact No check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					studList = studRepo.findByContactNoAndDelStatus(inputValue.trim(), 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					studList = studRepo.findByContactNoAndDelStatusAndStudentIdNot(inputValue.trim(), 1, primaryKey);
+				}
+
+			} else if (valueType == 2) {
+				System.err.println("Its Email check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					studList = studRepo.findByEmailAndDelStatus(inputValue, 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					studList = studRepo.findByEmailAndDelStatusAndStudentIdNot(inputValue.trim(), 1, primaryKey);
+				}
+
+			}
+			
+			if (studList.size() > 0) {
+				info.setError(true);
+				info.setMsg("duplicate");
+			} else {
+				info.setError(false);
+				info.setMsg("unique");
+			}
+		}
+
+		
 
 		return info;
 
