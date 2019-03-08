@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoft.common.EmailUtility;
 import com.ats.rusasoft.model.AccOfficer;
 import com.ats.rusasoft.model.Dept;
 import com.ats.rusasoft.model.GetHod;
@@ -73,18 +74,17 @@ public class MasterApiController {
 
 	@Autowired
 	HodRepo hodRepo;
-	
+
 	@Autowired
 	StudentRepo studRepo;
-	
 
 	@RequestMapping(value = { "/checkUniqueField" }, method = RequestMethod.POST)
 	public @ResponseBody Info checkUniqueField(@RequestParam String inputValue, @RequestParam int valueType,
 			@RequestParam int tableId, @RequestParam int isEditCall, @RequestParam int primaryKey) {
 
 		Info info = new Info();
-		// tableId 1 for Institute tableId 2 for Hod for Sachin 
-		
+		// tableId 1 for Institute tableId 2 for Hod for Sachin
+
 		if (tableId == 1) {
 			List<Institute> instList = new ArrayList<>();
 
@@ -131,7 +131,8 @@ public class MasterApiController {
 					hodList = hodRepo.findByContactNoAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					hodList = hodRepo.findByContactNoAndDelStatusAndIsActiveAndHodIdNot(inputValue.trim(), 1, 1, primaryKey);
+					hodList = hodRepo.findByContactNoAndDelStatusAndIsActiveAndHodIdNot(inputValue.trim(), 1, 1,
+							primaryKey);
 				}
 
 			} else if (valueType == 2) {
@@ -141,11 +142,12 @@ public class MasterApiController {
 					hodList = hodRepo.findByEmailAndDelStatusAndIsActive(inputValue, 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					hodList = hodRepo.findByEmailAndDelStatusAndIsActiveAndHodIdNot(inputValue.trim(), 1, 1, primaryKey);
+					hodList = hodRepo.findByEmailAndDelStatusAndIsActiveAndHodIdNot(inputValue.trim(), 1, 1,
+							primaryKey);
 				}
 
 			}
-			
+
 			if (hodList.size() > 0) {
 				info.setError(true);
 				info.setMsg("duplicate");
@@ -154,7 +156,7 @@ public class MasterApiController {
 				info.setMsg("unique");
 			}
 		}
-		
+
 		else if (tableId == 3) {
 			System.err.println("inside stud info check");
 
@@ -181,7 +183,7 @@ public class MasterApiController {
 				}
 
 			}
-			
+
 			if (studList.size() > 0) {
 				info.setError(true);
 				info.setMsg("duplicate");
@@ -191,14 +193,13 @@ public class MasterApiController {
 			}
 		}
 
-		
-
 		return info;
 
 	}
-	
-	@Autowired AccOfficerRepo accOfficerRepo;
-	
+
+	@Autowired
+	AccOfficerRepo accOfficerRepo;
+
 	@RequestMapping(value = { "/saveAccOfficer" }, method = RequestMethod.POST)
 	public @ResponseBody AccOfficer saveAccOfficer(@RequestBody AccOfficer accOff) {
 
@@ -242,7 +243,10 @@ public class MasterApiController {
 		}
 		return acOfRes;
 	}
-	
+
+	static String senderEmail = "atsinfosoft@gmail.com";
+	static	String senderPassword = "atsinfosoft@123";
+	static String mailsubject = " RUSA Login Credentials ";
 
 	@RequestMapping(value = { "/saveHod" }, method = RequestMethod.POST)
 	public @ResponseBody Hod saveInstitute(@RequestBody Hod hod) {
@@ -275,6 +279,12 @@ public class MasterApiController {
 				user.setUserType(3);// 3 for hod user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
+				
+				Info info=EmailUtility.sendEmail(senderEmail, senderPassword, hodRes.getEmail(), mailsubject,
+						userRes.getUserName(), userRes.getPass());
+				
+				System.err.println("Info email sent response   "+info.toString());
+
 			} else {
 
 				hodRes = hodRepo.save(hod);
@@ -628,6 +638,10 @@ public class MasterApiController {
 				insResp.setCheckerUserId(aprUserId);
 				insResp.setCheckerDatetime(curDateTime);
 				instituteRepo.save(insResp);
+				
+				
+				Info info2=EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
+						userRes.getUserName(), userRes.getPass());
 
 				final String emailSMTPserver = "smtp.gmail.com";
 				final String emailSMTPPort = "587";
@@ -667,8 +681,8 @@ public class MasterApiController {
 					mimeMessage.setSubject(subject);
 					mimeMessage.setText(mes);
 					mimeMessage.setText(" User Name " + userRes.getUserName() + "\n Password " + userRes.getPass());
-				
-					Transport.send(mimeMessage);
+
+					//Transport.send(mimeMessage);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
