@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoft.common.Commons;
+import com.ats.rusasoft.common.EmailUtility;
 import com.ats.rusasoft.model.AcademicYear;
 import com.ats.rusasoft.model.GetInstituteList;
 import com.ats.rusasoft.model.GetStudentDetail;
@@ -42,6 +43,10 @@ public class LibraryApiController {
 	StudentRepo studRepo;
 	
 	
+	static String senderEmail = "atsinfosoft@gmail.com";
+	static	String senderPassword = "atsinfosoft@123";
+	static String mailsubject = " RUSA Login Credentials ";
+	
 	@RequestMapping(value = { "/saveLibrarian" }, method = RequestMethod.POST)
 	public @ResponseBody Librarian saveLibrarian(@RequestBody Librarian librarian) {
 
@@ -69,6 +74,14 @@ public class LibraryApiController {
 				ul.setExVar2("NA");
 				
 				userRepo.saveAndFlush(ul);
+				Info info=EmailUtility.sendEmail(senderEmail, senderPassword, libResp.getEmail(), mailsubject,
+						ul.getUserName(), ul.getPass());
+				
+				System.err.println("Info email sent response   "+info.toString());
+				
+				Info info1=EmailUtility.sendMsg(ul.getUserName(), ul.getPass(), libResp.getContactNo());
+				
+				System.err.println("Info msg sent response   "+info1.toString());
 
 			} else {
 				libResp = libRepo.saveAndFlush(librarian);
@@ -201,6 +214,15 @@ public class LibraryApiController {
 					ul.setExVar2("NA");
 					
 					userRepo.saveAndFlush(ul);
+					
+					Info info=EmailUtility.sendEmail(senderEmail, senderPassword, studResp.getEmail(), mailsubject,
+							ul.getUserName(), ul.getPass());
+					
+					System.err.println("Info email sent response   "+info.toString());
+					
+					Info info1=EmailUtility.sendMsg(senderEmail, senderPassword, studResp.getContactNo());
+					
+					System.err.println("Info email sent response   "+info1.toString());
 
 				} else {
 					studResp = studRepo.saveAndFlush(student);
