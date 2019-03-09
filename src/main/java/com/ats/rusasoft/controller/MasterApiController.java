@@ -74,7 +74,7 @@ public class MasterApiController {
 
 	@Autowired
 	LibrarianRepo libRepo;
-	
+
 	@Autowired
 	DeptRepo deptRepo;
 
@@ -198,7 +198,7 @@ public class MasterApiController {
 				info.setMsg("unique");
 			}
 		}
-		
+
 		else if (tableId == 4) {
 			System.err.println("inside lib info check");
 
@@ -234,7 +234,6 @@ public class MasterApiController {
 				info.setMsg("unique");
 			}
 		}
-		
 
 		return info;
 
@@ -242,8 +241,9 @@ public class MasterApiController {
 
 	@Autowired
 	AccOfficerRepo accOfficerRepo;
-	
-	@Autowired GetAccOfficerRepo getGetAccOfficerRepo;
+
+	@Autowired
+	GetAccOfficerRepo getGetAccOfficerRepo;
 
 	@RequestMapping(value = { "/saveAccOfficer" }, method = RequestMethod.POST)
 	public @ResponseBody AccOfficer saveAccOfficer(@RequestBody AccOfficer accOff) {
@@ -289,8 +289,7 @@ public class MasterApiController {
 		return acOfRes;
 	}
 
-	
-	//getAccOffList
+	// getAccOffList
 	@RequestMapping(value = { "/getAccOffList" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetAccOfficer> getAccOffList(@RequestParam int instId) {
 
@@ -308,9 +307,52 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/getAccOfficer" }, method = RequestMethod.POST)
+	public @ResponseBody AccOfficer getAccOfficer(@RequestParam int accOffId) {
+
+		AccOfficer acOfRes = null;
+
+		try {
+
+			acOfRes = accOfficerRepo.findByOfficerId(accOffId);
+			
+		} catch (Exception e) {
+			System.err.println("Excc in getting one acc off by id "+e.getMessage());
+			e.printStackTrace();
+		}
+		return acOfRes;
+	}
+	//deleteAccOfficers
+	@RequestMapping(value = { "/deleteAccOfficers" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteAccOfficers(@RequestParam List<String> accOffIds) {
+
+		Info info = new Info();
+		try {
+			int res = accOfficerRepo.deleteAccOfficers(accOffIds);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteHods  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 	
+
 	static String senderEmail = "atsinfosoft@gmail.com";
-	static	String senderPassword = "atsinfosoft@123";
+	static String senderPassword = "atsinfosoft@123";
 	static String mailsubject = " RUSA Login Credentials ";
 
 	@RequestMapping(value = { "/saveHod" }, method = RequestMethod.POST)
@@ -344,11 +386,11 @@ public class MasterApiController {
 				user.setUserType(3);// 3 for hod user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
-				
-				Info info=EmailUtility.sendEmail(senderEmail, senderPassword, hodRes.getEmail(), mailsubject,
+
+				Info info = EmailUtility.sendEmail(senderEmail, senderPassword, hodRes.getEmail(), mailsubject,
 						userRes.getUserName(), userRes.getPass());
-				
-				System.err.println("Info email sent response   "+info.toString());
+
+				System.err.println("Info email sent response   " + info.toString());
 
 			} else {
 
@@ -703,9 +745,8 @@ public class MasterApiController {
 				insResp.setCheckerUserId(aprUserId);
 				insResp.setCheckerDatetime(curDateTime);
 				instituteRepo.save(insResp);
-				
-				
-				Info info2=EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
+
+				Info info2 = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
 						userRes.getUserName(), userRes.getPass());
 
 				final String emailSMTPserver = "smtp.gmail.com";
@@ -747,7 +788,7 @@ public class MasterApiController {
 					mimeMessage.setText(mes);
 					mimeMessage.setText(" User Name " + userRes.getUserName() + "\n Password " + userRes.getPass());
 
-					//Transport.send(mimeMessage);
+					// Transport.send(mimeMessage);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
