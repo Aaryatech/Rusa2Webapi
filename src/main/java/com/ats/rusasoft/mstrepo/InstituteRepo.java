@@ -21,12 +21,11 @@ public interface InstituteRepo extends JpaRepository<Institute, Integer> {
 	Institute findByInstituteId(int instituteId);
 	
 	
-	List<Institute> findByContactNo(String contactNo);//call when it is insert call
-	List<Institute> findByContactNoAndInstituteIdNot(String contactNo,int instId);//call when it is edit call
+	List<Institute> findByContactNoAndDelStatusAndIsActive(String contactNo,int delStatus,int isActive);//call when it is insert call
+	List<Institute> findByContactNoAndDelStatusAndIsActiveAndInstituteIdNot(String contactNo,int delStatus,int isActive,int instId);//call when it is edit call
 	
-	List<Institute> findByEmail(String email);//call when it is insert call
-	List<Institute> findByEmailAndInstituteIdNot(String email,int instId);//call when it is edit call
-	
+	List<Institute> findByEmailAndDelStatusAndIsActive(String email,int delStatus,int isActive);//call when it is insert call
+	List<Institute> findByEmailAndDelStatusAndIsActiveAndAndInstituteIdNot(String email,int delStatus, int isActive,int instId);//call when it is edit call
 	
 	List<Institute> findByContactNoAndEmailAndInstituteIdNot(String contactNo,String email,int instId );
 	

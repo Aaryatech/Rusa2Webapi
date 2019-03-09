@@ -89,7 +89,7 @@ public class MasterApiController {
 			@RequestParam int tableId, @RequestParam int isEditCall, @RequestParam int primaryKey) {
 
 		Info info = new Info();
-		// tableId 1 for Institute tableId 2 for Hod for Sachin
+		// tableId 1 for Institute tableId 2 for Hod for Sachin  table id 5 for acc Officer
 
 		if (tableId == 1) {
 			List<Institute> instList = new ArrayList<>();
@@ -98,20 +98,20 @@ public class MasterApiController {
 				System.err.println("Its Contact No check");
 				if (isEditCall == 0) {
 					System.err.println("Its New Record Insert ");
-					instList = instituteRepo.findByContactNo(inputValue.trim());
+					instList = instituteRepo.findByContactNoAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					instList = instituteRepo.findByContactNoAndInstituteIdNot(inputValue.trim(), primaryKey);
+					instList = instituteRepo.findByContactNoAndDelStatusAndIsActiveAndInstituteIdNot(inputValue.trim(), 1, 1, primaryKey);
 				}
 
 			} else if (valueType == 2) {
 				System.err.println("Its Email check");
 				if (isEditCall == 0) {
 					System.err.println("Its New Record Insert ");
-					instList = instituteRepo.findByEmail(inputValue);
+					instList = instituteRepo.findByEmailAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					instList = instituteRepo.findByEmailAndInstituteIdNot(inputValue.trim(), primaryKey);
+					instList = instituteRepo.findByEmailAndDelStatusAndIsActiveAndAndInstituteIdNot(inputValue.trim(), 1, 1, primaryKey);
 				}
 
 			}
@@ -234,6 +234,41 @@ public class MasterApiController {
 				info.setMsg("unique");
 			}
 		}
+		
+		if (tableId == 5) {
+			List<AccOfficer> accOffList = new ArrayList<>();
+
+			if (valueType == 1) {
+				System.err.println("Its Contact No check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					accOffList = accOfficerRepo.findByContactNoAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					accOffList = accOfficerRepo.findByContactNoAndDelStatusAndIsActiveAndOfficerIdNot(inputValue.trim(), 1, 1, primaryKey);
+				}
+
+			} else if (valueType == 2) {
+				System.err.println("Its Email check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					accOffList = accOfficerRepo.findByEmailAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
+				} else {
+					System.err.println("Its Edit Record ");
+					accOffList = accOfficerRepo.findByEmailAndDelStatusAndIsActiveAndOfficerIdNot(inputValue.trim(), 1, 1, primaryKey);
+				}
+
+			}
+
+			if (accOffList.size() > 0) {
+				info.setError(true);
+				info.setMsg("duplicate");
+			} else {
+				info.setError(false);
+				info.setMsg("unique");
+			}
+
+		}
 
 		return info;
 
@@ -276,6 +311,13 @@ public class MasterApiController {
 				user.setUserType(5);// 5 for acc Officer user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
+				
+				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, acOfRes.getEmail(), mailsubject,
+						userRes.getUserName(), userRes.getPass());
+				
+				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(),acOfRes.getContactNo());
+				
+				
 			} else {
 
 				acOfRes = accOfficerRepo.save(accOff);
@@ -349,6 +391,15 @@ public class MasterApiController {
 		return info;
 
 	}
+	//for demo example 
+	@RequestMapping(value = { "/getCount" }, method = RequestMethod.POST)
+	public @ResponseBody long getCount(@RequestParam String contactNo) {
+
+		long x=accOfficerRepo.countByContactNoAndDelStatusAndIsActive(contactNo, 1, 1);
+		return x;
+	
+		
+	}
 	
 
 	static String senderEmail = "atsinfosoft@gmail.com";
@@ -389,6 +440,9 @@ public class MasterApiController {
 
 				Info info = EmailUtility.sendEmail(senderEmail, senderPassword, hodRes.getEmail(), mailsubject,
 						userRes.getUserName(), userRes.getPass());
+				
+				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(),hodRes.getContactNo());
+
 
 				System.err.println("Info email sent response   " + info.toString());
 
@@ -746,8 +800,11 @@ public class MasterApiController {
 				insResp.setCheckerDatetime(curDateTime);
 				instituteRepo.save(insResp);
 
-				Info info2 = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
+				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
 						userRes.getUserName(), userRes.getPass());
+				
+				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(),princi.getPhoneNo());
+
 
 				final String emailSMTPserver = "smtp.gmail.com";
 				final String emailSMTPPort = "587";

@@ -20,4 +20,13 @@ public interface AccOfficerRepo extends JpaRepository<AccOfficer, Integer> {
 	@Query(value = "UPDATE m_acc_officer_reg SET del_status=0 WHERE officer_id IN (:accOffIds) ", nativeQuery = true)
 	int deleteAccOfficers(@Param("accOffIds") List<String> accOffIds);
 	
+	long countByContactNoAndDelStatusAndIsActive(String contactNo,int delStatus, int isActive);
+	
+	List<AccOfficer> findByContactNoAndDelStatusAndIsActive(String contactNo,int delStatus, int isActive);
+	List<AccOfficer> findByContactNoAndDelStatusAndIsActiveAndOfficerIdNot(String contactNo,int delStatus, int isActive,int officerId);
+	
+	List<AccOfficer>  findByEmailAndDelStatusAndIsActive(String email,int delStatus, int isActive);
+	List<AccOfficer>  findByEmailAndDelStatusAndIsActiveAndOfficerIdNot(String email,int delStatus, int isActive,int officerId);
+	
+	
 }
