@@ -3,6 +3,7 @@ package com.ats.rusasoft.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +14,10 @@ import com.ats.rusasoft.model.LoginResponse;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.model.GetUserDetail;
 import com.ats.rusasoft.model.Info;
+import com.ats.rusasoft.model.InstituteInfo;
+import com.ats.rusasoft.model.LoginLog;
 import com.ats.rusasoft.mstrepo.GetUserDataRepo;
+import com.ats.rusasoft.mstrepo.LoginLogRepo;
 import com.ats.rusasoft.mstrepo.LoginResponseRepo;
 import com.ats.rusasoft.mstrepo.UserService;
 
@@ -33,6 +37,8 @@ public class RestApiController {
 	
 	@Autowired
     GetUserDataRepo userDataRepo;
+	@Autowired
+	LoginLogRepo logRepo;
 	
 	
 
@@ -123,6 +129,23 @@ public class RestApiController {
 	
 }
 
+	@RequestMapping(value = { "/saveLoginLog" }, method = RequestMethod.POST)
+	public @ResponseBody LoginLog saveLoginLog(@RequestBody LoginLog instInfo) {
 
+		LoginLog instResp = null;
+ 
+		try {
+
+				instResp = logRepo.saveAndFlush(instInfo);
+
+
+		} catch (Exception e) {
+			System.err.println("Exce in saving saveLoginLog " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return instInfo;
+
+	}
 
 }

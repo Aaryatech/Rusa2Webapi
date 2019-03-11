@@ -31,6 +31,7 @@ import com.ats.rusasoft.mstrepo.GetInstituteInfoRepo;
 import com.ats.rusasoft.mstrepo.GetStudentDetailRepo;
 import com.ats.rusasoft.mstrepo.InstituteInfoRepo;
 import com.ats.rusasoft.mstrepo.LibrarianRepo;
+import com.ats.rusasoft.mstrepo.LoginLogRepo;
 import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
 import com.ats.rusasoft.mstrepo.UserService;
@@ -52,6 +53,7 @@ public class LibraryApiController {
 	@Autowired
 	GetInstituteInfoRepo getInstInfoRepo;
 	
+
 	
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static	String senderPassword = "atsinfosoft@123";
@@ -278,7 +280,7 @@ public class LibraryApiController {
 		  
 		  try { 
 			  libResp = studDetailRepo.getAllStudentList1(instituteId);
-			  System.err.println("lib are" + libResp.toString());
+			  System.err.println("Student list in api  are" + libResp.toString());
 		  
 		  } catch (Exception e) {
 		  System.err.println("Exce in getAllLibrarian Librarian " + e.getMessage());
