@@ -14,18 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.common.Commons;
 import com.ats.rusasoft.common.EmailUtility;
 import com.ats.rusasoft.model.AcademicYear;
+import com.ats.rusasoft.model.GetInstituteInfo;
 import com.ats.rusasoft.model.GetInstituteList;
 import com.ats.rusasoft.model.GetStudentDetail;
 import com.ats.rusasoft.model.Hod;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.Institute;
+import com.ats.rusasoft.model.InstituteInfo;
 import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.Principal;
 import com.ats.rusasoft.model.Quolification;
 import com.ats.rusasoft.model.Student;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.mstrepo.AcademicYearRepo;
+import com.ats.rusasoft.mstrepo.GetInstituteInfoRepo;
 import com.ats.rusasoft.mstrepo.GetStudentDetailRepo;
+import com.ats.rusasoft.mstrepo.InstituteInfoRepo;
 import com.ats.rusasoft.mstrepo.LibrarianRepo;
 import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
@@ -41,6 +45,12 @@ public class LibraryApiController {
 	
 	@Autowired
 	StudentRepo studRepo;
+	
+	@Autowired
+	InstituteInfoRepo instInfoRepo;
+	
+	@Autowired
+	GetInstituteInfoRepo getInstInfoRepo;
 	
 	
 	static String senderEmail = "atsinfosoft@gmail.com";
@@ -305,5 +315,90 @@ public class LibraryApiController {
 				return info;
 
 			}
+		  ///////////////////////////////////////**********Institute Info**********************////////////////////////////////
 	
+		@RequestMapping(value = { "/saveInstituteInfo" }, method = RequestMethod.POST)
+		public @ResponseBody InstituteInfo saveInstituteInfo(@RequestBody InstituteInfo instInfo) {
+
+			InstituteInfo instResp = null;
+	 
+			try {
+
+					instResp = instInfoRepo.saveAndFlush(instInfo);
+	
+
+			} catch (Exception e) {
+				System.err.println("Exce in saving InstituteInfo " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return instInfo;
+
+		}
+		
+		
+		@RequestMapping(value = { "/getInstituteInfoByInfoDetailId" }, method = RequestMethod.POST)
+		public @ResponseBody InstituteInfo getInfoByByInfoDetailId(@RequestParam int infoDetailId) {
+
+			InstituteInfo libResp = null;
+
+			try {
+				libResp = instInfoRepo.findByInfoDetailId(infoDetailId);
+
+			} catch (Exception e) {
+				System.err.println("Exce in getInfoByByInfoDetailId  " + e.getMessage());
+				e.printStackTrace();
+
+			}
+			return libResp;
+		}
+
+
+		  @RequestMapping(value = { "/getAllInstituteInfoByInstituteId" }, method = RequestMethod.POST)
+		  public @ResponseBody List<GetInstituteInfo> getAllInstituteInfoByInstituteId(@RequestParam int instituteId) {
+			  System.err.println("Inst list is"+instituteId);
+		  List<GetInstituteInfo> libResp = new ArrayList<>();
+		  
+		  try { 
+			  libResp = getInstInfoRepo.getAllInstituteList(instituteId);
+			  System.err.println("lib are" + libResp.toString());
+		  
+		  } catch (Exception e) {
+		  System.err.println("Exce in getAllInstituteList1 Librarian " + e.getMessage());
+		  e.printStackTrace(); }
+		  
+		  return libResp;
+		  
+		  }
+		  
+		  @RequestMapping(value = { "/deleteInstituteInfo" }, method = RequestMethod.POST)
+			public @ResponseBody Info deleteInstituteInfo(@RequestParam List<String> instIdList) {
+
+					Info info = new Info();
+					try {
+						int res = instInfoRepo.deleteInstitutes(instIdList);
+
+						if (res > 0) {
+							info.setError(false);
+							info.setMsg("success");
+
+						} else {
+							info.setError(true);
+							info.setMsg("failed");
+
+						}
+					} catch (Exception e) {
+
+						System.err.println("Exce in deleteInstituteInfo  " + e.getMessage());
+						e.printStackTrace();
+						info.setError(true);
+						info.setMsg("excep");
+					}
+
+					return info;
+
+				}
+		
+		
+		
 }
