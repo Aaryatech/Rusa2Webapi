@@ -18,18 +18,18 @@ public class MIqac {
 	private String iqacName;
 	private int desgntnId;
 	private int instituteId;
-	private Date joiningDate;
+	private String joiningDate;
 	private String contactNo;
 	private String email;
 	private int delStatus;
 	private int isActive;
 	private int isEnrollSystem;
 	private int makerUserId;
-	private Date makerEnterDatetime;
+	private String makerEnterDatetime;
 	private int checkerUserId;
-	private Date checkerDatetime;
-	private Date lastUpdatedDatetime;
-	
+	private String checkerDatetime;
+	private String lastUpdatedDatetime;
+	private int type;
 	
 	public int getIqacId() {
 		return iqacId;
@@ -55,10 +55,10 @@ public class MIqac {
 	public void setInstituteId(int instituteId) {
 		this.instituteId = instituteId;
 	}
-	public Date getJoiningDate() {
+	public String getJoiningDate() {
 		return joiningDate;
 	}
-	public void setJoiningDate(Date joiningDate) {
+	public void setJoiningDate(String joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 	public String getContactNo() {
@@ -97,11 +97,9 @@ public class MIqac {
 	public void setMakerUserId(int makerUserId) {
 		this.makerUserId = makerUserId;
 	}
-	public Date getMakerEnterDatetime() {
+	
+	public String getMakerEnterDatetime() {
 		return makerEnterDatetime;
-	}
-	public void setMakerEnterDatetime(Date makerEnterDatetime) {
-		this.makerEnterDatetime = makerEnterDatetime;
 	}
 	public int getCheckerUserId() {
 		return checkerUserId;
@@ -109,26 +107,36 @@ public class MIqac {
 	public void setCheckerUserId(int checkerUserId) {
 		this.checkerUserId = checkerUserId;
 	}
-	public Date getCheckerDatetime() {
+	
+	public String getCheckerDatetime() {
 		return checkerDatetime;
 	}
-	public void setCheckerDatetime(Date checkerDatetime) {
+	public void setCheckerDatetime(String checkerDatetime) {
 		this.checkerDatetime = checkerDatetime;
 	}
-	public Date getLastUpdatedDatetime() {
+	public String getLastUpdatedDatetime() {
 		return lastUpdatedDatetime;
 	}
-	public void setLastUpdatedDatetime(Date lastUpdatedDatetime) {
+	public void setLastUpdatedDatetime(String lastUpdatedDatetime) {
 		this.lastUpdatedDatetime = lastUpdatedDatetime;
+	}
+	public void setMakerEnterDatetime(String makerEnterDatetime) {
+		this.makerEnterDatetime = makerEnterDatetime;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	@Override
 	public String toString() {
 		return "MIqac [iqacId=" + iqacId + ", iqacName=" + iqacName + ", desgntnId=" + desgntnId + ", instituteId="
-				+ instituteId + ", joiningDate=" + joiningDate + ", contactNo=" + contactNo + ", email="
-				+ email + ", delStatus=" + delStatus + ", isActive=" + isActive + ", isEnrollSystem="
-				+ isEnrollSystem + ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime
-				+ ", checkerUserId=" + checkerUserId + ", checkerDatetime=" + checkerDatetime + ", lastUpdatedDatetime="
-				+ lastUpdatedDatetime + "]";
+				+ instituteId + ", joiningDate=" + joiningDate + ", contactNo=" + contactNo + ", email=" + email
+				+ ", delStatus=" + delStatus + ", isActive=" + isActive + ", isEnrollSystem=" + isEnrollSystem
+				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", checkerUserId="
+				+ checkerUserId + ", checkerDatetime=" + checkerDatetime + ", lastUpdatedDatetime="
+				+ lastUpdatedDatetime + ", type=" + type + "]";
 	}
 	
 	

@@ -24,6 +24,26 @@ public interface IqacRepo extends JpaRepository<MIqac, Integer> {
 	@Query(value="UPDATE m_iqac SET del_status=0 WHERE iqac_id=:id",nativeQuery=true)
 	int deleteByIqacId(@Param("id") int id);
 
+
+
+
+	List<MIqac> findByContactNoAndDelStatusAndIsActive(String contactNo, int i, int j);
+
+
+
+
+	List<MIqac> findByContactNoAndDelStatusAndIsActiveAndIqacIdNot(String contactNo, int i, int j, int iqacId);
+
+
+
+
+	List<MIqac> findByEmailAndDelStatusAndIsActive(String email, int i, int j);
+
+
+
+
+	List<MIqac> findByEmailAndDelStatusAndIsActiveAndIqacIdNot(String email, int i, int j, int iqacId);
+
 	
 
 }
