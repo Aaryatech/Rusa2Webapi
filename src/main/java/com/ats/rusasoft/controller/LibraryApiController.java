@@ -195,6 +195,23 @@ public class LibraryApiController {
 
 		}
 
+		@RequestMapping(value = { "/getAcademicYearByYearId" }, method = RequestMethod.POST)
+		public @ResponseBody AcademicYear getAcademicYearByYearId(@RequestParam int yearId) {
+
+			AcademicYear yearList = new AcademicYear();
+
+			try {
+				yearList = yearRepo.findByYearIdAndDelStatus(yearId, 1);
+
+			} catch (Exception e) {
+				System.err.println("Exce in getAcademicYearByYearId  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return yearList;
+
+		}
+
 
 	  ///////////////////////////////////////**********student**********************//////////////////////////////////
 		
