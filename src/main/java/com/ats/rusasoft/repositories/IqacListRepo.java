@@ -11,6 +11,6 @@ import com.ats.rusasoft.model.IqacList;
 public interface IqacListRepo extends JpaRepository<IqacList, Integer> {
 
 	@Modifying
-	@Query(value="SELECT i.iqac_id, i.iqac_name, i.joining_date, i.contact_no, i.email, d.designation_name FROM m_iqac i, m_designation d WHERE  i.del_status=1 AND i.desgntn_id=d.designation_id",nativeQuery=true)
+	@Query(value="SELECT i.iqac_id, i.iqac_name, i.joining_date, i.contact_no, i.email, d.designation_name FROM m_iqac i, m_designation d WHERE  i.del_status=1 AND i.desgntn_id=d.designation_id ORDER BY i.iqac_id DESC",nativeQuery=true)
 	List<IqacList> findByIsActiveAndDelStatus();
 }

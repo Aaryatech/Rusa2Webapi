@@ -23,6 +23,8 @@ import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.MIqac;
 import com.ats.rusasoft.model.Staff;
 import com.ats.rusasoft.model.StaffList;
+import com.ats.rusasoft.model.StudentSchemeList;
+import com.ats.rusasoft.model.StudentSupprtScheme;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.mstrepo.UserService;
 import com.ats.rusasoft.repositories.DeanRepo;
@@ -31,6 +33,8 @@ import com.ats.rusasoft.repositories.IqacListRepo;
 import com.ats.rusasoft.repositories.IqacRepo;
 import com.ats.rusasoft.repositories.StaffListRepo;
 import com.ats.rusasoft.repositories.StaffRepo;
+import com.ats.rusasoft.repositories.StudentSchemeRepo;
+import com.ats.rusasoft.repositories.StudentSupprtSchemeRepo;
 
 @RestController
 public class IqacRestController {
@@ -50,6 +54,10 @@ public class IqacRestController {
 	@Autowired DeanRepo deanrepo;
 	
 	@Autowired DeansListRepo deanlistrepo;
+	
+	@Autowired StudentSupprtSchemeRepo studschemerepo;
+	
+	@Autowired StudentSchemeRepo studrepo;
 	
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static	String senderPassword = "atsinfosoft@123";
@@ -415,5 +423,52 @@ public class IqacRestController {
 			 }
 			 return inf;
 		}
-	 
+		
+		
+		/****************************************Student Support Scheme***********************************/
+		
+		@RequestMapping(value= {"/saveStudentSupprtScheme"}, method=RequestMethod.POST)
+		public @ResponseBody StudentSupprtScheme insertStudentSupprtScheme(
+				@RequestBody StudentSupprtScheme studsupprtscheme)
+		{
+			return studschemerepo.save(studsupprtscheme);
+			
+		}
+		
+		@RequestMapping(value = {"/getAllStudentSchemes"}, method=RequestMethod.GET)
+		public @ResponseBody List<StudentSchemeList> getAllStudentSchemes() {
+			
+			List<StudentSchemeList> studSchmList = null;
+			try {
+				studSchmList = studrepo.getStudentSchemeList();
+				
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return studSchmList;
+			
+		}
+		
+		 @RequestMapping(value= {"/getStudentSchemesById"}, method=RequestMethod.POST)
+			public @ResponseBody StudentSupprtScheme getStudentSchemesById(@RequestParam("id") int id){
+				
+				return studschemerepo.findBySprtSchmIdAndDelStatus(id, 1);
+				
+			}
+		 
+		 @RequestMapping(value = {"/deleteStudentSchemesById"}, method=RequestMethod.POST)
+			public @ResponseBody Info deleteStudentSchemesById(@RequestParam("id") int id){
+				int isDelete=0;
+				 isDelete= studschemerepo.deleteBySprtSchmId(id);
+				 Info inf = new Info();
+				 if(isDelete>0) {
+					 inf.setError(false);
+					 inf.setMsg("Sucessfully Deleted");
+				 }
+				 else{
+					 inf.setError(true);
+					 inf.setMsg("Fail");
+				 }
+				 return inf;
+			}
 }
