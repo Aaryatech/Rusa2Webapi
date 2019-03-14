@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Table(name="m_academic_year")
 public class AcademicYear {
 	
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int yearId;
