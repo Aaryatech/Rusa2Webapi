@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ats.rusasoft.master.m2repo.CastRepo;
-import com.ats.rusasoft.master.m2repo.LocationRepo;
 import com.ats.rusasoft.model.progdetail.Cast;
 import com.ats.rusasoft.model.progdetail.Location;
+import com.ats.rusasoft.prodetailrepo.CastRepo;
+import com.ats.rusasoft.prodetailrepo.LocationRepo;
 
 @RestController
 public class ProgDetailControllerSac {

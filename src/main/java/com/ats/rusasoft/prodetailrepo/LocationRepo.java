@@ -1,4 +1,4 @@
-package com.ats.rusasoft.master.m2repo;
+package com.ats.rusasoft.prodetailrepo;
 
 import java.util.List;
 
