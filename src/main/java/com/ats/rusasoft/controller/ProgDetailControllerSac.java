@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.progdetail.AlumniDetail;
 import com.ats.rusasoft.model.progdetail.Cast;
+import com.ats.rusasoft.model.progdetail.GetAlumni;
 import com.ats.rusasoft.model.progdetail.Location;
 import com.ats.rusasoft.model.progdetail.StudAdmCatwise;
 import com.ats.rusasoft.model.progdetail.StudAdmLocwise;
 import com.ats.rusasoft.prodetailrepo.AlumniDetailRepo;
 import com.ats.rusasoft.prodetailrepo.CastRepo;
+import com.ats.rusasoft.prodetailrepo.GetAlumniRepo;
 import com.ats.rusasoft.prodetailrepo.LocationRepo;
 import com.ats.rusasoft.prodetailrepo.StudAdmCatwiseRepo;
 import com.ats.rusasoft.prodetailrepo.StudAdmLocwiseRepo;
@@ -124,6 +127,72 @@ public class ProgDetailControllerSac {
 		return almDetail;
 
 	}
+	
+	@Autowired GetAlumniRepo getAlumniRepo;
+	
+	@RequestMapping(value = { "/getAlumniList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetAlumni> getAlumniList(@RequestParam int instId, @RequestParam int yearId) {
+
+		List<GetAlumni> almDetail=new ArrayList<>();
+
+		try {
+			
+			almDetail = getAlumniRepo.getGetAlumniByInstAndYearId(instId, yearId);
+		} catch (Exception e) {
+			System.err.println("Exce in saveAlumni  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return almDetail;
+
+	}
+	
+	@RequestMapping(value = { "/getAlumni" }, method = RequestMethod.POST)
+	public @ResponseBody AlumniDetail getAlumni(@RequestParam int alumniId) {
+
+		AlumniDetail almDetail=new  AlumniDetail();
+
+		try {
+			
+			almDetail = alumniDetailRepo.findByAlumniDetailIdAndDelStatusAndIsActive(alumniId,1,1);
+		} catch (Exception e) {
+			System.err.println("Exce in getAlumni  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return almDetail;
+
+	}
+	
+	
+	
+	//deleteAccOfficers
+		@RequestMapping(value = { "/deleteAlumni" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteAlumni(@RequestParam List<String> alumniIds) {
+
+			Info info = new Info();
+			try {
+				int res = alumniDetailRepo.deleteAlumniIds(alumniIds);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteAlumni  " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			return info;
+
+		}
 	
 
 }
