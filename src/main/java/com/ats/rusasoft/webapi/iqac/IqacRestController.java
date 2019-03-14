@@ -200,7 +200,7 @@ public class IqacRestController {
 				String passWord = com.getAlphaNumericString(7);
 				 
 				  user.setRegPrimaryKey(iqacRes.getIqacId());
-				  user.setUserName(iqacRes.getIqacName());
+				  user.setUserName(iqacRes.getEmail());
 				  user.setPass(passWord);
 				  user.setRoleId(0);
 				  user.setExInt1(0);
@@ -279,7 +279,7 @@ public class IqacRestController {
 			String passWord = com.getAlphaNumericString(7);
 			 
 			  user.setRegPrimaryKey(staffRes.getFacultyId());
-			  user.setUserName(staffRes.getFacultyName());
+			  user.setUserName(staffRes.getEmail());
 			  user.setPass(passWord);
 			  user.setRoleId(0); 
 			  user.setExInt1(0);
@@ -306,13 +306,13 @@ public class IqacRestController {
 		
 	}
 	
-	@RequestMapping(value= {"/getListStaff"}, method=RequestMethod.GET)
-	public @ResponseBody List<StaffList> getListStaff(){
+	@RequestMapping(value= {"/getListStaff"}, method=RequestMethod.POST)
+	public @ResponseBody List<StaffList> getListStaff(@RequestParam("facId") int facId){
 		
 		List<StaffList> staffList = null;
 		try {
 			
-			staffList = stafflistrepo.findByIsActiveAndDelStatus();
+			staffList = stafflistrepo.findByIsActiveAndDelStatus(facId);
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -360,7 +360,7 @@ public class IqacRestController {
 			String passWord = com.getAlphaNumericString(7);
 			 
 			  user.setRegPrimaryKey(deanRes.getDeanId());
-			  user.setUserName(deanRes.getDeanName());
+			  user.setUserName(deanRes.getEmail());
 			  user.setPass(passWord);
 			  user.setRoleId(0); 
 			  user.setExInt1(0);
