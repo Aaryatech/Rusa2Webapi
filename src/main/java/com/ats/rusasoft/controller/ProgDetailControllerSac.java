@@ -15,7 +15,9 @@ import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.progdetail.AlumniDetail;
 import com.ats.rusasoft.model.progdetail.Cast;
 import com.ats.rusasoft.model.progdetail.GetAlumni;
+import com.ats.rusasoft.model.progdetail.GetHigherEduDetail;
 import com.ats.rusasoft.model.progdetail.GetTrainPlace;
+import com.ats.rusasoft.model.progdetail.HigherEducDetail;
 import com.ats.rusasoft.model.progdetail.Location;
 import com.ats.rusasoft.model.progdetail.ProgramType;
 import com.ats.rusasoft.model.progdetail.StudAdmCatwise;
@@ -24,7 +26,9 @@ import com.ats.rusasoft.model.progdetail.TrainPlacement;
 import com.ats.rusasoft.prodetailrepo.AlumniDetailRepo;
 import com.ats.rusasoft.prodetailrepo.CastRepo;
 import com.ats.rusasoft.prodetailrepo.GetAlumniRepo;
+import com.ats.rusasoft.prodetailrepo.GetHigherEduDetailRepo;
 import com.ats.rusasoft.prodetailrepo.GetTrainPlaceRepo;
+import com.ats.rusasoft.prodetailrepo.HigherEducDetailRepo;
 import com.ats.rusasoft.prodetailrepo.LocationRepo;
 import com.ats.rusasoft.prodetailrepo.ProgramTypeRepo;
 import com.ats.rusasoft.prodetailrepo.StudAdmCatwiseRepo;
@@ -46,6 +50,26 @@ public class ProgDetailControllerSac {
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllProgramType  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return progTypeList;
+
+	}
+	
+	//getHigherProg
+	
+	@RequestMapping(value = { "/getHigherProgList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgramType> getHigherProgList(@RequestParam int progTypeId) {
+
+		List<ProgramType> progTypeList = new ArrayList<>();
+
+		try {
+			
+			progTypeList = programTypeRepo.getHigherProg(progTypeId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getHigherProgList  " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -305,4 +329,90 @@ public class ProgDetailControllerSac {
 
 		}
 		
+		//HigherEducDetail Proceed
+		
+		@Autowired HigherEducDetailRepo higherEducDetailRepo;
+		
+		@RequestMapping(value = { "/saveHigherEducDetail" }, method = RequestMethod.POST)
+		public @ResponseBody HigherEducDetail saveHigherEducDetail(@RequestBody HigherEducDetail higherEdu) {
+
+			HigherEducDetail highEduDet=new  HigherEducDetail();
+
+			try {
+				
+				highEduDet = higherEducDetailRepo.save(higherEdu);
+
+			} catch (Exception e) {
+				System.err.println("Exce in saveHigherEducDetail  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return highEduDet;
+
+		}
+		
+		@RequestMapping(value = { "/getHigherEducDetail" }, method = RequestMethod.POST)
+		public @ResponseBody HigherEducDetail getHigherEducDetail(@RequestParam int eduDetailId) {
+
+			HigherEducDetail highEduRes=new  HigherEducDetail();
+
+			try {
+				
+				highEduRes = higherEducDetailRepo.findByEducationDetailId(eduDetailId);
+			} catch (Exception e) {
+				System.err.println("Exce in getHigherEducDetail  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return highEduRes;
+
+		}
+		
+		@RequestMapping(value = { "/deleteHigherEducDetail" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteHigherEducDetail(@RequestParam List<String> educationDetailIds) {
+
+			Info info = new Info();
+			try {
+				int res = higherEducDetailRepo.deleteAlumniIds(educationDetailIds);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteHigherEducDetail " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			return info;
+
+		}
+		
+		//GetHigherEduDetailRepo
+		
+		@Autowired GetHigherEduDetailRepo getHigherEduDetailRepo;
+		
+		@RequestMapping(value = { "/getHigherEduDetailList" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetHigherEduDetail> getHigherEduDetailList(@RequestParam int instId, @RequestParam int yearId) {
+
+			List<GetHigherEduDetail> highEdList=new ArrayList<>();
+
+			try {
+				
+				highEdList = getHigherEduDetailRepo.getHigherEduDetail(instId, yearId);
+			} catch (Exception e) {
+				System.err.println("Exce in getHigherEduDetailList  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return highEdList;
+
+		}
 }
