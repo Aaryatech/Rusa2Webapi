@@ -11,8 +11,8 @@ import com.ats.rusasoft.model.GetProgramActivity;
 public interface GetProgramActivityRepo extends JpaRepository<GetProgramActivity, Integer>{
 
 	@Query(value="select p.*,y.academic_year as year_name from t_program_student_activity p, m_academic_year y where y.year_id=p.year_id"
-			+ " and p.del_status=1 and p.type=:type and p.year_id=:yearId", nativeQuery=true)
-	List<GetProgramActivity> getStudentAcitivityList(@Param("type") int type,@Param("yearId") int yearId);
+			+ " and p.del_status=1 and p.type=:type and p.year_id=:yearId and p.institute_id=:instituteId", nativeQuery=true)
+	List<GetProgramActivity> getStudentAcitivityList(@Param("type") int type,@Param("yearId") int yearId,@Param("instituteId") int instituteId);
 
 	@Query(value="select p.*,y.academic_year as year_name from t_program_student_activity p, m_academic_year y where y.year_id=p.year_id"
 			+ " and p.del_status=1 and p.type=:type and p.year_id=:yearId and p.student_activity_id=:activityId", nativeQuery=true)
