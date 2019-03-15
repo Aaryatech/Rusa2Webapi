@@ -15,18 +15,43 @@ import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.progdetail.AlumniDetail;
 import com.ats.rusasoft.model.progdetail.Cast;
 import com.ats.rusasoft.model.progdetail.GetAlumni;
+import com.ats.rusasoft.model.progdetail.GetTrainPlace;
 import com.ats.rusasoft.model.progdetail.Location;
+import com.ats.rusasoft.model.progdetail.ProgramType;
 import com.ats.rusasoft.model.progdetail.StudAdmCatwise;
 import com.ats.rusasoft.model.progdetail.StudAdmLocwise;
+import com.ats.rusasoft.model.progdetail.TrainPlacement;
 import com.ats.rusasoft.prodetailrepo.AlumniDetailRepo;
 import com.ats.rusasoft.prodetailrepo.CastRepo;
 import com.ats.rusasoft.prodetailrepo.GetAlumniRepo;
+import com.ats.rusasoft.prodetailrepo.GetTrainPlaceRepo;
 import com.ats.rusasoft.prodetailrepo.LocationRepo;
+import com.ats.rusasoft.prodetailrepo.ProgramTypeRepo;
 import com.ats.rusasoft.prodetailrepo.StudAdmCatwiseRepo;
 import com.ats.rusasoft.prodetailrepo.StudAdmLocwiseRepo;
+import com.ats.rusasoft.prodetailrepo.TrainPlacementRepo;
 
 @RestController
 public class ProgDetailControllerSac {
+	
+	@Autowired ProgramTypeRepo programTypeRepo;
+	@RequestMapping(value = { "/getAllProgramType" }, method = RequestMethod.GET)
+	public @ResponseBody List<ProgramType> getAllProgramType() {
+
+		List<ProgramType> progTypeList = new ArrayList<>();
+
+		try {
+			
+			progTypeList = programTypeRepo.findByDelStatusAndIsActive(1, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllProgramType  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return progTypeList;
+
+	}
 
 	@Autowired
 	CastRepo castRepo;
@@ -193,6 +218,91 @@ public class ProgDetailControllerSac {
 			return info;
 
 		}
-	
+		
+		
+		//Trainint And Placement
+		
+		@Autowired TrainPlacementRepo trainPlacementRepo;
+		
+		@RequestMapping(value = { "/saveTrainPlacement" }, method = RequestMethod.POST)
+		public @ResponseBody TrainPlacement saveTrainPlacement(@RequestBody TrainPlacement tranPlace) {
 
+			TrainPlacement placementRes=new  TrainPlacement();
+
+			try {
+				
+				placementRes = trainPlacementRepo.save(tranPlace);
+
+			} catch (Exception e) {
+				System.err.println("Exce in saveTrainPlacement  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return placementRes;
+
+		}
+		
+		@RequestMapping(value = { "/getTrainPlacement" }, method = RequestMethod.POST)
+		public @ResponseBody TrainPlacement getTrainPlacement(@RequestParam int placementId) {
+
+			TrainPlacement trainPlace=new  TrainPlacement();
+
+			try {
+				
+				trainPlace = trainPlacementRepo.findByPlacementIdAndDelStatusAndIsActive(placementId, 1, 1);
+			} catch (Exception e) {
+				System.err.println("Exce in getTrainPlacement  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return trainPlace;
+
+		}
+		
+		@RequestMapping(value = { "/deleteTrainPlacement" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteTrainPlacement(@RequestParam List<String> placementIds) {
+
+			Info info = new Info();
+			try {
+				int res = trainPlacementRepo.deleteTrainPlace(placementIds);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteTrainPlacement " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			return info;
+
+		}
+		
+		@Autowired GetTrainPlaceRepo getTrainPlaceRepo;
+
+		@RequestMapping(value = { "/getGetTrainPlaceList" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetTrainPlace> getGetTrainPlaceList(@RequestParam int instId, @RequestParam int yearId) {
+
+			List<GetTrainPlace> almDetail=new ArrayList<>();
+
+			try {
+				
+				almDetail = getTrainPlaceRepo.getGetTrainPlace(instId, yearId);
+			} catch (Exception e) {
+				System.err.println("Exce in getGetTrainPlaceList  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return almDetail;
+
+		}
+		
 }
