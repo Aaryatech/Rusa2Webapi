@@ -3,7 +3,10 @@ package com.ats.rusasoft.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +20,20 @@ import com.ats.rusasoft.model.GetProgramActivity;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.Program;
 import com.ats.rusasoft.model.ProgramActivity;
+import com.ats.rusasoft.model.ProgramEducationObjective;
+import com.ats.rusasoft.model.ProgramMission;
+import com.ats.rusasoft.model.ProgramOutcome;
+import com.ats.rusasoft.model.ProgramSpeceficOutcome;
+import com.ats.rusasoft.model.ProgramVision;
 import com.ats.rusasoft.repository.GetProgramActivityRepo;
 import com.ats.rusasoft.repository.GetProgramRepository;
+import com.ats.rusasoft.repository.ProgramEducationObjectiveRepository;
+import com.ats.rusasoft.repository.ProgramMissionRepository;
+import com.ats.rusasoft.repository.ProgramOutcomeRepository;
 import com.ats.rusasoft.repository.ProgramRepository;
+import com.ats.rusasoft.repository.ProgramSpeceficOutcomeRepository;
 import com.ats.rusasoft.repository.ProgramStudentActivityRepo;
+import com.ats.rusasoft.repository.ProgramVisionRepository;
  
 
 @RestController
@@ -37,6 +50,21 @@ public class StudentActivityRestApiController {
 	
 	@Autowired
 	GetProgramRepository getProgramRepository;
+	
+	@Autowired
+	ProgramVisionRepository programVisionRepository;
+	
+	@Autowired
+	ProgramMissionRepository programMissionRepository;
+	
+	@Autowired
+	ProgramEducationObjectiveRepository programEducationObjectiveRepository;
+	
+	@Autowired
+	ProgramOutcomeRepository programOutcomeRepository;
+	
+	@Autowired
+	ProgramSpeceficOutcomeRepository programSpeceficOutcomeRepository;
 	
 	@RequestMapping(value = { "/saveStudentActivity" }, method = RequestMethod.POST)
 	public @ResponseBody ProgramActivity saveLoginLog(@RequestBody ProgramActivity programActivity) {
@@ -217,6 +245,480 @@ public class StudentActivityRestApiController {
 		try {
 
 			program = getProgramRepository.findByProgramId(programId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return program;
+
+	}
+	
+	@RequestMapping(value = { "/saveProgramVision" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramVision saveProgramVision(@RequestBody ProgramVision programVision) {
+
+		ProgramVision save = new ProgramVision();
+ 
+		try {
+
+			save = programVisionRepository.saveAndFlush(programVision);
+
+
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return save;
+
+	}
+	
+	@RequestMapping(value = { "/getProgramVisionList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgramVision> getProgramVisionList(@RequestParam("programId") int programId) {
+
+		List<ProgramVision> list = new ArrayList<ProgramVision>();
+ 
+		try {
+
+			list = programVisionRepository.findByDelStatusAndIsActiveAndProgramId(1,1,programId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+	
+	@RequestMapping(value = { "/deleteProgramVision" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteProgramVision(@RequestParam("visionId") int visionId ) {
+
+		Info info = new Info();
+ 
+		try {
+
+			
+			try {
+				int res = programVisionRepository.deleteProgramVision(visionId);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+ 
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getProgramVisionByVisionId" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramVision getProgramVisionByVisionId(@RequestParam("visionId") int visionId ) {
+
+		ProgramVision program = new ProgramVision();
+ 
+		try {
+
+			program = programVisionRepository.findByVisionId(visionId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return program;
+
+	}
+	
+	@RequestMapping(value = { "/saveProgramMission" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramMission saveProgramMission(@RequestBody ProgramMission programMission) {
+
+		ProgramMission save = new ProgramMission();
+ 
+		try {
+
+			save = programMissionRepository.saveAndFlush(programMission);
+
+
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return save;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getProgramMissionList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgramMission> getProgramMissionList(@RequestParam("programId") int programId) {
+
+		List<ProgramMission> list = new ArrayList<ProgramMission>();
+ 
+		try {
+
+			list = programMissionRepository.findByDelStatusAndIsActiveAndProgramId(1,1,programId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+	
+	@RequestMapping(value = { "/deleteProgramMission" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteProgramMission(@RequestParam("missionId") int missionId ) {
+
+		Info info = new Info();
+ 
+		try {
+
+			
+			try {
+				int res = programMissionRepository.deleteProgramMission(missionId);
+				
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+ 
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getProgramMissionByMissionId" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramMission getProgramMissionByMissionId(@RequestParam("missionId") int missionId ) {
+
+		ProgramMission program = new ProgramMission();
+ 
+		try {
+
+			program = programMissionRepository.findByMissionId(missionId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return program;
+
+	}
+	
+	
+	@RequestMapping(value = { "/saveProgramEducationObjective" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramEducationObjective saveProgramEducationObjective(@RequestBody ProgramEducationObjective programEducationObjective) {
+
+		ProgramEducationObjective save = new ProgramEducationObjective();
+ 
+		try {
+
+			save = programEducationObjectiveRepository.saveAndFlush(programEducationObjective);
+
+
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return save;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getProgramEducationObjectiveList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgramEducationObjective> getProgramEducationObjectiveList(@RequestParam("programId") int programId) {
+
+		List<ProgramEducationObjective> list = new ArrayList<ProgramEducationObjective>();
+ 
+		try {
+
+			list = programEducationObjectiveRepository.findByDelStatusAndIsActiveAndProgramId(1,1,programId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+	
+	@RequestMapping(value = { "/deleteProgramEducationObjective" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteProgramEducationObjective(@RequestParam("peoId") int peoId ) {
+
+		Info info = new Info();
+ 
+		try {
+
+			
+			try {
+				int res = programEducationObjectiveRepository.deleteProgramEducationObjective(peoId);
+				
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+ 
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getProgramEducationObjectiveByPeoId" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramEducationObjective getProgramEducationObjectiveByPeoId(@RequestParam("peoId") int peoId ) {
+
+		ProgramEducationObjective program = new ProgramEducationObjective();
+ 
+		try {
+
+			program = programEducationObjectiveRepository.findByPeoId(peoId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return program;
+
+	}
+	
+	@RequestMapping(value = { "/saveProgramOutcome" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramOutcome saveProgramOutcome(@RequestBody ProgramOutcome programOutcome) {
+
+		ProgramOutcome save = new ProgramOutcome();
+ 
+		try {
+
+			save = programOutcomeRepository.saveAndFlush(programOutcome);
+
+
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return save;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getProgramOutcomeList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgramOutcome> getProgramOutcomeList(@RequestParam("programId") int programId) {
+
+		List<ProgramOutcome> list = new ArrayList<ProgramOutcome>();
+ 
+		try {
+
+			list = programOutcomeRepository.findByDelStatusAndIsActiveAndProgramId(1,1,programId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+	
+	@RequestMapping(value = { "/deleteProgramOutcome" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteProgramOutcome(@RequestParam("poId") int poId ) {
+
+		Info info = new Info();
+ 
+		try {
+
+			
+			try {
+				int res = programOutcomeRepository.deleteProgramOutcome(poId);
+				
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+ 
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getProgramOutcomeByPoId" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramOutcome getProgramOutcomeByPoId(@RequestParam("poId") int poId ) {
+
+		ProgramOutcome program = new ProgramOutcome();
+ 
+		try {
+
+			program = programOutcomeRepository.findByPoId(poId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return program;
+
+	}
+	
+	@RequestMapping(value = { "/saveProgramSpeceficOutcome" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramSpeceficOutcome saveProgramSpeceficOutcome(@RequestBody ProgramSpeceficOutcome programSpeceficOutcome) {
+
+		ProgramSpeceficOutcome save = new ProgramSpeceficOutcome();
+ 
+		try {
+
+			save = programSpeceficOutcomeRepository.saveAndFlush(programSpeceficOutcome);
+
+
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return save;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getProgramSpeceficOutcomeList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgramSpeceficOutcome> getProgramSpeceficOutcomeList(@RequestParam("programId") int programId) {
+
+		List<ProgramSpeceficOutcome> list = new ArrayList<ProgramSpeceficOutcome>();
+ 
+		try {
+
+			list = programSpeceficOutcomeRepository.findByDelStatusAndIsActiveAndProgramId(1,1,programId);
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+	
+	@RequestMapping(value = { "/deleteProgramSpeceficOutcome" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteProgramSpeceficOutcome(@RequestParam("psoId") int psoId ) {
+
+		Info info = new Info();
+ 
+		try {
+
+			
+			try {
+				int res = programSpeceficOutcomeRepository.deleteProgramSpeceficOutcome(psoId);
+				
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+ 
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getProgramSpeceficOutcomeByPsoId" }, method = RequestMethod.POST)
+	public @ResponseBody ProgramSpeceficOutcome getProgramSpeceficOutcomeByPsoId(@RequestParam("psoId") int psoId ) {
+
+		ProgramSpeceficOutcome program = new ProgramSpeceficOutcome();
+ 
+		try {
+
+			program = programSpeceficOutcomeRepository.findByPsoId(psoId);
 
 			
 		} catch (Exception e) {
