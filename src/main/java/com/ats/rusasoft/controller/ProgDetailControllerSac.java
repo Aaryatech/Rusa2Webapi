@@ -16,6 +16,8 @@ import com.ats.rusasoft.model.progdetail.AlumniDetail;
 import com.ats.rusasoft.model.progdetail.Cast;
 import com.ats.rusasoft.model.progdetail.GetAlumni;
 import com.ats.rusasoft.model.progdetail.GetHigherEduDetail;
+import com.ats.rusasoft.model.progdetail.GetStudAdmCatwise;
+import com.ats.rusasoft.model.progdetail.GetStudAdmLocwise;
 import com.ats.rusasoft.model.progdetail.GetTrainPlace;
 import com.ats.rusasoft.model.progdetail.HigherEducDetail;
 import com.ats.rusasoft.model.progdetail.Location;
@@ -27,6 +29,8 @@ import com.ats.rusasoft.prodetailrepo.AlumniDetailRepo;
 import com.ats.rusasoft.prodetailrepo.CastRepo;
 import com.ats.rusasoft.prodetailrepo.GetAlumniRepo;
 import com.ats.rusasoft.prodetailrepo.GetHigherEduDetailRepo;
+import com.ats.rusasoft.prodetailrepo.GetStudAdmCatwiseRepo;
+import com.ats.rusasoft.prodetailrepo.GetStudAdmLocwiseRepo;
 import com.ats.rusasoft.prodetailrepo.GetTrainPlaceRepo;
 import com.ats.rusasoft.prodetailrepo.HigherEducDetailRepo;
 import com.ats.rusasoft.prodetailrepo.LocationRepo;
@@ -37,15 +41,17 @@ import com.ats.rusasoft.prodetailrepo.TrainPlacementRepo;
 
 @RestController
 public class ProgDetailControllerSac {
-	
-	@Autowired ProgramTypeRepo programTypeRepo;
+
+	@Autowired
+	ProgramTypeRepo programTypeRepo;
+
 	@RequestMapping(value = { "/getAllProgramType" }, method = RequestMethod.GET)
 	public @ResponseBody List<ProgramType> getAllProgramType() {
 
 		List<ProgramType> progTypeList = new ArrayList<>();
 
 		try {
-			
+
 			progTypeList = programTypeRepo.findByDelStatusAndIsActive(1, 1);
 
 		} catch (Exception e) {
@@ -56,16 +62,16 @@ public class ProgDetailControllerSac {
 		return progTypeList;
 
 	}
-	
-	//getHigherProg
-	
+
+	// getHigherProg
+
 	@RequestMapping(value = { "/getHigherProgList" }, method = RequestMethod.POST)
 	public @ResponseBody List<ProgramType> getHigherProgList(@RequestParam int progTypeId) {
 
 		List<ProgramType> progTypeList = new ArrayList<>();
 
 		try {
-			
+
 			progTypeList = programTypeRepo.getHigherProg(progTypeId);
 
 		} catch (Exception e) {
@@ -132,8 +138,27 @@ public class ProgDetailControllerSac {
 			System.err.println("Exce in saveStudentAdmCatwise  " + e.getMessage());
 			e.printStackTrace();
 		}
-
 		return resList;
+	}
+
+	@Autowired
+	GetStudAdmCatwiseRepo getStudAdmCatwiseRepo;
+
+	@RequestMapping(value = { "/getStudAdmCatwiseList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetStudAdmCatwise> getStudAdmCatwiseList(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<GetStudAdmCatwise> studAdmCatList = new ArrayList<>();
+
+		try {
+
+			studAdmCatList = getStudAdmCatwiseRepo.getStudAdmCatwise(instId, yearId);
+		} catch (Exception e) {
+			System.err.println("Exce in getStudAdmCatwiseList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return studAdmCatList;
 
 	}
 
@@ -156,16 +181,38 @@ public class ProgDetailControllerSac {
 		return resList;
 
 	}
-	
-	@Autowired AlumniDetailRepo alumniDetailRepo;
-	
+
+	@Autowired
+	GetStudAdmLocwiseRepo getStudAdmLocwiseRepo;
+
+	@RequestMapping(value = { "/getStudAdmLocwiseList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetStudAdmLocwise> getStudAdmLocwiseList(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<GetStudAdmLocwise> studAdmLocList = new ArrayList<>();
+
+		try {
+
+			studAdmLocList = getStudAdmLocwiseRepo.getStudAdmLocwise(instId, yearId);
+		} catch (Exception e) {
+			System.err.println("Exce in getStudAdmLocwiseList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return studAdmLocList;
+
+	}
+
+	@Autowired
+	AlumniDetailRepo alumniDetailRepo;
+
 	@RequestMapping(value = { "/saveAlumni" }, method = RequestMethod.POST)
 	public @ResponseBody AlumniDetail saveAlumni(@RequestBody AlumniDetail alDetail) {
 
-		AlumniDetail almDetail=new  AlumniDetail();
+		AlumniDetail almDetail = new AlumniDetail();
 
 		try {
-			
+
 			almDetail = alumniDetailRepo.save(alDetail);
 
 		} catch (Exception e) {
@@ -176,16 +223,17 @@ public class ProgDetailControllerSac {
 		return almDetail;
 
 	}
-	
-	@Autowired GetAlumniRepo getAlumniRepo;
-	
+
+	@Autowired
+	GetAlumniRepo getAlumniRepo;
+
 	@RequestMapping(value = { "/getAlumniList" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetAlumni> getAlumniList(@RequestParam int instId, @RequestParam int yearId) {
 
-		List<GetAlumni> almDetail=new ArrayList<>();
+		List<GetAlumni> almDetail = new ArrayList<>();
 
 		try {
-			
+
 			almDetail = getAlumniRepo.getGetAlumniByInstAndYearId(instId, yearId);
 		} catch (Exception e) {
 			System.err.println("Exce in saveAlumni  " + e.getMessage());
@@ -195,15 +243,15 @@ public class ProgDetailControllerSac {
 		return almDetail;
 
 	}
-	
+
 	@RequestMapping(value = { "/getAlumni" }, method = RequestMethod.POST)
 	public @ResponseBody AlumniDetail getAlumni(@RequestParam int alumniId) {
 
-		AlumniDetail almDetail=new  AlumniDetail();
+		AlumniDetail almDetail = new AlumniDetail();
 
 		try {
-			
-			almDetail = alumniDetailRepo.findByAlumniDetailIdAndDelStatusAndIsActive(alumniId,1,1);
+
+			almDetail = alumniDetailRepo.findByAlumniDetailIdAndDelStatusAndIsActive(alumniId, 1, 1);
 		} catch (Exception e) {
 			System.err.println("Exce in getAlumni  " + e.getMessage());
 			e.printStackTrace();
@@ -212,207 +260,209 @@ public class ProgDetailControllerSac {
 		return almDetail;
 
 	}
-	
-	
-	
-	//deleteAccOfficers
-		@RequestMapping(value = { "/deleteAlumni" }, method = RequestMethod.POST)
-		public @ResponseBody Info deleteAlumni(@RequestParam List<String> alumniIds) {
 
-			Info info = new Info();
-			try {
-				int res = alumniDetailRepo.deleteAlumniIds(alumniIds);
-				if (res > 0) {
-					info.setError(false);
-					info.setMsg("success");
+	// deleteAccOfficers
+	@RequestMapping(value = { "/deleteAlumni" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteAlumni(@RequestParam List<String> alumniIds) {
 
-				} else {
-					info.setError(true);
-					info.setMsg("failed");
+		Info info = new Info();
+		try {
+			int res = alumniDetailRepo.deleteAlumniIds(alumniIds);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
 
-				}
-			} catch (Exception e) {
-
-				System.err.println("Exce in deleteAlumni  " + e.getMessage());
-				e.printStackTrace();
+			} else {
 				info.setError(true);
-				info.setMsg("excep");
+				info.setMsg("failed");
+
 			}
+		} catch (Exception e) {
 
-			return info;
-
+			System.err.println("Exce in deleteAlumni  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
 		}
-		
-		
-		//Trainint And Placement
-		
-		@Autowired TrainPlacementRepo trainPlacementRepo;
-		
-		@RequestMapping(value = { "/saveTrainPlacement" }, method = RequestMethod.POST)
-		public @ResponseBody TrainPlacement saveTrainPlacement(@RequestBody TrainPlacement tranPlace) {
 
-			TrainPlacement placementRes=new  TrainPlacement();
+		return info;
 
-			try {
-				
-				placementRes = trainPlacementRepo.save(tranPlace);
+	}
 
-			} catch (Exception e) {
-				System.err.println("Exce in saveTrainPlacement  " + e.getMessage());
-				e.printStackTrace();
-			}
+	// Trainint And Placement
 
-			return placementRes;
+	@Autowired
+	TrainPlacementRepo trainPlacementRepo;
 
+	@RequestMapping(value = { "/saveTrainPlacement" }, method = RequestMethod.POST)
+	public @ResponseBody TrainPlacement saveTrainPlacement(@RequestBody TrainPlacement tranPlace) {
+
+		TrainPlacement placementRes = new TrainPlacement();
+
+		try {
+
+			placementRes = trainPlacementRepo.save(tranPlace);
+
+		} catch (Exception e) {
+			System.err.println("Exce in saveTrainPlacement  " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		@RequestMapping(value = { "/getTrainPlacement" }, method = RequestMethod.POST)
-		public @ResponseBody TrainPlacement getTrainPlacement(@RequestParam int placementId) {
 
-			TrainPlacement trainPlace=new  TrainPlacement();
+		return placementRes;
 
-			try {
-				
-				trainPlace = trainPlacementRepo.findByPlacementIdAndDelStatusAndIsActive(placementId, 1, 1);
-			} catch (Exception e) {
-				System.err.println("Exce in getTrainPlacement  " + e.getMessage());
-				e.printStackTrace();
-			}
+	}
 
-			return trainPlace;
+	@RequestMapping(value = { "/getTrainPlacement" }, method = RequestMethod.POST)
+	public @ResponseBody TrainPlacement getTrainPlacement(@RequestParam int placementId) {
 
+		TrainPlacement trainPlace = new TrainPlacement();
+
+		try {
+
+			trainPlace = trainPlacementRepo.findByPlacementIdAndDelStatusAndIsActive(placementId, 1, 1);
+		} catch (Exception e) {
+			System.err.println("Exce in getTrainPlacement  " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		@RequestMapping(value = { "/deleteTrainPlacement" }, method = RequestMethod.POST)
-		public @ResponseBody Info deleteTrainPlacement(@RequestParam List<String> placementIds) {
 
-			Info info = new Info();
-			try {
-				int res = trainPlacementRepo.deleteTrainPlace(placementIds);
-				if (res > 0) {
-					info.setError(false);
-					info.setMsg("success");
+		return trainPlace;
 
-				} else {
-					info.setError(true);
-					info.setMsg("failed");
+	}
 
-				}
-			} catch (Exception e) {
+	@RequestMapping(value = { "/deleteTrainPlacement" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteTrainPlacement(@RequestParam List<String> placementIds) {
 
-				System.err.println("Exce in deleteTrainPlacement " + e.getMessage());
-				e.printStackTrace();
+		Info info = new Info();
+		try {
+			int res = trainPlacementRepo.deleteTrainPlace(placementIds);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
 				info.setError(true);
-				info.setMsg("excep");
+				info.setMsg("failed");
+
 			}
+		} catch (Exception e) {
 
-			return info;
-
+			System.err.println("Exce in deleteTrainPlacement " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
 		}
-		
-		@Autowired GetTrainPlaceRepo getTrainPlaceRepo;
 
-		@RequestMapping(value = { "/getGetTrainPlaceList" }, method = RequestMethod.POST)
-		public @ResponseBody List<GetTrainPlace> getGetTrainPlaceList(@RequestParam int instId, @RequestParam int yearId) {
+		return info;
 
-			List<GetTrainPlace> almDetail=new ArrayList<>();
+	}
 
-			try {
-				
-				almDetail = getTrainPlaceRepo.getGetTrainPlace(instId, yearId);
-			} catch (Exception e) {
-				System.err.println("Exce in getGetTrainPlaceList  " + e.getMessage());
-				e.printStackTrace();
-			}
+	@Autowired
+	GetTrainPlaceRepo getTrainPlaceRepo;
 
-			return almDetail;
+	@RequestMapping(value = { "/getGetTrainPlaceList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTrainPlace> getGetTrainPlaceList(@RequestParam int instId, @RequestParam int yearId) {
 
+		List<GetTrainPlace> almDetail = new ArrayList<>();
+
+		try {
+
+			almDetail = getTrainPlaceRepo.getGetTrainPlace(instId, yearId);
+		} catch (Exception e) {
+			System.err.println("Exce in getGetTrainPlaceList  " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		//HigherEducDetail Proceed
-		
-		@Autowired HigherEducDetailRepo higherEducDetailRepo;
-		
-		@RequestMapping(value = { "/saveHigherEducDetail" }, method = RequestMethod.POST)
-		public @ResponseBody HigherEducDetail saveHigherEducDetail(@RequestBody HigherEducDetail higherEdu) {
 
-			HigherEducDetail highEduDet=new  HigherEducDetail();
+		return almDetail;
 
-			try {
-				
-				highEduDet = higherEducDetailRepo.save(higherEdu);
+	}
 
-			} catch (Exception e) {
-				System.err.println("Exce in saveHigherEducDetail  " + e.getMessage());
-				e.printStackTrace();
-			}
+	// HigherEducDetail Proceed
 
-			return highEduDet;
+	@Autowired
+	HigherEducDetailRepo higherEducDetailRepo;
 
+	@RequestMapping(value = { "/saveHigherEducDetail" }, method = RequestMethod.POST)
+	public @ResponseBody HigherEducDetail saveHigherEducDetail(@RequestBody HigherEducDetail higherEdu) {
+
+		HigherEducDetail highEduDet = new HigherEducDetail();
+
+		try {
+
+			highEduDet = higherEducDetailRepo.save(higherEdu);
+
+		} catch (Exception e) {
+			System.err.println("Exce in saveHigherEducDetail  " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		@RequestMapping(value = { "/getHigherEducDetail" }, method = RequestMethod.POST)
-		public @ResponseBody HigherEducDetail getHigherEducDetail(@RequestParam int eduDetailId) {
 
-			HigherEducDetail highEduRes=new  HigherEducDetail();
+		return highEduDet;
 
-			try {
-				
-				highEduRes = higherEducDetailRepo.findByEducationDetailId(eduDetailId);
-			} catch (Exception e) {
-				System.err.println("Exce in getHigherEducDetail  " + e.getMessage());
-				e.printStackTrace();
-			}
+	}
 
-			return highEduRes;
+	@RequestMapping(value = { "/getHigherEducDetail" }, method = RequestMethod.POST)
+	public @ResponseBody HigherEducDetail getHigherEducDetail(@RequestParam int eduDetailId) {
 
+		HigherEducDetail highEduRes = new HigherEducDetail();
+
+		try {
+
+			highEduRes = higherEducDetailRepo.findByEducationDetailId(eduDetailId);
+		} catch (Exception e) {
+			System.err.println("Exce in getHigherEducDetail  " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		@RequestMapping(value = { "/deleteHigherEducDetail" }, method = RequestMethod.POST)
-		public @ResponseBody Info deleteHigherEducDetail(@RequestParam List<String> educationDetailIds) {
 
-			Info info = new Info();
-			try {
-				int res = higherEducDetailRepo.deleteAlumniIds(educationDetailIds);
-				if (res > 0) {
-					info.setError(false);
-					info.setMsg("success");
+		return highEduRes;
 
-				} else {
-					info.setError(true);
-					info.setMsg("failed");
+	}
 
-				}
-			} catch (Exception e) {
+	@RequestMapping(value = { "/deleteHigherEducDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteHigherEducDetail(@RequestParam List<String> educationDetailIds) {
 
-				System.err.println("Exce in deleteHigherEducDetail " + e.getMessage());
-				e.printStackTrace();
+		Info info = new Info();
+		try {
+			int res = higherEducDetailRepo.deleteAlumniIds(educationDetailIds);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
 				info.setError(true);
-				info.setMsg("excep");
+				info.setMsg("failed");
+
 			}
+		} catch (Exception e) {
 
-			return info;
-
+			System.err.println("Exce in deleteHigherEducDetail " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
 		}
-		
-		//GetHigherEduDetailRepo
-		
-		@Autowired GetHigherEduDetailRepo getHigherEduDetailRepo;
-		
-		@RequestMapping(value = { "/getHigherEduDetailList" }, method = RequestMethod.POST)
-		public @ResponseBody List<GetHigherEduDetail> getHigherEduDetailList(@RequestParam int instId, @RequestParam int yearId) {
 
-			List<GetHigherEduDetail> highEdList=new ArrayList<>();
+		return info;
 
-			try {
-				
-				highEdList = getHigherEduDetailRepo.getHigherEduDetail(instId, yearId);
-			} catch (Exception e) {
-				System.err.println("Exce in getHigherEduDetailList  " + e.getMessage());
-				e.printStackTrace();
-			}
+	}
 
-			return highEdList;
+	// GetHigherEduDetailRepo
 
+	@Autowired
+	GetHigherEduDetailRepo getHigherEduDetailRepo;
+
+	@RequestMapping(value = { "/getHigherEduDetailList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetHigherEduDetail> getHigherEduDetailList(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<GetHigherEduDetail> highEdList = new ArrayList<>();
+
+		try {
+
+			highEdList = getHigherEduDetailRepo.getHigherEduDetail(instId, yearId);
+		} catch (Exception e) {
+			System.err.println("Exce in getHigherEduDetailList  " + e.getMessage());
+			e.printStackTrace();
 		}
+
+		return highEdList;
+
+	}
 }
