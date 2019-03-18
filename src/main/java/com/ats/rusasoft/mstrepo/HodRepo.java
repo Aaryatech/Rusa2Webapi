@@ -30,7 +30,10 @@ public interface HodRepo extends JpaRepository<Hod, Integer> {
 	List<Hod> findByEmailAndDelStatusAndIsActive(String email, int delStatus, int isActive);
 
 	List<Hod> findByEmailAndDelStatusAndIsActiveAndHodIdNot(String email, int delStatus, int isActive, int hodId);
-	
-	
+
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE m_hod SET is_active=0 WHERE hod_id =:hodId ", nativeQuery = true)
+	int updateHod(@Param("hodId") int hodId);
 
 }

@@ -89,7 +89,8 @@ public class MasterApiController {
 			@RequestParam int tableId, @RequestParam int isEditCall, @RequestParam int primaryKey) {
 
 		Info info = new Info();
-		// tableId 1 for Institute tableId 2 for Hod for Sachin  table id 5 for acc Officer
+		// tableId 1 for Institute tableId 2 for Hod for Sachin table id 5 for acc
+		// Officer
 
 		if (tableId == 1) {
 			List<Institute> instList = new ArrayList<>();
@@ -101,7 +102,8 @@ public class MasterApiController {
 					instList = instituteRepo.findByContactNoAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					instList = instituteRepo.findByContactNoAndDelStatusAndIsActiveAndInstituteIdNot(inputValue.trim(), 1, 1, primaryKey);
+					instList = instituteRepo.findByContactNoAndDelStatusAndIsActiveAndInstituteIdNot(inputValue.trim(),
+							1, 1, primaryKey);
 				}
 
 			} else if (valueType == 2) {
@@ -111,7 +113,8 @@ public class MasterApiController {
 					instList = instituteRepo.findByEmailAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					instList = instituteRepo.findByEmailAndDelStatusAndIsActiveAndAndInstituteIdNot(inputValue.trim(), 1, 1, primaryKey);
+					instList = instituteRepo.findByEmailAndDelStatusAndIsActiveAndAndInstituteIdNot(inputValue.trim(),
+							1, 1, primaryKey);
 				}
 
 			}
@@ -234,7 +237,7 @@ public class MasterApiController {
 				info.setMsg("unique");
 			}
 		}
-		
+
 		if (tableId == 5) {
 			List<AccOfficer> accOffList = new ArrayList<>();
 
@@ -245,7 +248,8 @@ public class MasterApiController {
 					accOffList = accOfficerRepo.findByContactNoAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					accOffList = accOfficerRepo.findByContactNoAndDelStatusAndIsActiveAndOfficerIdNot(inputValue.trim(), 1, 1, primaryKey);
+					accOffList = accOfficerRepo.findByContactNoAndDelStatusAndIsActiveAndOfficerIdNot(inputValue.trim(),
+							1, 1, primaryKey);
 				}
 
 			} else if (valueType == 2) {
@@ -255,7 +259,8 @@ public class MasterApiController {
 					accOffList = accOfficerRepo.findByEmailAndDelStatusAndIsActive(inputValue.trim(), 1, 1);
 				} else {
 					System.err.println("Its Edit Record ");
-					accOffList = accOfficerRepo.findByEmailAndDelStatusAndIsActiveAndOfficerIdNot(inputValue.trim(), 1, 1, primaryKey);
+					accOffList = accOfficerRepo.findByEmailAndDelStatusAndIsActiveAndOfficerIdNot(inputValue.trim(), 1,
+							1, primaryKey);
 				}
 
 			}
@@ -306,18 +311,17 @@ public class MasterApiController {
 				user.setRegPrimaryKey(acOfRes.getOfficerId());// principla primary key
 
 				user.setExInt2(acOfRes.getInstituteId()); //
-				user.setRoleId(6);//6 for acc officer
+				user.setRoleId(6);// 6 for acc officer
 				user.setUserName(userName);
 				user.setUserType(5);// 5 for acc Officer user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
-				
+
 				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, acOfRes.getEmail(), mailsubject,
 						userRes.getUserName(), userRes.getPass());
-				
-				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(),acOfRes.getContactNo());
-				
-				
+
+				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(), acOfRes.getContactNo());
+
 			} else {
 
 				acOfRes = accOfficerRepo.save(accOff);
@@ -357,14 +361,15 @@ public class MasterApiController {
 		try {
 
 			acOfRes = accOfficerRepo.findByOfficerId(accOffId);
-			
+
 		} catch (Exception e) {
-			System.err.println("Excc in getting one acc off by id "+e.getMessage());
+			System.err.println("Excc in getting one acc off by id " + e.getMessage());
 			e.printStackTrace();
 		}
 		return acOfRes;
 	}
-	//deleteAccOfficers
+
+	// deleteAccOfficers
 	@RequestMapping(value = { "/deleteAccOfficers" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteAccOfficers(@RequestParam List<String> accOffIds) {
 
@@ -391,16 +396,15 @@ public class MasterApiController {
 		return info;
 
 	}
-	//for demo example 
+
+	// for demo example
 	@RequestMapping(value = { "/getCount" }, method = RequestMethod.POST)
 	public @ResponseBody long getCount(@RequestParam String contactNo) {
 
-		long x=accOfficerRepo.countByContactNoAndDelStatusAndIsActive(contactNo, 1, 1);
+		long x = accOfficerRepo.countByContactNoAndDelStatusAndIsActive(contactNo, 1, 1);
 		return x;
-	
-		
+
 	}
-	
 
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static String senderPassword = "atsinfosoft@123";
@@ -432,7 +436,7 @@ public class MasterApiController {
 				user.setRegPrimaryKey(hodRes.getHodId());// principla primary key
 
 				user.setExInt2(hodRes.getInstituteId()); //
-				user.setRoleId(4);//4 for HOD
+				user.setRoleId(4);// 4 for HOD
 				user.setUserName(userName);
 				user.setUserType(3);// 3 for hod user Default
 
@@ -440,9 +444,8 @@ public class MasterApiController {
 
 				Info info = EmailUtility.sendEmail(senderEmail, senderPassword, hodRes.getEmail(), mailsubject,
 						userRes.getUserName(), userRes.getPass());
-				
-				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(),hodRes.getContactNo());
 
+				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(), hodRes.getContactNo());
 
 				System.err.println("Info email sent response   " + info.toString());
 
@@ -750,10 +753,64 @@ public class MasterApiController {
 
 	}
 
+	@RequestMapping(value = { "/updateHodStatus" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateHodStatus(@RequestParam int hodId) {
+
+		Info info = new Info();
+		try {
+			int res = hodRepo.updateHod(hodId);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in updateHod  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+
 	// create user after approving institute by Rusa
 
 	@Autowired
 	UserService userServiceRepo;
+
+	@RequestMapping(value = { "/blockPreviousHodRecord" }, method = RequestMethod.POST)
+	public @ResponseBody Info blockPreviousHodRecord(@RequestParam("regPrimaryKey") int regPrimaryKey,
+			@RequestParam("userType") int userType) {
+
+		Info info = new Info();
+
+		try {
+
+			int blockPreous = userServiceRepo.blockPreviousHodRecord(regPrimaryKey, userType);
+
+			if (blockPreous > 0) {
+				info.setError(false);
+				info.setMsg("block");
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("failed");
+		}
+		return info;
+
+	}
 
 	@RequestMapping(value = { "/approveInstitutes" }, method = RequestMethod.POST)
 	public @ResponseBody Info approveInstitutes(@RequestParam List<Integer> instIdList, @RequestParam int aprUserId) {
@@ -782,7 +839,7 @@ public class MasterApiController {
 				user.setRegPrimaryKey(princi.getPrincipalId());// principla primary key
 
 				user.setExInt2(instIdList.get(i)); //
-				user.setRoleId(2);//2 for Principal
+				user.setRoleId(2);// 2 for Principal
 				user.setUserName(userName);
 				user.setUserType(1);// 2 for Principal user Default
 
@@ -802,9 +859,8 @@ public class MasterApiController {
 
 				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
 						userRes.getUserName(), userRes.getPass());
-				
-				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(),princi.getPhoneNo());
 
+				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(), princi.getPhoneNo());
 
 				final String emailSMTPserver = "smtp.gmail.com";
 				final String emailSMTPPort = "587";
