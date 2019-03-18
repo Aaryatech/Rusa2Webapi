@@ -306,7 +306,7 @@ public class MasterApiController {
 				user.setRegPrimaryKey(acOfRes.getOfficerId());// principla primary key
 
 				user.setExInt2(acOfRes.getInstituteId()); //
-				user.setRoleId(0);
+				user.setRoleId(6);//6 for acc officer
 				user.setUserName(userName);
 				user.setUserType(5);// 5 for acc Officer user Default
 
@@ -432,7 +432,7 @@ public class MasterApiController {
 				user.setRegPrimaryKey(hodRes.getHodId());// principla primary key
 
 				user.setExInt2(hodRes.getInstituteId()); //
-				user.setRoleId(0);
+				user.setRoleId(4);//4 for HOD
 				user.setUserName(userName);
 				user.setUserType(3);// 3 for hod user Default
 
@@ -782,7 +782,7 @@ public class MasterApiController {
 				user.setRegPrimaryKey(princi.getPrincipalId());// principla primary key
 
 				user.setExInt2(instIdList.get(i)); //
-				user.setRoleId(0);
+				user.setRoleId(2);//2 for Principal
 				user.setUserName(userName);
 				user.setUserType(1);// 2 for Principal user Default
 
