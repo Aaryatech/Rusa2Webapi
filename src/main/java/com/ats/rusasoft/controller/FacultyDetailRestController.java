@@ -16,12 +16,16 @@ import com.ats.rusasoft.model.Dept;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.model.faculty.GetResearchProject;
+import com.ats.rusasoft.model.faculty.GetSubject;
 import com.ats.rusasoft.model.faculty.Journal;
 import com.ats.rusasoft.model.faculty.ResearchProject;
+import com.ats.rusasoft.model.faculty.Subject;
 import com.ats.rusasoft.repo.faculty.GetJournalRepo;
 import com.ats.rusasoft.repo.faculty.GetResearchProjectRepo;
+import com.ats.rusasoft.repo.faculty.GetSubjectRepo;
 import com.ats.rusasoft.repo.faculty.JournalRepo;
 import com.ats.rusasoft.repo.faculty.ResearchProjectRepo;
+import com.ats.rusasoft.repo.faculty.SubjectRepo;
 
 @RestController
 public class FacultyDetailRestController {
@@ -37,6 +41,12 @@ public class FacultyDetailRestController {
 
 	@Autowired
 	GetResearchProjectRepo getResearchProjectRepo;
+
+	@Autowired
+	SubjectRepo subjectRepo;
+
+	@Autowired
+	GetSubjectRepo getSubjectRepo;
 
 	@RequestMapping(value = { "/getJournalListByFacultyId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetJournal> getJournalListByFacultyId(@RequestParam int facultyId) {
@@ -241,6 +251,83 @@ public class FacultyDetailRestController {
 		}
 
 		return info;
+
+	}
+
+	@RequestMapping(value = { "/saveSubject" }, method = RequestMethod.POST)
+	public @ResponseBody Subject saveSubject(@RequestBody Subject subject) {
+
+		Subject subRes = null;
+
+		try {
+			subRes = subjectRepo.saveAndFlush(subject);
+
+		} catch (Exception e) {
+			System.err.println("Exce in saving saveSubject " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return subRes;
+	}
+
+	@RequestMapping(value = { "/deleteSubjects" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSubjects(@RequestParam List<String> subIdList) {
+
+		Info info = new Info();
+		try {
+			int res = subjectRepo.deleteSubjects(subIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteSubjects  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/getSubjectBySubId" }, method = RequestMethod.POST)
+	public @ResponseBody Subject getSubjectBySubId(@RequestParam int subId) {
+
+		Subject subRes = null;
+
+		try {
+			subRes = subjectRepo.findBySubIdAndDelStatus(subId, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getSubjectBySubId  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return subRes;
+	}
+
+	@RequestMapping(value = { "/getAllSubjectList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetSubject> getAllSubjectList() {
+
+		List<GetSubject> subList = new ArrayList<>();
+
+		try {
+			subList = getSubjectRepo.getProjectList();
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllJournalList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return subList;
 
 	}
 
