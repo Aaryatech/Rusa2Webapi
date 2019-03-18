@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="m_iqac")
 public class MIqac {
@@ -18,7 +20,7 @@ public class MIqac {
 	private String iqacName;
 	private int desgntnId;
 	private int instituteId;
-	private String joiningDate;
+	private Date joiningDate;
 	private String contactNo;
 	private String email;
 	private int delStatus;
@@ -55,10 +57,11 @@ public class MIqac {
 	public void setInstituteId(int instituteId) {
 		this.instituteId = instituteId;
 	}
-	public String getJoiningDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
-	public void setJoiningDate(String joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 	public String getContactNo() {

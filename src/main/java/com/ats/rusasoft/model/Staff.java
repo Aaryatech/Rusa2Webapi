@@ -1,5 +1,7 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Columns;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name=" m_faculty")
@@ -23,7 +27,7 @@ public class Staff {
 	private int teachingTo;
 	private String hightestQualificationYear;
 	private int currentDesignationId ;
-	private String joiningDate;
+	private Date joiningDate;
 	private int isWorking;
 	private String realivingDate;
 	private String contactNo;
@@ -86,10 +90,11 @@ public class Staff {
 	public void setCurrentDesignationId(int currentDesignationId) {
 		this.currentDesignationId = currentDesignationId;
 	}
-	public String getJoiningDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
-	public void setJoiningDate(String joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 	public int getIsWorking() {

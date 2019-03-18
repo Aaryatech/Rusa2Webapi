@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name="m_dean_reg")
 public class Dean {
@@ -19,8 +21,8 @@ public class Dean {
 	private String contactNo;
 	private String email;
 	private int qualificationId;
-	private String joiningDate;
-	private String realivingDate;
+	private Date joiningDate;
+	private Date realivingDate;
 	private int makerUserId;
 	private String makerEnterDatetime;
 	private int extraint1;
@@ -70,17 +72,18 @@ public class Dean {
 	public void setMakerUserId(int makerUserId) {
 		this.makerUserId = makerUserId;
 	}
-	
-	public String getJoiningDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
-	public void setJoiningDate(String joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
-	public String getRealivingDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getRealivingDate() {
 		return realivingDate;
 	}
-	public void setRealivingDate(String realivingDate) {
+	public void setRealivingDate(Date realivingDate) {
 		this.realivingDate = realivingDate;
 	}
 	
