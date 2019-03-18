@@ -79,7 +79,7 @@ public class LibraryApiController {
 				ul.setUserName(userName);
 				ul.setIsBlock(1);
 				ul.setRegPrimaryKey(libResp.getLibrarianId());
-				ul.setRoleId(0);
+				ul.setRoleId(8);
 				ul.setExInt1(1);
 				ul.setExInt2(1);
 				ul.setExVar1("NA");
@@ -87,7 +87,7 @@ public class LibraryApiController {
 				
 				userRepo.saveAndFlush(ul);
 				Info info=EmailUtility.sendEmail(senderEmail, senderPassword, libResp.getEmail(), mailsubject,
-						ul.getUserName(), ul.getPass());
+						libResp.getEmail(), ul.getPass());
 				
 				System.err.println("Info email sent response   "+info.toString());
 				
@@ -236,7 +236,7 @@ public class LibraryApiController {
 					ul.setUserName(userName);
 					ul.setIsBlock(1);
 					ul.setRegPrimaryKey(studResp.getStudentId());
-					ul.setRoleId(0);
+					ul.setRoleId(8);
 					ul.setExInt1(1);
 					ul.setExInt2(1);
 					ul.setExVar1("NA");
@@ -245,11 +245,13 @@ public class LibraryApiController {
 					userRepo.saveAndFlush(ul);
 					
 					Info info=EmailUtility.sendEmail(senderEmail, senderPassword, studResp.getEmail(), mailsubject,
-							ul.getUserName(), ul.getPass());
+							studResp.getEmail(), ul.getPass());
 					
 					System.err.println("Info email sent response   "+info.toString());
 					
-					Info info1=EmailUtility.sendMsg(senderEmail, senderPassword, studResp.getContactNo());
+					//Info info1=EmailUtility.sendMsg(ul.getUserName(), ul.getPass(), libResp.getContactNo());
+					
+					Info info1=EmailUtility.sendMsg(studResp.getEmail(), ul.getPass(), studResp.getContactNo());
 					
 					System.err.println("Info email sent response   "+info1.toString());
 
