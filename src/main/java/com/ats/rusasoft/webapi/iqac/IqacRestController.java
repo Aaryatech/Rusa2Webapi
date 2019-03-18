@@ -186,6 +186,41 @@ public class IqacRestController {
 		
 	}
 	
+	@RequestMapping(value= {"/getIqacbyInstituteId"}, method=RequestMethod.POST)
+	public @ResponseBody MIqac getIqacbyInstituteId(@RequestParam("instituteId") int instituteId){
+		
+		return iqacrepo.findByInstituteIdAndDelStatusAndIsActive(instituteId,1,1);
+		
+	}
+	
+	@RequestMapping(value= {"/blockPreviousIqacRecord"}, method=RequestMethod.POST)
+	public @ResponseBody Info blockPreviousIqacRecord(@RequestParam("instituteId") int instituteId,
+			@RequestParam("userType") int userType){
+		
+		Info info = new Info();
+		
+		try {
+			
+			int  blockPreous = userrepo.blockPreviousIqacRecord(instituteId,userType);
+			
+
+			if(blockPreous>0) {
+				info.setError(false);
+				info.setMsg("block");
+			}else {
+				info.setError(true);
+				info.setMsg("failed");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("failed");
+		}
+		return info;
+		
+	}
+	
 	
 	@RequestMapping(value= {"/insertNewIqac"}, method=RequestMethod.POST)
 	public @ResponseBody MIqac insertNewIqac(@RequestBody MIqac miqac){

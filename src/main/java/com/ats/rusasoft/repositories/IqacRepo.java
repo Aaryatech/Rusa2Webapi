@@ -44,6 +44,11 @@ public interface IqacRepo extends JpaRepository<MIqac, Integer> {
 
 	List<MIqac> findByEmailAndDelStatusAndIsActiveAndIqacIdNot(String email, int i, int j, int iqacId);
 
+
+
+
+	MIqac findByInstituteIdAndDelStatusAndIsActive(int instituteId, int i, int j);
+
 	
 
 }

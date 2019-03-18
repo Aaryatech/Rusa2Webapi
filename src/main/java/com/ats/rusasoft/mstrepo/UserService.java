@@ -28,6 +28,11 @@ public interface UserService extends JpaRepository<UserLogin, Integer>  {
 	int updateRoleId(@Param("roleId")int roleId,@Param("userId") int userId);
 
 	UserLogin findByRegPrimaryKey(int librarianId);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE t_user_login SET is_block=0 WHERE ex_int2=:instituteId and user_type=:userType",nativeQuery=true)
+	int blockPreviousIqacRecord(@Param("instituteId")int instituteId,@Param("userType")int userType);
 	
 	
 }
