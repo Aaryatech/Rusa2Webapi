@@ -16,6 +16,8 @@ import com.ats.rusasoft.model.Dept;
 import com.ats.rusasoft.model.FacultyAward;
 import com.ats.rusasoft.model.FacultyOutreach;
 import com.ats.rusasoft.model.FacultyPatent;
+import com.ats.rusasoft.model.Info;
+import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.model.progdetail.ProgramType;
 import com.ats.rusasoft.mstrepo.FacultyOutreachRepo;
 import com.ats.rusasoft.mstrepo.FacultyPatentRepo;
@@ -55,6 +57,22 @@ public class FacultyWebController {
 
 	}
 	
+	@RequestMapping(value = { "/getPatentListByFacultyId" }, method = RequestMethod.POST)
+	public @ResponseBody List<FacultyPatent> getPatentListByFacultyId(@RequestParam int facultyId) {
+
+		List<FacultyPatent> jouList = new ArrayList<>();
+
+		try {
+			jouList = patentRepo.getPetentRepo(facultyId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return jouList;
+	}
+	
 	@RequestMapping(value = { "/saveFacultyPatent" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyPatent saveFacultyPatent(@RequestBody FacultyPatent patent) {
 
@@ -88,6 +106,42 @@ public class FacultyWebController {
 		return acOfRes;
 	}
 	
+	@RequestMapping(value = { "/deletePetentFaculty" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePetentFaculty(@RequestParam("patentId") int patentId ) {
+
+		 
+		 Info info = new Info();
+		try {
+
+			
+			try {
+				int res = patentRepo.deletePetent(patentId);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteHods  " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
 	//--------------------------------------------Faculty Award-----------------------------------------------------//
 	
 	@RequestMapping(value = { "/getAllFacultyAward" }, method = RequestMethod.GET)
@@ -106,6 +160,23 @@ public class FacultyWebController {
 
 		return patentList;
 
+	}
+	
+
+	@RequestMapping(value = { "/getAwardListByFacultyId" }, method = RequestMethod.POST)
+	public @ResponseBody List<FacultyAward> getAwardListByFacultyId(@RequestParam int facultyId) {
+
+		List<FacultyAward> jouList = new ArrayList<>();
+
+		try {
+			jouList = facultyAwardRepo.getAwardRepo(facultyId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return jouList;
 	}
 	
 	@RequestMapping(value = { "/saveFacultyAward" }, method = RequestMethod.POST)
@@ -140,6 +211,43 @@ public class FacultyWebController {
 		}
 		return acOfRes;
 	}
+	@RequestMapping(value = { "/deleteAwardFaculty" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteAwardFaculty(@RequestParam("awardId") int awardId ) {
+
+		 
+		 Info info = new Info();
+		try {
+
+			
+			try {
+				int res = facultyAwardRepo.deleteAward(awardId);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteHods  " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+	
 	
 	//--------------------------------------------Faculty OutReach-----------------------------------------------------//
 
@@ -177,6 +285,21 @@ public class FacultyWebController {
 		return patentRes;
 	}
 
+	@RequestMapping(value = { "/getOutReachListByFacultyId" }, method = RequestMethod.POST)
+	public @ResponseBody List<FacultyOutreach> getOutReachListByFacultyId(@RequestParam int facultyId) {
+
+		List<FacultyOutreach> jouList = new ArrayList<>();
+
+		try {
+			jouList = facultyOutreachRepo.getOutReachRepo(facultyId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return jouList;
+	}
 	
 	@RequestMapping(value = { "/getFacultyOutReach" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyOutreach getFacultyOutReach(@RequestParam int outreachId) {
@@ -192,5 +315,41 @@ public class FacultyWebController {
 			e.printStackTrace();
 		}
 		return acOfRes;
+	}
+	@RequestMapping(value = { "/deleteOutreachFaculty" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteOutreachFaculty(@RequestParam("outreachId") int outreachId ) {
+
+		 
+		 Info info = new Info();
+		try {
+
+			
+			try {
+				int res = facultyOutreachRepo.deleteOutReach(outreachId);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteHods  " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			
+		} catch (Exception e) {
+		 
+			e.printStackTrace();
+		}
+
+		return info;
+
 	}
 }
