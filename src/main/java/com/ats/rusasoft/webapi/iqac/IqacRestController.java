@@ -202,7 +202,7 @@ public class IqacRestController {
 				  user.setRegPrimaryKey(iqacRes.getIqacId());
 				  user.setUserName(iqacRes.getEmail());
 				  user.setPass(passWord);
-				  user.setRoleId(0);
+				  user.setRoleId(3);
 				  user.setExInt1(0);
 				  user.setUserType(iqacRes.getType()); 
 				  user.setExInt2(iqacRes.getInstituteId());
@@ -281,7 +281,7 @@ public class IqacRestController {
 			  user.setRegPrimaryKey(staffRes.getFacultyId());
 			  user.setUserName(staffRes.getEmail());
 			  user.setPass(passWord);
-			  user.setRoleId(0); 
+			  user.setRoleId(5); 
 			  user.setExInt1(0);
 			  user.setUserType(staffRes.getExtraint1()); 
 			  user.setExInt2(staffRes.getInstituteId());
@@ -362,7 +362,7 @@ public class IqacRestController {
 			  user.setRegPrimaryKey(deanRes.getDeanId());
 			  user.setUserName(deanRes.getEmail());
 			  user.setPass(passWord);
-			  user.setRoleId(0); 
+			  user.setRoleId(7); 
 			  user.setExInt1(0);
 			  user.setUserType(deanRes.getExtraint1()); 
 			  user.setExInt2(deanRes.getInstituteId());
