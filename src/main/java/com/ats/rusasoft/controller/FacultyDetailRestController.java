@@ -19,12 +19,14 @@ import com.ats.rusasoft.model.faculty.GetResearchProject;
 import com.ats.rusasoft.model.faculty.GetSubject;
 import com.ats.rusasoft.model.faculty.Journal;
 import com.ats.rusasoft.model.faculty.ResearchProject;
+import com.ats.rusasoft.model.faculty.SWOC;
 import com.ats.rusasoft.model.faculty.Subject;
 import com.ats.rusasoft.repo.faculty.GetJournalRepo;
 import com.ats.rusasoft.repo.faculty.GetResearchProjectRepo;
 import com.ats.rusasoft.repo.faculty.GetSubjectRepo;
 import com.ats.rusasoft.repo.faculty.JournalRepo;
 import com.ats.rusasoft.repo.faculty.ResearchProjectRepo;
+import com.ats.rusasoft.repo.faculty.SWOCRepo;
 import com.ats.rusasoft.repo.faculty.SubjectRepo;
 
 @RestController
@@ -47,6 +49,9 @@ public class FacultyDetailRestController {
 
 	@Autowired
 	GetSubjectRepo getSubjectRepo;
+
+	@Autowired
+	SWOCRepo sWOCRepo;
 
 	@RequestMapping(value = { "/getJournalListByFacultyId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetJournal> getJournalListByFacultyId(@RequestParam int facultyId) {
@@ -254,6 +259,7 @@ public class FacultyDetailRestController {
 
 	}
 
+//--------------Subject------------------------
 	@RequestMapping(value = { "/saveSubject" }, method = RequestMethod.POST)
 	public @ResponseBody Subject saveSubject(@RequestBody Subject subject) {
 
@@ -329,6 +335,83 @@ public class FacultyDetailRestController {
 
 		return subList;
 
+	}
+
+//----------------SWOC------------------------------
+	@RequestMapping(value = { "/saveSWOCList" }, method = RequestMethod.POST)
+	public @ResponseBody List<SWOC> saveSWOCList(@RequestBody List<SWOC> swocList) {
+
+		List<SWOC> sWOCResList = new ArrayList<>();
+
+		try {
+			sWOCResList = sWOCRepo.saveAll(swocList);
+
+		} catch (Exception e) {
+			System.err.println("Exce in saving saveSWOCList " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return sWOCResList;
+	}
+
+	@RequestMapping(value = { "/deleteSwoc" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSwoc(@RequestParam List<String> swocIdList) {
+
+		Info info = new Info();
+		try {
+			int res = sWOCRepo.deleteSWOC(swocIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteSubjects  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+
+	@RequestMapping(value = { "/getSWOCBySwocId" }, method = RequestMethod.POST)
+	public @ResponseBody SWOC getSWOCBySwocId(@RequestParam int swocId) {
+
+		SWOC swocRes = null;
+
+		try {
+			swocRes = sWOCRepo.findBySwocIdAndDelStatus(swocId, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getSubjectBySubId  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return swocRes;
+	}
+
+	@RequestMapping(value = { "/getSWOCByFacultyId" }, method = RequestMethod.POST)
+	public @ResponseBody List<SWOC> getSWOCByFacultyId(@RequestParam int facultyId) {
+
+		List<SWOC> swocList = new ArrayList<>();
+
+		try {
+			swocList = sWOCRepo.findByFacultyIdAndDelStatus(facultyId, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getSWOCByFacultyId  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return swocList;
 	}
 
 }
