@@ -17,10 +17,12 @@ import com.ats.rusasoft.model.FacultyAward;
 import com.ats.rusasoft.model.FacultyOutreach;
 import com.ats.rusasoft.model.FacultyPatent;
 import com.ats.rusasoft.model.Info;
+import com.ats.rusasoft.model.OutreachType;
 import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.model.progdetail.ProgramType;
 import com.ats.rusasoft.mstrepo.FacultyOutreachRepo;
 import com.ats.rusasoft.mstrepo.FacultyPatentRepo;
+import com.ats.rusasoft.mstrepo.OutreachTypeRepo;
 import com.ats.rusasoft.prodetailrepo.FacultyAwardRepo;
 
 
@@ -352,4 +354,33 @@ public class FacultyWebController {
 		return info;
 
 	}
+	
+	
+	
+	//////////////////////**************************Outreach Type********************************////////////////////////
+	
+
+	@Autowired
+	OutreachTypeRepo outreachTypeRepo;
+	
+	
+	@RequestMapping(value = { "/getOutReachTypeList" }, method = RequestMethod.POST)
+	public @ResponseBody List<OutreachType> getOutReachTypeList(@RequestParam int instituteId) {
+
+		List<OutreachType> jouList = new ArrayList<>();
+
+		try {
+			jouList = outreachTypeRepo.findByDelStatusAndInstituteIdOrderByTypeIdDesc(1,instituteId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return jouList;
+	}
+	
+	
+	
+	
 }
