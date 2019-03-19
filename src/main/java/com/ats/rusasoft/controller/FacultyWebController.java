@@ -18,12 +18,14 @@ import com.ats.rusasoft.model.FacultyOutreach;
 import com.ats.rusasoft.model.FacultyPatent;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.OutreachType;
+import com.ats.rusasoft.model.faculty.GetFacultyOutreach;
 import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.model.progdetail.ProgramType;
 import com.ats.rusasoft.mstrepo.FacultyOutreachRepo;
 import com.ats.rusasoft.mstrepo.FacultyPatentRepo;
 import com.ats.rusasoft.mstrepo.OutreachTypeRepo;
 import com.ats.rusasoft.prodetailrepo.FacultyAwardRepo;
+import com.ats.rusasoft.repo.faculty.GetFacultyOutreachRepo;
 
 
 @RestController
@@ -39,6 +41,8 @@ public class FacultyWebController {
 	@Autowired
 	FacultyOutreachRepo facultyOutreachRepo;
 
+	@Autowired
+	GetFacultyOutreachRepo getFacultyOutreachRepo;
 	//--------------------------------------------Faculty Patent-----------------------------------------------------//
 
 	@RequestMapping(value = { "/getAllFacultyPatent" }, method = RequestMethod.GET)
@@ -275,9 +279,10 @@ public class FacultyWebController {
 	public @ResponseBody FacultyOutreach saveFacultyOutReach(@RequestBody FacultyOutreach patent) {
 
 		FacultyOutreach patentRes = null;
-
+		System.out.println("date:::"+patent.getOutreachDate());
 		try {
 			patentRes = facultyOutreachRepo.saveAndFlush(patent);
+			
 
 		} catch (Exception e) {
 			System.err.println("Exce in saving petent faculty  " + e.getMessage());
@@ -288,12 +293,12 @@ public class FacultyWebController {
 	}
 
 	@RequestMapping(value = { "/getOutReachListByFacultyId" }, method = RequestMethod.POST)
-	public @ResponseBody List<FacultyOutreach> getOutReachListByFacultyId(@RequestParam int facultyId) {
+	public @ResponseBody List<GetFacultyOutreach> getOutReachListByFacultyId(@RequestParam int facultyId,@RequestParam int instituteId) {
 
-		List<FacultyOutreach> jouList = new ArrayList<>();
+		List<GetFacultyOutreach> jouList = new ArrayList<>();
 
 		try {
-			jouList = facultyOutreachRepo.getOutReachRepo(facultyId);
+			jouList = getFacultyOutreachRepo.getOutreachList(facultyId,instituteId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());

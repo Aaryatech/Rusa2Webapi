@@ -58,6 +58,11 @@ public class FacultyOutreach {
 	
 	@Column(name="ex_var2")
 	private String exVar2;
+	
+	@Column(name="institute_id")
+	private int instituteId;
+	
+	
 
 	public int getOutreachId() {
 		return outreachId;
@@ -178,6 +183,16 @@ public class FacultyOutreach {
 	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
+	
+	
+
+	public int getInstituteId() {
+		return instituteId;
+	}
+
+	public void setInstituteId(int instituteId) {
+		this.instituteId = instituteId;
+	}
 
 	@Override
 	public String toString() {
@@ -185,9 +200,9 @@ public class FacultyOutreach {
 				+ ", outreachType=" + outreachType + ", outreachName=" + outreachName + ", outreachLevel="
 				+ outreachLevel + ", outreachDate=" + outreachDate + ", makerUserId=" + makerUserId
 				+ ", makerEnterDatetime=" + makerEnterDatetime + ", delStatus=" + delStatus + ", isActive=" + isActive
-				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + "]";
+				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
+				+ ", instituteId=" + instituteId + "]";
 	}
-	
-	
 
+	
 }
