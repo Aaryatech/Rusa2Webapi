@@ -22,4 +22,8 @@ public interface SWOCRepo extends JpaRepository<SWOC, Integer> {
 
 	List<SWOC> findByFacultyIdAndDelStatus(int facultyId, int i);
 
+	// List<SWOC> findByFacultyIdAndDelStatusAndSwocType(int facultyId, int i, int
+	// swocType);
+	List<SWOC> findByFacultyIdAndDelStatusAndSwocType(int facultyId, int i, int swocType);
+
 }
