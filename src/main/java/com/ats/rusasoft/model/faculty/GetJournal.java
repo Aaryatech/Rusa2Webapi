@@ -20,7 +20,7 @@ public class GetJournal {
 	private int yearId;
 	private String journalType;
 	private String journalName;
-	private Date journalYear;
+	private String journalYear;
 	private String journalIssue;
 	private String journalVolume;
 	private String journalPgFrom;
@@ -81,12 +81,11 @@ public class GetJournal {
 		this.journalName = journalName;
 	}
 
-	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getJournalYear() {
+	public String getJournalYear() {
 		return journalYear;
 	}
 
-	public void setJournalYear(Date journalYear) {
+	public void setJournalYear(String journalYear) {
 		this.journalYear = journalYear;
 	}
 

@@ -20,7 +20,7 @@ public class GetResearchProject {
 	private int yearId;
 
 	private String projName;
-	private Date projYear;
+	private String projYear;
 
 	private String projSponsor;
 
@@ -30,13 +30,13 @@ public class GetResearchProject {
 	private String projInvDept;
 
 	private String projInvDept2;
-	private int projGrant;
+	private String projGrant;
 
 	private float projTotalAmt;
 	private float projAmtRec;
 
-	private Date projFrdt;
-	private Date projTodt;
+	private String projFrdt;
+	private String projTodt;
 
 	private int delStatus;
 
@@ -82,12 +82,11 @@ public class GetResearchProject {
 		this.projName = projName;
 	}
 
-	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getProjYear() {
+	public String getProjYear() {
 		return projYear;
 	}
 
-	public void setProjYear(Date projYear) {
+	public void setProjYear(String projYear) {
 		this.projYear = projYear;
 	}
 
@@ -131,11 +130,11 @@ public class GetResearchProject {
 		this.projInvDept2 = projInvDept2;
 	}
 
-	public int getProjGrant() {
+	public String getProjGrant() {
 		return projGrant;
 	}
 
-	public void setProjGrant(int projGrant) {
+	public void setProjGrant(String projGrant) {
 		this.projGrant = projGrant;
 	}
 
@@ -155,21 +154,19 @@ public class GetResearchProject {
 		this.projAmtRec = projAmtRec;
 	}
 
-	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getProjFrdt() {
+	public String getProjFrdt() {
 		return projFrdt;
 	}
 
-	public void setProjFrdt(Date projFrdt) {
+	public void setProjFrdt(String projFrdt) {
 		this.projFrdt = projFrdt;
 	}
 
-	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getProjTodt() {
+	public String getProjTodt() {
 		return projTodt;
 	}
 
-	public void setProjTodt(Date projTodt) {
+	public void setProjTodt(String projTodt) {
 		this.projTodt = projTodt;
 	}
 
@@ -239,14 +236,13 @@ public class GetResearchProject {
 
 	@Override
 	public String toString() {
-		return "GetResearchProject [projId=" + projId + ", facultyId=" + facultyId + ", yearId=" + yearId
-				+ ", projName=" + projName + ", projYear=" + projYear + ", projSponsor=" + projSponsor
-				+ ", projInvName=" + projInvName + ", projInvName2=" + projInvName2 + ", projInvDept=" + projInvDept
-				+ ", projInvDept2=" + projInvDept2 + ", projGrant=" + projGrant + ", projTotalAmt=" + projTotalAmt
-				+ ", projAmtRec=" + projAmtRec + ", projFrdt=" + projFrdt + ", projTodt=" + projTodt + ", delStatus="
-				+ delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
-				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2="
-				+ exVar2 + "]";
+		return "ResearchProject [projId=" + projId + ", facultyId=" + facultyId + ", yearId=" + yearId + ", projName="
+				+ projName + ", projYear=" + projYear + ", projSponsor=" + projSponsor + ", projInvName=" + projInvName
+				+ ", projInvName2=" + projInvName2 + ", projInvDept=" + projInvDept + ", projInvDept2=" + projInvDept2
+				+ ", projGrant=" + projGrant + ", projTotalAmt=" + projTotalAmt + ", projAmtRec=" + projAmtRec
+				+ ", projFrdt=" + projFrdt + ", projTodt=" + projTodt + ", delStatus=" + delStatus + ", isActive="
+				+ isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1="
+				+ exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + "]";
 	}
 
 }

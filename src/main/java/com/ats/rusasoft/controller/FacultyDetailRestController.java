@@ -193,7 +193,6 @@ public class FacultyDetailRestController {
 
 		try {
 			journalRes = journalRepo.findByJournalIdAndDelStatus(journalId, 1);
-			journalRes.setJournalYear(DateConvertor.convertToDMY(journalRes.getJournalYear()));
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByJournalId  " + e.getMessage());

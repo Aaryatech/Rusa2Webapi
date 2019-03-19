@@ -28,7 +28,7 @@ public class ResearchProject {
 	private String projInvDept;
 
 	private String projInvDept2;
-	private int projGrant;
+	private String projGrant;
 
 	private float projTotalAmt;
 	private float projAmtRec;
@@ -128,11 +128,11 @@ public class ResearchProject {
 		this.projInvDept2 = projInvDept2;
 	}
 
-	public int getProjGrant() {
+	public String getProjGrant() {
 		return projGrant;
 	}
 
-	public void setProjGrant(int projGrant) {
+	public void setProjGrant(String projGrant) {
 		this.projGrant = projGrant;
 	}
 
