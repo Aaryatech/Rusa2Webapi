@@ -12,7 +12,7 @@ import com.ats.rusasoft.model.StaffList;
 public interface StaffListRepo extends JpaRepository<StaffList, Integer> {
 	
 	@Modifying
-	@Query(value="SELECT f.faculty_id, f.faculty_name, f.current_designation_id,f.highest_qualification, f.joining_date, f.realiving_date ,f.contact_no, f.email, q.qualification_name, dept.dept_name ,d.designation_name FROM m_faculty f, m_designation d, m_qualificatoin q, m_dept dept WHERE f.del_status=1 AND f.current_designation_id=d.designation_id AND f.highest_qualification=q.qualification_id AND dept.dept_id=f.dept_id AND f.institute_id=:facId ORDER BY faculty_id DESC",nativeQuery=true)
+	@Query(value="SELECT f.faculty_id, f.faculty_first_name, f.faculty_middel_name, f.faculty_last_name, f.current_designation_id,f.highest_qualification, f.joining_date, f.realiving_date ,f.contact_no, f.email, q.qualification_name, dept.dept_name ,d.designation_name FROM m_faculty f, m_designation d, m_qualificatoin q, m_dept dept WHERE f.del_status=1 AND f.current_designation_id=d.designation_id AND f.highest_qualification=q.qualification_id AND dept.dept_id=f.dept_id AND f.institute_id=:facId ORDER BY faculty_id DESC",nativeQuery=true)
 	List<StaffList> findByIsActiveAndDelStatus(@Param("facId") int facId);
 }
 //SELECT f.faculty_id, f.faculty_name, f.current_designation_id,f.highest_qualification, f.joining_date, f.contact_no, f.email, q.qualification_name, d.designation_name FROM m_faculty f, m_designation d, m_qualificatoin q WHERE f.del_status=1 AND f.current_designation_id=d.designation_id AND "

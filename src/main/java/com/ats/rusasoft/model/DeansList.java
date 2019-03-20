@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class DeansList {
 
@@ -12,10 +14,9 @@ public class DeansList {
 	private String deanName;
 	private String contactNo;
 	private String email;
-	private String joiningDate;
-	private String qualificationName;
-	
-	
+	private Date joiningDate;
+	private Date realivingDate;
+	private String qualificationName;	
 	
 	public int getDeanId() {
 		return deanId;
@@ -47,16 +48,25 @@ public class DeansList {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getJoiningDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
-	public void setJoiningDate(String joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getRealivingDate() {
+		return realivingDate;
+	}
+	public void setRealivingDate(Date realivingDate) {
+		this.realivingDate = realivingDate;
 	}
 	@Override
 	public String toString() {
 		return "DeansList [deanId=" + deanId + ", deanName=" + deanName + ", contactNo=" + contactNo + ", email="
-				+ email + ", joiningDate=" + joiningDate + ", qualificationName=" + qualificationName + "]";
+				+ email + ", joiningDate=" + joiningDate + ", realivingDate=" + realivingDate + ", qualificationName="
+				+ qualificationName + "]";
 	}
 	
 	

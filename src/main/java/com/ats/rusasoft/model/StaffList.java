@@ -13,9 +13,11 @@ public class StaffList {
 
 	@Id
 	private int facultyId;
-	private String facultyName;
-	private String joiningDate;
-	private String realivingDate;
+	private String facultyFirstName;
+	private String facultyMiddelName;
+	private String facultyLastName;
+	private Date joiningDate;
+	private Date realivingDate;
 	private String contactNo;
 	private String email;
 	private int currentDesignationId ;
@@ -48,24 +50,36 @@ public class StaffList {
 	public void setFacultyId(int facultyId) {
 		this.facultyId = facultyId;
 	}
-	public String getFacultyName() {
-		return facultyName;
+	public String getFacultyFirstName() {
+		return facultyFirstName;
 	}
-	public void setFacultyName(String facultyName) {
-		this.facultyName = facultyName;
+	public void setFacultyFirstName(String facultyFirstName) {
+		this.facultyFirstName = facultyFirstName;
 	}
-	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public String getJoiningDate() {
+	public String getFacultyMiddelName() {
+		return facultyMiddelName;
+	}
+	public void setFacultyMiddelName(String facultyMiddelName) {
+		this.facultyMiddelName = facultyMiddelName;
+	}
+	public String getFacultyLastName() {
+		return facultyLastName;
+	}
+	public void setFacultyLastName(String facultyLastName) {
+		this.facultyLastName = facultyLastName;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
-	public void setJoiningDate(String joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
-	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public String getRealivingDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getRealivingDate() {
 		return realivingDate;
 	}
-	public void setRealivingDate(String realivingDate) {
+	public void setRealivingDate(Date realivingDate) {
 		this.realivingDate = realivingDate;
 	}
 	public String getContactNo() {
@@ -88,13 +102,12 @@ public class StaffList {
 	}
 	@Override
 	public String toString() {
-		return "StaffList [facultyId=" + facultyId + ", facultyName=" + facultyName + ", joiningDate=" + joiningDate
+		return "StaffList [facultyId=" + facultyId + ", facultyFirstName=" + facultyFirstName + ", facultyMiddelName="
+				+ facultyMiddelName + ", facultyLastName=" + facultyLastName + ", joiningDate=" + joiningDate
 				+ ", realivingDate=" + realivingDate + ", contactNo=" + contactNo + ", email=" + email
 				+ ", currentDesignationId=" + currentDesignationId + ", qualificationName=" + qualificationName
 				+ ", designationName=" + designationName + ", deptName=" + deptName + "]";
 	}
-	
-	
 	
 		
 }
