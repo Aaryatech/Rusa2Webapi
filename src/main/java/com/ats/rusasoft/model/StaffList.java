@@ -1,7 +1,11 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class StaffList {
@@ -11,6 +15,7 @@ public class StaffList {
 	private int facultyId;
 	private String facultyName;
 	private String joiningDate;
+	private String realivingDate;
 	private String contactNo;
 	private String email;
 	private int currentDesignationId ;
@@ -49,11 +54,19 @@ public class StaffList {
 	public void setFacultyName(String facultyName) {
 		this.facultyName = facultyName;
 	}
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public String getJoiningDate() {
 		return joiningDate;
 	}
 	public void setJoiningDate(String joiningDate) {
 		this.joiningDate = joiningDate;
+	}
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public String getRealivingDate() {
+		return realivingDate;
+	}
+	public void setRealivingDate(String realivingDate) {
+		this.realivingDate = realivingDate;
 	}
 	public String getContactNo() {
 		return contactNo;
@@ -76,10 +89,11 @@ public class StaffList {
 	@Override
 	public String toString() {
 		return "StaffList [facultyId=" + facultyId + ", facultyName=" + facultyName + ", joiningDate=" + joiningDate
-				+ ", contactNo=" + contactNo + ", email=" + email + ", currentDesignationId=" + currentDesignationId
-				+ ", qualificationName=" + qualificationName + ", designationName=" + designationName + ", deptName="
-				+ deptName + "]";
+				+ ", realivingDate=" + realivingDate + ", contactNo=" + contactNo + ", email=" + email
+				+ ", currentDesignationId=" + currentDesignationId + ", qualificationName=" + qualificationName
+				+ ", designationName=" + designationName + ", deptName=" + deptName + "]";
 	}
+	
 	
 	
 		

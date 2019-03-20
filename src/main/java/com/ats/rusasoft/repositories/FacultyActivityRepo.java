@@ -13,8 +13,7 @@ import com.ats.rusasoft.model.FacultyActivity;
 
 public interface FacultyActivityRepo extends JpaRepository<FacultyActivity, Integer> {
 	
-	List<FacultyActivity> findByFacultyIdAndYearIdAndDelStatusOrderByActivityId(int facId, int yrId, int del);
-	
+
 	FacultyActivity findByActivityIdAndDelStatus(int activityId, int del);
 	
 	@Transactional

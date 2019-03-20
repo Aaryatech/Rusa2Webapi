@@ -29,7 +29,7 @@ public class Staff {
 	private int currentDesignationId ;
 	private Date joiningDate;
 	private int isWorking;
-	private String realivingDate;
+	private Date realivingDate;
 	private String contactNo;
 	private String email;
 	private int delStatus;
@@ -103,10 +103,11 @@ public class Staff {
 	public void setIsWorking(int isWorking) {
 		this.isWorking = isWorking;
 	}
-	public String getRealivingDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getRealivingDate() {
 		return realivingDate;
 	}
-	public void setRealivingDate(String realivingDate) {
+	public void setRealivingDate(Date realivingDate) {
 		this.realivingDate = realivingDate;
 	}
 	public String getContactNo() {

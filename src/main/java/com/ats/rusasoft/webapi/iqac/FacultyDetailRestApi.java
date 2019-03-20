@@ -13,13 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.model.FacultyActivity;
 import com.ats.rusasoft.model.FacultyBook;
 import com.ats.rusasoft.model.FacultyConference;
+import com.ats.rusasoft.model.FacultyContribution;
+import com.ats.rusasoft.model.FacultyPhdGuide;
 import com.ats.rusasoft.model.Info;
+import com.ats.rusasoft.model.OrganizedList;
 import com.ats.rusasoft.model.StudMentorList;
 import com.ats.rusasoft.model.StudentMentoring;
 import com.ats.rusasoft.mstrepo.StuedentMentorListRepo;
 import com.ats.rusasoft.repositories.BookPublicatioRepo;
 import com.ats.rusasoft.repositories.FacultyActivityRepo;
 import com.ats.rusasoft.repositories.FacultyConferenceRepo;
+import com.ats.rusasoft.repositories.FacultyContributionRepo;
+import com.ats.rusasoft.repositories.FacultyPhdGuideRepo;
+import com.ats.rusasoft.repositories.ShowOrganizedListRepo;
 import com.ats.rusasoft.repositories.StudentMentoringRepo;
 
 @RestController
@@ -34,6 +40,12 @@ public class FacultyDetailRestApi {
 	@Autowired BookPublicatioRepo bookpubrepo;
 	
 	@Autowired FacultyActivityRepo facAcRepo;
+	
+	@Autowired FacultyContributionRepo facContriRepo;
+	
+	@Autowired FacultyPhdGuideRepo fphdrepo;
+	
+	@Autowired ShowOrganizedListRepo showOrgnRep;
 	
 	@RequestMapping(value= {"/insertStudentMentoringDetails"}, method=RequestMethod.POST)
 	public @ResponseBody StudentMentoring insertStudMent(@RequestBody StudentMentoring studMent){
@@ -117,7 +129,6 @@ public class FacultyDetailRestApi {
 	
 	/***************************************Book Publication************************************/
 	
-	
 	@RequestMapping(value= {"/savefacultyPubBook"}, method=RequestMethod.POST)
 	public @ResponseBody FacultyBook insertBookPub(@RequestBody FacultyBook facBook){
 		
@@ -168,9 +179,9 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getAllActivityById"}, method=RequestMethod.POST)
-	public @ResponseBody List<FacultyActivity> getAllActivities(@RequestParam("facId") int facId, @RequestParam("yrId") int yrId ){
+	public @ResponseBody List<OrganizedList> getAllActivities(@RequestParam("facId") int facId, @RequestParam("yrId") int yrId ){
 		
-		return facAcRepo.findByFacultyIdAndYearIdAndDelStatusOrderByActivityId(facId, yrId, 1);
+		return showOrgnRep.getOrganizedDetailList(facId, yrId, 1);
 		
 	}
 	
@@ -199,4 +210,87 @@ public class FacultyDetailRestApi {
 		 return inf;
 	}
 	
+	/**********************************Faculty Contribution*************************************************/
+	
+	@RequestMapping(value= {"/saveOutReachContri"}, method=RequestMethod.POST)
+	public @ResponseBody FacultyContribution insertOutReachContri(@RequestBody FacultyContribution facCon){
+		
+		return facContriRepo.save(facCon);
+		
+	}
+	
+	@RequestMapping(value= {"/getAllOutReachContri"}, method=RequestMethod.POST)
+	public @ResponseBody List<FacultyContribution> getAllOutReachContri(@RequestParam("facId") int facId, @RequestParam("yrId") int yrId ){
+		
+		return facContriRepo.findByFacultyIdAndYearIdAndDelStatusOrderByConIdDesc(facId, yrId, 1);
+		
+	}
+	
+	
+	@RequestMapping(value= {"/getOutReachContriById"}, method=RequestMethod.POST)
+	public @ResponseBody FacultyContribution getOutReachContriById(@RequestParam("conId") int conId){
+		
+		return facContriRepo.findByConId(conId);
+		
+	}
+	
+	@RequestMapping(value= {"/deleteReachContriById"}, method=RequestMethod.POST)
+	public @ResponseBody Info deleteReachContriById(@RequestParam("conId") int conId){
+		
+		
+		int isDelete=0;
+		 isDelete = facContriRepo.deleteFContributionByconId(conId);
+		 Info inf = new Info();
+		 if(isDelete>0) {
+			 inf.setError(false);
+			 inf.setMsg("Sucessfully Deleted");
+		 }
+		 else{
+			 inf.setError(true);
+			 inf.setMsg("Fail");
+		 }
+		 return inf;
+	}
+	
+	/**************************************Faculty Phd Guide*******************************************/
+	
+	@RequestMapping(value= {"/insertPhdGuide"}, method=RequestMethod.POST)
+	public @ResponseBody FacultyPhdGuide insertPhdGuide(@RequestBody FacultyPhdGuide phd){
+		
+		return fphdrepo.save(phd);
+		
+	}
+	
+	@RequestMapping(value= {"/getAllPhdGuid"}, method=RequestMethod.POST)
+	public @ResponseBody List<FacultyPhdGuide> getAllPhdGuid(@RequestParam("facId") int facId, @RequestParam("yrId") int yrId ){
+		
+		return fphdrepo.findByFacultyIdAndYearIdAndDelStatusOrderByPhdIdDesc(facId, yrId, 1);
+		
+	}
+	
+
+	@RequestMapping(value= {"/getPhdGuideById"}, method=RequestMethod.POST)
+	public @ResponseBody FacultyPhdGuide getPhdGuideById(@RequestParam("phdId") int phdId){
+		
+		return fphdrepo.findByPhdId(phdId);
+		
+	}
+	
+	@RequestMapping(value= {"/deletePhdGuideById"}, method=RequestMethod.POST)
+	public @ResponseBody Info deletePhdGuideById(@RequestParam("phdId") int phdId){
+		
+		
+		int isDelete=0;
+		 isDelete = fphdrepo.deletePhdGuideByPhdId(phdId);
+		 Info inf = new Info();
+		 if(isDelete>0) {
+			 inf.setError(false);
+			 inf.setMsg("Sucessfully Deleted");
+		 }
+		 else{
+			 inf.setError(true);
+			 inf.setMsg("Fail");
+		 }
+		 return inf;
+	}
 }

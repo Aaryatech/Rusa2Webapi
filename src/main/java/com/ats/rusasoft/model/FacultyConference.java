@@ -1,10 +1,14 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="t_faculty_conference")
@@ -17,7 +21,7 @@ public class FacultyConference {
 	private int yearId;
 	private String confName;
 	private String confType;
-	private String confDate;
+	private Date confDate;
 	private String confVenue;
 	private String 	confFundFrom;
 	private int confFundAmt;
@@ -57,10 +61,11 @@ public class FacultyConference {
 	public void setConfType(String confType) {
 		this.confType = confType;
 	}
-	public String getConfDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getConfDate() {
 		return confDate;
 	}
-	public void setConfDate(String confDate) {
+	public void setConfDate(Date confDate) {
 		this.confDate = confDate;
 	}
 	public String getConfVenue() {
