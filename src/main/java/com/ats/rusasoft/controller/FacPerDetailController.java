@@ -15,11 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.model.faculty.FacultyAcademic;
 import com.ats.rusasoft.model.faculty.FacultyPersonalDetail;
 import com.ats.rusasoft.model.faculty.FacultyPhdDetails;
+import com.ats.rusasoft.model.faculty.GetFacAcademic;
 import com.ats.rusasoft.model.faculty.GetFacPerDetail;
+import com.ats.rusasoft.model.faculty.GetFacPhdGuideDetail;
 import com.ats.rusasoft.repo.faculty.FacultyAcademicRepo;
 import com.ats.rusasoft.repo.faculty.FacultyPersonalDetailRepo;
 import com.ats.rusasoft.repo.faculty.FacultyPhdDetailsRepo;
+import com.ats.rusasoft.repo.faculty.GetFacAcademicRepo;
 import com.ats.rusasoft.repo.faculty.GetFacPerDetailRepo;
+import com.ats.rusasoft.repo.faculty.GetFacPhdGuideDetailRepo;
 
 @RestController
 public class FacPerDetailController {
@@ -41,6 +45,26 @@ public class FacPerDetailController {
 
 		return facAcaRes;
 	}
+	
+	
+	@RequestMapping(value = { "/getFacAcademic" }, method = RequestMethod.POST)
+	public @ResponseBody FacultyAcademic getFacAcademic(
+			@RequestParam int fAcaId) {
+
+		FacultyAcademic facAcaRes = null;
+
+		try {
+			facAcaRes = facultyAcademicRepo.findByFAcaIdAndDelStatusAndIsActive(fAcaId, 1, 1);
+		} catch (Exception e) {
+			System.err.println("Exce in  getFacAcademic by FAcadeid" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return facAcaRes;
+	}
+	
+	
+	
 
 	@Autowired
 	FacultyPersonalDetailRepo facultyPersonalDetailRepo;
@@ -138,6 +162,46 @@ public class FacPerDetailController {
 		}
 
 		return facPhdDetailRes;
+	}
+	
+	//GetFacPhdGuideDetailRepo
+	@Autowired GetFacPhdGuideDetailRepo getFacPhdGuideDetailRepo;
+	
+	@RequestMapping(value = { "/getFacPhdGuideDetailList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFacPhdGuideDetail> getFacPhdGuideDetailList(
+			@RequestParam int instId) {
+
+		List<GetFacPhdGuideDetail> facPerDetList = new ArrayList<GetFacPhdGuideDetail>();
+
+		try {
+			facPerDetList = getFacPhdGuideDetailRepo.getFacPhdGuideDetail(instId);
+		} catch (Exception e) {
+			System.err.println("Exce in getting getFacPhdGuideDetailList " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return facPerDetList;
+	}
+	
+	
+	//GetFacAcademicRepo
+	@Autowired GetFacAcademicRepo getFacAcademicRepo;
+	
+	
+	@RequestMapping(value = { "/getFacAcademicList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFacAcademic> getFacAcademicList(
+			@RequestParam int instId) {
+
+		List<GetFacAcademic> facPerDetList = new ArrayList<GetFacAcademic>();
+
+		try {
+			facPerDetList = getFacAcademicRepo.getFacAcademic(instId);
+		} catch (Exception e) {
+			System.err.println("Exce in getting getFacAcademicList " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return facPerDetList;
 	}
 	
 }

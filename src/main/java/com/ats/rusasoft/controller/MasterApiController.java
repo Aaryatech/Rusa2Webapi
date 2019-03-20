@@ -312,15 +312,15 @@ public class MasterApiController {
 
 				user.setExInt2(acOfRes.getInstituteId()); //
 				user.setRoleId(6);// 6 for acc officer
-				user.setUserName(userName);
+				user.setUserName( acOfRes.getEmail());
 				user.setUserType(5);// 5 for acc Officer user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
 
 				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, acOfRes.getEmail(), mailsubject,
-						userRes.getUserName(), userRes.getPass());
+						 acOfRes.getEmail(), userRes.getPass());
 
-				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(), acOfRes.getContactNo());
+				Info smsRes = EmailUtility.sendMsg( acOfRes.getEmail(), userRes.getPass(), acOfRes.getContactNo());
 
 			} else {
 
@@ -437,15 +437,15 @@ public class MasterApiController {
 
 				user.setExInt2(hodRes.getInstituteId()); //
 				user.setRoleId(4);// 4 for HOD
-				user.setUserName(userName);
+				user.setUserName(hodRes.getEmail());
 				user.setUserType(3);// 3 for hod user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
 
 				Info info = EmailUtility.sendEmail(senderEmail, senderPassword, hodRes.getEmail(), mailsubject,
-						userRes.getUserName(), userRes.getPass());
+						hodRes.getEmail(), userRes.getPass());
 
-				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(), hodRes.getContactNo());
+				Info smsRes = EmailUtility.sendMsg(hodRes.getEmail(), userRes.getPass(), hodRes.getContactNo());
 
 				System.err.println("Info email sent response   " + info.toString());
 
@@ -840,7 +840,7 @@ public class MasterApiController {
 
 				user.setExInt2(instIdList.get(i)); //
 				user.setRoleId(2);// 2 for Principal
-				user.setUserName(userName);
+				user.setUserName(princi.getEmail());
 				user.setUserType(1);// 2 for Principal user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
@@ -858,9 +858,9 @@ public class MasterApiController {
 				instituteRepo.save(insResp);
 
 				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
-						userRes.getUserName(), userRes.getPass());
+						princi.getEmail(), userRes.getPass());
 
-				Info smsRes = EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(), princi.getPhoneNo());
+				Info smsRes = EmailUtility.sendMsg(princi.getEmail(), userRes.getPass(), princi.getPhoneNo());
 
 				final String emailSMTPserver = "smtp.gmail.com";
 				final String emailSMTPPort = "587";
