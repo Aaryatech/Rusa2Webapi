@@ -35,6 +35,7 @@ import com.ats.rusasoft.mstrepo.LoginLogRepo;
 import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
 import com.ats.rusasoft.mstrepo.UserService;
+import com.ats.rusasoft.prodetailrepo.StudentSuppSchemeRepo;
 
 @RestController
 public class LibraryApiController {
@@ -411,6 +412,37 @@ public class LibraryApiController {
 					} catch (Exception e) {
 
 						System.err.println("Exce in deleteInstituteInfo  " + e.getMessage());
+						e.printStackTrace();
+						info.setError(true);
+						info.setMsg("excep");
+					}
+
+					return info;
+
+				}
+		
+		  @Autowired 
+		  StudentSuppSchemeRepo studentSuppSchemeRepo;
+		  
+		  @RequestMapping(value = { "/deleteStudentSchemesRecordById" }, method = RequestMethod.POST)
+			public @ResponseBody Info deleteStudentSchemesRecordById(@RequestParam List<String> id) {
+
+					Info info = new Info();
+					try {
+						int res = studentSuppSchemeRepo.deleteSchemes(id);
+
+						if (res > 0) {
+							info.setError(false);
+							info.setMsg("success");
+
+						} else {
+							info.setError(true);
+							info.setMsg("failed");
+
+						}
+					} catch (Exception e) {
+
+						System.err.println("Exce in deleteStudentSchemesRecordById  " + e.getMessage());
 						e.printStackTrace();
 						info.setError(true);
 						info.setMsg("excep");
