@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoft.instprofilerepo.InstituteFunctionalMOURepo;
 import com.ats.rusasoft.model.GetProgram;
+import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.IqacBasicInfo;
+import com.ats.rusasoft.model.Librarian;
+import com.ats.rusasoft.model.instprofile.InstituteFunctionalMOU;
 import com.ats.rusasoft.model.progdetail.Cast;
 import com.ats.rusasoft.mstrepo.IqacBasicInfoRepo;
 
@@ -22,6 +26,9 @@ public class InstituteProfInfoApiController {
 	
 	@Autowired
 	IqacBasicInfoRepo iqacBasicInfoRepo;
+	
+	@Autowired
+	InstituteFunctionalMOURepo instituteFunctionalMOURepo;
 	
 	@RequestMapping(value = { "/saveInstituteBasicInfo" }, method = RequestMethod.POST)
 	public @ResponseBody IqacBasicInfo saveInstituteBasicInfo(@RequestBody IqacBasicInfo instInfo) {
@@ -78,9 +85,126 @@ public class InstituteProfInfoApiController {
 
 	}
 
+	  
+	  @RequestMapping(value = { "/deleteInstProf" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteInstProf(@RequestParam int iqacInfoId) {
+
+				Info info = new Info();
+				try {
+					int res = iqacBasicInfoRepo.deleteSchemes(iqacInfoId);
+
+					if (res > 0) {
+						info.setError(false);
+						info.setMsg("success");
+
+					} else {
+						info.setError(true);
+						info.setMsg("failed");
+
+					}
+				} catch (Exception e) {
+
+					System.err.println("Exce in deleteStudentSchemesRecordById  " + e.getMessage());
+					e.printStackTrace();
+					info.setError(true);
+					info.setMsg("excep");
+				}
+
+				return info;
+
+			}
 	
 	
+	//  ******************************mou*******************************//
+	  
+	  @RequestMapping(value = { "/saveInstituteMOU" }, method = RequestMethod.POST)
+		public @ResponseBody InstituteFunctionalMOU saveInstituteMOU(@RequestBody InstituteFunctionalMOU instInfo) {
+
+		  InstituteFunctionalMOU instResp = null;
+	 
+			try {
+
+					instResp = instituteFunctionalMOURepo.saveAndFlush(instInfo);
+
+
+			} catch (Exception e) {
+				System.err.println("Exce in saving InstituteInfo " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return instInfo; 
+
+		}
 	
-	
+	  
+
+
+	  @RequestMapping(value = { "/getAllMouByInstituteId" }, method = RequestMethod.POST)
+	  public @ResponseBody List<InstituteFunctionalMOU> getAllMouByInstituteId(@RequestParam int instId,@RequestParam int yearId) {
+	  
+	  List<InstituteFunctionalMOU> libResp = new ArrayList<>();
+	  
+	  try { 
+		  libResp = instituteFunctionalMOURepo.getAllMOUList(instId,yearId);
+		  System.err.println("lib are" + libResp.toString());
+	  
+	  } catch (Exception e) {
+	  System.err.println("Exce in getAllLibrarian Librarian " + e.getMessage());
+	  e.printStackTrace(); }
+	  
+	  return libResp;
+	  
+	  }
+	  
+	  
+	  @RequestMapping(value = { "/getMOUByMouId" }, method = RequestMethod.POST)
+		
+		public @ResponseBody InstituteFunctionalMOU getMOUByMouId(@RequestParam int mouId) {
+
+		  InstituteFunctionalMOU progRes = new InstituteFunctionalMOU();
+
+			try {
+				progRes = instituteFunctionalMOURepo.findByDelStatusAndIsActiveAndMouId(1, 1,mouId);
+
+			} catch (Exception e) {
+				System.err.println("Exce in getAllCastCategory  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return progRes;
+
+		}
+	  
+	  
+	  
+
+		@RequestMapping(value = { "/deleteMous" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteMous(@RequestParam List<String> mouIdList) {
+
+			Info info = new Info();
+			try {
+				int res = instituteFunctionalMOURepo.deleteMous(mouIdList);
+
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			return info;
+
+		}
+		
 
 }

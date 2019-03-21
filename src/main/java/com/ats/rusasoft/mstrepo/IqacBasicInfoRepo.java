@@ -1,6 +1,11 @@
 package com.ats.rusasoft.mstrepo;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,5 +23,12 @@ public interface IqacBasicInfoRepo extends JpaRepository<IqacBasicInfo, Integer>
     
     
 	IqacBasicInfo findByDelStatusAndIsActiveAndIqacInfoId(int delStatus, int isActive, int iqacInfoId);
+	
+	
+
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE m_iqac_basic_info SET del_status=0 WHERE m_iqac_basic_info.iqac_info_id=:iqacInfoId ", nativeQuery = true)
+	int deleteSchemes(@Param("iqacInfoId") int  iqacInfoId);
 
 }
