@@ -30,13 +30,13 @@ public class InstituteFunctionalMOU {
 	private String mouBeneficiary;
 	
 	private int mouBeneficiaryNos;
-	
+	private String mouAgency;
 	private int delStatus;
 	private int isActive;
 	
 	private int makerUserId;
 	private String makerDatetime;
-	private String mouAgency;
+
 	
 	
 	private int exInt1;

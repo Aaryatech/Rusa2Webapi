@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoft.instprofilerepo.InstituteFunctionalMOURepo;
+import com.ats.rusasoft.instprofilerepo.InstituteLinkageRepo;
 import com.ats.rusasoft.model.GetProgram;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.IqacBasicInfo;
 import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.instprofile.InstituteFunctionalMOU;
+import com.ats.rusasoft.model.instprofile.InstituteLinkage;
 import com.ats.rusasoft.model.progdetail.Cast;
 import com.ats.rusasoft.mstrepo.IqacBasicInfoRepo;
 
@@ -29,6 +31,9 @@ public class InstituteProfInfoApiController {
 	
 	@Autowired
 	InstituteFunctionalMOURepo instituteFunctionalMOURepo;
+	
+	@Autowired
+	InstituteLinkageRepo instituteLinkageRepo;
 	
 	@RequestMapping(value = { "/saveInstituteBasicInfo" }, method = RequestMethod.POST)
 	public @ResponseBody IqacBasicInfo saveInstituteBasicInfo(@RequestBody IqacBasicInfo instInfo) {
@@ -206,5 +211,97 @@ public class InstituteProfInfoApiController {
 
 		}
 		
+		//  ******************************linkage*******************************//
+		
+		
+		 
+		  @RequestMapping(value = { "/saveInstituteColLinkage" }, method = RequestMethod.POST)
+			public @ResponseBody InstituteLinkage saveInstituteColLinkage(@RequestBody InstituteLinkage instInfo) {
+
+			  InstituteLinkage instResp = null;
+		 
+				try {
+
+						instResp = instituteLinkageRepo.saveAndFlush(instInfo);
+
+
+				} catch (Exception e) {
+					System.err.println("Exce in saving InstituteInfo " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				return instInfo; 
+
+			}
+		
+		  
+
+		  @RequestMapping(value = { "/getAllInstLinkageByInstituteId" }, method = RequestMethod.POST)
+		  public @ResponseBody List<InstituteLinkage> getAllInstLinkageByInstituteId(@RequestParam int instId,@RequestParam int yearId) {
+		  
+		  List<InstituteLinkage> libResp = new ArrayList<>();
+		  
+		  try { 
+			  libResp = instituteLinkageRepo.getAllInstKinkagesList(instId,yearId);
+			  System.err.println("lib are" + libResp.toString());
+		  
+		  } catch (Exception e) {
+		  System.err.println("Exce in getAllLibrarian Librarian " + e.getMessage());
+		  e.printStackTrace(); }
+		  
+		  return libResp;
+		  
+		  }
+		  
+		  @RequestMapping(value = { "/getInstLinkageByLinkId" }, method = RequestMethod.POST)
+			
+			public @ResponseBody InstituteLinkage getInstLinkageByLinkId(@RequestParam int linkId) {
+
+			  InstituteLinkage progRes = new InstituteLinkage();
+
+				try {
+					progRes = instituteLinkageRepo.findByDelStatusAndIsActiveAndLinkId(1, 1,linkId);
+
+				} catch (Exception e) {
+					System.err.println("Exce in getAllCastCategory  " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				return progRes;
+
+			}
+		  
+		  
+		  
+
+			@RequestMapping(value = { "/deleteInstLinkages" }, method = RequestMethod.POST)
+			public @ResponseBody Info deleteInstLinkages(@RequestParam List<String> linkIdList) {
+
+				Info info = new Info();
+				try {
+					int res = instituteLinkageRepo.deleteLinkages(linkIdList);
+
+					if (res > 0) {
+						info.setError(false);
+						info.setMsg("success");
+
+					} else {
+						info.setError(true);
+						info.setMsg("failed");
+
+					}
+				} catch (Exception e) {
+
+					System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+					e.printStackTrace();
+					info.setError(true);
+					info.setMsg("excep");
+				}
+
+				return info;
+
+			}
+			  
+
 
 }
