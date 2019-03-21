@@ -73,7 +73,6 @@ public class FacultyDetailRestApi {
 	@RequestMapping(value= {"/deleteFacultyMentoringDetailsById"}, method=RequestMethod.POST)
 	public @ResponseBody Info deleteFacultyMentor(@RequestParam("mId") int mId){
 		
-		//return studmentrepo.findByMenIdAndDelStatus(mId, 1);
 		int isDelete=0;
 		 isDelete= studmentrepo.deleteByMenId(mId);
 		 Info inf = new Info();
@@ -252,7 +251,7 @@ public class FacultyDetailRestApi {
 		 return inf;
 	}
 	
-	/**************************************Faculty Phd Guide*******************************************/
+	/***************************************Faculty Phd Guide*******************************************/
 	
 	@RequestMapping(value= {"/insertPhdGuide"}, method=RequestMethod.POST)
 	public @ResponseBody FacultyPhdGuide insertPhdGuide(@RequestBody FacultyPhdGuide phd){

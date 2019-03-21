@@ -28,7 +28,7 @@ public interface GetUserDataRepo extends JpaRepository<GetUserDetail, Integer>
     
     
     
-    @Query(value=" SELECT i.faculty_id as user_detail_id,i.	faculty_name as sub_user_name,i.contact_no as user_con_number,"
+    @Query(value=" SELECT i.faculty_id as user_detail_id,i.faculty_first_name as sub_user_name,i.contact_no as user_con_number,"
     		+ "i.email as user_email,i.current_designation_id as user_desn_id,	i.highest_qualification as user_qual_id,i.institute_id as user_institute_id,0 as "
     		+ "is_enroll,i.dept_id as dept_id from m_faculty i  where i.faculty_id=:regKey ", nativeQuery=true)
     GetUserDetail getFacultyDetails(@Param("regKey") int regKey);
