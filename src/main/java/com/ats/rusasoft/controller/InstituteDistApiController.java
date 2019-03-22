@@ -16,9 +16,17 @@ import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.faculty.Journal;
 import com.ats.rusasoft.model.instprofile.Disctinctveness;
 import com.ats.rusasoft.model.instprofile.GetDisctinctveness;
+import com.ats.rusasoft.model.instprofile.GetHumanValues;
+import com.ats.rusasoft.model.instprofile.GetResearchCenter;
+import com.ats.rusasoft.model.instprofile.HumanValues;
 import com.ats.rusasoft.model.instprofile.InstituteFunctionalMOU;
+import com.ats.rusasoft.model.instprofile.ResearchCenter;
 import com.ats.rusasoft.repo.institute.DisctinctvenessRepo;
 import com.ats.rusasoft.repo.institute.GetDisctinctvenessRepo;
+import com.ats.rusasoft.repo.institute.GetHumanValuesRepo;
+import com.ats.rusasoft.repo.institute.GetResearchCenterRepo;
+import com.ats.rusasoft.repo.institute.HumanValuesRepo;
+import com.ats.rusasoft.repo.institute.ResearchCenterRepo;
 
 @RestController
 public class InstituteDistApiController {
@@ -28,6 +36,187 @@ public class InstituteDistApiController {
 
 	@Autowired
 	GetDisctinctvenessRepo getDisctinctvenessRepo;
+
+	@Autowired
+	GetHumanValuesRepo getHumanValuesRepo;
+
+	@Autowired
+	HumanValuesRepo humanValuesRepo;
+
+	@Autowired
+	GetResearchCenterRepo getResearchCenterRepo;
+
+	@Autowired
+	ResearchCenterRepo researchCenterRepo;
+
+	// ============Research Center============================
+
+	@RequestMapping(value = { "/saveReserachCenter" }, method = RequestMethod.POST)
+	public @ResponseBody ResearchCenter saveReserachCenter(@RequestBody ResearchCenter researchCenter) {
+
+		ResearchCenter saveRes = null;
+
+		try {
+			saveRes = researchCenterRepo.saveAndFlush(researchCenter);
+
+		} catch (Exception e) {
+			System.err.println("Exce in saving saveReserachCenter " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return saveRes;
+	}
+
+	@RequestMapping(value = { "/getResearchCenterByRcId" }, method = RequestMethod.POST)
+	public @ResponseBody ResearchCenter getResearchCenterByRcId(@RequestParam int rcId) {
+
+		ResearchCenter resp = new ResearchCenter();
+
+		try {
+			resp = researchCenterRepo.findByRcIdAndDelStatus(rcId, 1);
+			resp.setRcValidityFromdt(DateConvertor.convertToDMY(resp.getRcValidityFromdt()));
+			resp.setRcValidityTodt(DateConvertor.convertToDMY(resp.getRcValidityTodt()));
+
+		} catch (Exception e) {
+			System.err.println("Exce in getResearchCenterByRcId  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resp;
+
+	}
+
+	@RequestMapping(value = { "/getAllResearchCenterByInstituteId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetResearchCenter> getAllResearchCenterByInstituteId(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<GetResearchCenter> resp = new ArrayList<>();
+
+		try {
+			resp = getResearchCenterRepo.getAllRecearchCenterList(instId, yearId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllResearchCenterByInstituteId  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resp;
+
+	}
+	
+	@RequestMapping(value = { "/deleteResearchCenter" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteResearchCenter(@RequestParam List<String> rcIdList) {
+
+		Info info = new Info();
+		try {
+			int res = researchCenterRepo.deleteResearchCenter(rcIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in humanValuesRepo   " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+
+
+	// ============Human Values============================
+
+	@RequestMapping(value = { "/saveHumanValues" }, method = RequestMethod.POST)
+	public @ResponseBody HumanValues saveHumanValues(@RequestBody HumanValues humanValues) {
+
+		HumanValues saveRes = null;
+
+		try {
+			saveRes = humanValuesRepo.saveAndFlush(humanValues);
+
+		} catch (Exception e) {
+			System.err.println("Exce in saving saveHumanValues " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return saveRes;
+	}
+
+	@RequestMapping(value = { "/getHumanValuesByValueId" }, method = RequestMethod.POST)
+	public @ResponseBody HumanValues getHumanValuesByValueId(@RequestParam int valueId) {
+
+		HumanValues resp = new HumanValues();
+
+		try {
+			resp = humanValuesRepo.findByValueIdAndDelStatus(valueId, 1);
+			resp.setActivityFromdt(DateConvertor.convertToDMY(resp.getActivityFromdt()));
+			resp.setActivityTodt(DateConvertor.convertToDMY(resp.getActivityTodt()));
+
+		} catch (Exception e) {
+			System.err.println("Exce in getHumanValuesByValueId  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resp;
+
+	}
+
+	@RequestMapping(value = { "/getAllHumanValuesByInstituteId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetHumanValues> getAllHumanValuesByInstituteId(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<GetHumanValues> resp = new ArrayList<>();
+
+		try {
+			resp = getHumanValuesRepo.getAllHumanValuesList(instId, yearId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllHumanValuesByInstituteId  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resp;
+
+	}
+
+	@RequestMapping(value = { "/deleteHumanVlaues" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteHumanVlaues(@RequestParam List<String> valueIdList) {
+
+		Info info = new Info();
+		try {
+			int res = humanValuesRepo.deleteHumanValues(valueIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in humanValuesRepo   " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+
+	// ============Dist============================
 
 	@RequestMapping(value = { "/saveDist" }, method = RequestMethod.POST)
 	public @ResponseBody Disctinctveness saveDist(@RequestBody Disctinctveness disctinctveness) {
