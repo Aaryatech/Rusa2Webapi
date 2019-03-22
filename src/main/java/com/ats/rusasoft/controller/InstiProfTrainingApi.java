@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.instprofilerepo.GetInstTrainTeachDetailRepo;
 import com.ats.rusasoft.instprofilerepo.InstituteTrainingRepo;
 import com.ats.rusasoft.model.GetAccOfficer;
+import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.instprofile.GetInstTrainTeachDetail;
 import com.ats.rusasoft.model.instprofile.InstituteTraining;
 
@@ -78,5 +79,34 @@ public class InstiProfTrainingApi {
 		}
 		
 		return instTrainTeachList;
+	}
+	
+	
+	
+	@RequestMapping(value = { "/deleteInstTraining" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteInstTraining(@RequestParam List<String> trainingIdList) {
+
+		Info info = new Info();
+		try {
+			int res = instituteTrainingRepo.deleteInstTraining(trainingIdList);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteInstTraining  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
 	}
 }
