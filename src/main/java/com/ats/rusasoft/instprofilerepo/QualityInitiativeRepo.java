@@ -16,7 +16,7 @@ public interface QualityInitiativeRepo extends JpaRepository<QualityInitiative, 
 	
 	QualityInitiative findByQualityInitiativeId(int qualityInitiativeId);
 	
-	List<QualityInitiative> findByDelStatusAndIsActive(int delStatus, int isActive);
+	List<QualityInitiative> findByDelStatusAndIsActiveOrderByQualityInitiativeIdDesc(int delStatus, int isActive);
 
 	
 	@Transactional

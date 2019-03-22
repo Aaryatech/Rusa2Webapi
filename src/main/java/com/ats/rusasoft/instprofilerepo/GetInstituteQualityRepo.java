@@ -15,7 +15,7 @@ public interface GetInstituteQualityRepo extends JpaRepository<GetInstituteQuali
 			+ " FROM t_institute_quality  LEFT JOIN m_quality_initiatives "
 			+ " ON t_institute_quality.quality_initiative_id=m_quality_initiatives.quality_initiative_id\n"
 			+ " WHERE t_institute_quality.del_status=1 AND t_institute_quality.is_active=1 AND t_institute_quality.institute_id=:instId "
-			+ " AND t_institute_quality.year_id=:yearId ", nativeQuery = true)
+			+ " AND t_institute_quality.year_id=:yearId ORDER BY t_institute_quality.quality_id DESC ", nativeQuery = true)
 
 	List<GetInstituteQuality> getInstituteQualityList(@Param("instId") int instId, @Param("yearId") int yearId);
 

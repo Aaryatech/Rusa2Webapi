@@ -77,6 +77,34 @@ public class QualityInitiativeController {
 		return instQuality;
 
 	}
+	
+	//delete Institute Quality
+	@RequestMapping(value = { "/deleteInstQualities" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteInstQualities(@RequestParam List<String> qualityIdList) {
+
+		Info info = new Info();
+		try {
+			int res = instituteQualityRepo.deleteInstQualities(qualityIdList);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteInstQualities  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 
 	@Autowired
 	QualityInitiativeRepo qualityInitiativeRepo;
@@ -104,7 +132,7 @@ public class QualityInitiativeController {
 		List<QualityInitiative> qualInitList = new ArrayList<>();
 
 		try {
-			qualInitList = qualityInitiativeRepo.findByDelStatusAndIsActive(1, 1);
+			qualInitList = qualityInitiativeRepo.findByDelStatusAndIsActiveOrderByQualityInitiativeIdDesc(1, 1);
 		} catch (Exception e) {
 			System.err.println("Exce in getStudAdmCatwiseList  " + e.getMessage());
 			e.printStackTrace();
