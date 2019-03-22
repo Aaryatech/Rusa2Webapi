@@ -185,9 +185,9 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getFacActivityByActvId"}, method=RequestMethod.POST)
-	public @ResponseBody FacultyActivity getActivitiesById(@RequestParam("activityId") int activityId){
+	public @ResponseBody FacultyActivity getActivitiesById(@RequestParam("facActivityId") int facActivityId){
 		
-		return facAcRepo.findByActivityIdAndDelStatus(activityId, 1);
+		return facAcRepo.findByActivityIdAndDelStatus(facActivityId, 1);
 		
 	}
 	

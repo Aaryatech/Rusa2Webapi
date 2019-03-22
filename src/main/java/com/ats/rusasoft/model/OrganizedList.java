@@ -3,6 +3,8 @@ package com.ats.rusasoft.model;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class OrganizedList {
 	@Id
@@ -12,10 +14,10 @@ public class OrganizedList {
 	private String activityName;
 	private String activityLevel;
 	private Date activityDate;
-	private int	activityParticipants;
+	private String	activityParticipants;
 	private String	activityFundedBy;
-	private int	activityAmountSanctioned	;
-	private int	activityAmountUtilised;
+	private String	activityAmountSanctioned	;
+	private String	activityAmountUtilised;
 	public String getTypeName() {
 		return typeName;
 	}
@@ -45,16 +47,17 @@ public class OrganizedList {
 	public void setActivityLevel(String activityLevel) {
 		this.activityLevel = activityLevel;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getActivityDate() {
 		return activityDate;
 	}
 	public void setActivityDate(Date activityDate) {
 		this.activityDate = activityDate;
 	}
-	public int getActivityParticipants() {
+	public String getActivityParticipants() {
 		return activityParticipants;
 	}
-	public void setActivityParticipants(int activityParticipants) {
+	public void setActivityParticipants(String activityParticipants) {
 		this.activityParticipants = activityParticipants;
 	}
 	public String getActivityFundedBy() {
@@ -63,16 +66,16 @@ public class OrganizedList {
 	public void setActivityFundedBy(String activityFundedBy) {
 		this.activityFundedBy = activityFundedBy;
 	}
-	public int getActivityAmountSanctioned() {
+	public String getActivityAmountSanctioned() {
 		return activityAmountSanctioned;
 	}
-	public void setActivityAmountSanctioned(int activityAmountSanctioned) {
+	public void setActivityAmountSanctioned(String activityAmountSanctioned) {
 		this.activityAmountSanctioned = activityAmountSanctioned;
 	}
-	public int getActivityAmountUtilised() {
+	public String getActivityAmountUtilised() {
 		return activityAmountUtilised;
 	}
-	public void setActivityAmountUtilised(int activityAmountUtilised) {
+	public void setActivityAmountUtilised(String activityAmountUtilised) {
 		this.activityAmountUtilised = activityAmountUtilised;
 	}
 	@Override
