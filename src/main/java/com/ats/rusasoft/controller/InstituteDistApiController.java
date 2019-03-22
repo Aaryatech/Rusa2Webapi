@@ -21,12 +21,14 @@ import com.ats.rusasoft.model.instprofile.GetResearchCenter;
 import com.ats.rusasoft.model.instprofile.HumanValues;
 import com.ats.rusasoft.model.instprofile.InstituteFunctionalMOU;
 import com.ats.rusasoft.model.instprofile.ResearchCenter;
+import com.ats.rusasoft.model.instprofile.ValuesMaster;
 import com.ats.rusasoft.repo.institute.DisctinctvenessRepo;
 import com.ats.rusasoft.repo.institute.GetDisctinctvenessRepo;
 import com.ats.rusasoft.repo.institute.GetHumanValuesRepo;
 import com.ats.rusasoft.repo.institute.GetResearchCenterRepo;
 import com.ats.rusasoft.repo.institute.HumanValuesRepo;
 import com.ats.rusasoft.repo.institute.ResearchCenterRepo;
+import com.ats.rusasoft.repo.institute.ValuesMasterRepo;
 
 @RestController
 public class InstituteDistApiController {
@@ -48,6 +50,89 @@ public class InstituteDistApiController {
 
 	@Autowired
 	ResearchCenterRepo researchCenterRepo;
+
+	@Autowired
+	ValuesMasterRepo valuesMasterRepo;
+
+	// ===========Values Master============================
+
+	@RequestMapping(value = { "/saveValuesMaster" }, method = RequestMethod.POST)
+	public @ResponseBody ValuesMaster saveValuesMaster(@RequestBody ValuesMaster valuesMaster) {
+
+		ValuesMaster saveRes = null;
+
+		try {
+			saveRes = valuesMasterRepo.saveAndFlush(valuesMaster);
+
+		} catch (Exception e) {
+			System.err.println("Exce in saving saveValuesMaster " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return saveRes;
+	}
+
+	@RequestMapping(value = { "/getValuesMasterByValId" }, method = RequestMethod.POST)
+	public @ResponseBody ValuesMaster getValuesMasterByValId(@RequestParam int valMstId) {
+
+		ValuesMaster resp = new ValuesMaster();
+
+		try {
+			resp = valuesMasterRepo.findByValMastIdAndDelStatus(valMstId, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getValuesMasterByValId  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resp;
+
+	}
+
+	@RequestMapping(value = { "/getAllValuesList" }, method = RequestMethod.GET)
+	public @ResponseBody List<ValuesMaster> getAllValuesList() {
+
+		List<ValuesMaster> resp = new ArrayList<>();
+
+		try {
+			resp = valuesMasterRepo.findByDelStatusAndIsActive(1, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllValuesList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resp;
+
+	}
+
+	@RequestMapping(value = { "/deleteValuesMaster" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteValuesMaster(@RequestParam List<String> valIdList) {
+
+		Info info = new Info();
+		try {
+			int res = valuesMasterRepo.deleteValuesMaster(valIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteValuesMaster   " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 
 	// ============Research Center============================
 
@@ -103,7 +188,7 @@ public class InstituteDistApiController {
 		return resp;
 
 	}
-	
+
 	@RequestMapping(value = { "/deleteResearchCenter" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteResearchCenter(@RequestParam List<String> rcIdList) {
 
@@ -131,7 +216,6 @@ public class InstituteDistApiController {
 		return info;
 
 	}
-
 
 	// ============Human Values============================
 
