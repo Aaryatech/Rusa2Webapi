@@ -30,6 +30,10 @@ public class InstituteProfInfoApiController {
 	@Autowired
 	IqacBasicInfoRepo iqacBasicInfoRepo;
 
+	
+	
+	
+	
 	@Autowired
 	InstituteFunctionalMOURepo instituteFunctionalMOURepo;
 
