@@ -59,12 +59,13 @@ public class FacultyDetailRestController {
 	SWOCRepo sWOCRepo;
 
 	@RequestMapping(value = { "/getJournalListByFacultyId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetJournal> getJournalListByFacultyId(@RequestParam int facultyId) {
+	public @ResponseBody List<GetJournal> getJournalListByFacultyId(@RequestParam int facultyId,
+			@RequestParam int yearId) {
 
 		List<GetJournal> jouList = new ArrayList<>();
 
 		try {
-			jouList = getJournalRepo.getJournalRepo(facultyId);
+			jouList = getJournalRepo.getJournalRepo(facultyId, yearId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
@@ -91,12 +92,13 @@ public class FacultyDetailRestController {
 	}
 
 	@RequestMapping(value = { "/getProjectListByFacultyId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetResearchProject> getProjectListByFacultyId(@RequestParam int facultyId) {
+	public @ResponseBody List<GetResearchProject> getProjectListByFacultyId(@RequestParam int facultyId,
+			@RequestParam int yearId) {
 
 		List<GetResearchProject> projList = new ArrayList<>();
 
 		try {
-			projList = getResearchProjectRepo.getProjectList(facultyId);
+			projList = getResearchProjectRepo.getProjectList(facultyId, yearId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());

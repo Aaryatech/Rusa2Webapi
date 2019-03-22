@@ -10,7 +10,7 @@ import com.ats.rusasoft.model.faculty.GetResearchProject;
 
 public interface GetResearchProjectRepo extends JpaRepository<GetResearchProject, Integer> {
 
-	@Query(value = " SELECT * FROM t_faculty_project WHERE t_faculty_project.del_status=1 AND t_faculty_project.faculty_id=:facultyId AND t_faculty_project.is_active=1 ORDER BY t_faculty_project.proj_id DESC   ", nativeQuery = true)
-	List<GetResearchProject> getProjectList(@Param("facultyId") int facultyId);
+	@Query(value = " SELECT * FROM t_faculty_project WHERE t_faculty_project.del_status=1 AND t_faculty_project.faculty_id=:facultyId AND t_faculty_project.year_id=:yearId AND t_faculty_project.is_active=1 ORDER BY t_faculty_project.proj_id DESC   ", nativeQuery = true)
+	List<GetResearchProject> getProjectList(@Param("facultyId") int facultyId, @Param("yearId") int yearId);
 
 }
