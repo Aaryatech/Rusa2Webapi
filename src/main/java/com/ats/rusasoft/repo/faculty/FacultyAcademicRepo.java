@@ -8,4 +8,6 @@ public interface FacultyAcademicRepo extends JpaRepository<FacultyAcademic, Inte
 	
 	FacultyAcademic findByFAcaIdAndDelStatusAndIsActive( int fAcaId, int delStatus, int isActive);
 	
+	FacultyAcademic findByFacultyIdAndDelStatusAndIsActive(int facultyId, int delStatus, int isActive);
+	
 }

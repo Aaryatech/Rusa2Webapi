@@ -63,6 +63,22 @@ public class FacPerDetailController {
 		return facAcaRes;
 	}
 	
+	@RequestMapping(value = { "/getFacAcademicByFacId" }, method = RequestMethod.POST)
+	public @ResponseBody FacultyAcademic getFacAcademicByFacId(
+			@RequestParam int facultyId) {
+
+		FacultyAcademic facAcaRes = null;
+
+		try {
+			facAcaRes = facultyAcademicRepo.findByFacultyIdAndDelStatusAndIsActive(facultyId, 1, 1);
+		} catch (Exception e) {
+			System.err.println("Exce in  getFacAcademicByFacId by FAcadeid" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return facAcaRes;
+	}
+	
 	
 	
 
