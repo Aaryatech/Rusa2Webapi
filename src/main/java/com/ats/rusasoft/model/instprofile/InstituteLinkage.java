@@ -21,7 +21,7 @@ public class InstituteLinkage {
 	private int linknameId ;
 	private String linkAgency ;
 	private String linkNature ;
-	private String linkeneficiary ;
+	private String linkBeneficiary ;
  	private int linkBeneficiaryNos; 
 	private int delStatus;
 	private int isActive;
@@ -64,12 +64,7 @@ public class InstituteLinkage {
 	public void setLinkNature(String linkNature) {
 		this.linkNature = linkNature;
 	}
-	public String getLinkeneficiary() {
-		return linkeneficiary;
-	}
-	public void setLinkeneficiary(String linkeneficiary) {
-		this.linkeneficiary = linkeneficiary;
-	}
+
 	public int getLinkBeneficiaryNos() {
 		return linkBeneficiaryNos;
 	}
@@ -130,23 +125,28 @@ public class InstituteLinkage {
 	public void setLinkId(int linkId) {
 		this.linkId = linkId;
 	}
+	public String getLinkBeneficiary() {
+		return linkBeneficiary;
+	}
+	public void setLinkBeneficiary(String linkBeneficiary) {
+		this.linkBeneficiary = linkBeneficiary;
+	}
 	@Override
 	public String toString() {
 		return "InstituteLinkage [linkId=" + linkId + ", instituteId=" + instituteId + ", yearId=" + yearId
 				+ ", linknameId=" + linknameId + ", linkAgency=" + linkAgency + ", linkNature=" + linkNature
-				+ ", linkeneficiary=" + linkeneficiary + ", linkBeneficiaryNos=" + linkBeneficiaryNos + ", delStatus="
+				+ ", linkBeneficiary=" + linkBeneficiary + ", linkBeneficiaryNos=" + linkBeneficiaryNos + ", delStatus="
 				+ delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerDatetime="
 				+ makerDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2="
 				+ exVar2 + ", getInstituteId()=" + getInstituteId() + ", getYearId()=" + getYearId()
 				+ ", getLinknameId()=" + getLinknameId() + ", getLinkAgency()=" + getLinkAgency() + ", getLinkNature()="
-				+ getLinkNature() + ", getLinkeneficiary()=" + getLinkeneficiary() + ", getLinkBeneficiaryNos()="
-				+ getLinkBeneficiaryNos() + ", getDelStatus()=" + getDelStatus() + ", getIsActive()=" + getIsActive()
-				+ ", getMakerUserId()=" + getMakerUserId() + ", getMakerDatetime()=" + getMakerDatetime()
-				+ ", getExInt1()=" + getExInt1() + ", getExInt2()=" + getExInt2() + ", getExVar1()=" + getExVar1()
-				+ ", getExVar2()=" + getExVar2() + ", getLinkId()=" + getLinkId() + ", getClass()=" + getClass()
+				+ getLinkNature() + ", getLinkBeneficiaryNos()=" + getLinkBeneficiaryNos() + ", getDelStatus()="
+				+ getDelStatus() + ", getIsActive()=" + getIsActive() + ", getMakerUserId()=" + getMakerUserId()
+				+ ", getMakerDatetime()=" + getMakerDatetime() + ", getExInt1()=" + getExInt1() + ", getExInt2()="
+				+ getExInt2() + ", getExVar1()=" + getExVar1() + ", getExVar2()=" + getExVar2() + ", getLinkId()="
+				+ getLinkId() + ", getLinkBeneficiary()=" + getLinkBeneficiary() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
 	
 	
 
