@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.InstituteSupport;
 
 public interface InstituteSupportRepo extends JpaRepository<InstituteSupport, Integer> {
 	
-	List<InstituteSupport> findByInstituteIdAndYearIdAndDelStatusOrderByInstSchemeId(int instituteId, int yId, int del);
+	List<InstituteSupport> findByInstituteIdAndYearIdAndDelStatusOrderByInstSchemeIdDesc(int instituteId, int yId, int del);
 
 	InstituteSupport findByInstSchemeId(int schmId);
 
