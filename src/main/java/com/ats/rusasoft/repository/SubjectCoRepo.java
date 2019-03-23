@@ -22,4 +22,9 @@ public interface SubjectCoRepo extends JpaRepository<SubjectCo, Integer>{
 
 	SubjectCo findByCoIdAndDelStatusAndIsActive(int coId, int i, int j);
 
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE t_faculty_subject_co SET co_name=:coName WHERE co_id IN (:coId) ", nativeQuery = true)
+	int updateSubjeCoName(@Param("coName") String coName,@Param("coId") int coId);
+
 }

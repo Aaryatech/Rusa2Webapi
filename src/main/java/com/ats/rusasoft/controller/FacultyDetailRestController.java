@@ -403,6 +403,34 @@ public class FacultyDetailRestController {
 		return info;
 
 	}
+	
+	@RequestMapping(value = { "/updateSubjeCoName" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateSubjeCoName(@RequestParam("coName") String coName,@RequestParam("coId") int coId) {
+
+		Info info = new Info();
+		try {
+			int res = subjectCoRepo.updateSubjeCoName(coName,coId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteSubjects  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 
 	@RequestMapping(value = { "/getSubjectCoListBySubId" }, method = RequestMethod.POST)
 	public @ResponseBody List<SubjectCo> getSubjectCoListBySubId(@RequestParam int subId, @RequestParam int facultyId) {
