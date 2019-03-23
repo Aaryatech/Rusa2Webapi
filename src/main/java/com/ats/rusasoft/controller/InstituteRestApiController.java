@@ -81,7 +81,7 @@ public class InstituteRestApiController {
 	
 	@RequestMapping(value = {"/getAllInstituteActities"}, method = RequestMethod.POST)
 	public  @ResponseBody List<InstituteActivity>  getAllInstituteActities(@RequestParam("instituteId") int instituteId, @RequestParam("yId") int yId){
-		return instActvRepo.findByInstituteIdAndYearIdAndDelStatusOrderByInstActivityId(instituteId, yId, 1);
+		return instActvRepo.findByInstituteIdAndYearIdAndDelStatusOrderByInstActivityIdDesc(instituteId, yId, 1);
 		
 	}
 	

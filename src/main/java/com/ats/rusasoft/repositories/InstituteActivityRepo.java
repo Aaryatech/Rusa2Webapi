@@ -12,7 +12,7 @@ import com.ats.rusasoft.model.InstituteActivity;
 
 public interface InstituteActivityRepo extends JpaRepository<InstituteActivity, Integer> {
 
-	List<InstituteActivity> findByInstituteIdAndYearIdAndDelStatusOrderByInstActivityId(int instituteId, int yId, int i);
+	List<InstituteActivity> findByInstituteIdAndYearIdAndDelStatusOrderByInstActivityIdDesc(int instituteId, int yId, int i);
 
 	InstituteActivity findByInstActivityId(int instActvId);
 
