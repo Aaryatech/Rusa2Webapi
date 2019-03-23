@@ -21,11 +21,13 @@ import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.IqacList;
 import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.MIqac;
+import com.ats.rusasoft.model.Quolification;
 import com.ats.rusasoft.model.Staff;
 import com.ats.rusasoft.model.StaffList;
 import com.ats.rusasoft.model.StudentSchemeList;
 import com.ats.rusasoft.model.StudentSupprtScheme;
 import com.ats.rusasoft.model.UserLogin;
+import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.UserService;
 import com.ats.rusasoft.repositories.DeanRepo;
 import com.ats.rusasoft.repositories.DeansListRepo;
@@ -505,5 +507,26 @@ public class IqacRestController {
 					 inf.setMsg("Fail");
 				 }
 				 return inf;
+			}
+		 
+/***********************************************************************************************************/
+		 @Autowired
+			QuolificationRepo getQuolificationRepo;
+
+			@RequestMapping(value = { "/getQuolificationListToTeach" }, method = RequestMethod.POST)
+			public @ResponseBody List<Quolification> getQuolificationListToTeach(@RequestParam int type0) {
+
+				List<Quolification> quolList = new ArrayList<>();
+
+				try {
+					quolList = getQuolificationRepo.findByTypeAndDelStatus(type0, 1);
+					System.err.println("teachList1 " + quolList);
+				} catch (Exception e) {
+					System.err.println("Exce in getAllDeptList  " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				return quolList;
+
 			}
 }
