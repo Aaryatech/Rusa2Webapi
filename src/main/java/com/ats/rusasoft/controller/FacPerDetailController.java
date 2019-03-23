@@ -66,11 +66,14 @@ public class FacPerDetailController {
 	@RequestMapping(value = { "/getFacAcademicByFacId" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyAcademic getFacAcademicByFacId(
 			@RequestParam int facultyId) {
+		//System.err.println("getFacAcademicByFacId  facultyId " +facultyId);
+		
 
-		FacultyAcademic facAcaRes = null;
+		FacultyAcademic facAcaRes = new FacultyAcademic();
 
 		try {
 			facAcaRes = facultyAcademicRepo.findByFacultyIdAndDelStatusAndIsActive(facultyId, 1, 1);
+			//System.err.println("facAcaRes  getFacAcademicByFacId " +facAcaRes.toString());
 		} catch (Exception e) {
 			System.err.println("Exce in  getFacAcademicByFacId by FAcadeid" + e.getMessage());
 			e.printStackTrace();
