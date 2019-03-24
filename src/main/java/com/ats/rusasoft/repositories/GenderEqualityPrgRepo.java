@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.IntelPrpoRight;
 
 public interface GenderEqualityPrgRepo extends JpaRepository<GenderEqalityPrg, Integer> {
 
-	List<GenderEqalityPrg> findByInstituteIdAndYearIdAndDelStatusOrderByGprogId(int instituteId, int yId, int del);
+	List<GenderEqalityPrg> findByInstituteIdAndYearIdAndDelStatusOrderByGprogIdDesc(int instituteId, int yId, int del);
 	
 	GenderEqalityPrg findBygprogId(int gndrDataId);
 	

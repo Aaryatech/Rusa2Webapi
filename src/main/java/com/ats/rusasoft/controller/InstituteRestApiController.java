@@ -121,8 +121,7 @@ public class InstituteRestApiController {
 	@RequestMapping(value = {"/getAllIntelPropRights"}, method = RequestMethod.POST)
 	public  @ResponseBody List<IntelPrpoRight>  getintelRightsList(@RequestParam("instituteId") int instituteId, @RequestParam("yId") int yId){
 		
-		return intelRepo.findByInstituteIdAndYearIdAndDelStatusOrderByConId(instituteId, yId, 1);
-		
+		return intelRepo.findByInstituteIdAndYearIdAndDelStatusOrderByConIdDesc(instituteId, yId, 1);
 	}
 	
 	@RequestMapping(value = {"/getIntelPropRigntById"}, method = RequestMethod.POST)
@@ -162,9 +161,8 @@ public class InstituteRestApiController {
 	@RequestMapping(value = {"/getAllGenderEqltyData"}, method = RequestMethod.POST)
 	public  @ResponseBody List<GenderEqalityPrg>  getAllGenderEqltyList(@RequestParam("instituteId") int instituteId, @RequestParam("yId") int yId){
 		
-		return gProgRepo.findByInstituteIdAndYearIdAndDelStatusOrderByGprogId(instituteId, yId, 1);
+		return gProgRepo.findByInstituteIdAndYearIdAndDelStatusOrderByGprogIdDesc(instituteId, yId, 1);
 				
-		
 	}
 	
 	@RequestMapping(value = {"/editGenderEqualityById"}, method = RequestMethod.POST)

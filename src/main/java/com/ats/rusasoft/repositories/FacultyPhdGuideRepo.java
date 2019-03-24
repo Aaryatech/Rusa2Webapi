@@ -12,7 +12,6 @@ import com.ats.rusasoft.model.FacultyPhdGuide;
 
 public interface FacultyPhdGuideRepo extends JpaRepository<FacultyPhdGuide, Integer>{
 
-	List<FacultyPhdGuide> findByFacultyIdAndYearIdAndDelStatusOrderByPhdIdDesc(int facId, int yId, int del);
 	
 	FacultyPhdGuide findByPhdId(int phdId);
 	

@@ -12,7 +12,7 @@ import com.ats.rusasoft.model.IntelPrpoRight;
 
 public interface IntelPropRightRepo extends JpaRepository<IntelPrpoRight, Integer> {
 
-	List<IntelPrpoRight> findByInstituteIdAndYearIdAndDelStatusOrderByConId(int instituteId, int yId, int del);
+	List<IntelPrpoRight> findByInstituteIdAndYearIdAndDelStatusOrderByConIdDesc(int instituteId, int yId, int del);
 
 	IntelPrpoRight findByConId(int conId);
 	

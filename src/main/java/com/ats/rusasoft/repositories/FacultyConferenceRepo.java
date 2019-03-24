@@ -14,7 +14,7 @@ import com.ats.rusasoft.model.FacultyConference;
 public interface FacultyConferenceRepo extends JpaRepository<FacultyConference, Integer> {
 
 	@Modifying
-	@Query(value="SELECT conf_id, conf_name, year_id, faculty_id, conf_name, conf_type, conf_date, conf_venue, conf_fund_from, conf_fund_amt, del_status, is_active, maker_user_id, maker_enter_datetime, ex_int1, ex_var1  FROM t_faculty_conference WHERE del_status=1 AND faculty_id=:facId",nativeQuery=true)
+	@Query(value="SELECT conf_id, conf_name, year_id, faculty_id, conf_name, conf_type, conf_date, conf_venue, conf_fund_from, conf_fund_amt, del_status, is_active, maker_user_id, maker_enter_datetime, ex_int1, ex_var1  FROM t_faculty_conference WHERE del_status=1 AND faculty_id=:facId Order By conf_id Desc",nativeQuery=true)
 	List<FacultyConference> getListFacultyConference(@Param("facId") int facId);
 
 	public FacultyConference findByConfIdAndDelStatus(int facId, int del);

@@ -24,7 +24,7 @@ public class FacultyConference {
 	private Date confDate;
 	private String confVenue;
 	private String 	confFundFrom;
-	private float confFundAmt;
+	private String confFundAmt;
 	private int delStatus;
 	private int isActive;
 	private int makerUserId;
@@ -80,10 +80,10 @@ public class FacultyConference {
 	public void setConfFundFrom(String confFundFrom) {
 		this.confFundFrom = confFundFrom;
 	}
-	public float getConfFundAmt() {
+	public String getConfFundAmt() {
 		return confFundAmt;
 	}
-	public void setConfFundAmt(float confFundAmt) {
+	public void setConfFundAmt(String confFundAmt) {
 		this.confFundAmt = confFundAmt;
 	}
 	public int getDelStatus() {

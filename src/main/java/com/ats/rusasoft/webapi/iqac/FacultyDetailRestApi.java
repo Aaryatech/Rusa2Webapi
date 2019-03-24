@@ -19,6 +19,7 @@ import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.OrganizedList;
 import com.ats.rusasoft.model.StudMentorList;
 import com.ats.rusasoft.model.StudentMentoring;
+import com.ats.rusasoft.model.faculty.PhdGuidList;
 import com.ats.rusasoft.mstrepo.StuedentMentorListRepo;
 import com.ats.rusasoft.repositories.BookPublicatioRepo;
 import com.ats.rusasoft.repositories.FacultyActivityRepo;
@@ -27,6 +28,7 @@ import com.ats.rusasoft.repositories.FacultyContributionRepo;
 import com.ats.rusasoft.repositories.FacultyPhdGuideRepo;
 import com.ats.rusasoft.repositories.ShowOrganizedListRepo;
 import com.ats.rusasoft.repositories.StudentMentoringRepo;
+import com.ats.rusasoft.repository.PhdGuidListRepo;
 
 @RestController
 public class FacultyDetailRestApi {
@@ -46,6 +48,8 @@ public class FacultyDetailRestApi {
 	@Autowired FacultyPhdGuideRepo fphdrepo;
 	
 	@Autowired ShowOrganizedListRepo showOrgnRep;
+	
+	@Autowired PhdGuidListRepo phdListRepo;
 	
 	@RequestMapping(value= {"/insertStudentMentoringDetails"}, method=RequestMethod.POST)
 	public @ResponseBody StudentMentoring insertStudMent(@RequestBody StudentMentoring studMent){
@@ -261,9 +265,9 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getAllPhdGuid"}, method=RequestMethod.POST)
-	public @ResponseBody List<FacultyPhdGuide> getAllPhdGuid(@RequestParam("facId") int facId, @RequestParam("yrId") int yrId ){
+	public @ResponseBody List<PhdGuidList> getAllPhdGuid(@RequestParam("facId") int facId, @RequestParam("yrId") int yrId ){
 		
-		return fphdrepo.findByFacultyIdAndYearIdAndDelStatusOrderByPhdIdDesc(facId, yrId, 1);
+		return phdListRepo.findByFacultyIdAndYearIdAndDelStatusOrderByPhdIdDesc(facId, yrId, 1);
 		
 	}
 	
