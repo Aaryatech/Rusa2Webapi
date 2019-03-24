@@ -51,8 +51,8 @@ public class FacultyDetailRestApi {
 	public @ResponseBody StudentMentoring insertStudMent(@RequestBody StudentMentoring studMent){
 		
 		return studmentrepo.save(studMent);
-		
 	}
+	
 	@RequestMapping(value= {"/getStudentMentoringDetailsById"}, method=RequestMethod.POST)
 	public @ResponseBody StudentMentoring getByFacId(@RequestParam("facId") int facId){
 		
