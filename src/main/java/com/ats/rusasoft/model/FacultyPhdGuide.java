@@ -1,6 +1,5 @@
 package com.ats.rusasoft.model;
 
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,10 +22,10 @@ public class FacultyPhdGuide {
 	private int	isCoGuide;
 	private String coGuideName;
 	private String phdScholarName;
-	private Date phdRegYear;
+	private int phdRegYear;
 	private String phdTopic;
 	private int isPhdAwarded;
-	private Date  phdAwardedYear;
+	private int  phdAwardedYear;
 	private int delStatus;
 	private int	isActive;
 	private int makerUserId;
@@ -76,11 +75,11 @@ public class FacultyPhdGuide {
 	public void setPhdScholarName(String phdScholarName) {
 		this.phdScholarName = phdScholarName;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getPhdRegYear() {
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public int getPhdRegYear() {
 		return phdRegYear;
 	}
-	public void setPhdRegYear(Date phdRegYear) {
+	public void setPhdRegYear(int phdRegYear) {
 		this.phdRegYear = phdRegYear;
 	}
 	public String getPhdTopic() {
@@ -95,11 +94,11 @@ public class FacultyPhdGuide {
 	public void setIsPhdAwarded(int isPhdAwarded) {
 		this.isPhdAwarded = isPhdAwarded;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getPhdAwardedYear() {
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public int getPhdAwardedYear() {
 		return phdAwardedYear;
 	}
-	public void setPhdAwardedYear(Date phdAwardedYear) {
+	public void setPhdAwardedYear(int phdAwardedYear) {
 		this.phdAwardedYear = phdAwardedYear;
 	}
 	public int getDelStatus() {
