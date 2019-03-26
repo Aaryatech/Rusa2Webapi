@@ -95,7 +95,7 @@ public class InstituteDistApiController {
 		List<ValuesMaster> resp = new ArrayList<>();
 
 		try {
-			resp = valuesMasterRepo.findByDelStatusAndIsActive(1, 1);
+			resp = valuesMasterRepo.findByDelStatusAndIsActiveOrderByValMastIdDesc(1, 1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllValuesList  " + e.getMessage());

@@ -54,7 +54,7 @@ public class InstituteVissionMissionRestController {
 
 		try {
 
-			list = intituteisionRepository.findByDelStatusAndIsActiveAndInstituteId(1, 1, instituteId);
+			list = intituteisionRepository.findByDelStatusAndIsActiveAndInstituteIdOrderByInstVisionIdDesc(1, 1, instituteId);
 
 		} catch (Exception e) {
 
@@ -142,7 +142,7 @@ public class InstituteVissionMissionRestController {
 
 		try {
 
-			list = instituteMissionRepository.findByDelStatusAndIsActiveAndInstituteId(1, 1, instituteId);
+			list = instituteMissionRepository.findByDelStatusAndIsActiveAndInstituteIdOrderByInstMissionIdDesc(1, 1, instituteId);
 
 		} catch (Exception e) {
 

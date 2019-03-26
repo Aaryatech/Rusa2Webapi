@@ -205,7 +205,7 @@ public class LibraryApiController {
 		List<AcademicYear> yearList = new ArrayList<>();
 
 		try {
-			yearList = yearRepo.findByTypeAndDelStatus(type, 1);
+			yearList = yearRepo.findByTypeAndDelStatusOrderByYearIdDesc(type, 1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllYearList  " + e.getMessage());

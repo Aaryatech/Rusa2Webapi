@@ -48,7 +48,7 @@ public class FacultyCunsultancyApiController {
  
 		try {
 
-			list = facultyConsultancyRepo.findByFacultyIdAndDelStatusAndIsActiveAndYearId(facultyId,1,1,yearId);
+			list = facultyConsultancyRepo.findByFacultyIdAndDelStatusAndIsActiveAndYearIdOrderByConsIdDesc(facultyId,1,1,yearId);
 
 
 		} catch (Exception e) {

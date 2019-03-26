@@ -10,5 +10,5 @@ import com.ats.rusasoft.model.Designation;
 
 public interface DesignationRepo extends JpaRepository<Designation, Integer> {
 
-	List<Designation> findByDelStatusAndIsActive(@Param("i") int i, @Param("j") int j);
+	List<Designation> findByDelStatusAndIsActiveOrderByDesignationIdDesc(@Param("i") int i, @Param("j") int j);
 }

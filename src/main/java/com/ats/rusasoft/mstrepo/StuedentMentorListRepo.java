@@ -11,7 +11,7 @@ import com.ats.rusasoft.model.StudMentorList;
 public interface StuedentMentorListRepo extends JpaRepository<StudMentorList, Integer> {
 	
 	@Modifying
-	@Query(value="SELECT m.men_id, m.men_stu_count, a.academic_year FROM t_faculty_mentoring m, m_academic_year a WHERE m.faculty_id=a.year_id AND faculty_id=:facId AND m.del_status=1 ORDER BY m.men_id DESC",nativeQuery=true)
-	public List<StudMentorList> getListFacultyMonitor(int facId);
+	@Query(value="SELECT m.men_id, m.men_stu_count, a.academic_year FROM t_faculty_mentoring m, m_academic_year a WHERE m.year_id=a.year_id AND faculty_id=:facId AND m.del_status=1 AND m.year_id=:yearId ORDER BY m.men_id DESC",nativeQuery=true)
+	public List<StudMentorList> getListFacultyMonitor(int facId,int yearId);
 
 }

@@ -18,7 +18,8 @@ public interface InstituteBestPracticesRepo extends JpaRepository<InstituteBestP
 	
 	
 	@Query(value=" SELECT * from  institute_best_practices  where institute_best_practices.institute_id =:instId  and "
-			+ " institute_best_practices.del_status=1 and institute_best_practices.is_active=1  and institute_best_practices.year_id =:yearId ", nativeQuery=true)
+			+ " institute_best_practices.del_status=1 and institute_best_practices.is_active=1  and institute_best_practices.year_id =:yearId "
+			+ "  ORDER BY institute_best_practices.practices_id DESC ", nativeQuery=true)
 	
 	List<InstituteBestPractices> getAllBestPracList(@Param("instId") int instId,@Param("yearId") int yearId);
 

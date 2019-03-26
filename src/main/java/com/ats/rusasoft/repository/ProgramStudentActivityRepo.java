@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.ProgramActivity;
 
 public interface ProgramStudentActivityRepo extends JpaRepository<ProgramActivity, Integer>{
 
-	List<ProgramActivity> findByTypeAndYearId(int type, int yearId);
+	List<ProgramActivity> findByTypeAndYearIdOrderByStudentActivityIdDesc(int type, int yearId);
 
 	@Transactional
 	@Modifying

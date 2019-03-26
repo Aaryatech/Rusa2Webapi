@@ -92,7 +92,7 @@ public class ProgDetailControllerSac {
 		List<Cast> castList = new ArrayList<>();
 
 		try {
-			castList = castRepo.findByDelStatusAndIsActive(1, 1);
+			castList = castRepo.findByDelStatusAndIsActiveOrderByCastIdDesc(1, 1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllCastCategory  " + e.getMessage());

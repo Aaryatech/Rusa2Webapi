@@ -17,7 +17,7 @@ public interface InstituteAMCRepo extends JpaRepository<InstituteAMC, Integer> {
 	
 	
 	@Query(value=" SELECT * from  institute_amc  where institute_amc.institute_id =:instId  and "
-			+ "institute_amc.del_status=1 and institute_amc.is_active=1  and 	institute_amc.year_id =:yearId", nativeQuery=true)
+			+ "institute_amc.del_status=1 and institute_amc.is_active=1  and 	institute_amc.year_id =:yearId ORDER BY institute_amc.amc_id DESC ", nativeQuery=true)
 	
 	List<InstituteAMC> getAllInstituteAMC(@Param("instId") int instId,@Param("yearId") int yearId);
 

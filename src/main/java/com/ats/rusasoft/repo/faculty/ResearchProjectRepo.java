@@ -18,7 +18,7 @@ public interface ResearchProjectRepo extends JpaRepository<ResearchProject, Inte
 	@Query(value = "UPDATE t_faculty_project SET del_status=0 WHERE proj_id IN (:projIdList) ", nativeQuery = true)
 	int deleteResearchDetails(@Param("projIdList") List<String> projIdList);
 
-	List<ResearchProject> findByFacultyIdAndDelStatus(int facultyId, int i);
+	List<ResearchProject> findByFacultyIdAndDelStatusOrderByProjIdDesc(int facultyId, int i);
 
 	ResearchProject findByProjIdAndDelStatus(int projectId, int i);
 

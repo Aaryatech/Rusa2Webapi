@@ -14,7 +14,7 @@ import com.ats.rusasoft.model.InstitueVision;
 
 public interface InstituteMissionRepository extends JpaRepository<InstitueMission, Integer>{
 
-	List<InstitueMission> findByDelStatusAndIsActiveAndInstituteId(int i, int j, int instituteId);
+	List<InstitueMission> findByDelStatusAndIsActiveAndInstituteIdOrderByInstMissionIdDesc(int i, int j, int instituteId);
 
 	@Transactional
 	@Modifying

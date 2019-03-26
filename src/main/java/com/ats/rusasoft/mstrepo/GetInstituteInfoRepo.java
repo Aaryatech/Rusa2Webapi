@@ -18,7 +18,8 @@ public interface GetInstituteInfoRepo  extends JpaRepository<GetInstituteInfo, I
 			+ " t_institute_info_detail.no_current_admited_stnt,t_institute_info_detail.treasury_code, "
 			+ " t_institute_info_detail.rusa_id_no,m_academic_year.academic_year from t_institute_info_detail, "
 			+ " m_academic_year where t_institute_info_detail.del_status=1 and "
-			+ " t_institute_info_detail.year_id=m_academic_year.year_id and t_institute_info_detail.institute_id=:instituteId ",
+			+ " t_institute_info_detail.year_id=m_academic_year.year_id and t_institute_info_detail.institute_id=:instituteId "
+			+ " ORDER BY  t_institute_info_detail.info_detail_id DESC",
 			nativeQuery=true)
 	List<GetInstituteInfo> getAllInstituteList(@Param("instituteId") int instituteId);
 	

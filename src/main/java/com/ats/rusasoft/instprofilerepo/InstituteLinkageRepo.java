@@ -16,7 +16,8 @@ public interface InstituteLinkageRepo extends JpaRepository<InstituteLinkage, In
 	
 	
 	@Query(value=" SELECT * from  t_institute_linkage  where t_institute_linkage.institute_id =:instId  and "
-			+ "t_institute_linkage.del_status=1 and t_institute_linkage.is_active=1  and t_institute_linkage.year_id =:yearId", nativeQuery=true)
+			+ "t_institute_linkage.del_status=1 and t_institute_linkage.is_active=1  and t_institute_linkage.year_id =:yearId"
+			+ " ORDER BY t_institute_linkage.link_id DESC", nativeQuery=true)
 	
 	List<InstituteLinkage> getAllInstKinkagesList(@Param("instId") int instId,@Param("yearId") int yearId);
 

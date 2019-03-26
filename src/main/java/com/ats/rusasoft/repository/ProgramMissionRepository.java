@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.ProgramMission;
 
 public interface ProgramMissionRepository extends JpaRepository<ProgramMission, Integer>{
 
-	List<ProgramMission> findByDelStatusAndIsActiveAndProgramId(int i, int j, int programId);
+	List<ProgramMission> findByDelStatusAndIsActiveAndProgramIdOrderByMissionIdDesc(int i, int j, int programId);
 
 	@Transactional
 	@Modifying

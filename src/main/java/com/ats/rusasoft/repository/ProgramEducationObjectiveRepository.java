@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.ProgramEducationObjective;
 
 public interface ProgramEducationObjectiveRepository extends JpaRepository<ProgramEducationObjective, Integer>{
 
-	List<ProgramEducationObjective> findByDelStatusAndIsActiveAndProgramId(int i, int j, int programId);
+	List<ProgramEducationObjective> findByDelStatusAndIsActiveAndProgramIdOrderByPeoId(int i, int j, int programId);
 
 	@Transactional
 	@Modifying

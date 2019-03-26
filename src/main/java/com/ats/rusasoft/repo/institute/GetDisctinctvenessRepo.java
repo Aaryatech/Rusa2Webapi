@@ -14,7 +14,7 @@ public interface GetDisctinctvenessRepo extends JpaRepository<GetDisctinctveness
 	@Query(value = "SELECT * from  institute_distinctiveness  where institute_distinctiveness."
 			+ "institute_id =:instId  and  institute_distinctiveness.del_status=1 and "
 			+ "institute_distinctiveness.is_active=1  and 	institute_distinctiveness.year_id "
-			+ "=:yearId", nativeQuery = true)
+			+ "=:yearId ORDER BY institute_distinctiveness.dist_id DESC ", nativeQuery = true)
 
 	List<GetDisctinctveness> getAllDistList(@Param("instId") int instId, @Param("yearId") int yearId);
 

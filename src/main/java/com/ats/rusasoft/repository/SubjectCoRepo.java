@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.SubjectCo;
 
 public interface SubjectCoRepo extends JpaRepository<SubjectCo, Integer>{
 
-	List<SubjectCo> findBySubIdAndDelStatusAndIsActiveAndFacultyId(int subId, int i, int j, int facultyId);
+	List<SubjectCo> findBySubIdAndDelStatusAndIsActiveAndFacultyIdOrderByCoIdDesc(int subId, int i, int j, int facultyId);
 
 	@Transactional
 	@Modifying

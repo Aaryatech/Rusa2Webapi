@@ -28,7 +28,7 @@ public interface GetInstTrainTeachDetailRepo extends JpaRepository<GetInstTrainT
 			+ " t_institute_training.year_id,t_institute_training.training_type "
 			+ " FROM t_institute_training  "
 			+ " WHERE "
-			+ "  t_institute_training.training_id=:trainingId ", nativeQuery = true)
+			+ "  t_institute_training.training_id=:trainingId  ", nativeQuery = true)
 
 	GetInstTrainTeachDetail getInstTrainTeachDetailById(@Param("trainingId") int trainingId);
 

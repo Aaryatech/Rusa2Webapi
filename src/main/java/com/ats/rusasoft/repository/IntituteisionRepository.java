@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.InstitueVision;
 
 public interface IntituteisionRepository extends JpaRepository<InstitueVision, Integer>{
 
-	List<InstitueVision> findByDelStatusAndIsActiveAndInstituteId(int i, int j, int instituteId);
+	List<InstitueVision> findByDelStatusAndIsActiveAndInstituteIdOrderByInstVisionIdDesc(int i, int j, int instituteId);
 
 	@Transactional
 	@Modifying

@@ -15,7 +15,8 @@ import com.ats.rusasoft.model.instprofile.InstituteFunctionalMOU;
 public interface InstituteFunctionalMOURepo extends JpaRepository<InstituteFunctionalMOU, Integer> {
 	
 	@Query(value=" SELECT * from  t_institute_mou  where t_institute_mou.institute_id =:instId  and "
-			+ "t_institute_mou.del_status=1 and t_institute_mou.is_active=1  and 	t_institute_mou.year_id =:yearId", nativeQuery=true)
+			+ "t_institute_mou.del_status=1 and t_institute_mou.is_active=1  and 	t_institute_mou.year_id =:yearId"
+			+ "  ORDER BY t_institute_mou.mou_id DESC ", nativeQuery=true)
 	
 	List<InstituteFunctionalMOU> getAllMOUList(@Param("instId") int instId,@Param("yearId") int yearId);
 

@@ -8,7 +8,7 @@ import com.ats.rusasoft.model.Quolification;
 
 public interface QuolificationRepo extends JpaRepository<Quolification, Integer>{
 	
-	List<Quolification> findByTypeAndDelStatus(int type,int delStatus);
+	List<Quolification> findByTypeAndDelStatusOrderByQualificationIdDesc(int type,int delStatus);
 	
 	
 

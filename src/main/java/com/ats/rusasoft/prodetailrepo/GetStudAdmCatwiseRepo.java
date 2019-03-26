@@ -15,7 +15,9 @@ public interface GetStudAdmCatwiseRepo extends JpaRepository<GetStudAdmCatwise, 
 			+ " t_program_student_category.cat_tot_student  FROM t_program_student_category "
 			+ " LEFT JOIN  m_cast ON t_program_student_category.cast_id=m_cast.cast_id "
 			+ " WHERE t_program_student_category.is_active=1 AND t_program_student_category.del_status=1 "
-			+ " AND t_program_student_category.year_id=:yearId AND t_program_student_category.institute_id=:instId ", nativeQuery = true)
+			+ " AND t_program_student_category.year_id=:yearId AND t_program_student_category.institute_id=:instId"
+			+ " ORDER BY t_program_student_category.student_cat_id DESC "
+			+ " ", nativeQuery = true)
 
 	List<GetStudAdmCatwise> getStudAdmCatwise(@Param("instId") int instId, @Param("yearId") int yearId);
 

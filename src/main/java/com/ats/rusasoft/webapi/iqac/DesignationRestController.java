@@ -19,7 +19,7 @@ public class DesignationRestController {
 	@RequestMapping(value= {"/getAllDesignations"}, method=RequestMethod.GET)
 	public @ResponseBody List<Designation> getAllDesignation(){
 		
-		List<Designation> designationList = desgrepo.findByDelStatusAndIsActive(1,1);
+		List<Designation> designationList = desgrepo.findByDelStatusAndIsActiveOrderByDesignationIdDesc(1,1);
 		
 		return designationList;
 		

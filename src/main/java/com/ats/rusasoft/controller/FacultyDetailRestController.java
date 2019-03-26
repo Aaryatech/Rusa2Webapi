@@ -227,7 +227,7 @@ public class FacultyDetailRestController {
 		List<Journal> jouList = new ArrayList<>();
 
 		try {
-			jouList = journalRepo.findByFacultyIdAndDelStatus(facultyId, 1);
+			jouList = journalRepo.findByFacultyIdAndDelStatusOrderByJournalIdDesc(facultyId, 1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
@@ -439,7 +439,7 @@ public class FacultyDetailRestController {
 
 		try {
 
-			List = subjectCoRepo.findBySubIdAndDelStatusAndIsActiveAndFacultyId(subId, 1, 1, facultyId);
+			List = subjectCoRepo.findBySubIdAndDelStatusAndIsActiveAndFacultyIdOrderByCoIdDesc(subId, 1, 1, facultyId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getSubjectBySubId  " + e.getMessage());
@@ -519,7 +519,7 @@ public class FacultyDetailRestController {
 		List<SWOC> swocList = new ArrayList<>();
 
 		try {
-			swocList = sWOCRepo.findByFacultyIdAndDelStatus(facultyId, 1);
+			swocList = sWOCRepo.findByFacultyIdAndDelStatusOrderBySwocIdDesc(facultyId, 1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getSWOCByFacultyId  " + e.getMessage());
@@ -535,7 +535,7 @@ public class FacultyDetailRestController {
 		List<SWOC> swocList = new ArrayList<>();
 
 		try {
-			swocList = sWOCRepo.findByFacultyIdAndDelStatusAndSwocType(facultyId, 1, swocType);
+			swocList = sWOCRepo.findByFacultyIdAndDelStatusAndSwocTypeOrderBySwocIdDesc(facultyId, 1, swocType);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getSWOCByFacultyId  " + e.getMessage());

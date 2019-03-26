@@ -18,7 +18,7 @@ public interface GetAccOfficerRepo  extends JpaRepository<GetAccOfficer, Integer
 			" WHERE m_acc_officer_reg.institute_id=m_institute.institute_id AND "
 			+ " m_acc_officer_reg.qualification_id=m_qualificatoin.qualification_id AND m_acc_officer_reg.is_active=1 "
 			+ " AND m_acc_officer_reg.del_status=1 "
-			+ " AND m_acc_officer_reg.institute_id=:instId ", nativeQuery=true)
+			+ " AND m_acc_officer_reg.institute_id=:instId  ORDER BY m_acc_officer_reg.officer_id DESC ", nativeQuery=true)
 	
 	
 	List<GetAccOfficer> getGetAccOfficer(@Param("instId") int instId);

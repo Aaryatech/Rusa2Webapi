@@ -64,9 +64,9 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getStudentMentoringDetailsList"}, method=RequestMethod.POST)
-	public @ResponseBody List<StudMentorList> getFacultyMonitorList(@RequestParam("facId") int facId){
+	public @ResponseBody List<StudMentorList> getFacultyMonitorList(@RequestParam("facId") int facId,@RequestParam("yearId") int yearId){
 		
-		return smRepo.getListFacultyMonitor(facId);
+		return smRepo.getListFacultyMonitor(facId,yearId);
 	}
 	@RequestMapping(value= {"/editFacultyMentoringDetailsById"}, method=RequestMethod.POST)
 	public @ResponseBody StudentMentoring getFacultyMentor(@RequestParam("mId") int mId){

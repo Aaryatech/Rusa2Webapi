@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.FacultyConsultancy;
 
 public interface FacultyConsultancyRepo extends JpaRepository<FacultyConsultancy, Integer>{
 
-	List<FacultyConsultancy> findByFacultyIdAndDelStatusAndIsActiveAndYearId(int facultyId, int i, int j, int yearId);
+	List<FacultyConsultancy> findByFacultyIdAndDelStatusAndIsActiveAndYearIdOrderByConsIdDesc(int facultyId, int i, int j, int yearId);
 
 	@Transactional
 	@Modifying

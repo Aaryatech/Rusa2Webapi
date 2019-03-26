@@ -288,7 +288,7 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programVisionRepository.findByDelStatusAndIsActiveAndProgramId(1, 1, programId);
+			list = programVisionRepository.findByDelStatusAndIsActiveAndProgramIdOrderByVisionIdDesc(1, 1, programId);
 
 		} catch (Exception e) {
 
@@ -376,7 +376,7 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programMissionRepository.findByDelStatusAndIsActiveAndProgramId(1, 1, programId);
+			list = programMissionRepository.findByDelStatusAndIsActiveAndProgramIdOrderByMissionIdDesc(1, 1, programId);
 
 		} catch (Exception e) {
 
@@ -467,7 +467,7 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programEducationObjectiveRepository.findByDelStatusAndIsActiveAndProgramId(1, 1, programId);
+			list = programEducationObjectiveRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPeoId(1, 1, programId);
 
 		} catch (Exception e) {
 
@@ -557,7 +557,7 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programOutcomeRepository.findByDelStatusAndIsActiveAndProgramId(1, 1, programId);
+			list = programOutcomeRepository.findByDelStatusAndIsActiveAndProgramIdOrderByProgramIdDesc(1, 1, programId);
 
 		} catch (Exception e) {
 
@@ -648,7 +648,7 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programSpeceficOutcomeRepository.findByDelStatusAndIsActiveAndProgramId(1, 1, programId);
+			list = programSpeceficOutcomeRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPsoIdDesc(1, 1, programId);
 
 		} catch (Exception e) {
 

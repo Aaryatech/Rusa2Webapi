@@ -519,7 +519,7 @@ public class IqacRestController {
 				List<Quolification> quolList = new ArrayList<>();
 
 				try {
-					quolList = getQuolificationRepo.findByTypeAndDelStatus(type0, 1);
+					quolList = getQuolificationRepo.findByTypeAndDelStatusOrderByQualificationIdDesc(type0, 1);
 					System.err.println("teachList1 " + quolList);
 				} catch (Exception e) {
 					System.err.println("Exce in getAllDeptList  " + e.getMessage());

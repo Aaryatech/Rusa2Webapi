@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.ProgramVision;
 
 public interface ProgramVisionRepository extends JpaRepository<ProgramVision, Integer>{
  
-	List<ProgramVision> findByDelStatusAndIsActiveAndProgramId(int i, int j, int programId);
+	List<ProgramVision> findByDelStatusAndIsActiveAndProgramIdOrderByVisionIdDesc(int i, int j, int programId);
 
 	@Transactional
 	@Modifying

@@ -15,7 +15,7 @@ public interface LinkageMasterRepo extends JpaRepository<LinkageMaster, Integer>
 
 	
 	@Query(value=" SELECT * from  mi_institute_linkage_master  where mi_institute_linkage_master.institute_id =:instId  and "
-			+ "mi_institute_linkage_master.del_status=1 and mi_institute_linkage_master.is_active=1  ", nativeQuery=true)
+			+ "mi_institute_linkage_master.del_status=1 and mi_institute_linkage_master.is_active=1 ORDER BY mi_institute_linkage_master.linkname_id DESC   ", nativeQuery=true)
 	
 	List<LinkageMaster> getAllInstKinkagesList(@Param("instId") int instId);
 

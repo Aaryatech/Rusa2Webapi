@@ -13,7 +13,7 @@ public interface GetResearchCenterRepo extends JpaRepository<GetResearchCenter, 
 	@Query(value = "SELECT * from  institute_research_center  where institute_research_center."
 			+ "institute_id =:instId  and  institute_research_center.del_status=1 and "
 			+ "institute_research_center.is_active=1  and 	institute_research_center.year_id "
-			+ "=:yearId", nativeQuery = true)
+			+ "=:yearId ORDER BY institute_research_center.rc_id DESC ", nativeQuery = true)
 
 	List<GetResearchCenter> getAllRecearchCenterList(@Param("instId") int instId, @Param("yearId") int yearId);
 

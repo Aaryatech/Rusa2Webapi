@@ -20,6 +20,7 @@ public interface DeptRepo extends JpaRepository<Dept, Integer> {
 	
 	
 	
+	
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE m_dept SET del_status=0 WHERE dept_id IN (:deptIdList) ",nativeQuery=true)

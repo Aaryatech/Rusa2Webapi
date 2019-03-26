@@ -536,7 +536,7 @@ public class MasterApiController {
 		List<Quolification> quolList = new ArrayList<>();
 
 		try {
-			quolList = getQuolificationRepo.findByTypeAndDelStatus(type, 1);
+			quolList = getQuolificationRepo.findByTypeAndDelStatusOrderByQualificationIdDesc(type, 1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllDeptList  " + e.getMessage());

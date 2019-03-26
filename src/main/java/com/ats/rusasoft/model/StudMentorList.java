@@ -1,6 +1,7 @@
 package com.ats.rusasoft.model;
 
 import javax.persistence.Entity;
+
 import javax.persistence.Id;
 
 @Entity

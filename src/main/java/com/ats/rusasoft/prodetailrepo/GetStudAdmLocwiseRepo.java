@@ -16,7 +16,8 @@ public interface GetStudAdmLocwiseRepo extends JpaRepository<GetStudAdmLocwise, 
 			+ " FROM t_program_student_location LEFT JOIN  m_location "
 			+ " ON t_program_student_location.location_id=m_location.location_id "
 			+ " WHERE t_program_student_location.is_active=1 AND t_program_student_location.del_status=1 "
-			+ " AND t_program_student_location.year_id=:yearId AND t_program_student_location.institute_id=:instId ", nativeQuery = true)
+			+ " AND t_program_student_location.year_id=:yearId AND t_program_student_location.institute_id=:instId "
+			+ " ORDER BY t_program_student_location.student_loc_id DESC  ", nativeQuery = true)
 
 	List<GetStudAdmLocwise> getStudAdmLocwise(@Param("instId") int instId, @Param("yearId") int yearId);
 

@@ -17,7 +17,7 @@ public interface GetTrainPlaceRepo extends JpaRepository<GetTrainPlace, Integer>
 			+ " FROM t_traning_placement INNER JOIN m_program_type ON "
 			+ " t_traning_placement.program_type=m_program_type.program_id "
 			+ " WHERE t_traning_placement.year_id=:yearId AND t_traning_placement.institute_id=:instId "
-			+ " AND t_traning_placement.del_status=1 AND t_traning_placement.is_active=1   ", nativeQuery=true)
+			+ " AND t_traning_placement.del_status=1 AND t_traning_placement.is_active=1 ORDER BY t_traning_placement.placement_id DESC    ", nativeQuery=true)
 	List<GetTrainPlace> getGetTrainPlace(@Param("instId") int instId, @Param("yearId") int yearId);
 
 }

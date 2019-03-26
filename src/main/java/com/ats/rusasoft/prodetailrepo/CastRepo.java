@@ -9,7 +9,7 @@ import com.ats.rusasoft.model.progdetail.Cast;
 public interface CastRepo extends JpaRepository<Cast, Integer>{
 	
 	
-	List<Cast> findByDelStatusAndIsActive(int delStatus, int isActive);
+	List<Cast> findByDelStatusAndIsActiveOrderByCastIdDesc(int delStatus, int isActive);
 	
 	
 

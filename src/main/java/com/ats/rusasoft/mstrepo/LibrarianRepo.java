@@ -21,6 +21,7 @@ public interface LibrarianRepo extends JpaRepository<Librarian, Integer> {
 
 	Librarian findByLibrarianId(int libId); 
 
+	
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE m_librarian_reg SET del_status=0 WHERE librarian_id IN (:libIdList) ",nativeQuery=true)

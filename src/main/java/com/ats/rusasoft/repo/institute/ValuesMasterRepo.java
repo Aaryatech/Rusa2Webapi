@@ -20,6 +20,6 @@ public interface ValuesMasterRepo extends JpaRepository<ValuesMaster, Integer> {
 
 	ValuesMaster findByValMastIdAndDelStatus(int valMstId, int i);
 
-	List<ValuesMaster> findByDelStatusAndIsActive(int i, int j);
+	List<ValuesMaster> findByDelStatusAndIsActiveOrderByValMastIdDesc(int i, int j);
 
 }

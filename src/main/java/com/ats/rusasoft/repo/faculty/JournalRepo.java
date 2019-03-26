@@ -22,6 +22,6 @@ public interface JournalRepo extends JpaRepository<Journal, Integer> {
 	@Query(value = "UPDATE t_faculty_journal SET del_status=0 WHERE journal_id IN (:jouIdList) ", nativeQuery = true)
 	int deleteJournals(@Param("jouIdList") List<String> jouIdList);
 
-	List<Journal> findByFacultyIdAndDelStatus(int facultyId, int i);
+	List<Journal> findByFacultyIdAndDelStatusOrderByJournalIdDesc(int facultyId, int i);
 
 }

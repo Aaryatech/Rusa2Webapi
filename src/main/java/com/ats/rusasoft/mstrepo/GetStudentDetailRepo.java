@@ -20,7 +20,8 @@ public interface GetStudentDetailRepo extends JpaRepository<GetStudentDetail, In
 			+ " m_academic_year.academic_year " + 
 			" from m_student_reg,m_institute,m_dept,m_academic_year where m_student_reg.del_status=1 AND " + 
 			" m_student_reg.institute_id=m_institute.institute_id AND m_dept.dept_id=m_student_reg.dept_id and "
-			+ " m_student_reg.acadamic_year=m_academic_year.year_id AND m_student_reg.institute_id =:instituteId ",nativeQuery=true)
+			+ " m_student_reg.acadamic_year=m_academic_year.year_id AND m_student_reg.institute_id =:instituteId "
+			+ "ORDER BY m_student_reg.student_id DESC",nativeQuery=true)
 	List<GetStudentDetail> getAllStudentList1(@Param("instituteId") int instituteId);
 	
 
