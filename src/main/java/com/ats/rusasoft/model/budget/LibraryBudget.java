@@ -12,13 +12,13 @@ public class LibraryBudget {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int infraBudgetId ;
+	private int libBudgetId ;
 	
 	private int finYearId;
 	private int acYearId;
 	private int instituteId;
 	
-	private String infraBudgetTitle;
+	private String libBudgetTitle;
 	
 	private int budgetAllocated ;
 	private int budgetUtilized; 
@@ -35,13 +35,6 @@ public class LibraryBudget {
 	private String exVar2;
 	
 	
-	
-	public int getInfraBudgetId() {
-		return infraBudgetId;
-	}
-	public void setInfraBudgetId(int infraBudgetId) {
-		this.infraBudgetId = infraBudgetId;
-	}
 	public int getFinYearId() {
 		return finYearId;
 	}
@@ -59,12 +52,6 @@ public class LibraryBudget {
 	}
 	public void setInstituteId(int instituteId) {
 		this.instituteId = instituteId;
-	}
-	public String getInfraBudgetTitle() {
-		return infraBudgetTitle;
-	}
-	public void setInfraBudgetTitle(String infraBudgetTitle) {
-		this.infraBudgetTitle = infraBudgetTitle;
 	}
 	public int getBudgetAllocated() {
 		return budgetAllocated;
@@ -126,14 +113,25 @@ public class LibraryBudget {
 	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
+	public int getLibBudgetId() {
+		return libBudgetId;
+	}
+	public void setLibBudgetId(int libBudgetId) {
+		this.libBudgetId = libBudgetId;
+	}
+	public String getLibBudgetTitle() {
+		return libBudgetTitle;
+	}
+	public void setLibBudgetTitle(String libBudgetTitle) {
+		this.libBudgetTitle = libBudgetTitle;
+	}
 	@Override
 	public String toString() {
-		return "LibraryBudget [infraBudgetId=" + infraBudgetId + ", finYearId=" + finYearId + ", acYearId=" + acYearId
-				+ ", instituteId=" + instituteId + ", infraBudgetTitle=" + infraBudgetTitle + ", budgetAllocated="
+		return "LibraryBudget [libBudgetId=" + libBudgetId + ", finYearId=" + finYearId + ", acYearId=" + acYearId
+				+ ", instituteId=" + instituteId + ", libBudgetTitle=" + libBudgetTitle + ", budgetAllocated="
 				+ budgetAllocated + ", budgetUtilized=" + budgetUtilized + ", addBy=" + addBy + ", addDatetime="
 				+ addDatetime + ", delStatus=" + delStatus + ", isActive=" + isActive + ", exInt1=" + exInt1
 				+ ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + "]";
 	}
-	
 
 }
