@@ -472,12 +472,12 @@ public class IqacRestController {
 			
 		}
 		
-		@RequestMapping(value = {"/getAllStudentSchemes"}, method=RequestMethod.GET)
-		public @ResponseBody List<StudentSchemeList> getAllStudentSchemes() {
+		@RequestMapping(value = {"/getAllStudentSchemes"}, method=RequestMethod.POST)
+		public @ResponseBody List<StudentSchemeList> getAllStudentSchemes(@RequestParam("yearId") int yearId,@RequestParam("instId") int instId) {
 			
 			List<StudentSchemeList> studSchmList = null;
 			try {
-				studSchmList = studrepo.getStudentSchemeList();
+				studSchmList = studrepo.getStudentSchemeList(yearId,instId);
 				
 			}catch(Exception e){
 				e.printStackTrace();
