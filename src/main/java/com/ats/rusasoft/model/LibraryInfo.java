@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="m_iqac")
+@Table(name="m_library_info")
 public class LibraryInfo {
 	
 	@Id
@@ -148,7 +148,7 @@ public class LibraryInfo {
 	public void setIsPlanning(int isPlanning) {
 		this.isPlanning = isPlanning;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDateOfPlanningEstablishment() {
 		return dateOfPlanningEstablishment;
 	}
@@ -161,7 +161,7 @@ public class LibraryInfo {
 	public void setIsAdministration(int isAdministration) {
 		this.isAdministration = isAdministration;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDateOfAdministrationEstablishment() {
 		return dateOfAdministrationEstablishment;
 	}
@@ -174,7 +174,7 @@ public class LibraryInfo {
 	public void setIsFinanceAcc(int isFinanceAcc) {
 		this.isFinanceAcc = isFinanceAcc;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDateOfFinanceEstablishment() {
 		return dateOfFinanceEstablishment;
 	}
@@ -187,7 +187,7 @@ public class LibraryInfo {
 	public void setIsStudentAdmition(int isStudentAdmition) {
 		this.isStudentAdmition = isStudentAdmition;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDateOfStudentEstablishment() {
 		return dateOfStudentEstablishment;
 	}
@@ -200,7 +200,7 @@ public class LibraryInfo {
 	public void setIsExamination(int isExamination) {
 		this.isExamination = isExamination;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDateOfExaminationEstablishment() {
 		return dateOfExaminationEstablishment;
 	}

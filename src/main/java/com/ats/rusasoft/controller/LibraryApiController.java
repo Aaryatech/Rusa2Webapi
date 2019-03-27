@@ -23,6 +23,7 @@ import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.InstituteInfo;
 import com.ats.rusasoft.model.Librarian;
+import com.ats.rusasoft.model.LibraryInfo;
 import com.ats.rusasoft.model.Principal;
 import com.ats.rusasoft.model.Quolification;
 import com.ats.rusasoft.model.Student;
@@ -38,6 +39,7 @@ import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
 import com.ats.rusasoft.mstrepo.UserService;
 import com.ats.rusasoft.prodetailrepo.StudentSuppSchemeRepo;
+import com.ats.rusasoft.repository.LibraryInfoRepo;
 
 @RestController
 public class LibraryApiController {
@@ -58,11 +60,16 @@ public class LibraryApiController {
 
 	@Autowired
 	GetInstituteInfoRepo getInstInfoRepo;
+	
+	@Autowired
+	LibraryInfoRepo libInfoRepo;
 
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static String senderPassword = "atsinfosoft@123";
 	static String mailsubject = " RUSA Login Credentials ";
 
+	
+	
 	@RequestMapping(value = { "/saveLibrarian" }, method = RequestMethod.POST)
 	public @ResponseBody Librarian saveLibrarian(@RequestBody Librarian librarian) {
 
@@ -466,5 +473,73 @@ public class LibraryApiController {
 		return info;
 
 	}
+	
+	/**************************************************************************************************/
+	@RequestMapping(value = { "/insertlibBasicInfo" }, method = RequestMethod.POST)
+	public @ResponseBody LibraryInfo saveLibBasicInfo(@RequestBody LibraryInfo libInfo) {
+		LibraryInfo lib = null;
+		try {
+			lib =  libInfoRepo.save(libInfo);
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+		return lib;
+	}
+	
+	@RequestMapping(value = { "/libBasicInfoList" }, method = RequestMethod.POST)
+	public @ResponseBody List<LibraryInfo> showLibBasicInfo(@RequestParam int instituteId) {
+		
+		List<LibraryInfo> libList = null;
+		try {
+			libList = libInfoRepo.findByInstituteIdAndDelStatus(instituteId, 1);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return libList;
+	}
+	
+	
+	@RequestMapping(value = { "/editlibBasicInfoById" }, method = RequestMethod.POST)
+	public @ResponseBody LibraryInfo editlibBasicInfoById(@RequestParam int libInfoId) {
+		
+		LibraryInfo editLib = null;
+		try {
+			
+		     editLib = libInfoRepo.findByLibInfoId(libInfoId);
+		     
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return editLib;
+	}
+	
+	@RequestMapping(value = { "/deletelibBasicInfoById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletelibBasicInfoById(@RequestParam int libInfoId) {
+		
+		Info info = new Info();
+		try {
+			int res = libInfoRepo. deleteLibraryBasicInfoById(libInfoId);
 
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deletelibBasicInfoById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	
+		
+	}
 }
