@@ -301,7 +301,7 @@ public class BudgetControllerSac {
 		
 		//B
 		
-		@RequestMapping(value = { "/getWasteMngtBudgetByFinYearId" }, method = RequestMethod.POST)
+		 @RequestMapping(value = { "/getWasteMngtBudgetByFinYearId" }, method = RequestMethod.POST)
 		public @ResponseBody WasteMngtBudget getWasteMngtBudgetByFinYearId(
 				@RequestParam int curFinYear) {
 
