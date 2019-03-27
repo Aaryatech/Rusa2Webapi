@@ -26,6 +26,7 @@ import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.LibraryInfo;
 import com.ats.rusasoft.model.Principal;
 import com.ats.rusasoft.model.Quolification;
+import com.ats.rusasoft.model.RareBook;
 import com.ats.rusasoft.model.Student;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.mstrepo.AcademicYearRepo;
@@ -40,6 +41,7 @@ import com.ats.rusasoft.mstrepo.StudentRepo;
 import com.ats.rusasoft.mstrepo.UserService;
 import com.ats.rusasoft.prodetailrepo.StudentSuppSchemeRepo;
 import com.ats.rusasoft.repository.LibraryInfoRepo;
+import com.ats.rusasoft.repository.RareBookRepo;
 
 @RestController
 public class LibraryApiController {
@@ -63,6 +65,9 @@ public class LibraryApiController {
 	
 	@Autowired
 	LibraryInfoRepo libInfoRepo;
+	
+	@Autowired
+	RareBookRepo rarebookrepo;
 
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static String senderPassword = "atsinfosoft@123";
@@ -533,6 +538,79 @@ public class LibraryApiController {
 		} catch (Exception e) {
 
 			System.err.println("Exce in deletelibBasicInfoById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	
+		
+	}
+	
+	/**************************************************************************************************/
+	
+	@RequestMapping(value = { "/saveRareBook" }, method = RequestMethod.POST)
+	public @ResponseBody RareBook saveRareBook(@RequestBody RareBook rareBook) {
+		RareBook rarBook = null;
+		
+		
+		try {
+			
+			rarBook = rarebookrepo.save(rareBook);
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+		return rarBook;
+	}
+	
+	@RequestMapping(value = { "/showRareBooksInfo" }, method = RequestMethod.POST)
+	public @ResponseBody List<RareBook> showRareBooksInfo(@RequestParam int instituteId) {
+		
+		List<RareBook> bookList = null;
+		try {
+			bookList = rarebookrepo.findByInstituteIdAndDelStatusOrderByRareBookInfoIdDesc(instituteId, 1);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return bookList;
+	}
+	
+	@RequestMapping(value = { "/getRareBookById" }, method = RequestMethod.POST)
+	public @ResponseBody RareBook getRareBookById(@RequestParam int bookId) {
+		
+		RareBook editBook = null;
+		try {
+			
+			editBook = rarebookrepo.findByRareBookInfoId(bookId);
+		     
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return editBook;
+	}
+	
+	@RequestMapping(value = { "/deleteRareBookById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteRareBookById(@RequestParam int bookId) {
+		
+		Info info = new Info();
+		try {
+			int res = rarebookrepo.deleteRareBookInfoById(bookId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteRareBookById  " + e.getMessage());
 			e.printStackTrace();
 			info.setError(true);
 			info.setMsg("excep");
