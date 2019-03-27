@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.budgetrepo.FinancialYearRepo;
 import com.ats.rusasoft.budgetrepo.GetInfraStructureBudgetRepo;
 import com.ats.rusasoft.budgetrepo.GetLibraryBudgetRepo;
+import com.ats.rusasoft.budgetrepo.GetWasteMngtBudgetRepo;
 import com.ats.rusasoft.budgetrepo.InfraStructureBudgetRepo;
 import com.ats.rusasoft.budgetrepo.LibraryBudgetRepo;
+import com.ats.rusasoft.budgetrepo.WasteMngtBudgetRepo;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.budget.FinancialYear;
 import com.ats.rusasoft.model.budget.GetInfraStructureBudget;
 import com.ats.rusasoft.model.budget.GetLibraryBudget;
+import com.ats.rusasoft.model.budget.GetWasteMngtBudget;
 import com.ats.rusasoft.model.budget.InfraStructureBudget;
 import com.ats.rusasoft.model.budget.LibraryBudget;
+import com.ats.rusasoft.model.budget.WasteMngtBudget;
 
 @RestController
 public class BudgetControllerSac {
@@ -243,5 +247,133 @@ public class BudgetControllerSac {
 
 		return facAcaRes;
 	}
+	
+	//deleteLibBudget
+	
+	@RequestMapping(value = { "/deleteLibBudget" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteLibBudget(@RequestParam List<String> libBudgetIdList) {
 
+		Info info = new Info();
+		try {
+			int res = libraryBudgetRepo.deleteLibBudget(libBudgetIdList);
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteLibBudget  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	@Autowired WasteMngtBudgetRepo wasteMngtBudgetRepo;
+	@Autowired GetWasteMngtBudgetRepo getWasteMngtBudgetRepo;
+	
+	//waste Budget Start A
+	
+		@RequestMapping(value = { "/getWasteMngtBudgetListByAcYearId" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetWasteMngtBudget> getWasteMngtBudgetListByAcYearId(@RequestParam int instId, 
+				@RequestParam int acYearId) {
+
+			List<GetWasteMngtBudget>  budgetList= new ArrayList<GetWasteMngtBudget>();
+
+			try {
+				
+				budgetList = getWasteMngtBudgetRepo.getWasteMngtBudgetList(instId, acYearId);
+				
+			} catch (Exception e) {
+				System.err.println("Exce in  getWasteMngtBudgetListByAcYearId" + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return budgetList;
+		}
+		
+		//B
+		
+		@RequestMapping(value = { "/getWasteMngtBudgetByFinYearId" }, method = RequestMethod.POST)
+		public @ResponseBody WasteMngtBudget getWasteMngtBudgetByFinYearId(
+				@RequestParam int curFinYear) {
+
+			WasteMngtBudget budgetRes = null;
+
+			try {
+				budgetRes = wasteMngtBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+			} catch (Exception e) {
+				System.err.println("Exce in  getWasteMngtBudgetByFinYearId " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return budgetRes;
+		}
+		
+		//C
+		@RequestMapping(value = { "/saveWasteMngtBudget" }, method = RequestMethod.POST)
+		public @ResponseBody WasteMngtBudget saveWasteMngtBudget(
+				@RequestBody WasteMngtBudget budget) {
+
+			WasteMngtBudget budgetRes = null;
+
+			try {
+				budgetRes = wasteMngtBudgetRepo.save(budget);
+			} catch (Exception e) {
+				System.err.println("Exce in saving saveWasteMngtBudget " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return budgetRes;
+		}
+		//D
+		@RequestMapping(value = { "/getWasteMngtBudgetBywasteMngtBudgetId" }, method = RequestMethod.POST)
+		public @ResponseBody WasteMngtBudget getWasteMngtBudgetBywasteMngtBudgetId(
+				@RequestParam int wasteMngtBudgetId) {
+
+			WasteMngtBudget budgetRes = null;
+
+			try {
+				budgetRes = wasteMngtBudgetRepo.findByDelStatusAndIsActiveAndWasteMngtBudgetId(1, 1, wasteMngtBudgetId);
+			} catch (Exception e) {
+				System.err.println("Exce in  getWasteMngtBudgetBywasteMngtBudgetId " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return budgetRes;
+		}
+		
+		//deleteLibBudget
+		//E
+		@RequestMapping(value = { "/deleteWasteMngtBudget" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteWasteMngtBudget(@RequestParam List<String> wasteMngtBudgetIdList) {
+
+			Info info = new Info();
+			try {
+				int res = wasteMngtBudgetRepo.deleteWasteMngtBudget(wasteMngtBudgetIdList);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteWasteMngtBudget  " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			return info;
+		}
+//waste Budget End
 }
