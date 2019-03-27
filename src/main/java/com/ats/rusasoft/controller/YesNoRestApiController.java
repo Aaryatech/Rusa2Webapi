@@ -143,7 +143,7 @@ public class YesNoRestApiController {
 
 		try {
 
-			list = instituteYesNoRepository.findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndSectionCode(instituteId,1,1,yearId,secCode);
+			list = instituteYesNoRepository.findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndSectionCodeOrderByInstYesnoIdDesc(instituteId,1,1,yearId,secCode);
 
 		} catch (Exception e) {
 

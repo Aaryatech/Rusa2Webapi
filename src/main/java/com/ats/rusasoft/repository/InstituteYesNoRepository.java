@@ -18,7 +18,7 @@ public interface InstituteYesNoRepository extends JpaRepository<InstituteYesNo, 
 	List<InstituteYesNo> findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndYesnoPagecode(int instituteId, int i,
 			int j, int yearId, String pageCode);
 
-	List<InstituteYesNo> findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndSectionCode(int instituteId, int i, int j,
+	List<InstituteYesNo> findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndSectionCodeOrderByInstYesnoIdDesc(int instituteId, int i, int j,
 			int yearId, String secCode);
 
 	@Transactional
