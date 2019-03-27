@@ -13,17 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoft.budgetrepo.FinancialYearRepo;
 import com.ats.rusasoft.budgetrepo.GetInfraStructureBudgetRepo;
+import com.ats.rusasoft.budgetrepo.GetLibraryBookBudgetRepo;
 import com.ats.rusasoft.budgetrepo.GetLibraryBudgetRepo;
 import com.ats.rusasoft.budgetrepo.GetWasteMngtBudgetRepo;
 import com.ats.rusasoft.budgetrepo.InfraStructureBudgetRepo;
+import com.ats.rusasoft.budgetrepo.LibraryBookBudgetRepo;
 import com.ats.rusasoft.budgetrepo.LibraryBudgetRepo;
 import com.ats.rusasoft.budgetrepo.WasteMngtBudgetRepo;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.budget.FinancialYear;
 import com.ats.rusasoft.model.budget.GetInfraStructureBudget;
+import com.ats.rusasoft.model.budget.GetLibraryBookBudget;
 import com.ats.rusasoft.model.budget.GetLibraryBudget;
 import com.ats.rusasoft.model.budget.GetWasteMngtBudget;
 import com.ats.rusasoft.model.budget.InfraStructureBudget;
+import com.ats.rusasoft.model.budget.LibraryBookBudget;
 import com.ats.rusasoft.model.budget.LibraryBudget;
 import com.ats.rusasoft.model.budget.WasteMngtBudget;
 
@@ -376,4 +380,109 @@ public class BudgetControllerSac {
 			return info;
 		}
 //waste Budget End
+		
+		
+		
+		
+		//For Harsha
+		//LB Budget Start A
+		
+		@Autowired LibraryBookBudgetRepo libraryBookBudgetRepo;
+		@Autowired GetLibraryBookBudgetRepo getLibraryBookBudgetRepo;
+		
+			@RequestMapping(value = { "/getLibraryBookBudgetListByAcYearId" }, method = RequestMethod.POST)
+			public @ResponseBody List<GetLibraryBookBudget> getLibraryBookBudgetListByAcYearId(@RequestParam int instId, 
+					@RequestParam int acYearId) {
+
+				List<GetLibraryBookBudget>  budgetList= new ArrayList<GetLibraryBookBudget>();
+
+				try {
+					
+					budgetList = getLibraryBookBudgetRepo.getLibraryBookBudgetList(instId, acYearId);
+					
+				} catch (Exception e) {
+					System.err.println("Exce in  getWasteMngtBudgetListByAcYearId" + e.getMessage());
+					e.printStackTrace();
+				}
+
+				return budgetList;
+			}
+			
+			//B
+			
+			 @RequestMapping(value = { "/getLibBoookBudgetByFinYearId" }, method = RequestMethod.POST)
+			public @ResponseBody LibraryBookBudget getLibBoookBudgetByFinYearId(
+					@RequestParam int curFinYear) {
+
+				 LibraryBookBudget budgetRes = null;
+
+				try {
+					budgetRes = libraryBookBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+				} catch (Exception e) {
+					System.err.println("Exce in  getWasteMngtBudgetByFinYearId " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				return budgetRes;
+			}
+			
+			//C
+			@RequestMapping(value = { "/saveLibBookBudget" }, method = RequestMethod.POST)
+			public @ResponseBody LibraryBookBudget saveLibBookBudget(
+					@RequestBody LibraryBookBudget budget) {
+
+				LibraryBookBudget budgetRes = null;
+
+				try {
+					budgetRes = libraryBookBudgetRepo.save(budget);
+				} catch (Exception e) {
+					System.err.println("Exce in saving saveLibBookBudget " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				return budgetRes;
+			}
+			//D
+			@RequestMapping(value = { "/getLibBookBudgetByLibBookBudgetId" }, method = RequestMethod.POST)
+			public @ResponseBody LibraryBookBudget getLibBookBudgetByLibBookBudgetId(
+					@RequestParam int libraryBookBudgetId) {
+
+				LibraryBookBudget budgetRes = null;
+
+				try {
+					budgetRes = libraryBookBudgetRepo.findByDelStatusAndIsActiveAndLibraryBookBudgetId(1, 1, libraryBookBudgetId);
+				} catch (Exception e) {
+					System.err.println("Exce in  getWasteMngtBudgetBywasteMngtBudgetId " + e.getMessage());
+					e.printStackTrace();
+				}
+
+				return budgetRes;
+			}
+			
+			//deleteLibBookBudget
+			//E
+			@RequestMapping(value = { "/deleteLibBookBudget" }, method = RequestMethod.POST)
+			public @ResponseBody Info deleteLibBookBudget(@RequestParam List<String> libBookBudgetIdList) {
+
+				Info info = new Info();
+				try {
+					int res = libraryBookBudgetRepo.deleteLibBookBudget(libBookBudgetIdList);
+					if (res > 0) {
+						info.setError(false);
+						info.setMsg("success");
+					} else {
+						info.setError(true);
+						info.setMsg("failed");
+					}
+				} catch (Exception e) {
+
+					System.err.println("Exce in deleteLibBookBudget  " + e.getMessage());
+					e.printStackTrace();
+					info.setError(true);
+					info.setMsg("excep");
+				}
+
+				return info;
+			}
+	//waste Budget End
 }
