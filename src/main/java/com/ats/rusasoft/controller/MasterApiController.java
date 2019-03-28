@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -949,5 +950,39 @@ public class MasterApiController {
 
 		return sb.toString();
 	}
+	
+	@RequestMapping(value = { "/showInstituteData" }, method = RequestMethod.POST)
+	public @ResponseBody Institute approveInstitutes(@RequestParam("instId") int instId) {
+		
+		Institute instiData = null; 
+		try {
+			
+			instiData = instituteRepo.findByInstituteId(instId);
+			 
+			
+		}catch(Exception e) {
+			
+		}
+		return instiData;
+		
+	}
+	
+	@RequestMapping(value= {"/deleteInstituteById"}, method=RequestMethod.POST)
+	public @ResponseBody Info deleteByIqacById(@RequestParam("instId") int instId){
+		int isDelete=0;
+		 isDelete= instituteRepo.delPendingInst(instId);
+		 Info inf = new Info();
+		 if(isDelete>0) {
+			 inf.setError(false);
+			 inf.setMsg("Sucessfully Deleted");
+		 }
+		 else{
+			 inf.setError(true);
+			 inf.setMsg("Fail");
+		 }
+		 return inf;
+	}
+	
+
 
 }

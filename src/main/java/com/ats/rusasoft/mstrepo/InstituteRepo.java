@@ -29,4 +29,9 @@ public interface InstituteRepo extends JpaRepository<Institute, Integer> {
 	
 	List<Institute> findByContactNoAndEmailAndInstituteIdNot(String contactNo,String email,int instId );
 	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE m_institute SET del_status=0 WHERE institute_id=:instId",nativeQuery=true)
+	int delPendingInst(int instId);
+	
 }
