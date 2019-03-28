@@ -497,7 +497,7 @@ public class LibraryApiController {
 		
 		List<LibraryInfo> libList = null;
 		try {
-			libList = libInfoRepo.findByInstituteIdAndDelStatus(instituteId, 1);
+			libList = libInfoRepo.findByInstituteIdAndDelStatusOrderByLibInfoIdDesc(instituteId, 1);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

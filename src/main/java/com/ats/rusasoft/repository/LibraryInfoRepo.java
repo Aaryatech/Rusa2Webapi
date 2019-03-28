@@ -12,12 +12,12 @@ import com.ats.rusasoft.model.LibraryInfo;
 
 public interface LibraryInfoRepo extends JpaRepository<LibraryInfo, Integer> {
 	
-	List<LibraryInfo> findByInstituteIdAndDelStatus(int instituteId, int del);
+	List<LibraryInfo> findByInstituteIdAndDelStatusOrderByLibInfoIdDesc(int instituteId, int del);
 
 	LibraryInfo findByLibInfoId(int libInfoId);
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE m_library_info SET del_status=0 WHERE lib_info_id=:libInfoId ", nativeQuery = true)
+	@Query(value = "UPDATE m_library_info SET del_status=0 WHERE lib_info_id=:libInfoId ",nativeQuery = true)
 	int deleteLibraryBasicInfoById(int libInfoId);
 }
