@@ -38,4 +38,6 @@ public interface UserService extends JpaRepository<UserLogin, Integer> {
 	@Query(value = "UPDATE t_user_login SET is_block=0 WHERE reg_primary_key=:regPrimaryKey and user_type=:userType", nativeQuery = true)
 	int blockPreviousHodRecord(@Param("regPrimaryKey") int regPrimaryKey, @Param("userType") int userType);
 
+	UserLogin findByUserNameAndIsBlock(String userName, int isBlock);
+
 }

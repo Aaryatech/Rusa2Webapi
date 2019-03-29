@@ -124,7 +124,7 @@ public class EmailUtility {
 		}
 
 	
-	public static Info sendOtp(String OTP, String phoneNo) {
+	public static Info sendOtp(String OTP, String phoneNo,String msg) {
 		
 		Info info=new Info();
 		
@@ -138,7 +138,7 @@ public class EmailUtility {
 			map.add("user", "spdrusamah@gmail.com:Cyber@mva");
 			map.add("receipientno", phoneNo.trim());
 			map.add("dcs", "0");
-			map.add("msgtxt","OTP From RUSA  "+OTP);
+			map.add("msgtxt"," "+OTP);
 			map.add("state", "4");
 			
 			String response = restTemplate.postForObject("http://api.mVaayoo.com/mvaayooapi/MessageCompose", map,

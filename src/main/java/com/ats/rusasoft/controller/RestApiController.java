@@ -1,5 +1,6 @@
 package com.ats.rusasoft.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoft.model.LoginResponse;
+import com.ats.rusasoft.model.OTPVerification;
+import com.ats.rusasoft.model.Student;
 import com.ats.rusasoft.model.UserLogin;
+import com.ats.rusasoft.common.Commons;
+import com.ats.rusasoft.common.EmailUtility;
+import com.ats.rusasoft.model.AccOfficer;
 import com.ats.rusasoft.model.GetUserDetail;
+import com.ats.rusasoft.model.Hod;
 import com.ats.rusasoft.model.Info;
+import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.InstituteInfo;
+import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.LoginLog;
 import com.ats.rusasoft.mstrepo.GetUserDataRepo;
 import com.ats.rusasoft.mstrepo.LoginLogRepo;
@@ -42,6 +51,168 @@ public class RestApiController {
 	
 	
 
+	static String senderEmail = "atsinfosoft@gmail.com";
+	static String senderPassword = "atsinfosoft@123";
+	static String mailsubject = " RUSA Otp  Verification ";
+	static String otp1=null;
+	
+	@RequestMapping(value = { "/checkUserName" }, method = RequestMethod.POST)
+	public @ResponseBody Info checkUserName(@RequestParam String  inputValue) {
+		
+		OTPVerification.setConNumber(null);
+		OTPVerification.setEmailId(null);
+		OTPVerification.setOtp(null);
+		OTPVerification.setPass(null);
+		
+		
+		
+		
+		
+		System.err.println("Its userName "+inputValue);
+		Info info = new Info();
+		// tableId 1 for Institute tableId 2 for Hod for Sachin table id 5 for acc
+		// Officer
+		
+			UserLogin instList = new UserLogin();
+	System.err.println("Its New Record Insert ");
+					instList = userServices.findByUserNameAndIsBlock(inputValue.trim(), 1);
+				
+	if (instList!=null)
+	{
+		
+		System.err.println("In if " +instList.toString());
+		
+			info.setError(false);
+			info.setMsg("matched");
+			
+			System.err.println("Matched ");
+		//	int userId=	instList.getUserId();
+			int typeId=instList.getUserType();
+			int regKey=instList.getRegPrimaryKey();
+			
+			
+			GetUserDetail userDetail=null;
+			if(typeId == 1) 
+			{
+			   userDetail = userDataRepo.getPrinciDetails(regKey);
+			  
+			  
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			else if(typeId == 2) {
+				 userDetail = userDataRepo.getIqacDetails(regKey);
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			else if(typeId == 3) {
+				 userDetail = userDataRepo.getHodDetails(regKey);
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			else if(typeId == 4) {
+				 userDetail = userDataRepo.getFacultyDetails(regKey);
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			else if(typeId == 5) {
+				 userDetail = userDataRepo.getOfficerDetails(regKey);
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			
+			else if(typeId == 6) {
+				 userDetail = userDataRepo.getDeanDetails(regKey);
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			else if(typeId == 7) {
+			userDetail = userDataRepo.getLibrarianDetails(regKey);
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			else {
+			 userDetail = userDataRepo.getStudentDetails(regKey);
+			      System.err.println("User data is"+userDetail.toString());
+			}
+			String emailId=userDetail.getUserEmail();
+			String conNumber=userDetail.getUserConNumber();
+		
+			
+			
+			 System.err.println("User data is"+userDetail.toString());
+			char[] otp = Commons.OTP(6);
+			
+		
+			otp1=String.valueOf(otp);
+			info.setMsg(" Matched");
+			System.err.println("User otp is"+otp1);
+			Info inf= EmailUtility.sendOtp(otp1, conNumber,"Rusa OTP Verification");
+			
+			System.out.println("info ires"+inf.toString());
+			
+			OTPVerification.setConNumber(conNumber);
+			OTPVerification.setEmailId(emailId);
+			OTPVerification.setOtp(otp1);
+			OTPVerification.setPass(instList.getPass());
+			
+			
+      }
+ else 
+ {
+	 System.err.println("In Else ");
+		
+				info.setError(true);
+				info.setMsg("not Matched");
+				System.err.println(" not Matched ");
+	}
+
+
+		return info;
+
+	}
+
+	
+	@RequestMapping(value = { "/VerifyOTP" }, method = RequestMethod.POST)
+	public @ResponseBody Info VerifyOTP(@RequestParam String  otp) {
+	Info info=new Info();
+	try {
+		
+		
+		if(otp.equals(OTPVerification.getOtp())==true) {
+			info.setError(false);
+			info.setMsg("success");
+	
+			String mobile=OTPVerification.getConNumber();
+			String email=OTPVerification.getEmailId();
+			String pass=OTPVerification.getPass();
+			System.out.println("");
+			
+			
+			
+			Info inf= EmailUtility.sendOtp(pass, mobile,"Password From RUSA ");
+				/*
+				 * Info info1 = EmailUtility.sendEmail(senderEmail, senderPassword, email,
+				 * mailsubject, email, pass);
+				 */
+
+			System.err.println("Info email sent response   " + inf.toString());
+			
+			
+			
+			  } else { 
+				  info.setError(true);
+				  info.setMsg("failed");
+			  
+			  }
+			 
+	}catch (Exception e) {
+		
+		System.err.println("Exce in getAllInstitutes Institute " +e.getMessage());
+		e.printStackTrace();
+		info.setError(true);
+		info.setMsg("excep");
+	}
+	
+	return info;
+	
+}
+
+	
+	
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	
 	public @ResponseBody LoginResponse loginUser(@RequestParam("username") String userName,
