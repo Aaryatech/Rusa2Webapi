@@ -53,12 +53,14 @@ public class BudgetApiController {
 	}
 
 	@RequestMapping(value = { "/getAcademicBudgetByFinYearId" }, method = RequestMethod.POST)
-	public @ResponseBody AcademicBudget getAcademicBudgetByFinYearId(@RequestParam int curFinYear) {
+	public @ResponseBody AcademicBudget getAcademicBudgetByFinYearId(@RequestParam int curFinYear,
+			@RequestParam int instituteId) {
 
 		AcademicBudget facAcaRes = null;
 
 		try {
-			facAcaRes = academicBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+			facAcaRes = academicBudgetRepo.findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(1, 1, curFinYear,
+					instituteId);
 		} catch (Exception e) {
 			System.err.println("Exce in  getAcademicBudgetByFinYearId " + e.getMessage());
 			e.printStackTrace();
@@ -144,12 +146,14 @@ public class BudgetApiController {
 	}
 
 	@RequestMapping(value = { "/getphysicalFacilityBudgetByFinYearId" }, method = RequestMethod.POST)
-	public @ResponseBody PhysicalFacilityBudget getphysicalFacilityBudgetByFinYearId(@RequestParam int curFinYear) {
+	public @ResponseBody PhysicalFacilityBudget getphysicalFacilityBudgetByFinYearId(@RequestParam int curFinYear,
+			@RequestParam int instituteId) {
 
 		PhysicalFacilityBudget facAcaRes = null;
 
 		try {
-			facAcaRes = physicalFacilityBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+			facAcaRes = physicalFacilityBudgetRepo.findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(1, 1,
+					curFinYear, instituteId);
 		} catch (Exception e) {
 			System.err.println("Exce in  getphysicalFacilityBudgetByFinYearId " + e.getMessage());
 			e.printStackTrace();

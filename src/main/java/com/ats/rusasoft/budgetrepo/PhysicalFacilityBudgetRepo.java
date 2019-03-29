@@ -23,4 +23,7 @@ public interface PhysicalFacilityBudgetRepo extends JpaRepository<PhysicalFacili
 	@Query(value = "UPDATE t_physical_facility_budget SET del_status=0 WHERE physical_facility_budget_id IN (:phyBudgetIdList) ", nativeQuery = true)
 	int deletePhysicalBud(@Param("phyBudgetIdList") List<String> phyBudgetIdList);
 
+	PhysicalFacilityBudget findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(int i, int j, int curFinYear,
+			int instituteId);
+
 }

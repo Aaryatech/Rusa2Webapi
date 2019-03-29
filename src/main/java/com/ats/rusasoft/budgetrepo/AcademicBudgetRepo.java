@@ -18,11 +18,12 @@ public interface AcademicBudgetRepo extends JpaRepository<AcademicBudget, Intege
 	List<AcademicBudget> findByInstituteIdAndAcYearIdAndDelStatusAndIsActive(int instId, int acYearId, int i, int j);
 
 	AcademicBudget findByDelStatusAndIsActiveAndFinYearId(int i, int j, int curFinYear);
-	
-	
+
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE t_academic_budget SET del_status=0 WHERE academic_budget_id IN (:academicIdList) ", nativeQuery = true)
 	int deleteAcademic(@Param("academicIdList") List<String> academicIdList);
+
+	AcademicBudget findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(int i, int j, int curFinYear, int instituteId);
 
 }
