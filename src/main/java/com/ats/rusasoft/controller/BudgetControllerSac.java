@@ -97,12 +97,12 @@ public class BudgetControllerSac {
 	
 	@RequestMapping(value = { "/getInfraStructureBudgetByFinYearId" }, method = RequestMethod.POST)
 	public @ResponseBody InfraStructureBudget getInfraStructureBudgetByFinYearId(
-			@RequestParam int curFinYear) {
+			@RequestParam int curFinYear,@RequestParam int instId) {
 
 		InfraStructureBudget facAcaRes = null;
 
 		try {
-			facAcaRes = infraStructureBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+			facAcaRes = infraStructureBudgetRepo.findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(1, 1, curFinYear, instId);
 		} catch (Exception e) {
 			System.err.println("Exce in  getInfraStructureBudgetByFinYearId " + e.getMessage());
 			e.printStackTrace();
@@ -205,12 +205,12 @@ public class BudgetControllerSac {
 	
 	@RequestMapping(value = { "/getLibBudgetByFinYearId" }, method = RequestMethod.POST)
 	public @ResponseBody LibraryBudget getLibBudgetByFinYearId(
-			@RequestParam int curFinYear) {
+			@RequestParam int curFinYear, @RequestParam int instId) {
 
 		LibraryBudget facAcaRes = null;
 
 		try {
-			facAcaRes = libraryBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+			facAcaRes = libraryBudgetRepo.findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(1,1,curFinYear,instId);
 		} catch (Exception e) {
 			System.err.println("Exce in  getLibBudgetByFinYearId " + e.getMessage());
 			e.printStackTrace();
@@ -307,12 +307,12 @@ public class BudgetControllerSac {
 		
 		 @RequestMapping(value = { "/getWasteMngtBudgetByFinYearId" }, method = RequestMethod.POST)
 		public @ResponseBody WasteMngtBudget getWasteMngtBudgetByFinYearId(
-				@RequestParam int curFinYear) {
+				@RequestParam int curFinYear,@RequestParam int instId) {
 
 			WasteMngtBudget budgetRes = null;
 
 			try {
-				budgetRes = wasteMngtBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+				budgetRes = wasteMngtBudgetRepo.findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(1, 1, curFinYear,instId);
 			} catch (Exception e) {
 				System.err.println("Exce in  getWasteMngtBudgetByFinYearId " + e.getMessage());
 				e.printStackTrace();
@@ -412,12 +412,12 @@ public class BudgetControllerSac {
 			
 			 @RequestMapping(value = { "/getLibBoookBudgetByFinYearId" }, method = RequestMethod.POST)
 			public @ResponseBody LibraryBookBudget getLibBoookBudgetByFinYearId(
-					@RequestParam int curFinYear) {
+					@RequestParam int curFinYear,@RequestParam int instId) {
 
 				 LibraryBookBudget budgetRes = null;
 
 				try {
-					budgetRes = libraryBookBudgetRepo.findByDelStatusAndIsActiveAndFinYearId(1, 1, curFinYear);
+					budgetRes = libraryBookBudgetRepo.findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(1, 1, curFinYear, instId);
 				} catch (Exception e) {
 					System.err.println("Exce in  getWasteMngtBudgetByFinYearId " + e.getMessage());
 					e.printStackTrace();

@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.budget.WasteMngtBudget;
 
 public interface WasteMngtBudgetRepo extends JpaRepository<WasteMngtBudget, Integer> {
 
-	WasteMngtBudget findByDelStatusAndIsActiveAndFinYearId(int i, int j, int curFinYear);
+	WasteMngtBudget findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(int i, int j, int curFinYear,int instId);
 
 	WasteMngtBudget findByDelStatusAndIsActiveAndWasteMngtBudgetId(int i, int j, int wasteMngtBudgetId);
 

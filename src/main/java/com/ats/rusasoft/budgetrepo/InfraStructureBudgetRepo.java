@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.budget.InfraStructureBudget;
 
 public interface InfraStructureBudgetRepo extends JpaRepository<InfraStructureBudget, Integer>{
 	
-	InfraStructureBudget findByDelStatusAndIsActiveAndFinYearId(int d,int i, int curFinYear);
+	InfraStructureBudget findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(int d,int i, int curFinYear, int instId);
 	
 	InfraStructureBudget findByDelStatusAndIsActiveAndInfraBudgetId(int d,int i, int infraBudgetId);
 	

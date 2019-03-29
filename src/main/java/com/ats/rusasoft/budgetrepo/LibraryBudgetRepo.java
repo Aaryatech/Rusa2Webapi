@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.budget.LibraryBudget;
 
 public interface LibraryBudgetRepo extends JpaRepository<LibraryBudget, Integer>{
 
-	LibraryBudget findByDelStatusAndIsActiveAndFinYearId(int i, int j, int curFinYear);
+	LibraryBudget findByDelStatusAndIsActiveAndFinYearIdAndInstituteId(int i, int j, int curFinYear, int instId);
 	
 	
 	LibraryBudget findByDelStatusAndIsActiveAndLibBudgetId(int i, int j, int libBudgetId);
