@@ -439,4 +439,32 @@ public class FacultyDetailRestApi {
 		 }
 		 return inf;
 	}
+	
+	@RequestMapping(value = { "/deletePhdGuidList" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePhdGuidList(@RequestParam List<String> phdIdsList) {
+
+		Info info = new Info();
+		try {
+			int res = fphdrepo.delPhds(phdIdsList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 }
