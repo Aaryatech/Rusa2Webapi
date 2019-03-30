@@ -1,6 +1,8 @@
 package com.ats.rusasoft.repositories;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +22,11 @@ public interface StudentMentoringRepo extends JpaRepository<StudentMentoring, In
 	@Modifying
 	@Query(value="UPDATE t_faculty_mentoring SET del_status=0 WHERE men_id=:mId",nativeQuery=true)
 	public int deleteByMenId(int mId);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE t_faculty_mentoring SET del_status=0  WHERE men_id IN (:menIdList) ",nativeQuery=true)
+	public int deleteSelStudMentor(@Param("menIdList") List<String> menIdList);
 
 	
 	

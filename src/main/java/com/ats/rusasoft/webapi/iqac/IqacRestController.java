@@ -383,6 +383,34 @@ public class IqacRestController {
 		 return inf;
 	}
 	
+
+	@RequestMapping(value = { "/deleteStaffSlected" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteStaffs(@RequestParam List<String> staffIdList) {
+
+		Info info = new Info();
+		try {
+			int res = staffrepo.deleteStaffs(staffIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 	/*******************************************DEAN********************************************/
 	
 	@RequestMapping(value = {"/saveNewDean"}, method=RequestMethod.POST)

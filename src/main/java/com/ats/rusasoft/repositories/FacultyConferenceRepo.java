@@ -22,7 +22,12 @@ public interface FacultyConferenceRepo extends JpaRepository<FacultyConference, 
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE t_faculty_conference SET del_status=0 WHERE conf_id=:facId",nativeQuery=true)
-	int deleteByFacId(@Param("facId") int facId);	
+	int deleteByFacId(@Param("facId") int facId);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE t_faculty_conference SET del_status=0  WHERE conf_id IN (:confIdList)",nativeQuery=true)
+	int deletePubDetails(@Param("confIdList") List<String> confIdList);	
 	
 	
 }
