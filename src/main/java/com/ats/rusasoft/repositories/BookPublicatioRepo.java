@@ -21,4 +21,9 @@ public interface BookPublicatioRepo extends JpaRepository<FacultyBook, Integer> 
 	@Modifying
 	@Query(value="UPDATE t_faculty_book SET del_status=0 WHERE book_id=:bookId",nativeQuery=true)
 	int deleteByBookId(@Param("bookId") int bookId);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE t_faculty_book SET del_status=0  WHERE book_id IN (:bookIdsList) ",nativeQuery=true)
+	int delPubJournals(@Param("bookIdsList") List<String> bookIdsList);
 }

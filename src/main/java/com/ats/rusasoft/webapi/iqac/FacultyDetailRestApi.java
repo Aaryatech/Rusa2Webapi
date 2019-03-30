@@ -230,6 +230,35 @@ public class FacultyDetailRestApi {
 		 return inf;
 	}
 	
+	@RequestMapping(value = { "/delFacultyPubJournals" }, method = RequestMethod.POST)
+	public @ResponseBody Info delFacultyPubJournals(@RequestParam List<String> bookIdsList) {
+
+		Info info = new Info();
+		try {
+			int res = bookpubrepo.delPubJournals(bookIdsList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
+	
 	/***************************************************Facultity Activity**************************************************/
 	
 	@RequestMapping(value= {"/insertFacultyActivity"}, method=RequestMethod.POST)
@@ -269,6 +298,34 @@ public class FacultyDetailRestApi {
 			 inf.setMsg("Fail");
 		 }
 		 return inf;
+	}
+	
+	@RequestMapping(value = { "/deleteOrgActivity" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteOrgActivity(@RequestParam List<String> activityIdList) {
+
+		Info info = new Info();
+		try {
+			int res = facAcRepo.delOrgActivity(activityIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
 	}
 	
 	/**********************************Faculty Contribution*************************************************/
@@ -311,6 +368,34 @@ public class FacultyDetailRestApi {
 			 inf.setMsg("Fail");
 		 }
 		 return inf;
+	}
+	
+	@RequestMapping(value = { "/deleteOutReachContiList" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteOutReachContiList(@RequestParam List<String> facContIdsList) {
+
+		Info info = new Info();
+		try {
+			int res = facContriRepo.deleteOutReachContributn(facContIdsList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
 	}
 	
 	/***************************************Faculty Phd Guide*******************************************/
