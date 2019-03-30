@@ -91,6 +91,35 @@ public class FacultyDetailRestApi {
 		 return inf;
 	}
 	
+		
+	@RequestMapping(value = { "/delSlectedStudMentor"}, method = RequestMethod.POST)
+	public @ResponseBody Info deleteInstLinkages(@RequestParam List<String> menIdList) {
+
+		Info info = new Info();
+		try {
+			int res = studmentrepo.deleteSelStudMentor(menIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 	/*************************************Faculty Conference**********************************/
 	
 	@RequestMapping(value= {"/insertNewFacConference"}, method=RequestMethod.POST)
@@ -129,6 +158,35 @@ public class FacultyDetailRestApi {
 		 }
 		 return inf;
 	}
+	
+	@RequestMapping(value = { "/delPubicationDetails" }, method = RequestMethod.POST)
+	public @ResponseBody Info delPubicationDetails(@RequestParam List<String> confIdList) {
+
+		Info info = new Info();
+		try {
+			int res = facconRepo.deletePubDetails(confIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 	
 	/***************************************Book Publication************************************/
 	
