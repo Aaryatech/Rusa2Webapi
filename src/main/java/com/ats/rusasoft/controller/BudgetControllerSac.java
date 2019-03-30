@@ -463,7 +463,7 @@ public class BudgetControllerSac {
 			//E
 			@RequestMapping(value = { "/deleteLibBookBudget" }, method = RequestMethod.POST)
 			public @ResponseBody Info deleteLibBookBudget(@RequestParam List<String> libBookBudgetIdList) {
-
+					System.err.println("libBookBudgetIdList"+libBookBudgetIdList.toString());
 				Info info = new Info();
 				try {
 					int res = libraryBookBudgetRepo.deleteLibBookBudget(libBookBudgetIdList);
