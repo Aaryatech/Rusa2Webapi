@@ -92,7 +92,7 @@ public class LibraryApiController {
 				System.err.println("pass is " + pass);
 				ul.setUserType(7);
 				ul.setPass(pass);
-				ul.setUserName(userName);
+				ul.setUserName(librarian.getEmail());
 				ul.setIsBlock(1);
 				ul.setRegPrimaryKey(libResp.getLibrarianId());
 				ul.setRoleId(8);
@@ -264,7 +264,7 @@ public class LibraryApiController {
 				System.err.println("pass is " + pass);
 				ul.setUserType(8);
 				ul.setPass(pass);
-				ul.setUserName(userName);
+				ul.setUserName(student.getEmail());
 				ul.setIsBlock(1);
 				ul.setRegPrimaryKey(studResp.getStudentId());
 				ul.setRoleId(9);

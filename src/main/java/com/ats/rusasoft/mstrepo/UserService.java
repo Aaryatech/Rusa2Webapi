@@ -18,7 +18,7 @@ public interface UserService extends JpaRepository<UserLogin, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "UPDATE t_user_login SET pass=:password ,ex_int1=1   WHERE user_id=:userId ", nativeQuery = true)
+	@Query(value = "UPDATE t_user_login SET pass=:password ,ex_int1=0   WHERE user_id=:userId ", nativeQuery = true)
 	int chagePass(@Param("password") String password, @Param("userId") int userId);
 
 	@Transactional
