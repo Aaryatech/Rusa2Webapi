@@ -20,6 +20,11 @@ public interface IntelPropRightRepo extends JpaRepository<IntelPrpoRight, Intege
 	@Modifying
 	@Query(value = "UPDATE institute_ivsr_contribution SET del_status=0 WHERE con_id = :conId",nativeQuery=true)
 	int deleteIntelRightById(int conId);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE institute_ivsr_contribution SET del_status=0  WHERE con_id IN (:rightIdList) ",nativeQuery=true)
+	int deleteSelIntellRight(List<String> rightIdList);
 	
 	
 }

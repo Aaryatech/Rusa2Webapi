@@ -21,5 +21,10 @@ public interface GenderEqualityPrgRepo extends JpaRepository<GenderEqalityPrg, I
 	@Modifying
 	@Query(value = "UPDATE institute_ivsr_gender_prog SET del_status=0 WHERE gprog_id = :gndrDataId",nativeQuery=true)
 	int deleteGendrEqltyById(int gndrDataId);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE institute_ivsr_gender_prog SET del_status=0  WHERE gprog_id IN (:gndreqtyIdList) ",nativeQuery=true)
+	int deleteSelGenderEquitys(List<String> gndreqtyIdList);
 	
 }

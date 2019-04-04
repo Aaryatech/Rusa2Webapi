@@ -206,6 +206,34 @@ public class InstituteRestApiController {
 		
 	}
 	
+	@RequestMapping(value = { "/deleteIntelRights"}, method = RequestMethod.POST)
+	public @ResponseBody Info deleteIntelRights(@RequestParam List<String> rightIdList) {
+
+		Info info = new Info();
+		try {
+			int res = intelRepo.deleteSelIntellRight(rightIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 	/******************************************Gender Equality Programe*********************************************/
 	
 	@RequestMapping(value = {"/addGendrEqtyPrg"}, method = RequestMethod.POST)
@@ -247,6 +275,33 @@ public class InstituteRestApiController {
 		 return inf;
 		
 	}
-	
+
+	@RequestMapping(value = { "/deleteGenderEquity"}, method = RequestMethod.POST)
+	public @ResponseBody Info deleteGenderEquity(@RequestParam List<String> gndreqtyIdList) {
+
+		Info info = new Info();
+		try {
+			int res = gProgRepo.deleteSelGenderEquitys(gndreqtyIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 
 }
