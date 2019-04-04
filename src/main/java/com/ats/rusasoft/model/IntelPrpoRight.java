@@ -21,7 +21,7 @@ public class IntelPrpoRight {
 	private String conName;
 	private Date conFromdt;
 	private Date conTodt;
-	private String conPcount;
+	private int conPcount;
 	private int delStatus;
 	private int isActive;
 	private int makerUserId;
@@ -66,10 +66,10 @@ public class IntelPrpoRight {
 	public void setConTodt(Date conTodt) {
 		this.conTodt = conTodt;
 	}
-	public String getConPcount() {
+	public int getConPcount() {
 		return conPcount;
 	}
-	public void setConPcount(String conPcount) {
+	public void setConPcount(int conPcount) {
 		this.conPcount = conPcount;
 	}
 	public int getDelStatus() {

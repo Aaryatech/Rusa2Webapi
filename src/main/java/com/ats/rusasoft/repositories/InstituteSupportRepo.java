@@ -22,6 +22,11 @@ public interface InstituteSupportRepo extends JpaRepository<InstituteSupport, In
 	@Query(value = "UPDATE t_institute_schemes SET del_status=0 WHERE inst_scheme_id = :schmId",nativeQuery=true)
 	int deleteByInstSuprtSchmId(@Param("schmId") int schmId);
 	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE t_institute_schemes SET del_status=0  WHERE inst_scheme_id IN (:instIdList) ",nativeQuery=true)
+	int deleteSelInstSupport(@Param("instIdList")List<String> instIdList);
+	
 }
 
 

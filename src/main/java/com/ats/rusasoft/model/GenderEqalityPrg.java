@@ -22,7 +22,7 @@ public class GenderEqalityPrg {
 	private String gprogName;
 	private Date gprogFromdt;
 	private Date gprogTodt;
-	private String 	gprogPcount;
+	private int	gprogPcount;
 	private int delStatus;
 	private int isActive;
 	private int makerUserId;
@@ -57,10 +57,10 @@ public class GenderEqalityPrg {
 	public void setGprogTodt(Date gprogTodt) {
 		this.gprogTodt = gprogTodt;
 	}
-	public String getGprogPcount() {
+	public int getGprogPcount() {
 		return gprogPcount;
 	}
-	public void setGprogPcount(String gprogPcount) {
+	public void setGprogPcount(int gprogPcount) {
 		this.gprogPcount = gprogPcount;
 	}
 	public int getInstituteId() {

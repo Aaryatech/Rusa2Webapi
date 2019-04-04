@@ -24,7 +24,7 @@ public class InstituteActivity {
 	private String instActivityName;
 	private Date instActivityFromdt;
 	private Date instActivityTodt;
-	private String instActivityParticipation;
+	private int instActivityParticipation;
 	private int delStatus;
 	private int isActive;
 	private int makerUserId;
@@ -83,10 +83,10 @@ public class InstituteActivity {
 	public void setInstActivityTodt(Date instActivityTodt) {
 		this.instActivityTodt = instActivityTodt;
 	}
-	public String getInstActivityParticipation() {
+	public int getInstActivityParticipation() {
 		return instActivityParticipation;
 	}
-	public void setInstActivityParticipation(String instActivityParticipation) {
+	public void setInstActivityParticipation(int instActivityParticipation) {
 		this.instActivityParticipation = instActivityParticipation;
 	}
 	public int getDelStatus() {

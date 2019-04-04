@@ -70,6 +70,35 @@ public class InstituteRestApiController {
 		
 	}
 	
+	@RequestMapping(value = { "/deletinstSupport"}, method = RequestMethod.POST)
+	public @ResponseBody Info deleteInstLinkages(@RequestParam List<String> instIdList) {
+
+		Info info = new Info();
+		try {
+			int res = instSuprtRepo.deleteSelInstSupport(instIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
+	
 	/*****************************************Institute Activity*********************************************/
 	
 	@RequestMapping(value = {"/addNewInstituteActity"}, method = RequestMethod.POST)
@@ -108,6 +137,34 @@ public class InstituteRestApiController {
 		 }
 		 return inf;
 		
+	}
+	
+	@RequestMapping(value = { "/deleteOrgActivities"}, method = RequestMethod.POST)
+	public @ResponseBody Info deleteOrgActivities(@RequestParam List<String> activityIdList) {
+
+		Info info = new Info();
+		try {
+			int res = instActvRepo.deleteSelOrgActivity(activityIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
 	}
 	
 	/**********************************Intelectual Property Right********************************/
