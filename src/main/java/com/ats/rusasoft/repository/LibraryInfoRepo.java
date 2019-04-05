@@ -20,4 +20,9 @@ public interface LibraryInfoRepo extends JpaRepository<LibraryInfo, Integer> {
 	@Modifying
 	@Query(value = "UPDATE m_library_info SET del_status=0 WHERE lib_info_id=:libInfoId ",nativeQuery = true)
 	int deleteLibraryBasicInfoById(int libInfoId);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE m_library_info SET del_status=0  WHERE lib_info_id IN (:libIdList) ",nativeQuery=true)
+	int deleteLibInfo(List<String> libIdList);
 }

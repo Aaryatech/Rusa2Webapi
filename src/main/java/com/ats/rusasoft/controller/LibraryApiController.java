@@ -548,6 +548,33 @@ public class LibraryApiController {
 		
 	}
 	
+	@RequestMapping(value = { "/deleteSelLib" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelLib(@RequestParam List<String> libIdList) {
+
+		Info info = new Info();
+		try {
+			int res = libInfoRepo.deleteLibInfo(libIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 	/**************************************************************************************************/
 	
 	@RequestMapping(value = { "/saveRareBook" }, method = RequestMethod.POST)
@@ -617,7 +644,32 @@ public class LibraryApiController {
 		}
 
 		return info;
+	}
 	
-		
+	@RequestMapping(value = { "/deleteSelRareBooks" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelRareBooks(@RequestParam List<String> rareBookIdList) {
+
+		Info info = new Info();
+		try {
+			int res = rarebookrepo.deleteRareBooks(rareBookIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
 	}
 }
