@@ -1,14 +1,10 @@
 package com.ats.rusasoft.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="t_faculty_book")
@@ -27,7 +23,7 @@ public class FacultyBook {
 		private String bookCoauther3;
 		private String bookPublisher;
 		private String bookIsbn;
-		private Date bookPubYear;
+		private String bookPubYear;
 		private int delStatus;
 		private int isActive;
 		private int makerUserId;
@@ -114,11 +110,11 @@ public class FacultyBook {
 		public void setBookIsbn(String bookIsbn) {
 			this.bookIsbn = bookIsbn;
 		}
-		@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-		public Date getBookPubYear() {
+		
+		public String getBookPubYear() {
 			return bookPubYear;
 		}
-		public void setBookPubYear(Date bookPubYear) {
+		public void setBookPubYear(String bookPubYear) {
 			this.bookPubYear = bookPubYear;
 		}
 		public int getDelStatus() {
