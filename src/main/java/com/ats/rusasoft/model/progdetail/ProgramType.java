@@ -17,7 +17,7 @@ public class ProgramType {
 	private String programName; 
 	
 	private int delStatus; 	
-	private int sequence;
+	private String sequence;
 	
 	private int isActive;
 
@@ -45,11 +45,11 @@ public class ProgramType {
 		this.delStatus = delStatus;
 	}
 
-	public int getSequence() {
+	public String getSequence() {
 		return sequence;
 	}
 
-	public void setSequence(int sequence) {
+	public void setSequence(String sequence) {
 		this.sequence = sequence;
 	}
 

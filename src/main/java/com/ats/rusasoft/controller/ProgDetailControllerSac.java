@@ -51,8 +51,7 @@ public class ProgDetailControllerSac {
 		List<ProgramType> progTypeList = new ArrayList<>();
 
 		try {
-
-			progTypeList = programTypeRepo.findByDelStatusAndIsActive(1, 1);
+		progTypeList = programTypeRepo.findByDelStatusAndIsActiveAndSequenceNotIn(1	, 1, "0");	
 
 		} catch (Exception e) {
 			System.err.println("Exce in getAllProgramType  " + e.getMessage());
