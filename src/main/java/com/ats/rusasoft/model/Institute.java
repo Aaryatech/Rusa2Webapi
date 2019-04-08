@@ -25,7 +25,13 @@ public class Institute {
 	
 	private String regDate;
 	private String instituteAdd;
+	private String village;
+	private String taluka;
+	private String district;
+	private String state;
+	private String pincode;
 
+	
 	private String trustName;
 	private String trustAdd;
 	private String trustContactNo;
@@ -283,18 +289,59 @@ public class Institute {
 		this.exVar2 = exVar2;
 	}
 
+	public String getVillage() {
+		return village;
+	}
+
+	public void setVillage(String village) {
+		this.village = village;
+	}
+
+	public String getTaluka() {
+		return taluka;
+	}
+
+	public void setTaluka(String taluka) {
+		this.taluka = taluka;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
 	@Override
 	public String toString() {
 		return "Institute [instituteId=" + instituteId + ", instituteName=" + instituteName + ", aisheCode=" + aisheCode
 				+ ", isRegistration=" + isRegistration + ", regDate=" + regDate + ", instituteAdd=" + instituteAdd
-				+ ", trustName=" + trustName + ", trustAdd=" + trustAdd + ", trustContactNo=" + trustContactNo
-				+ ", presidentName=" + presidentName + ", principalName=" + principalName + ", contactNo=" + contactNo
-				+ ", email=" + email + ", delStatus=" + delStatus + ", isActive=" + isActive + ", userType=" + userType
-				+ ", isEnrollSystem=" + isEnrollSystem + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
-				+ makerEnterDatetime + ", checkerUserId=" + checkerUserId + ", checkerDatetime=" + checkerDatetime
-				+ ", lastUpdatedDatetime=" + lastUpdatedDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", presidenContact=" + presidenContact
-				+ ", presidentEmail=" + presidentEmail + "]";
+				+ ", village=" + village + ", taluka=" + taluka + ", district=" + district + ", state=" + state
+				+ ", pincode=" + pincode + ", trustName=" + trustName + ", trustAdd=" + trustAdd + ", trustContactNo="
+				+ trustContactNo + ", presidentName=" + presidentName + ", principalName=" + principalName
+				+ ", contactNo=" + contactNo + ", email=" + email + ", delStatus=" + delStatus + ", isActive="
+				+ isActive + ", userType=" + userType + ", isEnrollSystem=" + isEnrollSystem + ", makerUserId="
+				+ makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", checkerUserId=" + checkerUserId
+				+ ", checkerDatetime=" + checkerDatetime + ", lastUpdatedDatetime=" + lastUpdatedDatetime + ", exInt1="
+				+ exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", presidenContact="
+				+ presidenContact + ", presidentEmail=" + presidentEmail + "]";
 	}
-
+	
 }
