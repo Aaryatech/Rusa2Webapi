@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -490,9 +492,30 @@ public class MasterApiController {
 
 		try {
 			hodListByInstId = getHodRepo.getHodListByInstId(instId);
+			
+			for(int i=0;i<hodListByInstId.size();i++) {
+				
+				List<Integer> deptIds = Stream.of(hodListByInstId.get(i).getDeptId().split(",")).map(Integer::parseInt)
+						.collect(Collectors.toList());
+				List<Dept> deptList = new ArrayList<>();
+				
+					deptList = deptRepo.findByDelStatusAndIsActiveAndDeptIdIn(1, 1, deptIds);
+					
+					String deptName="";
+					for(int j=0;j<deptList.size();j++) {
+						
+						deptName=deptList.get(j).getDeptName()+","+deptName;
+						deptName.substring(0, deptName.length());
+					}
+					
+					hodListByInstId.get(i).setDeptName(deptName);
+			}
+			
+			System.err.println("hodListByInstId " +hodListByInstId.toString());
 
 		} catch (Exception e) {
-			System.err.println("Exce in getAllDeptList  " + e.getMessage());
+			
+			System.err.println("Exce in getHodListByInstId  " + e.getMessage());
 			e.printStackTrace();
 		}
 

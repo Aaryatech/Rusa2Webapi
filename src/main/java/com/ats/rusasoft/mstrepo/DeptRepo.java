@@ -19,7 +19,7 @@ public interface DeptRepo extends JpaRepository<Dept, Integer> {
 	Dept findBydeptId(int deptId);
 	
 	
-	
+	List<Dept> findByDelStatusAndIsActiveAndDeptIdIn(int delSatus, int isActive,List<Integer> deptIds);
 	
 	@Transactional
 	@Modifying
