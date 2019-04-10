@@ -7,18 +7,19 @@ import javax.persistence.Id;
 
 @Entity
 public class GetFacultyOutreach {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    private int outreachId;
-	
-private String typeName;
-	
+	private int outreachId;
+
+	private String typeName;
+
 	private String outreachDate;
-	
+
 	private String outreachLevel;
-	
+
 	private String outreachName;
+
 	public int getOutreachId() {
 		return outreachId;
 	}
@@ -27,7 +28,6 @@ private String typeName;
 		this.outreachId = outreachId;
 	}
 
-	
 	public String getOutreachDate() {
 		return outreachDate;
 	}
@@ -65,12 +65,5 @@ private String typeName;
 		return "GetFacultyOutreach [outreachId=" + outreachId + ", typeName=" + typeName + ", outreachDate="
 				+ outreachDate + ", outreachLevel=" + outreachLevel + ", outreachName=" + outreachName + "]";
 	}
-
-	
-	
-	
-	
-	
-	
 
 }

@@ -1,9 +1,13 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetFacultyPatent {
@@ -20,11 +24,11 @@ public class GetFacultyPatent {
 
 	private String patentTitle;
 
-	private String patentFilingDate;
+	private Date patentFilingDate;
 
 	private String patentGuideName;
 
-	private String patentPubDate;
+	private Date patentPubDate;
 
 	private int delStatus;
 
@@ -85,14 +89,6 @@ public class GetFacultyPatent {
 		this.patentTitle = patentTitle;
 	}
 
-	public String getPatentFilingDate() {
-		return patentFilingDate;
-	}
-
-	public void setPatentFilingDate(String patentFilingDate) {
-		this.patentFilingDate = patentFilingDate;
-	}
-
 	public String getPatentGuideName() {
 		return patentGuideName;
 	}
@@ -101,11 +97,21 @@ public class GetFacultyPatent {
 		this.patentGuideName = patentGuideName;
 	}
 
-	public String getPatentPubDate() {
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getPatentFilingDate() {
+		return patentFilingDate;
+	}
+
+	public void setPatentFilingDate(Date patentFilingDate) {
+		this.patentFilingDate = patentFilingDate;
+	}
+
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getPatentPubDate() {
 		return patentPubDate;
 	}
 
-	public void setPatentPubDate(String patentPubDate) {
+	public void setPatentPubDate(Date patentPubDate) {
 		this.patentPubDate = patentPubDate;
 	}
 
