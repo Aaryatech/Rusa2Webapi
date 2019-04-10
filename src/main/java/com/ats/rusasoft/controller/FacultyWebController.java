@@ -16,34 +16,39 @@ import com.ats.rusasoft.model.Dept;
 import com.ats.rusasoft.model.FacultyAward;
 import com.ats.rusasoft.model.FacultyOutreach;
 import com.ats.rusasoft.model.FacultyPatent;
+import com.ats.rusasoft.model.GetFacultyPatent;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.OutreachType;
 import com.ats.rusasoft.model.faculty.GetFacultyOutreach;
 import com.ats.rusasoft.model.faculty.GetJournal;
+import com.ats.rusasoft.model.faculty.GetResearchProject;
 import com.ats.rusasoft.model.progdetail.ProgramType;
 import com.ats.rusasoft.mstrepo.FacultyOutreachRepo;
 import com.ats.rusasoft.mstrepo.FacultyPatentRepo;
+import com.ats.rusasoft.mstrepo.GetFacultyPatentRepo;
 import com.ats.rusasoft.mstrepo.OutreachTypeRepo;
 import com.ats.rusasoft.prodetailrepo.FacultyAwardRepo;
 import com.ats.rusasoft.repo.faculty.GetFacultyOutreachRepo;
 
-
 @RestController
 public class FacultyWebController {
 
-	
 	@Autowired
 	FacultyPatentRepo patentRepo;
-	
+
 	@Autowired
 	FacultyAwardRepo facultyAwardRepo;
-	
+
 	@Autowired
 	FacultyOutreachRepo facultyOutreachRepo;
 
 	@Autowired
 	GetFacultyOutreachRepo getFacultyOutreachRepo;
-	//--------------------------------------------Faculty Patent-----------------------------------------------------//
+
+	@Autowired
+	GetFacultyPatentRepo getFacultyPatentRepo;
+	// --------------------------------------------Faculty
+	// Patent-----------------------------------------------------//
 
 	@RequestMapping(value = { "/getAllFacultyPatent" }, method = RequestMethod.GET)
 	public @ResponseBody List<FacultyPatent> getAllFacultyPatent() {
@@ -51,7 +56,7 @@ public class FacultyWebController {
 		List<FacultyPatent> patentList = new ArrayList<>();
 
 		try {
-			
+
 			patentList = patentRepo.findByDelStatusAndIsActive(1, 1);
 
 		} catch (Exception e) {
@@ -62,7 +67,7 @@ public class FacultyWebController {
 		return patentList;
 
 	}
-	
+
 	@RequestMapping(value = { "/getPatentListByFacultyId" }, method = RequestMethod.POST)
 	public @ResponseBody List<FacultyPatent> getPatentListByFacultyId(@RequestParam int facultyId) {
 
@@ -78,7 +83,34 @@ public class FacultyWebController {
 		}
 		return jouList;
 	}
-	
+
+	@RequestMapping(value = { "/getPatentListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFacultyPatent> getPatentListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+
+		List<GetFacultyPatent> patentList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				patentList = getFacultyPatentRepo.getPatentListYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				patentList = getFacultyPatentRepo.getPatentListByDept(deptIdList, yearId, instituteId);
+			} else {
+				patentList = getFacultyPatentRepo.getPatentList(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return patentList;
+	}
+
 	@RequestMapping(value = { "/saveFacultyPatent" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyPatent saveFacultyPatent(@RequestBody FacultyPatent patent) {
 
@@ -95,7 +127,6 @@ public class FacultyWebController {
 		return patentRes;
 	}
 
-	
 	@RequestMapping(value = { "/getFacultyPatent" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyPatent getFacultyPatent(@RequestParam int patentId) {
 
@@ -103,23 +134,21 @@ public class FacultyWebController {
 
 		try {
 
-			acOfRes = patentRepo.findByPatentIdAndDelStatus(patentId,1);
-			
+			acOfRes = patentRepo.findByPatentIdAndDelStatus(patentId, 1);
+
 		} catch (Exception e) {
-			System.err.println("Excc in getting one patent id by patentid "+e.getMessage());
+			System.err.println("Excc in getting one patent id by patentid " + e.getMessage());
 			e.printStackTrace();
 		}
 		return acOfRes;
 	}
-	
-	@RequestMapping(value = { "/deletePetentFaculty" }, method = RequestMethod.POST)
-	public @ResponseBody Info deletePetentFaculty(@RequestParam("patentId") int patentId ) {
 
-		 
-		 Info info = new Info();
+	@RequestMapping(value = { "/deletePetentFaculty" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePetentFaculty(@RequestParam("patentId") int patentId) {
+
+		Info info = new Info();
 		try {
 
-			
 			try {
 				int res = patentRepo.deletePetent(patentId);
 				if (res > 0) {
@@ -139,24 +168,24 @@ public class FacultyWebController {
 				info.setMsg("excep");
 			}
 
-			
 		} catch (Exception e) {
-		 
+
 			e.printStackTrace();
 		}
 
 		return info;
 
 	}
-	//--------------------------------------------Faculty Award-----------------------------------------------------//
-	
+	// --------------------------------------------Faculty
+	// Award-----------------------------------------------------//
+
 	@RequestMapping(value = { "/getAllFacultyAward" }, method = RequestMethod.GET)
 	public @ResponseBody List<FacultyAward> getAllFacultyAward() {
 
 		List<FacultyAward> patentList = new ArrayList<>();
 
 		try {
-			
+
 			patentList = facultyAwardRepo.findByDelStatusAndIsActive(1, 1);
 
 		} catch (Exception e) {
@@ -167,7 +196,6 @@ public class FacultyWebController {
 		return patentList;
 
 	}
-	
 
 	@RequestMapping(value = { "/getAwardListByFacultyId" }, method = RequestMethod.POST)
 	public @ResponseBody List<FacultyAward> getAwardListByFacultyId(@RequestParam int facultyId) {
@@ -184,7 +212,7 @@ public class FacultyWebController {
 		}
 		return jouList;
 	}
-	
+
 	@RequestMapping(value = { "/saveFacultyAward" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyAward saveFacultyAward(@RequestBody FacultyAward patent) {
 
@@ -200,8 +228,7 @@ public class FacultyWebController {
 		}
 		return patentRes;
 	}
-  
-	
+
 	@RequestMapping(value = { "/getFacultyAwardById" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyAward getFacultyAward(@RequestParam int awardId) {
 
@@ -209,22 +236,21 @@ public class FacultyWebController {
 
 		try {
 
-			acOfRes = facultyAwardRepo.findByAwardIdAndDelStatus(awardId,1);
-			
+			acOfRes = facultyAwardRepo.findByAwardIdAndDelStatus(awardId, 1);
+
 		} catch (Exception e) {
-			System.err.println("Excc in getting one award id by id "+e.getMessage());
+			System.err.println("Excc in getting one award id by id " + e.getMessage());
 			e.printStackTrace();
 		}
 		return acOfRes;
 	}
-	@RequestMapping(value = { "/deleteAwardFaculty" }, method = RequestMethod.POST)
-	public @ResponseBody Info deleteAwardFaculty(@RequestParam("awardId") int awardId ) {
 
-		 
-		 Info info = new Info();
+	@RequestMapping(value = { "/deleteAwardFaculty" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteAwardFaculty(@RequestParam("awardId") int awardId) {
+
+		Info info = new Info();
 		try {
 
-			
 			try {
 				int res = facultyAwardRepo.deleteAward(awardId);
 				if (res > 0) {
@@ -244,18 +270,17 @@ public class FacultyWebController {
 				info.setMsg("excep");
 			}
 
-			
 		} catch (Exception e) {
-		 
+
 			e.printStackTrace();
 		}
 
 		return info;
 
 	}
-	
-	
-	//--------------------------------------------Faculty OutReach-----------------------------------------------------//
+
+	// --------------------------------------------Faculty
+	// OutReach-----------------------------------------------------//
 
 	@RequestMapping(value = { "/getAllFacultyOutReach" }, method = RequestMethod.GET)
 	public @ResponseBody List<FacultyOutreach> getAllFacultyOutReach() {
@@ -263,7 +288,7 @@ public class FacultyWebController {
 		List<FacultyOutreach> patentList = new ArrayList<>();
 
 		try {
-			
+
 			patentList = facultyOutreachRepo.findByDelStatusAndIsActive(1, 1);
 
 		} catch (Exception e) {
@@ -272,17 +297,16 @@ public class FacultyWebController {
 		}
 
 		return patentList;
- 
+
 	}
-	
+
 	@RequestMapping(value = { "/saveFacultyOutReach" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyOutreach saveFacultyOutReach(@RequestBody FacultyOutreach patent) {
 
 		FacultyOutreach patentRes = null;
-		System.out.println("date:::"+patent.getOutreachDate());
+		System.out.println("date:::" + patent.getOutreachDate());
 		try {
 			patentRes = facultyOutreachRepo.saveAndFlush(patent);
-			
 
 		} catch (Exception e) {
 			System.err.println("Exce in saving petent faculty  " + e.getMessage());
@@ -293,12 +317,13 @@ public class FacultyWebController {
 	}
 
 	@RequestMapping(value = { "/getOutReachListByFacultyId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetFacultyOutreach> getOutReachListByFacultyId(@RequestParam int facultyId,@RequestParam int instituteId) {
+	public @ResponseBody List<GetFacultyOutreach> getOutReachListByFacultyId(@RequestParam int facultyId,
+			@RequestParam int instituteId) {
 
 		List<GetFacultyOutreach> jouList = new ArrayList<>();
 
 		try {
-			jouList = getFacultyOutreachRepo.getOutreachList(facultyId,instituteId);
+			jouList = getFacultyOutreachRepo.getOutreachList(facultyId, instituteId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
@@ -307,7 +332,7 @@ public class FacultyWebController {
 		}
 		return jouList;
 	}
-	
+
 	@RequestMapping(value = { "/getFacultyOutReach" }, method = RequestMethod.POST)
 	public @ResponseBody FacultyOutreach getFacultyOutReach(@RequestParam int outreachId) {
 
@@ -315,22 +340,21 @@ public class FacultyWebController {
 
 		try {
 
-			acOfRes = facultyOutreachRepo.findByOutreachIdAndDelStatus(outreachId,1);
-			
+			acOfRes = facultyOutreachRepo.findByOutreachIdAndDelStatus(outreachId, 1);
+
 		} catch (Exception e) {
-			System.err.println("Excc in getting one patent id by patentid "+e.getMessage());
+			System.err.println("Excc in getting one patent id by patentid " + e.getMessage());
 			e.printStackTrace();
 		}
 		return acOfRes;
 	}
-	@RequestMapping(value = { "/deleteOutreachFaculty" }, method = RequestMethod.POST)
-	public @ResponseBody Info deleteOutreachFaculty(@RequestParam("outreachId") int outreachId ) {
 
-		 
-		 Info info = new Info();
+	@RequestMapping(value = { "/deleteOutreachFaculty" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteOutreachFaculty(@RequestParam("outreachId") int outreachId) {
+
+		Info info = new Info();
 		try {
 
-			
 			try {
 				int res = facultyOutreachRepo.deleteOutReach(outreachId);
 				if (res > 0) {
@@ -350,32 +374,28 @@ public class FacultyWebController {
 				info.setMsg("excep");
 			}
 
-			
 		} catch (Exception e) {
-		 
+
 			e.printStackTrace();
 		}
 
 		return info;
 
 	}
-	
-	
-	
-	//////////////////////**************************Outreach Type********************************////////////////////////
-	
+
+	////////////////////// **************************Outreach
+	////////////////////// Type********************************////////////////////////
 
 	@Autowired
 	OutreachTypeRepo outreachTypeRepo;
-	
-	
+
 	@RequestMapping(value = { "/getOutReachTypeList" }, method = RequestMethod.POST)
 	public @ResponseBody List<OutreachType> getOutReachTypeList(@RequestParam int instituteId) {
 
 		List<OutreachType> jouList = new ArrayList<>();
 
 		try {
-			jouList = outreachTypeRepo.findByDelStatusAndInstituteIdOrderByTypeIdDesc(1,instituteId);
+			jouList = outreachTypeRepo.findByDelStatusAndInstituteIdOrderByTypeIdDesc(1, instituteId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
@@ -384,8 +404,5 @@ public class FacultyWebController {
 		}
 		return jouList;
 	}
-	
-	
-	
-	
+
 }
