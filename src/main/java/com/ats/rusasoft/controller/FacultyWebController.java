@@ -16,6 +16,9 @@ import com.ats.rusasoft.model.Dept;
 import com.ats.rusasoft.model.FacultyAward;
 import com.ats.rusasoft.model.FacultyOutreach;
 import com.ats.rusasoft.model.FacultyPatent;
+import com.ats.rusasoft.model.GetFacultyActivity;
+import com.ats.rusasoft.model.GetFacultyAward;
+import com.ats.rusasoft.model.GetFacultyOutrea;
 import com.ats.rusasoft.model.GetFacultyPatent;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.OutreachType;
@@ -28,7 +31,10 @@ import com.ats.rusasoft.mstrepo.FacultyPatentRepo;
 import com.ats.rusasoft.mstrepo.GetFacultyPatentRepo;
 import com.ats.rusasoft.mstrepo.OutreachTypeRepo;
 import com.ats.rusasoft.prodetailrepo.FacultyAwardRepo;
+import com.ats.rusasoft.prodetailrepo.GetFacultyAwardRepo;
+import com.ats.rusasoft.repo.faculty.GetFacultyOutreaRepo;
 import com.ats.rusasoft.repo.faculty.GetFacultyOutreachRepo;
+import com.ats.rusasoft.repositories.GetFacultyActivityRepo;
 
 @RestController
 public class FacultyWebController {
@@ -47,6 +53,69 @@ public class FacultyWebController {
 
 	@Autowired
 	GetFacultyPatentRepo getFacultyPatentRepo;
+
+	@Autowired
+	GetFacultyAwardRepo getFacultyAwardRepo;
+
+	@Autowired
+	GetFacultyOutreaRepo getFacultyOutreaRepo;
+
+	@Autowired
+	GetFacultyActivityRepo getFacultyActivityRepo;
+
+	@RequestMapping(value = { "/getFacultyActivityListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFacultyActivity> getFacultyActivityListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+
+		List<GetFacultyActivity> facOutList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				facOutList = getFacultyActivityRepo.getActivityListYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				facOutList = getFacultyActivityRepo.getActivityListByDept(deptIdList, yearId, instituteId);
+			} else {
+				facOutList = getFacultyActivityRepo.getActivityList(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getFacultyActivityListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facOutList;
+	}
+
+	@RequestMapping(value = { "/getOutReachListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFacultyOutrea> getOutReachListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+
+		List<GetFacultyOutrea> facOutList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				facOutList = getFacultyOutreaRepo.getOutReachListYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				facOutList = getFacultyOutreaRepo.getOutReachListByDept(deptIdList, yearId, instituteId);
+			} else {
+				facOutList = getFacultyOutreaRepo.getOutReachList(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facOutList;
+	}
 	// --------------------------------------------Faculty
 	// Patent-----------------------------------------------------//
 
@@ -109,6 +178,33 @@ public class FacultyWebController {
 
 		}
 		return patentList;
+	}
+
+	@RequestMapping(value = { "/getAwardListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFacultyAward> getAwardListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+
+		List<GetFacultyAward> awardList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				awardList = getFacultyAwardRepo.getAwardListYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				awardList = getFacultyAwardRepo.getAwardListByDept(deptIdList, yearId, instituteId);
+			} else {
+				awardList = getFacultyAwardRepo.getAwardList(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return awardList;
 	}
 
 	@RequestMapping(value = { "/saveFacultyPatent" }, method = RequestMethod.POST)
