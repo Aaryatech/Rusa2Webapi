@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoft.model.LoginResponse;
 import com.ats.rusasoft.model.OTPVerification;
+import com.ats.rusasoft.model.Staff;
 import com.ats.rusasoft.model.Student;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.common.Commons;
@@ -29,6 +30,7 @@ import com.ats.rusasoft.mstrepo.GetUserDataRepo;
 import com.ats.rusasoft.mstrepo.LoginLogRepo;
 import com.ats.rusasoft.mstrepo.LoginResponseRepo;
 import com.ats.rusasoft.mstrepo.UserService;
+import com.ats.rusasoft.repositories.StaffRepo;
 
 
 
@@ -212,14 +214,31 @@ public class RestApiController {
 }
 
 	
-	
+	@Autowired StaffRepo staffRepo;
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
 	
 	public @ResponseBody LoginResponse loginUser(@RequestParam("username") String userName,
 			@RequestParam("password") String pass,@RequestParam("isBlock") int isBlock) {
 
 		System.err.println("inside loginUser ");
-		LoginResponse loginResponse = logRes.getUser(userName, pass,isBlock);
+		
+		Staff staff=staffRepo.findByDelStatusAndIsActiveAndEmailAndPassword(1,1,userName,pass);
+		
+		LoginResponse loginResponse = new LoginResponse();
+		loginResponse.setUserId(staff.getFacultyId());	
+		loginResponse.setRoleId(staff.getRoleIds());
+		
+		loginResponse.setStaff(staff);
+		
+		GetUserDetail userDetail=new GetUserDetail();
+		userDetail.setUserInstituteId(staff.getInstituteId());
+
+		userDetail.setUserDetailId(staff.getFacultyId());
+		loginResponse.setGetData(userDetail);
+		loginResponse.setExInt2(staff.getInstituteId());
+		
+		
+				/*logRes.getUser(userName, pass,isBlock);
 		System.err.println("User data is"+loginResponse.toString());
 		int typeId=loginResponse.getUserType();
 		
@@ -266,7 +285,7 @@ public class RestApiController {
 		
 		 
 		
-		System.err.println("User data is after"+loginResponse.toString());
+		System.err.println("User data is after"+loginResponse.toString());*/
 		return loginResponse;
  
 	}

@@ -17,12 +17,24 @@ public class LoginResponse {
 		private String pass;
 		private int isBlock;
 		private int regPrimaryKey;
-		private int roleId;
+		private String roleId;
 		private int exInt1;
 		private int exInt2;
 		
         @Transient
 		GetUserDetail getData;
+        
+        @Transient
+        Staff staff;
+        
+
+		public Staff getStaff() {
+			return staff;
+		}
+
+		public void setStaff(Staff staff) {
+			this.staff = staff;
+		}
 
 		public int getUserId() {
 			return userId;
@@ -72,11 +84,11 @@ public class LoginResponse {
 			this.regPrimaryKey = regPrimaryKey;
 		}
 
-		public int getRoleId() {
+		public String getRoleId() {
 			return roleId;
 		}
 
-		public void setRoleId(int roleId) {
+		public void setRoleId(String roleId) {
 			this.roleId = roleId;
 		}
 
@@ -108,7 +120,7 @@ public class LoginResponse {
 		public String toString() {
 			return "LoginResponse [userId=" + userId + ", userType=" + userType + ", userName=" + userName + ", pass="
 					+ pass + ", isBlock=" + isBlock + ", regPrimaryKey=" + regPrimaryKey + ", roleId=" + roleId
-					+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", getData=" + getData + "]";
+					+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", getData=" + getData + ", staff=" + staff + "]";
 		}
 
 		

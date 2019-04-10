@@ -16,7 +16,7 @@ public interface AssignRoleDetailListRepository extends JpaRepository<AssignRole
 
 	List<AssignRoleDetailList> findByDelStatus(int delStatus);
 
-	@Query(value = " SELECT r.* from m_assign_role r, t_user_login u where u.user_id=:usrId AND r.role_id=u.role_id", nativeQuery = true)
+	@Query(value = " SELECT r.* from m_assign_role r, m_faculty u where u.faculty_id=:usrId AND r.role_id=u.role_ids", nativeQuery = true)
 	AssignRoleDetailList getRoleJson(@Param("usrId") int usrId);
 
 	@Modifying
