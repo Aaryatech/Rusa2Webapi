@@ -1,13 +1,9 @@
 package com.ats.rusasoft.model.faculty;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetJournal {
@@ -40,6 +36,9 @@ public class GetJournal {
 	private int exInt2;
 	private String exVar1;
 	private String exVar2;
+
+	private String facultyFirstName;
+	private String deptName;
 
 	public int getJournalId() {
 		return journalId;
@@ -193,6 +192,22 @@ public class GetJournal {
 		this.exVar2 = exVar2;
 	}
 
+	public String getFacultyFirstName() {
+		return facultyFirstName;
+	}
+
+	public void setFacultyFirstName(String facultyFirstName) {
+		this.facultyFirstName = facultyFirstName;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetJournal [journalId=" + journalId + ", facultyId=" + facultyId + ", yearId=" + yearId
@@ -201,7 +216,8 @@ public class GetJournal {
 				+ journalPgFrom + ", journalPgTo=" + journalPgTo + ", journalStandard=" + journalStandard
 				+ ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId
 				+ ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + "]";
+				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", facultyFirstName=" + facultyFirstName + ", deptName="
+				+ deptName + "]";
 	}
 
 }

@@ -58,17 +58,27 @@ public class FacultyDetailRestController {
 	@Autowired
 	SWOCRepo sWOCRepo;
 
-	@RequestMapping(value = { "/getJournalListByFacultyId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetJournal> getJournalListByFacultyId(@RequestParam int facultyId,
-			@RequestParam int yearId) {
+	@RequestMapping(value = { "/getJournalListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetJournal> getJournalListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetJournal> jouList = new ArrayList<>();
 
 		try {
-			jouList = getJournalRepo.getJournalRepo(facultyId, yearId);
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				jouList = getJournalRepo.getJouByYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				jouList = getJournalRepo.getJournalByDept(deptIdList, yearId, instituteId);
+			} else {
+				jouList = getJournalRepo.getJournalRepo(facultyId, yearId, instituteId);
+			}
 
 		} catch (Exception e) {
-			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -91,7 +101,7 @@ public class FacultyDetailRestController {
 		return projRes;
 	}
 
-	@RequestMapping(value = { "/getProjectListByFacultyId" }, method = RequestMethod.POST)
+/*	@RequestMapping(value = { "/getProjectListByFacultyId" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetResearchProject> getProjectListByFacultyId(@RequestParam int facultyId,
 			@RequestParam int yearId) {
 
@@ -106,23 +116,35 @@ public class FacultyDetailRestController {
 
 		}
 		return projList;
+	}*/
+
+	@RequestMapping(value = { "/getProjectListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetResearchProject> getProjectListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+
+		List<GetResearchProject> projList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				projList = getResearchProjectRepo.getProjectListYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				projList = getResearchProjectRepo.getProjectListByDept(deptIdList, yearId, instituteId);
+			} else {
+				projList = getResearchProjectRepo.getProjectList(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return projList;
 	}
 
-	/*
-	 * @RequestMapping(value = { "/getProjectListByFacultyId" }, method =
-	 * RequestMethod.POST) public @ResponseBody List<ResearchProject>
-	 * getProjectListByFacultyId(@RequestParam int facultyId) {
-	 * 
-	 * List<ResearchProject> projList = new ArrayList<>();
-	 * 
-	 * try { projList = researchProjectRepo.findByFacultyIdAndDelStatus(facultyId,
-	 * 1);
-	 * 
-	 * } catch (Exception e) { System.err.println("Exce in getJournalByFacultyId  "
-	 * + e.getMessage()); e.printStackTrace();
-	 * 
-	 * } return projList; }
-	 */
 	@RequestMapping(value = { "/getProjectByProjId" }, method = RequestMethod.POST)
 	public @ResponseBody ResearchProject getProjectByProjId(@RequestParam int projectId) {
 
@@ -403,13 +425,13 @@ public class FacultyDetailRestController {
 		return info;
 
 	}
-	
+
 	@RequestMapping(value = { "/updateSubjeCoName" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateSubjeCoName(@RequestParam("coName") String coName,@RequestParam("coId") int coId) {
+	public @ResponseBody Info updateSubjeCoName(@RequestParam("coName") String coName, @RequestParam("coId") int coId) {
 
 		Info info = new Info();
 		try {
-			int res = subjectCoRepo.updateSubjeCoName(coName,coId);
+			int res = subjectCoRepo.updateSubjeCoName(coName, coId);
 
 			if (res > 0) {
 				info.setError(false);
