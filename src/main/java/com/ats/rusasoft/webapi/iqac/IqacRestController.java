@@ -308,14 +308,15 @@ public class IqacRestController {
 		Staff staffRes= null;
 		
 		if(staff.getFacultyId()==0) {
-			
+			String passWord = com.getAlphaNumericString(7);
+			staff.setPassword(passWord);
+
 			staffRes = staffrepo.save(staff);
 			
-			UserLogin user = new UserLogin(); 
+			//UserLogin user = new UserLogin(); 
 			
-			String passWord = com.getAlphaNumericString(7);
 			 
-			  user.setRegPrimaryKey(staffRes.getFacultyId());
+			  /*user.setRegPrimaryKey(staffRes.getFacultyId());
 			  user.setUserName(staffRes.getEmail());
 			  user.setPass(passWord);
 			  user.setRoleId(5); 
@@ -327,12 +328,12 @@ public class IqacRestController {
 			  user.setIsBlock(1);
 			  
 			  UserLogin userRes = userrepo.save(user);
-			  System.out.println("IQac LOg:"+userRes);
+			  System.out.println("IQac LOg:"+userRes);*/
 		
 			  Info info=EmailUtility.sendEmail(senderEmail, senderPassword, staffRes.getEmail(), mailsubject,
-						userRes.getUserName(), userRes.getPass());
+					  staffRes.getEmail(), staffRes.getPassword());
 			  
-			  Info info1=EmailUtility.sendMsg(userRes.getUserName(), userRes.getPass(), staffRes.getContactNo());
+			  Info info1=EmailUtility.sendMsg(staffRes.getEmail(), staffRes.getPassword(), staffRes.getContactNo());
 				System.err.println("Info email sent response   "+info.toString());
 			
 		}else{

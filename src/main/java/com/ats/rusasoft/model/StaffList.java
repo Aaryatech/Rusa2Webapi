@@ -14,8 +14,8 @@ public class StaffList {
 	@Id
 	private int facultyId;
 	private String facultyFirstName;
-	private String facultyMiddelName;
-	private String facultyLastName;
+	/*private String facultyMiddelName;
+	private String facultyLastName;*/
 	private Date joiningDate;
 	private Date realivingDate;
 	private String contactNo;
@@ -56,18 +56,6 @@ public class StaffList {
 	public void setFacultyFirstName(String facultyFirstName) {
 		this.facultyFirstName = facultyFirstName;
 	}
-	public String getFacultyMiddelName() {
-		return facultyMiddelName;
-	}
-	public void setFacultyMiddelName(String facultyMiddelName) {
-		this.facultyMiddelName = facultyMiddelName;
-	}
-	public String getFacultyLastName() {
-		return facultyLastName;
-	}
-	public void setFacultyLastName(String facultyLastName) {
-		this.facultyLastName = facultyLastName;
-	}
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getJoiningDate() {
 		return joiningDate;
@@ -102,12 +90,12 @@ public class StaffList {
 	}
 	@Override
 	public String toString() {
-		return "StaffList [facultyId=" + facultyId + ", facultyFirstName=" + facultyFirstName + ", facultyMiddelName="
-				+ facultyMiddelName + ", facultyLastName=" + facultyLastName + ", joiningDate=" + joiningDate
-				+ ", realivingDate=" + realivingDate + ", contactNo=" + contactNo + ", email=" + email
+		return "StaffList [facultyId=" + facultyId + ", facultyFirstName=" + facultyFirstName + ", joiningDate="
+				+ joiningDate + ", realivingDate=" + realivingDate + ", contactNo=" + contactNo + ", email=" + email
 				+ ", currentDesignationId=" + currentDesignationId + ", qualificationName=" + qualificationName
 				+ ", designationName=" + designationName + ", deptName=" + deptName + "]";
 	}
+
 	
 		
 }

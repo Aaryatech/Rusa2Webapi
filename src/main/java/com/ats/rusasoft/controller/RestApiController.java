@@ -246,7 +246,7 @@ public class RestApiController {
 		GetUserDetail userDetail=null;
 		if(typeId == 1) 
 		{
-		   userDetail = userDataRepo.getPrinciDetails(regKey);
+		      userDetail = userDataRepo.getPrinciDetails(regKey);
 		  
 		      System.err.println("User data is"+userDetail.toString());
 		}

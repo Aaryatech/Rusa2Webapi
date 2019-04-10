@@ -205,4 +205,22 @@ public class AccessRightApiController {
 		 }
 		return info;
 	}
+	
+	//assignRoleDetailListRepository;
+	
+		//10 April
+	
+	@RequestMapping(value = { "/getRoleIdsByRoleNameList" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<AssignRoleDetailList> getRoleIdsByRoleNameList(@RequestParam List<String> roleNameList) {
+
+		List<AssignRoleDetailList> roleNameListRes = new ArrayList<>();
+		
+		try {
+			roleNameListRes =assignRoleDetailListRepository.findByDelStatusAndRoleNameIn(0, roleNameList);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return roleNameListRes;
+	}
 }

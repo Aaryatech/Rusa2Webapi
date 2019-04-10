@@ -24,5 +24,8 @@ public interface AssignRoleDetailListRepository extends JpaRepository<AssignRole
 	int deleteRole(@Param("roleId") int roleId);
 
 	AssignRoleDetailList findByRoleId(int roleId);
+	
+	List<AssignRoleDetailList> findByDelStatusAndRoleNameIn(int delStatus,List<String> roleNameList);
+	
 
 }
