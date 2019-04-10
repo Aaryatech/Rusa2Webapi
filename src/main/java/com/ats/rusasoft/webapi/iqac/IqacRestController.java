@@ -383,7 +383,7 @@ public class IqacRestController {
 		 }
 		 return inf;
 	}
-	
+	 
 
 	@RequestMapping(value = { "/deleteStaffSlected" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteStaffs(@RequestParam List<String> staffIdList) {
