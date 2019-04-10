@@ -1,11 +1,15 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "t_program")
@@ -35,7 +39,7 @@ public class Program {
 	private int sanctionalIntake;
 	
 	@Column(name="date_of_introduction")
-	private String dateOfIntroduction;
+	private Date dateOfIntroduction;
 	
 	@Column(name="approved_by")
 	private String approvedBy;
@@ -119,12 +123,12 @@ public class Program {
 	public void setSanctionalIntake(int sanctionalIntake) {
 		this.sanctionalIntake = sanctionalIntake;
 	}
-
-	public String getDateOfIntroduction() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getDateOfIntroduction() {
 		return dateOfIntroduction;
 	}
 
-	public void setDateOfIntroduction(String dateOfIntroduction) {
+	public void setDateOfIntroduction(Date dateOfIntroduction) {
 		this.dateOfIntroduction = dateOfIntroduction;
 	}
 
