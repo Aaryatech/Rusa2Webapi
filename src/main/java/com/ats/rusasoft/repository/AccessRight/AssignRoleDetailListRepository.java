@@ -27,5 +27,7 @@ public interface AssignRoleDetailListRepository extends JpaRepository<AssignRole
 	
 	List<AssignRoleDetailList> findByDelStatusAndRoleNameIn(int delStatus,List<String> roleNameList);
 	
+	List<AssignRoleDetailList> findByDelStatusAndRoleIdIn(int delStatus,List<Integer> roleIdList);
+
 
 }

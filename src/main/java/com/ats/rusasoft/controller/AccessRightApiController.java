@@ -132,6 +132,15 @@ public class AccessRightApiController {
 		return accessRightService.getRoleJson(userId);
 	}
 	
+	//11 April..Sachin
+	@RequestMapping(value = { "/getRoleJsonByRoleId" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String getRoleJsonByRoleId(@RequestParam int roleId) {
+
+		return accessRightService.getRoleJsonByRoleId(roleId);
+		
+	}
+	
 	@RequestMapping(value = { "/getAllUserList" }, method = RequestMethod.POST)
 	public @ResponseBody List<UserList> getAllUserList(@RequestParam("instituteId") int instituteId) {
 		

@@ -21,5 +21,9 @@ public interface AccessRightService {
 	//List<User> getAllUser();
 
 	String getRoleJson(int userId);
+	
+	String getRoleJsonByRoleId(int roleId);
+	
+	
 
 }

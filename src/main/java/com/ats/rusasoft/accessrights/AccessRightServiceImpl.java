@@ -12,8 +12,6 @@ import com.ats.rusasoft.repository.AccessRight.AccessRightModuleRepository;
 import com.ats.rusasoft.repository.AccessRight.AccessRightSubModuleRepository;
 import com.ats.rusasoft.repository.AccessRight.AssignRoleDetailListRepository;
 
-
-
 @Service
 public class AccessRightServiceImpl implements AccessRightService {
 
@@ -30,11 +28,11 @@ public class AccessRightServiceImpl implements AccessRightService {
 	 * @Autowired GetEmployeeRepository getEmployeeRepository;
 	 */
 
-	//@Autowired
-	//CustRepo employeeRepository;
+	// @Autowired
+	// CustRepo employeeRepository;
 
-	//@Autowired
-	//private UserRepo userRepository;
+	// @Autowired
+	// private UserRepo userRepository;
 
 	@Override
 	public List<AccessRightModule> getAllModulAndSubModule() {
@@ -83,7 +81,7 @@ public class AccessRightServiceImpl implements AccessRightService {
 
 		Info info = new Info();
 		try {
-			int update=0;// = userRepository.updateRoleIdByEmpId(id, roleId);
+			int update = 0;// = userRepository.updateRoleIdByEmpId(id, roleId);
 			if (update == 0) {
 				info.setError(true);
 				info.setMessage("Employee role assign Failed");
@@ -99,11 +97,11 @@ public class AccessRightServiceImpl implements AccessRightService {
 		return info;
 	}
 
-	/*@Override
-	public List<User> getAllUser() {
-
-		return userRepository.findByDelStatus(1);
-	}*/
+	/*
+	 * @Override public List<User> getAllUser() {
+	 * 
+	 * return userRepository.findByDelStatus(1); }
+	 */
 
 	@Override
 	public String getRoleJson(int usrId) {
@@ -112,6 +110,24 @@ public class AccessRightServiceImpl implements AccessRightService {
 			System.out.println("user Id : " + usrId);
 			assignRoleDetailList = assignRoleDetailListRepository.getRoleJson(usrId);
 
+			System.out.println("assignRoleDetailList  : " + assignRoleDetailList.toString());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		String json = null;
+		if (assignRoleDetailList != null) {
+			json = new String(assignRoleDetailList.getRoleJson());
+		}
+
+		return json;
+	}
+
+	@Override
+	public String getRoleJsonByRoleId(int roleId) {
+		AssignRoleDetailList assignRoleDetailList = new AssignRoleDetailList();
+		try {
+			System.out.println("roleId Id : " + roleId);
+			assignRoleDetailList = assignRoleDetailListRepository.findByRoleId(roleId);
 			System.out.println("assignRoleDetailList  : " + assignRoleDetailList.toString());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
