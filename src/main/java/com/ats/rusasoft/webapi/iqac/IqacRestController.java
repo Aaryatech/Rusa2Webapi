@@ -21,6 +21,7 @@ import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.IqacList;
 import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.MIqac;
+import com.ats.rusasoft.model.NewDeanList;
 import com.ats.rusasoft.model.Quolification;
 import com.ats.rusasoft.model.Staff;
 import com.ats.rusasoft.model.StaffList;
@@ -33,6 +34,7 @@ import com.ats.rusasoft.repositories.DeanRepo;
 import com.ats.rusasoft.repositories.DeansListRepo;
 import com.ats.rusasoft.repositories.IqacListRepo;
 import com.ats.rusasoft.repositories.IqacRepo;
+import com.ats.rusasoft.repositories.NewDeanListRepo;
 import com.ats.rusasoft.repositories.StaffListRepo;
 import com.ats.rusasoft.repositories.StaffRepo;
 import com.ats.rusasoft.repositories.StudentSchemeRepo;
@@ -60,6 +62,8 @@ public class IqacRestController {
 	@Autowired StudentSupprtSchemeRepo studschemerepo;
 	
 	@Autowired StudentSchemeRepo studrepo;
+	
+	@Autowired NewDeanListRepo newDeanListRepo;
 	
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static	String senderPassword = "atsinfosoft@123";
@@ -452,12 +456,24 @@ public class IqacRestController {
 	}
 	
 	
-	  @RequestMapping(value= {"/getListDean"}, method=RequestMethod.GET)
-	  public @ResponseBody List<DeansList> getListDean(){
+	  @RequestMapping(value= {"/getListDean"}, method=RequestMethod.POST)
+	  public @ResponseBody List<NewDeanList> getListDean(@RequestParam int facultyId,
+				@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod,@RequestParam List<Integer> deptIdList,
+				@RequestParam int instituteId ,@RequestParam int isDean){
+	
+		  System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+					+ isHod +  "deptIdList" + deptIdList);
 	 
-	  List<DeansList> deansList = null; try {
+	  List<NewDeanList> deansList = null; try {
+		  if (isPrincipal == 1 || isIQAC == 1) {
+			  deansList = newDeanListRepo.getDeanByInst( instituteId, isDean);
+			} else if ( isDean == 1 || isHod == 1) {
+				deansList = newDeanListRepo.getDeanByDept(deptIdList, instituteId, isDean);
+			} else {
+				deansList = newDeanListRepo.getDeanRepo(facultyId, instituteId, isDean);
+			}
 	  
-	  deansList = deanlistrepo.findByIsActiveAndDelStatus();
+	  //deansList = deanlistrepo.findByIsActiveAndDelStatus();
 	  
 	  }catch(Exception e){ e.printStackTrace(); }
 	  
