@@ -1,5 +1,6 @@
 package com.ats.rusasoft.webapi.iqac;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,17 @@ import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.OrganizedList;
 import com.ats.rusasoft.model.StudMentorList;
 import com.ats.rusasoft.model.StudentMentoring;
+import com.ats.rusasoft.model.faculty.FacultiContributionList;
+import com.ats.rusasoft.model.faculty.FacultyBookList;
+import com.ats.rusasoft.model.faculty.FacultyConferenceList;
+import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.model.faculty.PhdGuidList;
 import com.ats.rusasoft.mstrepo.StuedentMentorListRepo;
 import com.ats.rusasoft.repositories.BookPublicatioRepo;
+import com.ats.rusasoft.repositories.FaclutyConfListRepo;
+import com.ats.rusasoft.repositories.FacultiContriRepo;
 import com.ats.rusasoft.repositories.FacultyActivityRepo;
+import com.ats.rusasoft.repositories.FacultyBookListRepo;
 import com.ats.rusasoft.repositories.FacultyConferenceRepo;
 import com.ats.rusasoft.repositories.FacultyContributionRepo;
 import com.ats.rusasoft.repositories.FacultyPhdGuideRepo;
@@ -36,6 +44,8 @@ public class FacultyDetailRestApi {
 	@Autowired StudentMentoringRepo studmentrepo;
 	
 	@Autowired StuedentMentorListRepo  smRepo;
+	
+	@Autowired FaclutyConfListRepo fConRepo;
 	
 	@Autowired FacultyConferenceRepo facconRepo;
 	
@@ -51,6 +61,11 @@ public class FacultyDetailRestApi {
 	
 	@Autowired PhdGuidListRepo phdListRepo;
 	
+	@Autowired FacultyBookListRepo facBookRepo;
+	
+	@Autowired FacultiContriRepo facContriListRepo;
+	
+	
 	@RequestMapping(value= {"/insertStudentMentoringDetails"}, method=RequestMethod.POST)
 	public @ResponseBody StudentMentoring insertStudMent(@RequestBody StudentMentoring studMent){
 		
@@ -64,9 +79,35 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getStudentMentoringDetailsList"}, method=RequestMethod.POST)
-	public @ResponseBody List<StudMentorList> getFacultyMonitorList(@RequestParam("facId") int facId,@RequestParam("yearId") int yearId){
+	public @ResponseBody List<StudMentorList> getFacultyMonitorList(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId){
+		System.out.println("facultyId ==" + facultyId + " isPrincipal=" + isPrincipal + " sIQAC=" + isIQAC + " isHod="
+				+ isHod + " yearId=" + yearId + " deptIdList=" + deptIdList);
+
 		
-		return smRepo.getListFacultyMonitor(facId,yearId);
+		List<StudMentorList> studMentr = new ArrayList<>();
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				System.out.println("1");
+				studMentr = smRepo.getStudMentrByYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				System.out.println("2");
+				studMentr = smRepo.getStudMentrByDept(deptIdList, yearId, instituteId);
+			} 
+			else { 
+				studMentr = smRepo.getListStudMentor(facultyId, yearId, instituteId);
+			 }
+				 
+
+		} catch (Exception e) {
+			System.err.println("Exce in getStudentMentorList  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		System.err.println("Mentor List" + studMentr);
+		return studMentr;
 	}
 	@RequestMapping(value= {"/editFacultyMentoringDetailsById"}, method=RequestMethod.POST)
 	public @ResponseBody StudentMentoring getFacultyMentor(@RequestParam("mId") int mId){
@@ -130,9 +171,32 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getfacultyConferenceByFacId"}, method=RequestMethod.POST)
-	public @ResponseBody List<FacultyConference> getFacultyConfList(@RequestParam("facId") int facId){
-		System.err.println("FId:"+facId);
-		return facconRepo.getListFacultyConference(facId);
+	public @ResponseBody List<FacultyConferenceList> getFacultyConfList(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId){
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		
+		List<FacultyConferenceList> facConfList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				facConfList = fConRepo.getJouByYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				facConfList = fConRepo.getJournalByDept(deptIdList, yearId, instituteId);
+			} else {
+				facConfList = fConRepo.getJournalRepo(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+		
+		return facConfList;
 	}
 	
 	@RequestMapping(value= {"/getFacConfByFacId"}, method=RequestMethod.POST)
@@ -198,9 +262,32 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getAllPublishedBooks"}, method=RequestMethod.POST)
-	public @ResponseBody List<FacultyBook> getPublishedBooks(@RequestParam("facId") int facId){
+	public @ResponseBody List<FacultyBookList> getPublishedBooks(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId){
 		
-		return bookpubrepo.findByFacultyIdAndDelStatusOrderByBookIdDesc(facId, 1);
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+
+		List<FacultyBookList> fBookList = new ArrayList<>();
+		
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				fBookList = facBookRepo.getJouByYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				fBookList = facBookRepo.getJournalByDept(deptIdList, yearId, instituteId);
+			} else {
+				fBookList = facBookRepo.getJournalRepo(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return  fBookList;
 		
 	}
 	
@@ -338,9 +425,30 @@ public class FacultyDetailRestApi {
 	}
 	
 	@RequestMapping(value= {"/getAllOutReachContri"}, method=RequestMethod.POST)
-	public @ResponseBody List<FacultyContribution> getAllOutReachContri(@RequestParam("facId") int facId, @RequestParam("yrId") int yrId ){
-		
-		return facContriRepo.findByFacultyIdAndYearIdAndDelStatusOrderByConIdDesc(facId, yrId, 1);
+	public @ResponseBody List<FacultiContributionList> getAllOutReachContri(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+
+		List<FacultiContributionList> facContriList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				facContriList = facContriListRepo.getJouByYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				facContriList = facContriListRepo.getJournalByDept(deptIdList, yearId, instituteId);
+			} else {
+				facContriList = facContriListRepo.getJournalRepo(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facContriList;
 		
 	}
 	

@@ -1,30 +1,20 @@
-package com.ats.rusasoft.model;
-
-import java.util.Date;
+package com.ats.rusasoft.model.faculty;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name="t_faculty_conference")
-public class FacultyConference {
-	
+public class FacultyConferenceList {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int confId;
 	private int facultyId;
 	private int yearId;
-	/*
-	 * private String facultyFirstName; private String deptName;
-	 */
+	private String facultyFirstName;
+	private String deptName;
 	private String confName;
 	private String confType;
-	private Date confDate;
+	private String confDate;
 	private String confVenue;
 	private String 	confFundFrom;
 	private int confFundAmt;
@@ -54,12 +44,18 @@ public class FacultyConference {
 		this.yearId = yearId;
 	}
 	
-	/*
-	 * public String getFacultyFirstName() { return facultyFirstName; } public void
-	 * setFacultyFirstName(String facultyFirstName) { this.facultyFirstName =
-	 * facultyFirstName; } public String getDeptName() { return deptName; } public
-	 * void setDeptName(String deptName) { this.deptName = deptName; }
-	 */
+	public String getFacultyFirstName() {
+		return facultyFirstName;
+	}
+	public void setFacultyFirstName(String facultyFirstName) {
+		this.facultyFirstName = facultyFirstName;
+	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
 	public String getConfName() {
 		return confName;
 	}
@@ -72,11 +68,10 @@ public class FacultyConference {
 	public void setConfType(String confType) {
 		this.confType = confType;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getConfDate() {
+	public String getConfDate() {
 		return confDate;
 	}
-	public void setConfDate(Date confDate) {
+	public void setConfDate(String confDate) {
 		this.confDate = confDate;
 	}
 	public String getConfVenue() {
@@ -135,14 +130,15 @@ public class FacultyConference {
 	}
 	@Override
 	public String toString() {
-		return "FacultyConference [confId=" + confId + ", facultyId=" + facultyId + ", yearId=" + yearId + ", confName="
-				+ confName + ", confType=" + confType + ", confDate=" + confDate + ", confVenue=" + confVenue
-				+ ", confFundFrom=" + confFundFrom + ", confFundAmt=" + confFundAmt + ", delStatus=" + delStatus
-				+ ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
-				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exVar1=" + exVar1 + "]";
+		return "FacultyConference [confId=" + confId + ", facultyId=" + facultyId + ", yearId=" + yearId
+				+ ", facultyFirstName=" + facultyFirstName + ", deptName=" + deptName + ", confName=" + confName
+				+ ", confType=" + confType + ", confDate=" + confDate + ", confVenue=" + confVenue + ", confFundFrom="
+				+ confFundFrom + ", confFundAmt=" + confFundAmt + ", delStatus=" + delStatus + ", isActive=" + isActive
+				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1
+				+ ", exVar1=" + exVar1 + "]";
 	}
 	
 	
-	
-	
+
+
 }

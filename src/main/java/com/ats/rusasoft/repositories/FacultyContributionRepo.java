@@ -13,7 +13,7 @@ import com.ats.rusasoft.model.FacultyContribution;
 
 public interface FacultyContributionRepo extends JpaRepository<FacultyContribution, Integer> {
 	
-	List<FacultyContribution> findByFacultyIdAndYearIdAndDelStatusOrderByConIdDesc(int facId, int yrId, int del);
+	//List<FacultyContribution> findByFacultyIdAndYearIdAndDelStatusOrderByConIdDesc(int facId, int yrId, int del);
 	
 	FacultyContribution findByConId(int conId);
 	
