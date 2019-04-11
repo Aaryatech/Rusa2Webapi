@@ -19,6 +19,12 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 	@Modifying
 	@Query(value="UPDATE m_faculty SET del_status=0 WHERE faculty_id=:id",nativeQuery=true)
 	int deleteByFacultyId(@Param("id") int id);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE m_faculty SET password=:password ,is_enrolled=1   WHERE faculty_id=:userId ", nativeQuery = true)
+	int chagePass(@Param("password") String password, @Param("userId") int userId);
+
 
 	List<Staff> findByContactNoAndDelStatus(String contactNo, int i);
 
@@ -35,7 +41,7 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 	
 	Staff findByDelStatusAndIsActiveAndEmailAndPassword(int delStatus,int isActive,String email,String password);
 
-	
+	Staff findByDelStatusAndIsActiveAndEmail(int delStatus, int isActive,String email);
 	
 
 	

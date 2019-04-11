@@ -11,6 +11,20 @@ public class OTPVerification {
 	
 	public static String otp;
 	public static String pass;
+	
+public static int userId;
+
+
+
+
+	public static int getUserId() {
+	return userId;
+}
+
+
+public static void setUserId(int userId) {
+	OTPVerification.userId = userId;
+}
 
 
 	public static String getEmailId() {
@@ -55,8 +69,7 @@ public class OTPVerification {
 
 	@Override
 	public String toString() {
-		return "OTPVerification [getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return "OTPVerification []";
 	}
 
 

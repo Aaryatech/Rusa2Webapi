@@ -69,13 +69,12 @@ public class RestApiController {
 		
 		
 		
-		
 		System.err.println("Its userName "+inputValue);
 		Info info = new Info();
 		// tableId 1 for Institute tableId 2 for Hod for Sachin table id 5 for acc
 		// Officer
 		
-			UserLogin instList = new UserLogin();
+		/*	UserLogin instList = new UserLogin();
 	System.err.println("Its New Record Insert ");
 					instList = userServices.findByUserNameAndIsBlock(inputValue.trim(), 1);
 				
@@ -91,9 +90,9 @@ public class RestApiController {
 		//	int userId=	instList.getUserId();
 			int typeId=instList.getUserType();
 			int regKey=instList.getRegPrimaryKey();
+			*/
 			
-			
-			GetUserDetail userDetail=null;
+			/*GetUserDetail userDetail=null;
 			if(typeId == 1) 
 			{
 			   userDetail = userDataRepo.getPrinciDetails(regKey);
@@ -129,9 +128,15 @@ public class RestApiController {
 			else {
 			 userDetail = userDataRepo.getStudentDetails(regKey);
 			      System.err.println("User data is"+userDetail.toString());
-			}
-			String emailId=userDetail.getUserEmail();
-			String conNumber=userDetail.getUserConNumber();
+			}*/
+			
+			Staff userDetail=staffRepo.findByDelStatusAndIsActiveAndEmail(1, 1, inputValue);
+			
+			if(userDetail!=null) {
+			OTPVerification.setUserId(userDetail.getFacultyId());
+
+			String emailId=userDetail.getEmail();
+			String conNumber=userDetail.getContactNo();
 		
 			
 			
@@ -149,8 +154,7 @@ public class RestApiController {
 			OTPVerification.setConNumber(conNumber);
 			OTPVerification.setEmailId(emailId);
 			OTPVerification.setOtp(otp1);
-			OTPVerification.setPass(instList.getPass());
-			
+			OTPVerification.setPass(userDetail.getPassword());
 			
       }
  else 
@@ -180,8 +184,8 @@ public class RestApiController {
 	
 			String mobile=OTPVerification.getConNumber();
 			String email=OTPVerification.getEmailId();
-			String pass=OTPVerification.getPass();
-			System.out.println("");
+			String pass=Commons.getAlphaNumericString(7);
+			System.out.println("pass");
 			
 			
 			
@@ -193,8 +197,10 @@ public class RestApiController {
 
 			System.err.println("Info email sent response   " + inf.toString());
 			
+		
 			
-			
+			int res=staffrepo.chagePass(pass, OTPVerification.getUserId());
+
 			  } else { 
 				  info.setError(true);
 				  info.setMsg("failed");
@@ -290,12 +296,12 @@ public class RestApiController {
  
 	}
 	
-	
+	@Autowired StaffRepo staffrepo;
 	@RequestMapping(value = { "/changePass" }, method = RequestMethod.POST)
 	public @ResponseBody Info changePass(@RequestParam String password,@RequestParam int userId) {
 	Info info=new Info();
 	try {
-		int res=userServices.chagePass(password,userId);
+		int res=staffrepo.chagePass(password, userId);
 		
 		if(res>0) {
 			info.setError(false);
@@ -309,7 +315,7 @@ public class RestApiController {
 		}
 	}catch (Exception e) {
 		
-		System.err.println("Exce in getAllInstitutes Institute " +e.getMessage());
+		System.err.println("Exce in changePass Institute " +e.getMessage());
 		e.printStackTrace();
 		info.setError(true);
 		info.setMsg("excep");
