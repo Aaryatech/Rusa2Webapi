@@ -2,6 +2,8 @@ package com.ats.rusasoft.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.common.DateConvertor;
 import com.ats.rusasoft.model.Dept;
 import com.ats.rusasoft.model.Info;
+import com.ats.rusasoft.model.NewDeanList;
 import com.ats.rusasoft.model.SubjectCo;
 import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.model.faculty.GetResearchProject;
@@ -23,11 +26,13 @@ import com.ats.rusasoft.model.faculty.Journal;
 import com.ats.rusasoft.model.faculty.ResearchProject;
 import com.ats.rusasoft.model.faculty.SWOC;
 import com.ats.rusasoft.model.faculty.Subject;
+import com.ats.rusasoft.mstrepo.DeptRepo;
 import com.ats.rusasoft.repo.faculty.GetJournalRepo;
 import com.ats.rusasoft.repo.faculty.GetResearchProjectRepo;
 import com.ats.rusasoft.repo.faculty.GetSWOCRepo;
 import com.ats.rusasoft.repo.faculty.GetSubjectRepo;
 import com.ats.rusasoft.repo.faculty.JournalRepo;
+import com.ats.rusasoft.repo.faculty.NewDeanListRepository;
 import com.ats.rusasoft.repo.faculty.ResearchProjectRepo;
 import com.ats.rusasoft.repo.faculty.SWOCRepo;
 import com.ats.rusasoft.repo.faculty.SubjectRepo;
@@ -63,21 +68,62 @@ public class FacultyDetailRestController {
 	@Autowired
 	GetSWOCRepo getSWOCRepo;
 
+	@Autowired
+	NewDeanListRepository newDeanListRepository;
+
+	@Autowired
+	DeptRepo deptRepo;
+
+	@RequestMapping(value = { "/getNewHodList" }, method = RequestMethod.POST)
+	public @ResponseBody List<NewDeanList> getNewHodList(@RequestParam int instituteId) {
+
+		List<NewDeanList> facultyList = new ArrayList<>();
+
+		try {
+
+			facultyList = newDeanListRepository.getNewHodList(instituteId);
+
+			for (int i = 0; i < facultyList.size(); i++) {
+
+				List<Integer> deptIds = Stream.of(facultyList.get(i).getDeptId().split(",")).map(Integer::parseInt)
+						.collect(Collectors.toList());
+				List<Dept> deptList = new ArrayList<>();
+
+				deptList = deptRepo.findByDelStatusAndIsActiveAndDeptIdIn(1, 1, deptIds);
+
+				String deptName = "";
+				for (int j = 0; j < deptList.size(); j++) {
+
+					deptName = deptList.get(j).getDeptName() + "," + deptName;
+					deptName.substring(0, deptName.length());
+				}
+
+				facultyList.get(i).setDeptName(deptName);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getNewHodList  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facultyList;
+	}
+
 	@RequestMapping(value = { "/getSwocListByFacultyIdAndtype" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetSWOC> getSwocListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
-			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId,@RequestParam int type) {
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId, @RequestParam int type) {
 
 		List<GetSWOC> swocList = new ArrayList<>();
 
 		try {
 
 			if (isPrincipal == 1 || isIQAC == 1) {
-				swocList = getSWOCRepo.getSwocListYear(yearId, instituteId,type);
+				swocList = getSWOCRepo.getSwocListYear(yearId, instituteId, type);
 			} else if (isHod == 1) {
-				swocList = getSWOCRepo.getSwocListByDept(deptIdList, yearId, instituteId,type);
+				swocList = getSWOCRepo.getSwocListByDept(deptIdList, yearId, instituteId, type);
 			} else {
-				swocList = getSWOCRepo.getSwocList(facultyId, yearId, instituteId,type);
+				swocList = getSWOCRepo.getSwocList(facultyId, yearId, instituteId, type);
 			}
 
 		} catch (Exception e) {
@@ -158,8 +204,11 @@ public class FacultyDetailRestController {
 	public @ResponseBody List<GetResearchProject> getProjectListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		/*System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);*/
+		/*
+		 * System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal +
+		 * "isIQAC" + isIQAC + "isHod" + isHod + "yearId" + yearId + "deptIdList" +
+		 * deptIdList);
+		 */
 
 		List<GetResearchProject> projList = new ArrayList<>();
 
