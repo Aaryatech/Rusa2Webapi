@@ -30,7 +30,7 @@ public class GetFacultyConsultancy {
 
 	private int delStatus;
 
-	private String makerdatetime;
+	private String makerDatetime;
 
 	private int makerUserId;
 
@@ -125,12 +125,12 @@ public class GetFacultyConsultancy {
 		this.delStatus = delStatus;
 	}
 
-	public String getMakerdatetime() {
-		return makerdatetime;
+	public String getMakerDatetime() {
+		return makerDatetime;
 	}
 
-	public void setMakerdatetime(String makerdatetime) {
-		this.makerdatetime = makerdatetime;
+	public void setMakerDatetime(String makerDatetime) {
+		this.makerDatetime = makerDatetime;
 	}
 
 	public int getMakerUserId() {
@@ -194,7 +194,7 @@ public class GetFacultyConsultancy {
 		return "GetFacultyConsultancy [consId=" + consId + ", facultyId=" + facultyId + ", yearId=" + yearId
 				+ ", consNature=" + consNature + ", consSponsor=" + consSponsor + ", consAmount=" + consAmount
 				+ ", consPeriod=" + consPeriod + ", isConsCompleted=" + isConsCompleted + ", isActive=" + isActive
-				+ ", delStatus=" + delStatus + ", makerdatetime=" + makerdatetime + ", makerUserId=" + makerUserId
+				+ ", delStatus=" + delStatus + ", makerDatetime=" + makerDatetime + ", makerUserId=" + makerUserId
 				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
 				+ ", deptName=" + deptName + ", facultyFirstName=" + facultyFirstName + "]";
 	}
