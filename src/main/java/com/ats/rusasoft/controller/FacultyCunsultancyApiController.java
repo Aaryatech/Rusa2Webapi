@@ -1,6 +1,7 @@
 package com.ats.rusasoft.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoft.model.FacultyConsultancy;
 import com.ats.rusasoft.model.GetFacultyConsultancy;
+import com.ats.rusasoft.model.GetFacultyPhdGuide;
 import com.ats.rusasoft.model.Info;
-import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.repository.FacultyConsultancyRepo;
 import com.ats.rusasoft.repository.GetFacultyConsultancyRepo;
+import com.ats.rusasoft.repository.GetFacultyPhdGuideRepo;
 
 @RestController
 public class FacultyCunsultancyApiController {
@@ -27,12 +29,38 @@ public class FacultyCunsultancyApiController {
 	@Autowired
 	GetFacultyConsultancyRepo getFacultyConsultancyRepo;
 
+	@Autowired
+	GetFacultyPhdGuideRepo getFacultyPhdGuideRepo;
+
+	@RequestMapping(value = { "/getPhdGuideListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetFacultyPhdGuide> getPhdGuideListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+
+		List<GetFacultyPhdGuide> phdGuideList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				phdGuideList = getFacultyPhdGuideRepo.getConListYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				phdGuideList = getFacultyPhdGuideRepo.getConListByDept(deptIdList, yearId, instituteId);
+			} else {
+				phdGuideList = getFacultyPhdGuideRepo.getConList(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getConListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return phdGuideList;
+	}
+
 	@RequestMapping(value = { "/getConListByFacultyIdAndtype" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetFacultyConsultancy> getConListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetFacultyConsultancy> conList = new ArrayList<>();
 

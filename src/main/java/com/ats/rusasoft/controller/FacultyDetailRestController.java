@@ -17,6 +17,7 @@ import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.SubjectCo;
 import com.ats.rusasoft.model.faculty.GetJournal;
 import com.ats.rusasoft.model.faculty.GetResearchProject;
+import com.ats.rusasoft.model.faculty.GetSWOC;
 import com.ats.rusasoft.model.faculty.GetSubject;
 import com.ats.rusasoft.model.faculty.Journal;
 import com.ats.rusasoft.model.faculty.ResearchProject;
@@ -24,6 +25,7 @@ import com.ats.rusasoft.model.faculty.SWOC;
 import com.ats.rusasoft.model.faculty.Subject;
 import com.ats.rusasoft.repo.faculty.GetJournalRepo;
 import com.ats.rusasoft.repo.faculty.GetResearchProjectRepo;
+import com.ats.rusasoft.repo.faculty.GetSWOCRepo;
 import com.ats.rusasoft.repo.faculty.GetSubjectRepo;
 import com.ats.rusasoft.repo.faculty.JournalRepo;
 import com.ats.rusasoft.repo.faculty.ResearchProjectRepo;
@@ -58,12 +60,38 @@ public class FacultyDetailRestController {
 	@Autowired
 	SWOCRepo sWOCRepo;
 
+	@Autowired
+	GetSWOCRepo getSWOCRepo;
+
+	@RequestMapping(value = { "/getSwocListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetSWOC> getSwocListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId,@RequestParam int type) {
+
+		List<GetSWOC> swocList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				swocList = getSWOCRepo.getSwocListYear(yearId, instituteId,type);
+			} else if (isHod == 1) {
+				swocList = getSWOCRepo.getSwocListByDept(deptIdList, yearId, instituteId,type);
+			} else {
+				swocList = getSWOCRepo.getSwocList(facultyId, yearId, instituteId,type);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return swocList;
+	}
+
 	@RequestMapping(value = { "/getJournalListByFacultyIdAndtype" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetJournal> getJournalListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetJournal> jouList = new ArrayList<>();
 
@@ -85,6 +113,31 @@ public class FacultyDetailRestController {
 		return jouList;
 	}
 
+	@RequestMapping(value = { "/getSubjectListByFacultyIdAndtype" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetSubject> getSubjectListByFacultyIdAndtype(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+
+		List<GetSubject> subList = new ArrayList<>();
+
+		try {
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				subList = getSubjectRepo.getSubListYear(yearId, instituteId);
+			} else if (isHod == 1) {
+				subList = getSubjectRepo.getSubListByDept(deptIdList, yearId, instituteId);
+			} else {
+				subList = getSubjectRepo.getSubList(facultyId, yearId, instituteId);
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return subList;
+	}
+
 	@RequestMapping(value = { "/saveReaserchProject" }, method = RequestMethod.POST)
 	public @ResponseBody ResearchProject saveReaserchProject(@RequestBody ResearchProject researchProject) {
 
@@ -101,29 +154,12 @@ public class FacultyDetailRestController {
 		return projRes;
 	}
 
-/*	@RequestMapping(value = { "/getProjectListByFacultyId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetResearchProject> getProjectListByFacultyId(@RequestParam int facultyId,
-			@RequestParam int yearId) {
-
-		List<GetResearchProject> projList = new ArrayList<>();
-
-		try {
-			projList = getResearchProjectRepo.getProjectList(facultyId, yearId);
-
-		} catch (Exception e) {
-			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());
-			e.printStackTrace();
-
-		}
-		return projList;
-	}*/
-
 	@RequestMapping(value = { "/getProjectListByFacultyIdAndtype" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetResearchProject> getProjectListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		/*System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);*/
 
 		List<GetResearchProject> projList = new ArrayList<>();
 
@@ -345,24 +381,6 @@ public class FacultyDetailRestController {
 
 		}
 		return subRes;
-	}
-
-	@RequestMapping(value = { "/getAllSubjectList" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetSubject> getAllSubjectList(@RequestParam("facultyId") int facultyId,
-			@RequestParam("yearId") int yearId) {
-
-		List<GetSubject> subList = new ArrayList<>();
-
-		try {
-			subList = getSubjectRepo.getProjectList(facultyId, yearId);
-
-		} catch (Exception e) {
-			System.err.println("Exce in getAllJournalList  " + e.getMessage());
-			e.printStackTrace();
-		}
-
-		return subList;
-
 	}
 
 	@RequestMapping(value = { "/saveSubjectCo" }, method = RequestMethod.POST)

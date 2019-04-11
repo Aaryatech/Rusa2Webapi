@@ -6,24 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class GetSubject {
+public class GetSWOC {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int subId;
+	private int swocId;
 
 	private int facultyId;
 	private int yearId;
-	private int progId;
-	private String subCode;
-	private String subSem;
-	private String subName;
-	private String subType;
-	private float subPassPer;
+	private int swocType;
 
-	private int subIsCbse;
-	private int subStuAppear;
-	private int subStuPassed;
+	private String swocText;
 
 	private int delStatus;
 
@@ -36,17 +29,15 @@ public class GetSubject {
 	private int exInt2;
 	private String exVar1;
 	private String exVar2;
-
-	private String nameOfProgram;
 	private String deptName;
 	private String facultyFirstName;
 
-	public int getSubId() {
-		return subId;
+	public int getSwocId() {
+		return swocId;
 	}
 
-	public void setSubId(int subId) {
-		this.subId = subId;
+	public void setSwocId(int swocId) {
+		this.swocId = swocId;
 	}
 
 	public int getFacultyId() {
@@ -65,76 +56,20 @@ public class GetSubject {
 		this.yearId = yearId;
 	}
 
-	public int getProgId() {
-		return progId;
+	public int getSwocType() {
+		return swocType;
 	}
 
-	public void setProgId(int progId) {
-		this.progId = progId;
+	public void setSwocType(int swocType) {
+		this.swocType = swocType;
 	}
 
-	public String getSubCode() {
-		return subCode;
+	public String getSwocText() {
+		return swocText;
 	}
 
-	public void setSubCode(String subCode) {
-		this.subCode = subCode;
-	}
-
-	public String getSubSem() {
-		return subSem;
-	}
-
-	public void setSubSem(String subSem) {
-		this.subSem = subSem;
-	}
-
-	public String getSubName() {
-		return subName;
-	}
-
-	public void setSubName(String subName) {
-		this.subName = subName;
-	}
-
-	public String getSubType() {
-		return subType;
-	}
-
-	public void setSubType(String subType) {
-		this.subType = subType;
-	}
-
-	public float getSubPassPer() {
-		return subPassPer;
-	}
-
-	public void setSubPassPer(float subPassPer) {
-		this.subPassPer = subPassPer;
-	}
-
-	public int getSubIsCbse() {
-		return subIsCbse;
-	}
-
-	public void setSubIsCbse(int subIsCbse) {
-		this.subIsCbse = subIsCbse;
-	}
-
-	public int getSubStuAppear() {
-		return subStuAppear;
-	}
-
-	public void setSubStuAppear(int subStuAppear) {
-		this.subStuAppear = subStuAppear;
-	}
-
-	public int getSubStuPassed() {
-		return subStuPassed;
-	}
-
-	public void setSubStuPassed(int subStuPassed) {
-		this.subStuPassed = subStuPassed;
+	public void setSwocText(String swocText) {
+		this.swocText = swocText;
 	}
 
 	public int getDelStatus() {
@@ -201,14 +136,6 @@ public class GetSubject {
 		this.exVar2 = exVar2;
 	}
 
-	public String getNameOfProgram() {
-		return nameOfProgram;
-	}
-
-	public void setNameOfProgram(String nameOfProgram) {
-		this.nameOfProgram = nameOfProgram;
-	}
-
 	public String getDeptName() {
 		return deptName;
 	}
@@ -227,13 +154,11 @@ public class GetSubject {
 
 	@Override
 	public String toString() {
-		return "GetSubject [subId=" + subId + ", facultyId=" + facultyId + ", yearId=" + yearId + ", progId=" + progId
-				+ ", subCode=" + subCode + ", subSem=" + subSem + ", subName=" + subName + ", subType=" + subType
-				+ ", subPassPer=" + subPassPer + ", subIsCbse=" + subIsCbse + ", subStuAppear=" + subStuAppear
-				+ ", subStuPassed=" + subStuPassed + ", delStatus=" + delStatus + ", isActive=" + isActive
+		return "GetSWOC [swocId=" + swocId + ", facultyId=" + facultyId + ", yearId=" + yearId + ", swocType="
+				+ swocType + ", swocText=" + swocText + ", delStatus=" + delStatus + ", isActive=" + isActive
 				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1
-				+ ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", nameOfProgram="
-				+ nameOfProgram + ", deptName=" + deptName + ", facultyFirstName=" + facultyFirstName + "]";
+				+ ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", deptName=" + deptName
+				+ ", facultyFirstName=" + facultyFirstName + "]";
 	}
 
 }

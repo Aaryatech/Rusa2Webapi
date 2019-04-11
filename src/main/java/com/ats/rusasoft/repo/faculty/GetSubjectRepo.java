@@ -10,8 +10,18 @@ import com.ats.rusasoft.model.faculty.GetSubject;
 
 public interface GetSubjectRepo extends JpaRepository<GetSubject, Integer> {
 
-	@Query(value = "select p.name_of_program,s.* from t_program p,t_faculty_subject s where s.prog_id=p.program_id and s.del_status=1 and s.is_active=1 and s.faculty_id=:facultyId "
-			+ " and s.year_id=:yearId ORDER BY s.sub_id DESC ", nativeQuery = true)
-	List<GetSubject> getProjectList(@Param("facultyId") int facultyId,@Param("yearId") int yearId);
+	@Query(value = " SELECT p.name_of_program,j.*,f.faculty_first_name,d.dept_name FROM t_faculty_subject j,m_faculty f,m_dept d,t_program p WHERE j.del_status=1 AND j.faculty_id IN(:facultyId)\n"
+			+ " AND j.year_id=:yearId AND j.is_active=1 AND f.faculty_id=j.faculty_id AND f.dept_id=d.dept_id AND f.institute_id=:instituteId  AND j.prog_id=p.program_id   ORDER BY j.sub_id DESC ", nativeQuery = true)
+	List<GetSubject> getSubList(@Param("facultyId") int facultyId, @Param("yearId") int yearId,
+			@Param("instituteId") int instituteId);
+
+	@Query(value = "  SELECT p.name_of_program,j.*,f.faculty_first_name,d.dept_name FROM t_faculty_subject j,m_faculty f,m_dept d ,t_program p WHERE j.del_status=1  "
+			+ "	  AND j.year_id=:yearId AND j.is_active=1 AND f.faculty_id=j.faculty_id AND f.dept_id=d.dept_id AND d.dept_id IN(:deptIdList) AND f.institute_id=:instituteId AND j.prog_id=p.program_id  ORDER BY j.sub_id DESC ", nativeQuery = true)
+	List<GetSubject> getSubListByDept(@Param("deptIdList") List<Integer> deptIdList, @Param("yearId") int yearId,
+			@Param("instituteId") int instituteId);
+
+	@Query(value = "  SELECT p.name_of_program,j.*,f.faculty_first_name,d.dept_name FROM t_faculty_subject j,m_faculty f,m_dept d ,t_program p WHERE j.del_status=1  "
+			+ "	  AND j.year_id=:yearId AND j.is_active=1 AND f.faculty_id=j.faculty_id AND f.dept_id=d.dept_id  AND f.institute_id=:instituteId AND j.prog_id=p.program_id  ORDER BY j.sub_id DESC ", nativeQuery = true)
+	List<GetSubject> getSubListYear(@Param("yearId") int yearId, @Param("instituteId") int instituteId);
 
 }
