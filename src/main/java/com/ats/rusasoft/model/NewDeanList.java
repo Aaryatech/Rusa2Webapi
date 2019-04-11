@@ -5,10 +5,10 @@ import javax.persistence.Id;
 
 @Entity
 public class NewDeanList {
-	
+
 	@Id
 	private int facultyId;
-	private int deptId;
+	private String deptId;
 	private String facultyFirstName;
 	private int highestQualification;
 	private int teachingTo;
@@ -21,7 +21,7 @@ public class NewDeanList {
 	private String deptName;
 	private String qualificationName;
 	private String designationName;
-	
+
 	public int getFacultyId() {
 		return facultyId;
 	}
@@ -30,11 +30,11 @@ public class NewDeanList {
 		this.facultyId = facultyId;
 	}
 
-	public int getDeptId() {
+	public String getDeptId() {
 		return deptId;
 	}
 
-	public void setDeptId(int deptId) {
+	public void setDeptId(String deptId) {
 		this.deptId = deptId;
 	}
 
@@ -143,7 +143,5 @@ public class NewDeanList {
 				+ ", deptName=" + deptName + ", qualificationName=" + qualificationName + ", designationName="
 				+ designationName + "]";
 	}
-	
-	
-	
+
 }
