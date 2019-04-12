@@ -13,7 +13,7 @@ public interface NewDeanListRepo extends JpaRepository<NewDeanList, Integer> {
 			+ "d.dept_name,q.qualification_name,des.designation_name FROM m_faculty f, m_designation des,m_qualificatoin q ,m_dept d "
 			+ "WHERE f.dept_id=d.dept_id AND des.designation_id=f.current_designation_id AND "
 			+ "q.qualification_id=f.highest_qualification AND f.del_status=1 AND f.is_active=1 AND f.is_dean=:isDean "
-			+ "AND f.institute_id=:instituteId ORDER BY f.faculty_id",nativeQuery=true)
+			+ "AND f.institute_id=:instituteId ORDER BY f.faculty_id DESC",nativeQuery=true)
 	List<NewDeanList> getDeanByInst(int instituteId, int isDean);
 
 	@Query(value="SELECT f.faculty_id,f.faculty_first_name,f.dept_id,f.highest_qualification,f.teaching_to,"
@@ -21,7 +21,7 @@ public interface NewDeanListRepo extends JpaRepository<NewDeanList, Integer> {
 			+ "d.dept_name,q.qualification_name,des.designation_name FROM m_faculty f, m_designation des,m_qualificatoin q ,m_dept d "
 			+ "WHERE f.dept_id=d.dept_id AND des.designation_id=f.current_designation_id AND "
 			+ "q.qualification_id=f.highest_qualification AND f.del_status=1 AND f.is_active=1 AND f.is_dean=:isDean "
-			+ "AND d.dept_id IN(:deptIdList) AND f.institute_id=:instituteId ORDER BY f.faculty_id",nativeQuery=true)
+			+ "AND d.dept_id IN(:deptIdList) AND f.institute_id=:instituteId ORDER BY f.faculty_id DESC",nativeQuery=true)
 	List<NewDeanList> getDeanByDept(List<Integer> deptIdList, int instituteId, int isDean);
 
 			@Query(value="SELECT f.faculty_id,f.faculty_first_name,f.dept_id,f.highest_qualification,f.teaching_to,"
@@ -29,7 +29,7 @@ public interface NewDeanListRepo extends JpaRepository<NewDeanList, Integer> {
 				+ "d.dept_name,q.qualification_name,des.designation_name FROM m_faculty f, m_designation des,m_qualificatoin q ,m_dept d "
 				+ "WHERE f.dept_id=d.dept_id AND des.designation_id=f.current_designation_id AND "
 				+ "q.qualification_id=f.highest_qualification AND f.institute_id=:instituteId AND f.del_status=1 AND f.is_active=1 AND f.is_dean=:isDean "
-				+ "AND f.institute_id=:instituteId AND m_faculty.faculty_id=:facultyId ORDER BY f.faculty_id",nativeQuery=true)
+				+ "AND f.institute_id=:instituteId AND m_faculty.faculty_id=:facultyId ORDER BY f.faculty_id DESC",nativeQuery=true)
 	List<NewDeanList> getDeanRepo(int facultyId, int instituteId, int isDean);
 
 }
