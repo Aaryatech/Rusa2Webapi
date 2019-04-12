@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -46,6 +47,7 @@ import com.ats.rusasoft.mstrepo.PrincipalRepo;
 import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
 import com.ats.rusasoft.mstrepo.UserService;
+import com.ats.rusasoft.repositories.StaffRepo;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -649,6 +651,8 @@ public class MasterApiController {
 
 	}
 
+	@Autowired
+	StaffRepo staffRepo;
 	@RequestMapping(value = { "/saveInstitute" }, method = RequestMethod.POST)
 	public @ResponseBody Institute saveInstitute(@RequestBody Institute institute) {
 
@@ -705,23 +709,21 @@ public class MasterApiController {
 				staff.setRealivingDate(null);
 				staff.setRoleIds("2");
 				staff.setTeachingTo(0);
-				staff.setType(2);
 
-				/*staff.setInstituteId(instituteId);
-				staff.setJoiningDate(dateOfJoin);
-				staff.setContactNo(contact);
-				staff.setEmail(email);
+				staff.setInstituteId(insResp.getInstituteId());
+				staff.setJoiningDate(new Date());
 				staff.setDelStatus(1);
 				staff.setIsActive(1);
-				staff.setMakerUserId(userId);*/
+				staff.setMakerUserId(0);
 				staff.setMakerEnterDatetime(curDateTime);
 				staff.setCheckerUserId(0);
 				staff.setCheckerDatetime(curDateTime);
 				staff.setLastUpdatedDatetime(curDateTime);
-				staff.setType(2);
+				staff.setType(1);
 
 				staff.setExtravarchar1("NA");
 				
+				staffRepo.save(staff);
 				
 				//
 				
@@ -731,13 +733,13 @@ public class MasterApiController {
 
 				System.err.println("Old Isntitute Old   Principal  update if any");
 
-				Principal princi = pincipalRepo.findByInstituteId(insResp.getInstituteId());
+				/*Principal princi = pincipalRepo.findByInstituteId(insResp.getInstituteId());
 
 				princi.setEmail(insResp.getEmail());
 				princi.setInstituteId(insResp.getInstituteId());
 				princi.setPhoneNo(insResp.getContactNo());
 				princi.setPrincipalName(insResp.getPrincipalName());
-				pincipalRepo.saveAndFlush(princi);
+				pincipalRepo.saveAndFlush(princi);*/
 
 			}
 

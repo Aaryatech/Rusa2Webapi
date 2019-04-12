@@ -199,6 +199,25 @@ public class IqacRestController {
 		
 	}
 	
+	
+	@RequestMapping(value= {"/getUserInfoByContcAndEmail"}, method=RequestMethod.POST)
+	public @ResponseBody Staff getUserInfoByConAndEmail(@RequestParam  int instId,@RequestParam int checkValue,@RequestParam String inputValue){
+		
+		Staff staff=null;
+		if(checkValue==1) {
+			//Its Contact no check
+			staff=staffrepo.findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndContactNo(1, 1, 0, instId, inputValue);
+		}
+		else {
+			
+			//Its Email check
+			staff=staffrepo.findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndEmailIgnoreCase(1, 1, 0, instId, inputValue);
+		}
+		return staff;
+		
+	}
+	
+	
 	@RequestMapping(value= {"/blockPreviousIqacRecord"}, method=RequestMethod.POST)
 	public @ResponseBody Info blockPreviousIqacRecord(@RequestParam("instituteId") int instituteId,
 			@RequestParam("userType") int userType){

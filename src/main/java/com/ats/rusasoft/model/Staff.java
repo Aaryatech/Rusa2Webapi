@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Columns;
 
@@ -60,11 +61,17 @@ public class Staff {
 	private int isDean;
 	private int isLibrarian;
 	private int isStudent;
-
-
-	private int isEnrolled;
+	private int isEnrolled;////default 0 once login then 1
+	private int isBlocked; //default 0 if blocked then 1
 	
-	
+
+	public int getIsBlocked() {
+		return isBlocked;
+	}
+
+	public void setIsBlocked(int isBlocked) {
+		this.isBlocked = isBlocked;
+	}
 
 	public int getIsEnrolled() {
 		return isEnrolled;
@@ -376,7 +383,10 @@ public class Staff {
 				+ ", makerEnterDatetime=" + makerEnterDatetime + ", editUserId=" + editUserId + ", lastUpdatedDatetime="
 				+ lastUpdatedDatetime + ", checkerUserId=" + checkerUserId + ", checkerDatetime=" + checkerDatetime
 				+ ", extraint1=" + extraint1 + ", extravarchar1=" + extravarchar1 + ", roleIds=" + roleIds
-				+ ", password=" + password + ", type=" + type + "]";
+				+ ", password=" + password + ", type=" + type + ", isPrincipal=" + isPrincipal + ", isIqac=" + isIqac
+				+ ", isHod=" + isHod + ", isFaculty=" + isFaculty + ", isAccOff=" + isAccOff + ", isDean=" + isDean
+				+ ", isLibrarian=" + isLibrarian + ", isStudent=" + isStudent + ", isEnrolled=" + isEnrolled
+				+ ", isBlocked=" + isBlocked + "]";
 	}
 
 }
