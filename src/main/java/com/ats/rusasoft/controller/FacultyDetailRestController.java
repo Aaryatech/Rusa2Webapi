@@ -95,10 +95,10 @@ public class FacultyDetailRestController {
 				for (int j = 0; j < deptList.size(); j++) {
 
 					deptName = deptList.get(j).getDeptName() + "," + deptName;
-					deptName.substring(0, deptName.length());
+
 				}
 
-				facultyList.get(i).setDeptName(deptName);
+				facultyList.get(i).setDeptName(deptName.substring(0, deptName.length() - 1));
 			}
 
 		} catch (Exception e) {
@@ -124,7 +124,7 @@ public class FacultyDetailRestController {
 		}
 		return facultyList;
 	}
-	
+
 	@RequestMapping(value = { "/getNewAccOffList" }, method = RequestMethod.POST)
 	public @ResponseBody List<NewDeanList> getNewAccOffList(@RequestParam int instituteId) {
 
