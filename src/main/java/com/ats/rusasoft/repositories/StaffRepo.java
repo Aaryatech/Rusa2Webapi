@@ -13,18 +13,20 @@ import com.ats.rusasoft.model.Staff;
 
 public interface StaffRepo extends JpaRepository<Staff, Integer> {
 
-	Staff findByFacultyIdAndDelStatus(@Param("id") int id,@Param("i") int i);
+	Staff findByFacultyIdAndDelStatus(@Param("id") int id, @Param("i") int i);
+
+	Staff findByFacultyIdAndDelStatusAndIsPrincipalAndIsActive(@Param("facultyId") int facultyId, @Param("i") int i,
+			@Param("j") int j, @Param("k") int k);
 
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE m_faculty SET del_status=0 WHERE faculty_id=:id",nativeQuery=true)
+	@Query(value = "UPDATE m_faculty SET del_status=0 WHERE faculty_id=:id", nativeQuery = true)
 	int deleteByFacultyId(@Param("id") int id);
-	
+
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE m_faculty SET password=:password ,is_enrolled=1   WHERE faculty_id=:userId ", nativeQuery = true)
 	int chagePass(@Param("password") String password, @Param("userId") int userId);
-
 
 	List<Staff> findByContactNoAndDelStatus(String contactNo, int i);
 
@@ -36,19 +38,18 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE m_faculty SET del_status=0  WHERE faculty_id IN (:staffIdList) ",nativeQuery=true)
-	int deleteStaffs(@Param("staffIdList")List<String> staffIdList);
-	
-	Staff findByDelStatusAndIsActiveAndEmailAndPasswordContaining(int delStatus,int isActive,String email,String password);
+	@Query(value = "UPDATE m_faculty SET del_status=0  WHERE faculty_id IN (:staffIdList) ", nativeQuery = true)
+	int deleteStaffs(@Param("staffIdList") List<String> staffIdList);
 
-	Staff findByDelStatusAndIsActiveAndEmail(int delStatus, int isActive,String email);
-	
-	Staff findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndEmailIgnoreCase(int delStatus, int isActive, int isBlocked, int instId,String email);
-	Staff findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndContactNo(int delStatus, int isActive, int isBlocked, int instId,String contactNo);
+	Staff findByDelStatusAndIsActiveAndEmailAndPasswordContaining(int delStatus, int isActive, String email,
+			String password);
 
-	
-	
-	
+	Staff findByDelStatusAndIsActiveAndEmail(int delStatus, int isActive, String email);
 
-	
+	Staff findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndEmailIgnoreCase(int delStatus, int isActive,
+			int isBlocked, int instId, String email);
+
+	Staff findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndContactNo(int delStatus, int isActive, int isBlocked,
+			int instId, String contactNo);
+
 }
