@@ -374,12 +374,25 @@ public class IqacRestController {
 	}
 	
 	@RequestMapping(value= {"/getListStaff"}, method=RequestMethod.POST)
-	public @ResponseBody List<StaffList> getListStaff(@RequestParam("facId") int facId){
-		
+	public @ResponseBody List<StaffList> getListStaff(@RequestParam int facultyId, @RequestParam int user,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList+" " +user);
+
 		List<StaffList> staffList = null;
 		try {
 			
-			staffList = stafflistrepo.findByIsActiveAndDelStatus(facId);
+			if (isPrincipal == 1 || isIQAC == 1) {
+				staffList = stafflistrepo.getFacultyListYear(instituteId);
+			} else if (isHod == 1) {
+				staffList = stafflistrepo.getFacultyListByDept(deptIdList, instituteId);
+			} 
+			else {
+				staffList = stafflistrepo.getFacultyListById(facultyId, instituteId); 
+			}
+				 
+			//staffList = stafflistrepo.findByIsActiveAndDelStatus(facId);
 			
 		}catch(Exception e){
 			e.printStackTrace();
