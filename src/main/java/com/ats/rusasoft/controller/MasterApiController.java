@@ -31,6 +31,7 @@ import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.Principal;
 import com.ats.rusasoft.model.Quolification;
+import com.ats.rusasoft.model.Staff;
 import com.ats.rusasoft.model.Student;
 import com.ats.rusasoft.model.UserLogin;
 import com.ats.rusasoft.mstrepo.AccOfficerRepo;
@@ -669,6 +670,61 @@ public class MasterApiController {
 				princi.setPrincipalName(insResp.getPrincipalName());
 				princi.setIsEnroll(0);
 				pincipalRepo.saveAndFlush(princi);
+				
+				//
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Calendar cal = Calendar.getInstance();
+				String curDateTime = dateFormat.format(cal.getTime());
+				
+				Staff staff = new Staff();
+
+				staff.setContactNo(insResp.getContactNo());
+				staff.setCurrentDesignationId(9);
+				staff.setDeptId("18");
+				staff.setEmail(insResp.getEmail());
+				staff.setFacultyFirstName(insResp.getPrincipalName());
+				staff.setFacultyId(0);
+				staff.setHighestQualification(1);
+				staff.setHightestQualificationYear(null);
+				staff.setIsAccOff(0);
+				staff.setIsDean(0);
+				staff.setIsFaculty(0);
+				staff.setIsHod(0);
+				staff.setIsIqac(0);
+				staff.setIsLibrarian(0);
+				staff.setIsPrincipal(1);
+
+				staff.setIsStudent(0);
+				staff.setIsWorking(1);
+				staff.setJoiningDate(null);
+				staff.setLastUpdatedDatetime(curDateTime);
+				staff.setMakerEnterDatetime(curDateTime);
+
+				staff.setPassword("");
+				staff.setRealivingDate(null);
+				staff.setRoleIds("2");
+				staff.setTeachingTo(0);
+				staff.setType(2);
+
+				/*staff.setInstituteId(instituteId);
+				staff.setJoiningDate(dateOfJoin);
+				staff.setContactNo(contact);
+				staff.setEmail(email);
+				staff.setDelStatus(1);
+				staff.setIsActive(1);
+				staff.setMakerUserId(userId);*/
+				staff.setMakerEnterDatetime(curDateTime);
+				staff.setCheckerUserId(0);
+				staff.setCheckerDatetime(curDateTime);
+				staff.setLastUpdatedDatetime(curDateTime);
+				staff.setType(2);
+
+				staff.setExtravarchar1("NA");
+				
+				
+				//
+				
 
 			} else {
 				insResp = instituteRepo.saveAndFlush(institute);
