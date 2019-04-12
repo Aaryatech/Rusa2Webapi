@@ -11,23 +11,23 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class IqacList {
 
 	@Id
-	private int iqacId;
-	private String iqacName;
+	private int facultyId;
+	private String facultyFirstName;
 	private Date joiningDate;
 	private String contactNo;
 	private String email;
 	private String designationName;
-	public int getIqacId() {
-		return iqacId;
+	public int getFacultyId() {
+		return facultyId;
 	}
-	public void setIqacId(int iqacId) {
-		this.iqacId = iqacId;
+	public void setFacultyId(int facultyId) {
+		this.facultyId = facultyId;
 	}
-	public String getIqacName() {
-		return iqacName;
+	public String getFacultyFirstName() {
+		return facultyFirstName;
 	}
-	public void setIqacName(String iqacName) {
-		this.iqacName = iqacName;
+	public void setFacultyFirstName(String facultyFirstName) {
+		this.facultyFirstName = facultyFirstName;
 	}
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getJoiningDate() {
@@ -56,11 +56,9 @@ public class IqacList {
 	}
 	@Override
 	public String toString() {
-		return "IqacList [iqacId=" + iqacId + ", iqacName=" + iqacName + ", joiningDate=" + joiningDate + ", contactNo="
-				+ contactNo + ", email=" + email + ", designationName=" + designationName + "]";
+		return "IqacList [facultyId=" + facultyId + ", facultyFirstName=" + facultyFirstName + ", joiningDate="
+				+ joiningDate + ", contactNo=" + contactNo + ", email=" + email + ", designationName=" + designationName
+				+ "]";
 	}
-	
-	
-	
 
 }

@@ -272,17 +272,23 @@ public class IqacRestController {
 		
 	}
 	
-	@RequestMapping(value= {"/getAllIqac"}, method=RequestMethod.GET)
-	public @ResponseBody List<IqacList> getAllIqac(){
-		
-		List<IqacList> iqcList = null;
-		try {
+	@RequestMapping(value= {"/getAllIqac"}, method=RequestMethod.POST)
+	public @ResponseBody List<IqacList> getAllIqac(@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int instituteId){
+
+	  System.out.println("isIQAC" + isIQAC+ " "+instituteId+" "+isPrincipal);
+ 
+	  List<IqacList> iqcList = null; 
+  try {
+	  if (isIQAC == 1 || isPrincipal == 1) {
+		  iqcList=iqaclistrepo.findByIsActiveAndDelStatus(instituteId, isIQAC);
+		} 
 			
-			iqcList=iqaclistrepo.findByIsActiveAndDelStatus();
+			//iqcList=iqaclistrepo.findByIsActiveAndDelStatus();
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+  System.out.println("List="+iqcList);
 		return iqcList;
 	}
 	
