@@ -299,7 +299,7 @@ public class IqacRestController {
 	  List<IqacList> iqcList = null; 
   try {
 	  if (isIQAC == 1 || isPrincipal == 1) {
-		  iqcList=iqaclistrepo.findByIsActiveAndDelStatus(instituteId, isIQAC);
+		  iqcList=iqaclistrepo.findIqacByInstId(instituteId);
 		} 
 			
 			//iqcList=iqaclistrepo.findByIsActiveAndDelStatus();
