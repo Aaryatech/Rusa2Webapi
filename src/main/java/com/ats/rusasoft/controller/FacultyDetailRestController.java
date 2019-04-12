@@ -109,6 +109,38 @@ public class FacultyDetailRestController {
 		return facultyList;
 	}
 
+	@RequestMapping(value = { "/getNewLibraryList" }, method = RequestMethod.POST)
+	public @ResponseBody List<NewDeanList> getNewLibraryList(@RequestParam int instituteId) {
+
+		List<NewDeanList> facultyList = new ArrayList<>();
+
+		try {
+			facultyList = newDeanListRepository.getNewLibraryList(instituteId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getNewLibraryList  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facultyList;
+	}
+	
+	@RequestMapping(value = { "/getNewAccOffList" }, method = RequestMethod.POST)
+	public @ResponseBody List<NewDeanList> getNewAccOffList(@RequestParam int instituteId) {
+
+		List<NewDeanList> facultyList = new ArrayList<>();
+
+		try {
+			facultyList = newDeanListRepository.getNewAccOffList(instituteId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getNewAccOffList  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facultyList;
+	}
+
 	@RequestMapping(value = { "/getSwocListByFacultyIdAndtype" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetSWOC> getSwocListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
