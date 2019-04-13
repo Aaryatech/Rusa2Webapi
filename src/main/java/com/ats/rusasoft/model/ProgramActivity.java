@@ -1,11 +1,15 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "t_program_student_activity")
@@ -29,7 +33,7 @@ public class ProgramActivity {
 	private String otherCompitition;
 	
 	@Column(name="date")
-	private String date;
+	private Date date;
 	
 	@Column(name="year")
 	private String year;
@@ -109,12 +113,12 @@ public class ProgramActivity {
 	public void setOtherCompitition(String otherCompitition) {
 		this.otherCompitition = otherCompitition;
 	}
-
-	public String getDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
