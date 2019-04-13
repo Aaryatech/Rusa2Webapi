@@ -1,14 +1,18 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class StudentSchemeList {
 
 	@Id
 	private int sprtSchmId;
-	private String academicYear;
+	private Date  academicYear;
 	private String schemeName;
 	private String level;
 	private String type;
@@ -21,10 +25,11 @@ public class StudentSchemeList {
 	public void setSprtSchmId(int sprtSchmId) {
 		this.sprtSchmId = sprtSchmId;
 	}
-	public String getAcademicYear() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getAcademicYear() {
 		return academicYear;
 	}
-	public void setAcademicYear(String academicYear) {
+	public void setAcademicYear(Date academicYear) {
 		this.academicYear = academicYear;
 	}
 	public String getSchemeName() {

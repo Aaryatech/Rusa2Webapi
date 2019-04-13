@@ -1,10 +1,14 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="t_support_scheme_detail")
@@ -20,7 +24,7 @@ public class StudentSupprtScheme {
 	private String type;
 	private int noStudentBenifited;
 	private String supportAgencyName;
-	private String implementationYear;
+	private Date implementationYear;
 	private int delStatus;
 	private int isActive;
 	private String addDate;
@@ -77,10 +81,11 @@ public class StudentSupprtScheme {
 	public void setSupportAgencyName(String supportAgencyName) {
 		this.supportAgencyName = supportAgencyName;
 	}
-	public String getImplementationYear() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getImplementationYear() {
 		return implementationYear;
 	}
-	public void setImplementationYear(String implementationYear) {
+	public void setImplementationYear(Date implementationYear) {
 		this.implementationYear = implementationYear;
 	}
 	public int getDelStatus() {
