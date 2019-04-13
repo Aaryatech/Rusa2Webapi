@@ -244,7 +244,7 @@ public class IqacRestController {
 		return info;
 		
 	}
-	
+
 	
 	@RequestMapping(value= {"/insertNewIqac"}, method=RequestMethod.POST)
 	public @ResponseBody MIqac insertNewIqac(@RequestBody MIqac miqac){
