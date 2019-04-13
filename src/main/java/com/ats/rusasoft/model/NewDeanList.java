@@ -1,7 +1,11 @@
 package com.ats.rusasoft.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class NewDeanList {
@@ -13,8 +17,8 @@ public class NewDeanList {
 	private int highestQualification;
 	private int teachingTo;
 	private int currentDesignationId;
-	private String joiningDate;
-	private String realivingDate;
+	private Date joiningDate;
+	private Date realivingDate;
 	private String contactNo;
 	private String email;
 	private int makerUserId;
@@ -70,19 +74,21 @@ public class NewDeanList {
 		this.currentDesignationId = currentDesignationId;
 	}
 
-	public String getJoiningDate() {
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getJoiningDate() {
 		return joiningDate;
 	}
 
-	public void setJoiningDate(String joiningDate) {
+	public void setJoiningDate(Date joiningDate) {
 		this.joiningDate = joiningDate;
 	}
 
-	public String getRealivingDate() {
+	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getRealivingDate() {
 		return realivingDate;
 	}
 
-	public void setRealivingDate(String realivingDate) {
+	public void setRealivingDate(Date realivingDate) {
 		this.realivingDate = realivingDate;
 	}
 
