@@ -68,8 +68,7 @@ public class IqacRestController {
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static	String senderPassword = "atsinfosoft@123";
 	static String mailsubject = " RUSA Login Credentials ";
-	
-	
+		
 	@RequestMapping(value = { "/chkUniqueValues" }, method = RequestMethod.POST)
 	public @ResponseBody Info chkUniqueFields(@RequestParam String inputValue, @RequestParam int valueType,
 			@RequestParam int tableId, @RequestParam int isEditCall, @RequestParam int primaryKey) {
