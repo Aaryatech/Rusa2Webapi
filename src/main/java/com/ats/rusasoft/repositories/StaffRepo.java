@@ -41,8 +41,8 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 	@Query(value = "UPDATE m_faculty SET del_status=0  WHERE faculty_id IN (:staffIdList) ", nativeQuery = true)
 	int deleteStaffs(@Param("staffIdList") List<String> staffIdList);
 
-	Staff findByDelStatusAndIsActiveAndEmailAndPasswordContaining(int delStatus, int isActive, String email,
-			String password);
+	Staff findByDelStatusAndIsActiveAndEmailAndPasswordContainingAndIsBlocked(int delStatus, int isActive, String email,
+			String password,int isBlocked);
 
 	Staff findByDelStatusAndIsActiveAndEmail(int delStatus, int isActive, String email);
 
@@ -51,5 +51,6 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 
 	Staff findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndContactNo(int delStatus, int isActive, int isBlocked,
 			int instId, String contactNo);
+	Staff findByDelStatusAndIsActiveAndIsBlockedAndInstituteId(int delStatus, int isActive,int isBlocked,int instId);
 
 }

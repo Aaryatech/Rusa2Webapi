@@ -932,8 +932,12 @@ public class MasterApiController {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
 				String curDateTime = dateFormat.format(cal.getTime());
+				
+				Staff staff=staffRepo.findByDelStatusAndIsActiveAndIsBlockedAndInstituteId(1,1,0,instIdList.get(i));
+				staff.setPassword(pass);
+				staffRepo.save(staff);
 
-				insResp = instituteRepo.findByInstituteId(userRes.getExInt2());
+				insResp = instituteRepo.findByInstituteId(instIdList.get(i));
 
 				insResp.setCheckerUserId(aprUserId);
 				insResp.setCheckerDatetime(curDateTime);

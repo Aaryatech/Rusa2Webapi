@@ -188,7 +188,7 @@ public class RestApiController {
 
 		System.err.println("inside loginUser ");
 
-		Staff staff = staffRepo.findByDelStatusAndIsActiveAndEmailAndPasswordContaining(1, 1, userName, pass);
+		Staff staff = staffRepo.findByDelStatusAndIsActiveAndEmailAndPasswordContainingAndIsBlocked(1, 1, userName, pass,0);
 
 		LoginResponse loginResponse = new LoginResponse();
 		loginResponse.setUserId(staff.getFacultyId());
