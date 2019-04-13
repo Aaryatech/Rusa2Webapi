@@ -504,11 +504,11 @@ public class IqacRestController {
 	 
 	  List<NewDeanList> deansList = null; try {
 		  if (isPrincipal == 1 || isIQAC == 1) {
-			  deansList = newDeanListRepo.getDeanByInst( instituteId, isDean);
+			  deansList = newDeanListRepo.getDeanByInst( instituteId);
 			} else if ( isDean == 1 || isHod == 1) {
-				deansList = newDeanListRepo.getDeanByDept(deptIdList, instituteId, isDean);
+				deansList = newDeanListRepo.getDeanByDept(deptIdList, instituteId);
 			} else {
-				deansList = newDeanListRepo.getDeanRepo(facultyId, instituteId, isDean);
+				deansList = newDeanListRepo.getDeanRepo(facultyId, instituteId);
 			}
 	  
 	  //deansList = deanlistrepo.findByIsActiveAndDelStatus();

@@ -12,7 +12,7 @@ import com.ats.rusasoft.model.ProgramSpeceficOutcome;
 public interface GetPsoRepo extends JpaRepository<ProgramSpeceficOutcome, Integer>{
 	
 @Query(value=" SELECT * FROM t_program_pso WHERE t_program_pso.program_id=:programId and t_program_pso.del_status=1 "
-		+ "and t_program_pso.is_active=1 ORDER BY t_program_pso_pso_id DESC ",nativeQuery=true)
+		+ "and t_program_pso.is_active=1 ORDER BY pso_id DESC ",nativeQuery=true)
 	
 	List<ProgramSpeceficOutcome> getProgramSpecificOutcomes(@Param("programId") int programId);
 	
