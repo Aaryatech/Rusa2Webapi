@@ -94,7 +94,7 @@ public class FacultyDetailRestApi {
 				studMentr = smRepo.getStudMentrByYear(yearId, instituteId, facultyId);
 			} else if (isHod == 1) {
 				System.out.println("2");
-				studMentr = smRepo.getStudMentrByDept(deptIdList, yearId, instituteId, facultyId);
+				studMentr = smRepo.getStudMentrByDept(deptIdList, yearId, instituteId);
 			} 
 			else { 
 				studMentr = smRepo.getListStudMentor(facultyId, yearId, instituteId);
