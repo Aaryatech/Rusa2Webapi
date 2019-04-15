@@ -91,10 +91,10 @@ public class FacultyDetailRestApi {
 
 			if (isPrincipal == 1 || isIQAC == 1) {
 				System.out.println("1");
-				studMentr = smRepo.getStudMentrByYear(yearId, instituteId);
+				studMentr = smRepo.getStudMentrByYear(yearId, instituteId, facultyId);
 			} else if (isHod == 1) {
 				System.out.println("2");
-				studMentr = smRepo.getStudMentrByDept(deptIdList, yearId, instituteId);
+				studMentr = smRepo.getStudMentrByDept(deptIdList, yearId, instituteId, facultyId);
 			} 
 			else { 
 				studMentr = smRepo.getListStudMentor(facultyId, yearId, instituteId);

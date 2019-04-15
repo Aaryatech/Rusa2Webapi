@@ -11,13 +11,13 @@ import com.ats.rusasoft.model.StudMentorList;
 
 public interface StuedentMentorListRepo extends JpaRepository<StudMentorList, Integer> {
 	
-	@Query(value="SELECT m.men_id, m.faculty_id, m.year_id, m.men_stu_count, f.faculty_first_name, d.dept_name FROM m_faculty f,m_dept d,t_faculty_mentoring m WHERE m.del_status=1 AND m.is_active=1 AND f.faculty_id=m.faculty_id AND f.dept_id=d.dept_id AND m.year_id=:yearId AND f.institute_id=:instituteId ORDER BY m.men_id DESC ",nativeQuery=true)
-	public List<StudMentorList> getStudMentrByYear(@Param("yearId") int yearId, @Param("instituteId") int instituteId);
+	@Query(value="SELECT m.men_id, m.faculty_id, m.year_id, m.men_stu_count, f.faculty_first_name, d.dept_name FROM m_faculty f,m_dept d, t_faculty_mentoring m WHERE m.del_status=1 AND m.is_active=1 AND f.faculty_id=m.faculty_id  AND f.dept_id=d.dept_id AND m.year_id=:yearId AND f.institute_id=:instituteId AND m.faculty_id=:facultyId ORDER BY m.men_id DESC",nativeQuery=true)
+	public List<StudMentorList> getStudMentrByYear(@Param("yearId") int yearId, @Param("instituteId") int instituteId, @Param("facultyId") int facultyId);
 	
 	
-	@Query(value="SELECT m.men_id, m.faculty_id, m.year_id, m.men_stu_count, f.faculty_first_name, d.dept_name FROM m_faculty f,m_dept d,t_faculty_mentoring m WHERE m.del_status=1 AND m.is_active=1  AND f.faculty_id=m.faculty_id AND f.dept_id=d.dept_id AND m.year_id=:yearId AND f.institute_id=:instituteId AND d.dept_id IN(:deptIdList)  ORDER BY m.men_id DESC",nativeQuery=true)
-	public List<StudMentorList> getStudMentrByDept(@Param("deptIdList") List<Integer> deptIdList, @Param("yearId") int yearId,
-			@Param("instituteId") int instituteId);
+	@Query(value="SELECT m.men_id, m.faculty_id, m.year_id, m.men_stu_count, f.faculty_first_name, d.dept_name FROM m_faculty f,m_dept d,t_faculty_mentoring m WHERE m.del_status=1 AND m.is_active=1  AND f.faculty_id=m.faculty_id AND f.dept_id=d.dept_id AND m.year_id=:yearId AND f.institute_id=:instituteId AND d.dept_id IN(:deptIdList) AND m.faculty_id=:facultyId ORDER BY m.men_id DESC",nativeQuery=true)
+	public List<StudMentorList> getStudMentrByDept(@Param("deptIdList") List<Integer> deptIdList, @Param("yearId") int yearId, 
+		@Param("instituteId") int instituteId, @Param("facultyId") int facultyId);
 
 	
 	 @Query(value="SELECT m.men_id, m.faculty_id, m.year_id, m.men_stu_count, f.faculty_first_name, d.dept_name FROM m_faculty f,m_dept d,t_faculty_mentoring m WHERE m.del_status=1 AND m.is_active=1 AND f.faculty_id=m.faculty_id AND f.dept_id=d.dept_id AND m.year_id=:yearId AND f.institute_id=:instituteId AND m.faculty_id=:facultyId ORDER BY m.men_id DESC ",nativeQuery=true)
