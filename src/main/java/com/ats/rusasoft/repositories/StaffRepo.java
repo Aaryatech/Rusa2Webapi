@@ -22,6 +22,11 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 	@Modifying
 	@Query(value = "UPDATE m_faculty SET del_status=0 WHERE faculty_id=:id", nativeQuery = true)
 	int deleteByFacultyId(@Param("id") int id);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE m_faculty SET is_blocked=1 WHERE faculty_id=:userId", nativeQuery = true)
+	int blockUser(@Param("userId") int userId);
 
 	@Transactional
 	@Modifying

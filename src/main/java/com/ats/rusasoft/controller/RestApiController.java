@@ -51,6 +51,37 @@ public class RestApiController {
 	static String senderPassword = "atsinfosoft@123";
 	static String mailsubject = " RUSA Otp  Verification ";
 	static String otp1 = null;
+	
+	//blockUser
+	
+	// blockUser
+		@RequestMapping(value = { "/blockUser" }, method = RequestMethod.POST)
+		public @ResponseBody Info blockUser(@RequestParam int userId) {
+
+			Info info = new Info();
+			try {
+				int res = staffrepo.blockUser(userId);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in blockUser  " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+			return info;
+
+		}
+	
 
 	@RequestMapping(value = { "/checkUserName" }, method = RequestMethod.POST)
 	public @ResponseBody Info checkUserName(@RequestParam String inputValue) {
