@@ -42,6 +42,9 @@ public class AccessRightModule {
 	@Column(name="order_by")
 	private int orderBy;
 	
+	@Column(name="icon_div")
+	String iconDiv;
+	
 	@Transient
 	List<AccessRightSubModule> accessRightSubModuleList;
 
@@ -93,11 +96,19 @@ public class AccessRightModule {
 		this.orderBy = orderBy;
 	}
 
+	public String getIconDiv() {
+		return iconDiv;
+	}
+
+	public void setIconDiv(String iconDiv) {
+		this.iconDiv = iconDiv;
+	}
+
 	@Override
 	public String toString() {
 		return "AccessRightModule [moduleId=" + moduleId + ", moduleName=" + moduleName + ", moduleDesc=" + moduleDesc
-				+ ", delStatus=" + delStatus + ", orderBy=" + orderBy + ", accessRightSubModuleList="
-				+ accessRightSubModuleList + "]";
+				+ ", delStatus=" + delStatus + ", orderBy=" + orderBy + ", iconDiv=" + iconDiv
+				+ ", accessRightSubModuleList=" + accessRightSubModuleList + "]";
 	}
 	
 }
