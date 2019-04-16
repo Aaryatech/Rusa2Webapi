@@ -403,12 +403,12 @@ public class LibraryApiController {
 	}
 
 	@RequestMapping(value = { "/getAllInstituteInfoByInstituteId" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetInstituteInfo> getAllInstituteInfoByInstituteId(@RequestParam int instituteId) {
+	public @ResponseBody List<GetInstituteInfo> getAllInstituteInfoByInstituteId(@RequestParam int instituteId, @RequestParam int acadmicYear) {
 		System.err.println("Inst list is" + instituteId);
 		List<GetInstituteInfo> libResp = new ArrayList<>();
 
 		try {
-			libResp = getInstInfoRepo.getAllInstituteList(instituteId);
+			libResp = getInstInfoRepo.getAllInstituteList(instituteId, acadmicYear);
 			System.err.println("lib are" + libResp.toString());
 
 		} catch (Exception e) {
