@@ -22,4 +22,6 @@ public interface ProgramRepository extends JpaRepository<Program, Integer>{
 
 	List<Program> findByDelStatusAndIsActiveAndInstituteIdOrderByProgramIdDesc(int i, int j, int instituteId);
 
+	List<Program> findByProgramTypeAndDelStatus(int programTypeId, int i);
+
 }

@@ -245,6 +245,24 @@ public class StudentActivityRestApiController {
 
 	}
 
+	@RequestMapping(value = { "/getProgramByProgramTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Program> getProgramByProgramTypeId(@RequestParam("programTypeId") int programTypeId) {
+
+		List<Program> list = new ArrayList<Program>();
+
+		try {
+
+			list = programRepository.findByProgramTypeAndDelStatus(programTypeId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+
 	@RequestMapping(value = { "/getProgramByProgramId" }, method = RequestMethod.POST)
 	public @ResponseBody GetProgram getProgramByProgramId(@RequestParam("programId") int programId) {
 
@@ -467,7 +485,8 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programEducationObjectiveRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPeoId(1, 1, programId);
+			list = programEducationObjectiveRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPeoId(1, 1,
+					programId);
 
 		} catch (Exception e) {
 
@@ -648,7 +667,8 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programSpeceficOutcomeRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPsoIdDesc(1, 1, programId);
+			list = programSpeceficOutcomeRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPsoIdDesc(1, 1,
+					programId);
 
 		} catch (Exception e) {
 
