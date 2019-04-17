@@ -92,12 +92,15 @@ public class FacultyDetailRestController {
 				deptList = deptRepo.findByDelStatusAndIsActiveAndDeptIdIn(1, 1, deptIds);
 
 				String deptName = "";
+				int x=0;
 				for (int j = 0; j < deptList.size(); j++) {
 
 					deptName = deptList.get(j).getDeptName() + "," + deptName;
+					if(deptList.size()>1)
+						x=1;
 
 				}
-
+if(x==1)
 				facultyList.get(i).setDeptName(deptName.substring(0, deptName.length() - 1));
 			}
 
