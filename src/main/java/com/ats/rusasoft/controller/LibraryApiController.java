@@ -228,6 +228,31 @@ public class LibraryApiController {
 
 	}
 
+	
+	
+	
+
+
+	@RequestMapping(value = { "/getAcademicYearByIsCurrent" }, method = RequestMethod.POST)
+	public @ResponseBody AcademicYear getAcademicYearByIsClosed(@RequestParam int isCurrent) {
+
+		AcademicYear yearList = new AcademicYear();
+
+		try {
+			yearList = yearRepo.findByIsCurrentAndDelStatus(isCurrent, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAcademicYearByYearId is current " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return yearList;
+
+	}
+
+
+	
+	
 	@RequestMapping(value = { "/getAcademicYearByYearId" }, method = RequestMethod.POST)
 	public @ResponseBody AcademicYear getAcademicYearByYearId(@RequestParam int yearId) {
 

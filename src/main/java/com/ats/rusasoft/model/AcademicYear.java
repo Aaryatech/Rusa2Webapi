@@ -23,6 +23,14 @@ public class AcademicYear {
 	private int type;
 	
 	private int delStatus;
+	
+	private int isClosed;
+	
+	private int isCurrent;
+	
+	
+	
+	
 
 	public int getYearId() {
 		return yearId;
@@ -72,15 +80,32 @@ public class AcademicYear {
 		this.delStatus = delStatus;
 	}
 
+	
+	
+	public int getIsClosed() {
+		return isClosed;
+	}
+
+	public void setIsClosed(int isClosed) {
+		this.isClosed = isClosed;
+	}
+
+	public int getIsCurrent() {
+		return isCurrent;
+	}
+
+	public void setIsCurrent(int isCurrent) {
+		this.isCurrent = isCurrent;
+	}
+
 	@Override
 	public String toString() {
 		return "AcademicYear [yearId=" + yearId + ", academicYear=" + academicYear + ", makerId=" + makerId
-				+ ", makerDatetime=" + makerDatetime + ", type=" + type + ", delStatus=" + delStatus + ", getYearId()="
-				+ getYearId() + ", getAcademicYear()=" + getAcademicYear() + ", getMakerId()=" + getMakerId()
-				+ ", getMakerDatetime()=" + getMakerDatetime() + ", getType()=" + getType() + ", getDelStatus()="
-				+ getDelStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ ", makerDatetime=" + makerDatetime + ", type=" + type + ", delStatus=" + delStatus + ", isClosed="
+				+ isClosed + ", isCurrent=" + isCurrent + "]";
 	}
+
+	
 	
 	
 	

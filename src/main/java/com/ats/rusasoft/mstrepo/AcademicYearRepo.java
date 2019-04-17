@@ -13,6 +13,8 @@ public interface AcademicYearRepo extends JpaRepository<AcademicYear, Integer>  
 	List<AcademicYear> findByTypeAndDelStatusOrderByYearIdDesc(int type, int i);
 	
 	AcademicYear findByYearIdAndDelStatus(int yearId, int delStatus);
+
+	AcademicYear findByIsCurrentAndDelStatus(int isCurrent, int delStatus);
 	
 
 }
