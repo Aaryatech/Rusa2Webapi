@@ -154,6 +154,26 @@ public class YesNoRestApiController {
 
 	}
 	
+	@RequestMapping(value = { "/getInstituteYesNoById" }, method = RequestMethod.POST)
+	public @ResponseBody InstituteYesNo getInstituteYesNoByInstituteIdAndSectionCode(@RequestParam("instituteId") int instituteId,
+			@RequestParam("yearId") int yearId,@RequestParam("secCode") String secCode, @RequestParam("id") int id ) {
+
+	InstituteYesNo instyn= new InstituteYesNo();
+
+		try {
+
+			instyn = instituteYesNoRepository.findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndSectionCodeAndInstYesnoId(instituteId,1,1,yearId,secCode,id);
+			System.out.println("res="+instyn);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return instyn;
+
+	}
+	
+	
 	@RequestMapping(value = { "/deleteYesNoRecord" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteYesNoRecord(@RequestParam("id") int id ) {
 

@@ -10,7 +10,7 @@ import com.ats.rusasoft.model.instprofile.GetInstituteQuality;
 
 public interface GetInstituteQualityRepo extends JpaRepository<GetInstituteQuality, Integer> {
 
-	@Query(value = " SELECT t_institute_quality.quality_id, t_institute_quality.quality_initiative_id,	t_institute_quality.quality_fromdt,t_institute_quality.quality_todt,t_institute_quality.quality_pcount,"
+	@Query(value = " SELECT t_institute_quality.quality_id, t_institute_quality.quality_initiative_id,t_institute_quality.ex_var1,	t_institute_quality.quality_fromdt,t_institute_quality.quality_todt,t_institute_quality.quality_pcount,"
 			+ " m_quality_initiatives.quality_initiative_name "
 			+ " FROM t_institute_quality  LEFT JOIN m_quality_initiatives "
 			+ " ON t_institute_quality.quality_initiative_id=m_quality_initiatives.quality_initiative_id\n"
@@ -19,7 +19,7 @@ public interface GetInstituteQualityRepo extends JpaRepository<GetInstituteQuali
 
 	List<GetInstituteQuality> getInstituteQualityList(@Param("instId") int instId, @Param("yearId") int yearId);
 
-	@Query(value = " SELECT t_institute_quality.quality_id, t_institute_quality.quality_initiative_id,	t_institute_quality.quality_fromdt,t_institute_quality.quality_todt , "
+	@Query(value = " SELECT t_institute_quality.quality_id, t_institute_quality.quality_initiative_id,t_institute_quality.ex_var1,	t_institute_quality.quality_fromdt,t_institute_quality.quality_todt , "
 			+ "t_institute_quality.quality_pcount,"
 			+ " m_quality_initiatives.quality_initiative_name "
 			+ " FROM t_institute_quality  LEFT JOIN m_quality_initiatives "
