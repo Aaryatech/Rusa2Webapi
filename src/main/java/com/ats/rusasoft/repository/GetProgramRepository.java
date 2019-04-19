@@ -23,8 +23,8 @@ public interface GetProgramRepository extends JpaRepository<GetProgram, Integer>
 	
 	
 	
-	@Query(value=" SELECT t_program.*,0 as program_name  FROM t_program   WHERE t_program.program_id=:programId and t_program.del_status=1 and t_program.is_active=1 ", nativeQuery=true)
+	@Query(value="SELECT t_program.*, pt.program_name as program_name  FROM t_program, m_program_type pt  WHERE t_program.program_id=:programId and t_program.program_type=pt.program_id and t_program.del_status=1 and t_program.is_active=1", nativeQuery=true)
 	
 	GetProgram getProgramDetail(@Param("programId") int programId);
-
+// SELECT t_program.*,0 as program_name  FROM t_program   WHERE t_program.program_id=:programId and t_program.del_status=1 and t_program.is_active=1 
 }

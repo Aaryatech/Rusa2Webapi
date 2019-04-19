@@ -26,7 +26,7 @@ public interface InstituteYesNoRepository extends JpaRepository<InstituteYesNo, 
 	@Query(value = "UPDATE t_institute_yesno SET del_status=0 WHERE inst_yesno_id IN (:id) ", nativeQuery = true)
 	int deleteYesNoRecord(@Param("id") int id);
 
-	InstituteYesNo findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndSectionCodeAndInstYesnoId(int instituteId, int i,
-			int j, int yearId, String secCode, int id);
+	InstituteYesNo findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndInstYesnoId(int instituteId, int i,
+			int j, int yearId, int id);
 	
 }
