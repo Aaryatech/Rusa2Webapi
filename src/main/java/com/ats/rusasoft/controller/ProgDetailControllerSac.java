@@ -17,7 +17,9 @@ import com.ats.rusasoft.model.progdetail.Cast;
 import com.ats.rusasoft.model.progdetail.GetAlumni;
 import com.ats.rusasoft.model.progdetail.GetHigherEduDetail;
 import com.ats.rusasoft.model.progdetail.GetStudAdmCatwise;
+import com.ats.rusasoft.model.progdetail.GetStudAdmCatwiseGrpByProg;
 import com.ats.rusasoft.model.progdetail.GetStudAdmLocwise;
+import com.ats.rusasoft.model.progdetail.GetStudAdmLocwiseGrpByProg;
 import com.ats.rusasoft.model.progdetail.GetTrainPlace;
 import com.ats.rusasoft.model.progdetail.HigherEducDetail;
 import com.ats.rusasoft.model.progdetail.Location;
@@ -29,7 +31,9 @@ import com.ats.rusasoft.prodetailrepo.AlumniDetailRepo;
 import com.ats.rusasoft.prodetailrepo.CastRepo;
 import com.ats.rusasoft.prodetailrepo.GetAlumniRepo;
 import com.ats.rusasoft.prodetailrepo.GetHigherEduDetailRepo;
+import com.ats.rusasoft.prodetailrepo.GetStudAdmCatwiseGrpByProgRepo;
 import com.ats.rusasoft.prodetailrepo.GetStudAdmCatwiseRepo;
+import com.ats.rusasoft.prodetailrepo.GetStudAdmLocwiseGrpByProgRepo;
 import com.ats.rusasoft.prodetailrepo.GetStudAdmLocwiseRepo;
 import com.ats.rusasoft.prodetailrepo.GetTrainPlaceRepo;
 import com.ats.rusasoft.prodetailrepo.HigherEducDetailRepo;
@@ -160,6 +164,89 @@ public class ProgDetailControllerSac {
 		return studAdmCatList;
 
 	}
+	//For ajax.onload of selected prog type 18 Apr.
+	@RequestMapping(value = { "/getStudAdmCatwiseByProgType" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetStudAdmCatwise> getStudAdmCatwiseByProgType(@RequestParam int instId,
+			@RequestParam int yearId,@RequestParam int progType) {
+
+		List<GetStudAdmCatwise> studAdmCatList = new ArrayList<>();
+
+		try {
+
+			studAdmCatList = getStudAdmCatwiseRepo.getStudAdmCatwiseByProgType(instId, yearId, progType);
+		} catch (Exception e) {
+			System.err.println("Exce in getStudAdmCatwiseList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return studAdmCatList;
+
+	}
+	
+	
+	
+	
+	//For ajax.onload of selected prog type 19 Apr.
+		@RequestMapping(value = { "/getStudAdmLocwiseByProgType" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetStudAdmLocwise> getStudAdmLocwiseByProgType(@RequestParam int instId,
+				@RequestParam int yearId,@RequestParam int progType) {
+
+			List<GetStudAdmLocwise> studAdmCatList = new ArrayList<>();
+
+			try {
+
+				studAdmCatList = getStudAdmLocwiseRepo.getStudAdmLocwiseByProgType(instId, yearId, progType);
+				
+			} catch (Exception e) {
+				System.err.println("Exce in getStudAdmLocwiseByProgType  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return studAdmCatList;
+
+		}
+		
+	
+	//18/Apr  For List page..
+	@Autowired GetStudAdmCatwiseGrpByProgRepo getStudAdmCatwiseGrpByProgRepo;
+	@RequestMapping(value = { "/getStudAdmCatwiseGrpByProgType" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetStudAdmCatwiseGrpByProg> getStudAdmCatwiseGrpByProgType(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<GetStudAdmCatwiseGrpByProg> studAdmCatList = new ArrayList<>();
+
+		try {
+
+			studAdmCatList = getStudAdmCatwiseGrpByProgRepo.getStudAdmCatwiseGrpByProg(instId, yearId);
+		} catch (Exception e) {
+			System.err.println("Exce in getStudAdmCatwiseList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return studAdmCatList;
+
+	}
+	
+	//19 Apr For List Page
+	@Autowired GetStudAdmLocwiseGrpByProgRepo getStudAdmLocwiseGrpByProgRepo;
+	@RequestMapping(value = { "/getStudAdmLocwiseGrpByProgType" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetStudAdmLocwiseGrpByProg> getStudAdmLocwiseGrpByProgType(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<GetStudAdmLocwiseGrpByProg> studAdmCatList = new ArrayList<>();
+
+		try {
+
+			studAdmCatList = getStudAdmLocwiseGrpByProgRepo.getStudAdmLocwiseGrpByProg(instId, yearId);
+		} catch (Exception e) {
+			System.err.println("Exce in getStudAdmCatwiseList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return studAdmCatList;
+
+	}
+	
 
 	@Autowired
 	StudAdmLocwiseRepo studAdmLocwiseRepo;
