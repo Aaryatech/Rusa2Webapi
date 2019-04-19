@@ -220,8 +220,10 @@ public class RestApiController {
 		System.err.println("inside loginUser ");
 
 		Staff staff = staffRepo.findByDelStatusAndIsActiveAndEmailAndPasswordContainingAndIsBlocked(1, 1, userName, pass,0);
-
 		LoginResponse loginResponse = new LoginResponse();
+if(staff!=null)
+		if(staff.getPassword().equals(pass)) {
+System.err.println("Matched " +pass);
 		loginResponse.setUserId(staff.getFacultyId());
 		loginResponse.setRoleId(staff.getRoleIds());
 
@@ -233,7 +235,10 @@ public class RestApiController {
 		userDetail.setUserDetailId(staff.getFacultyId());
 		loginResponse.setGetData(userDetail);
 		loginResponse.setExInt2(staff.getInstituteId());
+		}else {
+			System.err.println("not Matched " +pass);
 
+		}
 		/*
 		 * logRes.getUser(userName, pass,isBlock);
 		 * System.err.println("User data is"+loginResponse.toString()); int
