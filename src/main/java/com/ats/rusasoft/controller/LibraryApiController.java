@@ -22,6 +22,7 @@ import com.ats.rusasoft.model.Hod;
 import com.ats.rusasoft.model.Info;
 import com.ats.rusasoft.model.Institute;
 import com.ats.rusasoft.model.InstituteInfo;
+import com.ats.rusasoft.model.LibBookPurchase;
 import com.ats.rusasoft.model.Librarian;
 import com.ats.rusasoft.model.LibraryInfo;
 import com.ats.rusasoft.model.Principal;
@@ -40,6 +41,7 @@ import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
 import com.ats.rusasoft.mstrepo.UserService;
 import com.ats.rusasoft.prodetailrepo.StudentSuppSchemeRepo;
+import com.ats.rusasoft.repositories.LibBookPurchaseRepo;
 import com.ats.rusasoft.repository.LibraryInfoRepo;
 import com.ats.rusasoft.repository.RareBookRepo;
 
@@ -68,6 +70,9 @@ public class LibraryApiController {
 	
 	@Autowired
 	RareBookRepo rarebookrepo;
+	
+	@Autowired
+	LibBookPurchaseRepo libBookRepo;
 
 	static String senderEmail = "atsinfosoft@gmail.com";
 	static String senderPassword = "atsinfosoft@123";
@@ -677,6 +682,107 @@ public class LibraryApiController {
 		Info info = new Info();
 		try {
 			int res = rarebookrepo.deleteRareBooks(rareBookIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
+
+	@RequestMapping(value = { "/newLibBookPurchase" }, method = RequestMethod.POST)
+	public @ResponseBody LibBookPurchase newLibBookPurchase(@RequestBody LibBookPurchase lib) {
+		LibBookPurchase libBook = null;
+		
+		System.err.println(lib.toString());
+		try {
+			
+			libBook = libBookRepo.save(lib);
+		
+		
+		  }catch(Exception e) { 
+		  System.err.println("ex "+e.getMessage());
+		  e.printStackTrace();
+		  }
+		
+		return libBook;
+	}
+	
+	
+	@RequestMapping(value = { "/showPurchsaeBooksList" }, method = RequestMethod.POST)
+	public @ResponseBody List<LibBookPurchase> showLibBooks(@RequestParam int instituteId, @RequestParam int acadYear) {
+		
+		List<LibBookPurchase> bookList = null;
+		try {
+			bookList = libBookRepo.findByDelStatusAndInstituteIdAndAcademicYrid(1,instituteId,acadYear);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return bookList;
+	}
+	
+	
+	@RequestMapping(value = { "/getLibBookById" }, method = RequestMethod.POST)
+	public @ResponseBody LibBookPurchase editLibBooks(@RequestParam int bookId) {
+		
+		LibBookPurchase bookInfo = null;
+		try {
+			bookInfo = libBookRepo.findByBookPurchaseIdAndDelStatus(bookId, 1);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return bookInfo;
+	}
+	
+	
+	@RequestMapping(value = { "/deleteLibBookById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteLibBookById(@RequestParam int bookId) {
+		
+		Info info = new Info();
+		try {
+			int res = libBookRepo.deletePurchasedBookInfoById(bookId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteRareBookById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+
+	@RequestMapping(value = { "/deleteSelPurchasedBooks" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelPurchasedBooks(@RequestParam List<String> libBookIdList) {
+
+		Info info = new Info();
+		try {
+			int res = libBookRepo.deleteLibInfo(libBookIdList);
 
 			if (res > 0) {
 				info.setError(false);

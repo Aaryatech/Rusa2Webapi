@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoft.common.EmailUtility;
 import com.ats.rusasoft.model.AccOfficer;
 import com.ats.rusasoft.model.Dept;
+import com.ats.rusasoft.model.EContentDevFacility;
 import com.ats.rusasoft.model.GetAccOfficer;
 import com.ats.rusasoft.model.GetHod;
 import com.ats.rusasoft.model.GetInstituteList;
@@ -46,6 +48,7 @@ import com.ats.rusasoft.mstrepo.LibrarianRepo;
 import com.ats.rusasoft.mstrepo.PrincipalRepo;
 import com.ats.rusasoft.mstrepo.QuolificationRepo;
 import com.ats.rusasoft.mstrepo.StudentRepo;
+import com.ats.rusasoft.mstrepo.TInstEContentDevFacilityRepo;
 import com.ats.rusasoft.mstrepo.UserService;
 import com.ats.rusasoft.repositories.StaffRepo;
 
@@ -89,6 +92,9 @@ public class MasterApiController {
 
 	@Autowired
 	StudentRepo studRepo;
+	
+	@Autowired
+	TInstEContentDevFacilityRepo econtentRepo;
 
 	@RequestMapping(value = { "/checkUniqueField" }, method = RequestMethod.POST)
 	public @ResponseBody Info checkUniqueField(@RequestParam String inputValue, @RequestParam int valueType,
@@ -1068,6 +1074,106 @@ public class MasterApiController {
 		 return inf;
 	}
 	
+	
+	@RequestMapping(value = { "/saveEcontentDevFacilities" }, method = RequestMethod.POST)
+	public @ResponseBody EContentDevFacility saveEcontentDevFacilities(@RequestBody EContentDevFacility eCont) {
+	
+		EContentDevFacility contentres = null;
 
+		try {
+			contentres = econtentRepo.saveAndFlush(eCont);
 
+		}catch (Exception e) {
+			System.err.println("Exce in saveEcontentDevFacilities " + e.getMessage());
+			e.printStackTrace();
+		}
+		return contentres;
+	}
+	
+	
+	@RequestMapping(value = { "/showEComtentDevFaclity" }, method = RequestMethod.POST)
+	public @ResponseBody List<EContentDevFacility> showEComtentDevFaclity(@RequestParam("instituteId") int instituteId) {
+
+		List<EContentDevFacility> eCont = new ArrayList<>();
+
+		try {
+
+			eCont = econtentRepo.findByDelStatusAndInstId(1,instituteId);
+			System.err.println("eCont="+eCont);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllPendingInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return eCont;
+
+	}
+	
+	
+
+	@RequestMapping(value = { "/getEContentDevFecilityById" }, method = RequestMethod.POST)
+	public @ResponseBody EContentDevFacility getEContentDevFecilityById(@RequestParam("contentId") int contentId) {
+		
+		EContentDevFacility eCon = null;
+		eCon = econtentRepo.findByInstEContentDevFacilityIdAndDelStatus(contentId, 1);
+		return eCon;
+		
+	}
+	
+	@RequestMapping(value = { "/deleteEContentById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteLibBookById(@RequestParam("contentId") int contentId) {
+		
+		Info info = new Info();
+		try {
+			int res = econtentRepo.deleteContentById(contentId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteRareBookById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	@RequestMapping(value = { "/deleteSelContent" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelPurchasedBooks(@RequestParam List<String> contentIdsList) {
+
+		Info info = new Info();
+		try {
+			int res = econtentRepo.deleteEContents(contentIdsList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
 }
