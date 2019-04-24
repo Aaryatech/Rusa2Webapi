@@ -491,7 +491,7 @@ public class FacultyWebController {
 		List<OutreachType> jouList = new ArrayList<>();
 
 		try {
-			jouList = outreachTypeRepo.findByDelStatusAndInstituteIdOrderByTypeIdDesc(1, instituteId);
+			jouList = outreachTypeRepo.findByDelStatusOrderByTypeIdDesc(1);
 
 		} catch (Exception e) {
 			System.err.println("Exce in getJournalByFacultyId  " + e.getMessage());

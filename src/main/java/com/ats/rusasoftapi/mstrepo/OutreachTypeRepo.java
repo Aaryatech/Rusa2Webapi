@@ -10,6 +10,6 @@ import com.ats.rusasoftapi.model.OutreachType;
 public interface OutreachTypeRepo  extends JpaRepository<OutreachType, Integer> {
 	
 	
-	List<OutreachType> findByDelStatusAndInstituteIdOrderByTypeIdDesc(int delStatus, int instId);
+	List<OutreachType> findByDelStatusOrderByTypeIdDesc(int delStatus);
 
 }

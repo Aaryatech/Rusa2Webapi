@@ -192,14 +192,14 @@ public class StudentActivityRestApiController {
 	}
 
 	// neha
-	@RequestMapping(value = { "/getAllProgramList" }, method = RequestMethod.GET)
-	public @ResponseBody List<GetProgram> getAllProgramList() {
+	@RequestMapping(value = { "/getAllProgramList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetProgram> getAllProgramList(@RequestParam int instId) {
 
 		List<GetProgram> list = new ArrayList<GetProgram>();
 
 		try {
 
-			list = getProgramRepository.getAllProgramList();
+			list = getProgramRepository.getAllProgramList(instId);
 
 		} catch (Exception e) {
 

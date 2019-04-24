@@ -2,6 +2,7 @@ package com.ats.rusasoftapi.repository;
 
 import java.util.List;
 
+import org.junit.runners.Parameterized.Parameters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +19,8 @@ public interface GetProgramRepository extends JpaRepository<GetProgram, Integer>
 			+ " p.del_status=1 and p.is_active=1 and p.program_id=:programId", nativeQuery = true)
 	GetProgram findByProgramId(@Param("programId") int programId);
 
-	@Query(value = "select p.*,pt.program_name from m_program_type pt,t_program p where pt.program_id=p.program_type and p.del_status=1 and p.is_active=1 ORDER BY p.program_id DESC", nativeQuery = true)
-	List<GetProgram> getAllProgramList();
+	@Query(value = "select p.*,pt.program_name from m_program_type pt,t_program p where pt.program_id=p.program_type and p.del_status=1 and p.is_active=1 AND p.institute_id=:instId ORDER BY p.program_id DESC", nativeQuery = true)
+	List<GetProgram> getAllProgramList(@Param("instId") int instId);
 	
 	
 	
