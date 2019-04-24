@@ -1,4 +1,4 @@
-package com.ats.rusasoft.repo.infra;
+package com.ats.rusasoftapi.repo.infra;
 
 import java.util.List;
 

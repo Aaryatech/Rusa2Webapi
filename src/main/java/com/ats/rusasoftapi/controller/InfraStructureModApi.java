@@ -17,10 +17,10 @@ import com.ats.rusasoftapi.model.infra.InfraAreaName;
 import com.ats.rusasoftapi.model.infra.InfraAreaType;
 import com.ats.rusasoftapi.model.infra.InstInfraAreaInfo;
 import com.ats.rusasoftapi.model.instprofile.InstituteTraining;
-import com.ats.rusasoft.repo.infra.GetInstInfraAreaInfoRepo;
-import com.ats.rusasoft.repo.infra.InfraAreaNameRepo;
-import com.ats.rusasoft.repo.infra.InfraAreaTypeRepo;
-import com.ats.rusasoft.repo.infra.InstInfraAreaInfoRepo;
+import com.ats.rusasoftapi.repo.infra.GetInstInfraAreaInfoRepo;
+import com.ats.rusasoftapi.repo.infra.InfraAreaNameRepo;
+import com.ats.rusasoftapi.repo.infra.InstInfraAreaInfoRepo;
+import com.ats.rusasoftapi.repo.infra.InfraAreaTypeRepo;
 
 @RestController
 public class InfraStructureModApi {
