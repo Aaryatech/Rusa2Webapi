@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.repositories.IqacListRepo;
 import com.ats.rusasoftapi.common.Commons;
 import com.ats.rusasoftapi.common.EmailUtility;
 import com.ats.rusasoftapi.model.Dean;
@@ -32,7 +33,6 @@ import com.ats.rusasoftapi.mstrepo.QuolificationRepo;
 import com.ats.rusasoftapi.mstrepo.UserService;
 import com.ats.rusasoftapi.repositories.DeanRepo;
 import com.ats.rusasoftapi.repositories.DeansListRepo;
-import com.ats.rusasoftapi.repositories.IqacListRepo;
 import com.ats.rusasoftapi.repositories.IqacRepo;
 import com.ats.rusasoftapi.repositories.NewDeanListRepo;
 import com.ats.rusasoftapi.repositories.StaffListRepo;
@@ -202,7 +202,7 @@ public class IqacRestController {
 	@RequestMapping(value= {"/getUserInfoByContcAndEmail"}, method=RequestMethod.POST)
 	public @ResponseBody Staff getUserInfoByConAndEmail(@RequestParam  int instId,@RequestParam int checkValue,@RequestParam String inputValue){
 		
-		Staff staff=null;
+		Staff staff=new Staff();
 		if(checkValue==1) {
 			//Its Contact no check
 			staff=staffrepo.findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndContactNo(1, 1, 0, instId, inputValue);
@@ -211,6 +211,11 @@ public class IqacRestController {
 			
 			//Its Email check
 			staff=staffrepo.findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndEmailIgnoreCase(1, 1, 0, instId, inputValue);
+		}
+		
+		if(staff==null) {
+			staff=new Staff();
+			
 		}
 		return staff;
 		
