@@ -36,6 +36,7 @@ import com.ats.rusasoftapi.model.Quolification;
 import com.ats.rusasoftapi.model.Staff;
 import com.ats.rusasoftapi.model.Student;
 import com.ats.rusasoftapi.model.TFacultyStudLinkage;
+import com.ats.rusasoftapi.model.TNeighbourhoodCommActivities;
 import com.ats.rusasoftapi.model.UserLogin;
 import com.ats.rusasoftapi.mstrepo.AccOfficerRepo;
 import com.ats.rusasoftapi.mstrepo.DeptRepo;
@@ -51,6 +52,7 @@ import com.ats.rusasoftapi.mstrepo.StudentRepo;
 import com.ats.rusasoftapi.mstrepo.TInstEContentDevFacilityRepo;
 import com.ats.rusasoftapi.mstrepo.UserService;
 import com.ats.rusasoftapi.repositories.StaffRepo;
+import com.ats.rusasoftapi.repositories.TNeighbourhoodCommActivitiesRepo;
 import com.ats.rusasoftapi.repository.TFacultyStudLinkageRepo;
 
 import javax.activation.DataHandler;
@@ -544,18 +546,17 @@ public class MasterApiController {
 	}
 	
 	
-	@RequestMapping(value = { "/getDeptForHodReg" }, method = RequestMethod.POST)
-	public @ResponseBody List<Dept> getDeptForHodReg(@RequestParam int  instId) {
-		List<Dept> deptList = new ArrayList<>();
-		try {
-		deptList = deptRepo.getDeptForHodReg(instId);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return deptList;
-		
-	}
+	/*
+	 * @RequestMapping(value = { "/getDeptForHodReg" }, method = RequestMethod.POST)
+	 * public @ResponseBody List<Dept> getDeptForHodReg(@RequestParam int instId) {
+	 * List<Dept> deptList = new ArrayList<>(); try { deptList =
+	 * deptRepo.getDeptForHodReg(instId); }catch (Exception e) {
+	 * e.printStackTrace(); }
+	 * 
+	 * return deptList;
+	 * 
+	 * }
+	 */
 	
 	
 
@@ -1206,6 +1207,10 @@ public class MasterApiController {
 	}
 	
 	/*******************************Research & Innovation******************************/
+	
+	@Autowired
+	TFacultyStudLinkageRepo studFacLinkRepo;
+
 	@RequestMapping(value = { "/newstudFacLink" }, method = RequestMethod.POST)
 		public @ResponseBody TFacultyStudLinkage saveEcontentDevFacilities(@RequestBody TFacultyStudLinkage linkage) {
 			TFacultyStudLinkage link = null;
@@ -1227,7 +1232,7 @@ public class MasterApiController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exce in getAllPendingInstitutes Institute " + e.getMessage());
+			System.err.println("Exce in showStudFacLinks " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -1248,7 +1253,7 @@ public class MasterApiController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exce in getAllPendingInstitutes Institute " + e.getMessage());
+			System.err.println("Exce in getStudFacLinksById  " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -1282,9 +1287,7 @@ public class MasterApiController {
 
 		return info;
 	}
-	@Autowired
-	TFacultyStudLinkageRepo studFacLinkRepo;
-
+	
 	@RequestMapping(value = { "/deleteSelLinks" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteSelLinks(@RequestParam List<String> linkageIdsList) {
 
@@ -1312,6 +1315,111 @@ public class MasterApiController {
 	}
 
 	
+	@Autowired
+	TNeighbourhoodCommActivitiesRepo neghComActRepo;
+	
+	@RequestMapping(value = { "/saveNeighbourhoodCommAct" }, method = RequestMethod.POST)
+	public @ResponseBody TNeighbourhoodCommActivities saveEcontentDevFacilities(@RequestBody TNeighbourhoodCommActivities neighbourCommAct) {
+		TNeighbourhoodCommActivities neighborhoodActivity = null;
+		neighborhoodActivity = neghComActRepo.save(neighbourCommAct);
+		
+		return neighborhoodActivity;
+	
+	}
+	
+	@RequestMapping(value = { "/showNeighbourCommActivities" }, method = RequestMethod.POST)
+	public @ResponseBody List<TNeighbourhoodCommActivities> showNeighbourCommActivities(@RequestParam("instituteId") int instituteId) {
 
+		List<TNeighbourhoodCommActivities> neighbourActList = null;
 
+		try {
+
+			neighbourActList = neghComActRepo.findByInstIdAndDelStatusOrderByInstNeighbourhoodCommActIdDesc(instituteId, 1);
+			System.err.println("linls="+neighbourActList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllPendingInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return neighbourActList;
+
+	}
+
+	@RequestMapping(value = { "/getneighbCommActivityById" }, method = RequestMethod.POST)
+	public @ResponseBody TNeighbourhoodCommActivities getneighbCommActivityById(@RequestParam("neighbCommActId") int neighbCommActId) {
+
+		TNeighbourhoodCommActivities neighbourCommAct = null;
+
+		try {
+
+			neighbourCommAct = neghComActRepo.findByInstNeighbourhoodCommActIdAndDelStatus(neighbCommActId, 1);
+			System.err.println("act="+neighbourCommAct);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getneighbCommActivityById" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return neighbourCommAct;
+
+	}
+	
+	
+	@RequestMapping(value = { "/deleteneghCommActivityId" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteneghCommActivityId(@RequestParam("neighbCommActId") int neighbCommActId) {
+		
+		Info info = new Info();
+		try {
+			int res = neghComActRepo.deleteNeghbCommActivityById(neighbCommActId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteRareBookById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	@RequestMapping(value = { "/deleteSelAcitivities" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelAcitivities(@RequestParam List<String> actIdList) {
+
+		Info info = new Info();
+		try {
+			int res = neghComActRepo.deleteActivities(actIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
 }

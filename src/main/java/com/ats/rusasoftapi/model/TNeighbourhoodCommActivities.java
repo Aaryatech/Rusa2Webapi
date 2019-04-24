@@ -26,9 +26,9 @@ public class TNeighbourhoodCommActivities {
 	private int makerUserId;
 	private String makerDatetime;
 	private int exInt1;
-	private int exVar1;
+	private String exVar1;
 	private int exInt2;
-	private int exVar2;
+	private String exVar2;
 	public int getInstNeighbourhoodCommActId() {
 		return instNeighbourhoodCommActId;
 	}
@@ -101,10 +101,10 @@ public class TNeighbourhoodCommActivities {
 	public void setExInt1(int exInt1) {
 		this.exInt1 = exInt1;
 	}
-	public int getExVar1() {
+	public String getExVar1() {
 		return exVar1;
 	}
-	public void setExVar1(int exVar1) {
+	public void setExVar1(String exVar1) {
 		this.exVar1 = exVar1;
 	}
 	public int getExInt2() {
@@ -113,10 +113,10 @@ public class TNeighbourhoodCommActivities {
 	public void setExInt2(int exInt2) {
 		this.exInt2 = exInt2;
 	}
-	public int getExVar2() {
+	public String getExVar2() {
 		return exVar2;
 	}
-	public void setExVar2(int exVar2) {
+	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
 	
