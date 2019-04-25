@@ -285,7 +285,7 @@ public class LibraryApiController {
 				studResp = studRepo.saveAndFlush(student);
 
 				System.err.println("New Student Insert  New User");
-				String userName = Commons.getAlphaNumericString(7);
+				/*String userName = Commons.getAlphaNumericString(7);
 				UserLogin ul = new UserLogin();
 				String pass = Commons.getAlphaNumericString(7);
 				System.err.println("pass is " + pass);
@@ -300,19 +300,19 @@ public class LibraryApiController {
 				ul.setExVar1("NA");
 				ul.setExVar2("NA");
 
-				userRepo.saveAndFlush(ul);
+				userRepo.saveAndFlush(ul);*/
 
-				Info info = EmailUtility.sendEmail(senderEmail, senderPassword, studResp.getEmail(), mailsubject,
-						studResp.getEmail(), ul.getPass());
+				//Info info = EmailUtility.sendEmail(senderEmail, senderPassword, studResp.getEmail(), mailsubject,
+						//studResp.getEmail(), ul.getPass());
 
-				System.err.println("Info email sent response   " + info.toString());
+				//System.err.println("Info email sent response   " + info.toString());
 
 				// Info info1=EmailUtility.sendMsg(ul.getUserName(), ul.getPass(),
 				// libResp.getContactNo());
 
-				Info info1 = EmailUtility.sendMsg(studResp.getEmail(), ul.getPass(), studResp.getContactNo());
+				//Info info1 = EmailUtility.sendMsg(studResp.getEmail(), ul.getPass(), studResp.getContactNo());
 
-				System.err.println("Info email sent response   " + info1.toString());
+				//.err.println("Info email sent response   " + info1.toString());
 
 			} else {
 				studResp = studRepo.saveAndFlush(student);

@@ -30,6 +30,18 @@ public class GetFacultyPhdGuide {
 
 	private String deptName;
 	private String facultyFirstName;
+	
+	private String academicYear;
+	
+	
+
+	public String getAcademicYear() {
+		return academicYear;
+	}
+
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
 
 	public int getPhdId() {
 		return phdId;
@@ -191,7 +203,7 @@ public class GetFacultyPhdGuide {
 				+ ", isPhdAwarded=" + isPhdAwarded + ", phdAwardedYear=" + phdAwardedYear + ", delStatus=" + delStatus
 				+ ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
 				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exVar1=" + exVar1 + ", deptName=" + deptName
-				+ ", facultyFirstName=" + facultyFirstName + "]";
+				+ ", facultyFirstName=" + facultyFirstName + ", academicYear=" + academicYear + "]";
 	}
 
 }

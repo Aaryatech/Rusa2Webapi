@@ -19,7 +19,7 @@ public interface FacultyPhdGuideRepo extends JpaRepository<FacultyPhdGuide, Inte
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE t_faculty_phdguide SET del_status=0 WHERE phd_id=:phdId",nativeQuery=true)
-	int deletePhdGuideByPhdId(int phdId);
+	int deletePhdGuideByPhdId(@Param("phdId") int phdId);
 
 	@Transactional
 	@Modifying

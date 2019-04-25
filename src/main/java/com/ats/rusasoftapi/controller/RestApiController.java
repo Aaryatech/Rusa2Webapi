@@ -172,6 +172,10 @@ public class RestApiController {
 	@RequestMapping(value = { "/VerifyOTP" }, method = RequestMethod.POST)
 	public @ResponseBody Info VerifyOTP(@RequestParam String otp) {
 		Info info = new Info();
+		
+		Object object=new Object();
+		
+		
 		try {
 
 			if (otp.equals(OTPVerification.getOtp()) == true) {
@@ -183,13 +187,14 @@ public class RestApiController {
 				String pass = Commons.getAlphaNumericString(7);
 				System.out.println("pass");
 
-				Info inf = EmailUtility.sendOtp(pass, mobile, "Password From RUSA ");
+				//Info inf = EmailUtility.sendOtp(pass, mobile, "Password From RUSA ");
 
-				Info info1 = EmailUtility.sendEmail(senderEmail, senderPassword, email, mailsubject, email, pass);
+				//Info info1 = EmailUtility.sendEmail(senderEmail, senderPassword, email, mailsubject, email, pass);
 
-				System.err.println("Info email sent response   " + inf.toString());
+				//System.err.println("Info email sent response   " + inf.toString());
 
-				int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
+				//int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
+				
 
 			} else {
 				info.setError(true);

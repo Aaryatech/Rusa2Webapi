@@ -272,7 +272,7 @@ if(x==1)
 
 		try {
 			researchProjectRes = researchProjectRepo.findByProjIdAndDelStatus(projectId, 1);
-			researchProjectRes.setProjYear(DateConvertor.convertToDMY(researchProjectRes.getProjYear()));
+			//researchProjectRes.setProjYear(DateConvertor.convertToDMY(researchProjectRes.getProjYear()));
 
 			researchProjectRes.setProjFrdt(DateConvertor.convertToDMY(researchProjectRes.getProjFrdt()));
 
