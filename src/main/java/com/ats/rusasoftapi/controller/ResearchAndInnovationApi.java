@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.Info;
+import com.ats.rusasoftapi.model.InstResearchDevMous;
 import com.ats.rusasoftapi.model.MExtActList;
 import com.ats.rusasoftapi.model.MExtensionActivity;
+import com.ats.rusasoftapi.model.ResearchDevMou;
 import com.ats.rusasoftapi.model.TExtensionActivity;
 import com.ats.rusasoftapi.model.TNeighbourhoodCommActivities;
+import com.ats.rusasoftapi.repositories.InstResearchDevMousRepo;
 import com.ats.rusasoftapi.repositories.MExtActListRepo;
 import com.ats.rusasoftapi.repositories.MExtensionActivityRepo;
+import com.ats.rusasoftapi.repositories.ResearchDevMouRepo;
 import com.ats.rusasoftapi.repositories.TExtensionActivityRepo;
 
 @RestController
@@ -26,6 +30,11 @@ public class ResearchAndInnovationApi {
 	@Autowired TExtensionActivityRepo extAcrRepo;
 	
 	@Autowired MExtActListRepo extReop;
+	
+	@Autowired ResearchDevMouRepo mouRepo;
+	
+	@Autowired InstResearchDevMousRepo rsrcMouRepo;
+	
 /******************Extension Activity********************/
 	
 	
@@ -146,4 +155,122 @@ public class ResearchAndInnovationApi {
 		return info;
 
 	}
+	
+	@RequestMapping(value = { "/getAllRsrchDevMous" }, method = RequestMethod.GET)
+	public @ResponseBody List<ResearchDevMou> getAllRsrchDevMous() {
+		System.out.println("List");
+		List<ResearchDevMou> extList = null;
+		
+		extList = mouRepo.findBydelStatus(1);
+		System.out.println("List"+extList);
+		return extList;
+	
+	}
+	
+	@RequestMapping(value = { "/savResrchDevMou" }, method = RequestMethod.POST)
+	public @ResponseBody InstResearchDevMous saveExtActivity(@RequestBody InstResearchDevMous tExtAct) {
+		InstResearchDevMous saveMous = null;
+		saveMous = rsrcMouRepo.save(tExtAct);
+		
+		return saveMous;
+	
+	}
+	
+	@RequestMapping(value = { "/getAllRsrchDevMous"}, method = RequestMethod.POST)
+	public @ResponseBody List<InstResearchDevMous> getAllRsrchDevMous(@RequestParam("instituteId") int instituteId) {
+
+		List<InstResearchDevMous> extActList = null;
+
+		try {System.out.println("Inst="+instituteId);
+
+			extActList = rsrcMouRepo.getAllRsrchDevMousByInstId(instituteId);
+			System.err.println("List="+extActList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllRsrchDevMous" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return extActList;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getMouRsrchDevById"}, method = RequestMethod.POST)
+	public @ResponseBody InstResearchDevMous getMouRsrchDevById(@RequestParam("mouRsrchDevId") int mouRsrchDevId) {
+
+		InstResearchDevMous mouRsrch = null;
+
+		try {
+
+			mouRsrch = rsrcMouRepo.findByInstReasearchDevMouIdAndDelStatus(mouRsrchDevId,1);
+			//System.err.println("Ext="+mouRsrch);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getMouRsrchDevById" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return mouRsrch;
+
+	}
+	
+	@RequestMapping(value = { "/deleteRsrchMouById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteRsrchMouById(@RequestParam int mouRsrchDevId) {
+		
+		Info info = new Info();
+		try {
+			int res = rsrcMouRepo.deleteMouRsrchDevById(mouRsrchDevId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteRsrchMouById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	@RequestMapping(value = { "/deleteSelResearchMous" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelResearchMous(@RequestParam List<String> mouRsrchDevIdList) {
+
+		Info info = new Info();
+		try {
+			int res = rsrcMouRepo.deletetRsrchMous(mouRsrchDevIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 }
