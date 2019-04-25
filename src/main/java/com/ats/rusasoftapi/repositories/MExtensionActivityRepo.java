@@ -8,7 +8,7 @@ import com.ats.rusasoftapi.model.MExtensionActivity;
 
 public interface MExtensionActivityRepo extends JpaRepository<MExtensionActivity, Integer> {
 
-	List<MExtensionActivity> findByDelStatus(int i);
+	List<MExtensionActivity> findByDelStatusOrderBySequenceAsc(int i);
 	
 	
 }

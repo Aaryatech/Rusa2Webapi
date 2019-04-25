@@ -26,7 +26,7 @@ public class MExtActList {
 	private String exVar1;
 	private int exInt2;
 	private String exVar2;
-	private String activityTitle;
+	//private String activityTitle;
 	public int getInstExtensionActId() {
 		return instExtensionActId;
 	}
@@ -51,12 +51,12 @@ public class MExtActList {
 	public void setAcYearId(int acYearId) {
 		this.acYearId = acYearId;
 	}
-	public String getActivityTitle() {
+	/*public String getActivityTitle() {
 		return activityTitle;
 	}
 	public void setActivityTitle(String activityTitle) {
 		this.activityTitle = activityTitle;
-	}
+	}*/
 	public int getNoOfStudParticipated() {
 		return noOfStudParticipated;
 	}
@@ -138,7 +138,7 @@ public class MExtActList {
 	@Override
 	public String toString() {
 		return "MExtActList [instExtensionActId=" + instExtensionActId + ", extensionActivityId=" + extensionActivityId
-				+ ", instId=" + instId + ", acYearId=" + acYearId + ", activityTitle=" + activityTitle
+				+ ", instId=" + instId + ", acYearId=" + acYearId
 				+ ", noOfStudParticipated=" + noOfStudParticipated + ", noOfStudInInst=" + noOfStudInInst
 				+ ", noOfFacultyParticipated=" + noOfFacultyParticipated + ", noOfFacultyInInst=" + noOfFacultyInInst
 				+ ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId

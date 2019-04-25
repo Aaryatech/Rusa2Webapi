@@ -34,7 +34,7 @@ public class ResearchAndInnovationApi {
 		System.out.println("List");
 		List<MExtensionActivity> extList = null;
 		
-		extList = mExtRepo.findByDelStatus(1);
+		extList = mExtRepo.findByDelStatusOrderBySequenceAsc(1);
 		System.out.println("List"+extList);
 		return extList;
 	
