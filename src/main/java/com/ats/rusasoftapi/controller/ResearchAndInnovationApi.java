@@ -22,6 +22,7 @@ import com.ats.rusasoftapi.repositories.MExtActListRepo;
 import com.ats.rusasoftapi.repositories.MExtensionActivityRepo;
 import com.ats.rusasoftapi.repositories.ResearchDevMouRepo;
 import com.ats.rusasoftapi.repositories.TExtensionActivityRepo;
+import com.ats.rusasoftapi.repositories.TNeighbourhoodCommActivitiesRepo;
 
 @RestController
 public class ResearchAndInnovationApi {
@@ -34,6 +35,9 @@ public class ResearchAndInnovationApi {
 	@Autowired ResearchDevMouRepo mouRepo;
 	
 	@Autowired InstResearchDevMousRepo rsrcMouRepo;
+	
+	@Autowired TNeighbourhoodCommActivitiesRepo neghComActRepo;
+	
 	
 /******************Extension Activity********************/
 	
@@ -61,7 +65,7 @@ public class ResearchAndInnovationApi {
 	}
 	
 	@RequestMapping(value = { "/getAllExtActivities"}, method = RequestMethod.POST)
-	public @ResponseBody List<MExtActList> showNeighbourCommActivities(@RequestParam("instituteId") int instituteId) {
+	public @ResponseBody List<MExtActList> getAllExtActivities(@RequestParam("instituteId") int instituteId) {
 
 		List<MExtActList> extActList = null;
 
@@ -272,5 +276,112 @@ public class ResearchAndInnovationApi {
 		return info;
 
 	}
+	
+	
+	@RequestMapping(value = { "/saveNeighbourhoodCommAct" }, method = RequestMethod.POST)
+	public @ResponseBody TNeighbourhoodCommActivities saveEcontentDevFacilities(@RequestBody TNeighbourhoodCommActivities neighbourCommAct) {
+		TNeighbourhoodCommActivities neighborhoodActivity = null;
+		neighborhoodActivity = neghComActRepo.save(neighbourCommAct);
+		
+		return neighborhoodActivity;
+	
+	}
+	
+	@RequestMapping(value = { "/showNeighbourCommActivities" }, method = RequestMethod.POST)
+	public @ResponseBody List<TNeighbourhoodCommActivities> showNeighbourCommActivities(@RequestParam("instituteId") int instituteId) {
+
+		List<TNeighbourhoodCommActivities> neighbourActList = null;
+
+		try {
+
+			neighbourActList = neghComActRepo.findByInstIdAndDelStatusOrderByInstNeighbourhoodCommActIdDesc(instituteId, 1);
+			System.err.println("linls="+neighbourActList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllPendingInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return neighbourActList;
+
+	}
+
+	@RequestMapping(value = { "/getneighbCommActivityById" }, method = RequestMethod.POST)
+	public @ResponseBody TNeighbourhoodCommActivities getneighbCommActivityById(@RequestParam("neighbCommActId") int neighbCommActId) {
+
+		TNeighbourhoodCommActivities neighbourCommAct = null;
+
+		try {
+
+			neighbourCommAct = neghComActRepo.findByInstNeighbourhoodCommActIdAndDelStatus(neighbCommActId, 1);
+			System.err.println("act="+neighbourCommAct);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getneighbCommActivityById" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return neighbourCommAct;
+
+	}
+	
+	
+	@RequestMapping(value = { "/deleteneghCommActivityId" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteneghCommActivityId(@RequestParam("neighbCommActId") int neighbCommActId) {
+		
+		Info info = new Info();
+		try {
+			int res = neghComActRepo.deleteNeghbCommActivityById(neighbCommActId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteRareBookById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	@RequestMapping(value = { "/deleteSelAcitivities" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelAcitivities(@RequestParam List<String> actIdList) {
+
+		Info info = new Info();
+		try {
+			int res = neghComActRepo.deleteActivities(actIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
 	
 }
