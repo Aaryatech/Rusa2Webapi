@@ -1,6 +1,7 @@
 package com.ats.rusasoftapi.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,11 +171,13 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = { "/VerifyOTP" }, method = RequestMethod.POST)
-	public @ResponseBody Info VerifyOTP(@RequestParam String otp) {
+	public @ResponseBody Staff VerifyOTP(@RequestParam String otp) {
 		Info info = new Info();
 		
 		Object object=new Object();
+		HashMap<Integer, Staff>  hashMap=new HashMap<>();
 		
+		Staff staff=new Staff();
 		
 		try {
 
@@ -186,22 +189,26 @@ public class RestApiController {
 				String email = OTPVerification.getEmailId();
 				String pass = Commons.getAlphaNumericString(7);
 				System.out.println("pass");
-
+				//int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
+				
+				staff=staffrepo.findByFacultyIdAndDelStatus(OTPVerification.getUserId(),1);
+				hashMap.put(1, staff);
+				
 				//Info inf = EmailUtility.sendOtp(pass, mobile, "Password From RUSA ");
 
 				//Info info1 = EmailUtility.sendEmail(senderEmail, senderPassword, email, mailsubject, email, pass);
 
 				//System.err.println("Info email sent response   " + inf.toString());
 
-				//int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
+				//
 				
 
 			} else {
 				info.setError(true);
 				info.setMsg("failed");
-
+				//hashMap.put(0, new Staff());
 			}
-
+			//hashMap.put(0, info);
 		} catch (Exception e) {
 
 			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
@@ -210,7 +217,7 @@ public class RestApiController {
 			info.setMsg("excep");
 		}
 
-		return info;
+		return staff;
 
 	}
 
