@@ -18,10 +18,12 @@ import com.ats.rusasoftapi.model.infra.InfraAreaName;
 import com.ats.rusasoftapi.model.infra.InfraAreaType;
 import com.ats.rusasoftapi.model.infra.InstInfraAreaInfo;
 import com.ats.rusasoftapi.model.infra.ItInfrastructure;
+import com.ats.rusasoftapi.model.infra.TInstInternetInfo;
 import com.ats.rusasoftapi.model.instprofile.InstituteTraining;
 import com.ats.rusasoftapi.repo.infra.GetInstInfraAreaInfoRepo;
 import com.ats.rusasoftapi.repo.infra.InfraAreaNameRepo;
 import com.ats.rusasoftapi.repo.infra.InstInfraAreaInfoRepo;
+import com.ats.rusasoftapi.repositories.TInstInternetInfoRepo;
 import com.ats.rusasoftapi.repo.infra.InfraAreaTypeRepo;
 
 @RestController
@@ -34,6 +36,8 @@ public class InfraStructureModApi {
 	@Autowired InstInfraAreaInfoRepo instInfraAreaInfoRepo;
 	
 	@Autowired ItInfrastructureRepo infraRepo;
+	
+	@Autowired TInstInternetInfoRepo internetRepo;
 
 	
 	@RequestMapping(value = { "/getInfraAreaTypeList" }, method = RequestMethod.GET)
@@ -228,4 +232,107 @@ public class InfraStructureModApi {
 
 	}
 	
+	
+	
+	@RequestMapping(value = { "/saveNewInternetConnectionInfo" }, method = RequestMethod.POST)
+	public @ResponseBody TInstInternetInfo saveNewInternetConnectionInfo(@RequestBody TInstInternetInfo internet) {
+		TInstInternetInfo interConc = null;
+		try {
+			interConc = internetRepo.save(internet);
+	}catch(Exception e) {
+		System.out.println(e.getMessage());
+		e.printStackTrace();
+	}
+		
+		
+		return interConc;
+		
+	}
+	
+	@RequestMapping(value = { "/showAllInternetConnection" }, method = RequestMethod.POST)
+	public @ResponseBody List<TInstInternetInfo> showAllInternetConnection(@RequestParam int instituteId) {
+
+		List<TInstInternetInfo> netConnList = new ArrayList<TInstInternetInfo>();
+
+		try {
+			netConnList = internetRepo.findByInstIdAndDelStatusOrderByInstInternetInfoIdDesc(instituteId, 1);
+		} catch (Exception e) {
+			System.err.println("Exce in showAllInternetConnection " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return netConnList;
+	}
+	
+	@RequestMapping(value = { "/getConnectionInfoById" }, method = RequestMethod.POST)
+	public @ResponseBody TInstInternetInfo getConnectionInfoById(@RequestParam int connectionId) {
+
+		TInstInternetInfo netConn = null;
+
+		try {
+			netConn = internetRepo.findByInstInternetInfoId(connectionId);
+		} catch (Exception e) {
+			System.err.println("Exce in showAllInternetConnection " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return netConn;
+	}
+	
+	@RequestMapping(value = { "/deletetLanConectionById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletetLanConectionById(@RequestParam int connectionId) {
+		Info info = new Info();
+		try {
+			int res = internetRepo.delNetConnectionById(connectionId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deletetLanConectionById " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+				
+	}
+	
+	
+	
+	@RequestMapping(value = { "/delSelLanConnection" }, method = RequestMethod.POST)
+	public @ResponseBody Info delSelLanConnection(@RequestParam List<String> lanInfoIdslList) {
+
+		Info info = new Info();
+		try {
+			int res = internetRepo.deleteLanConnectiion(lanInfoIdslList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in delSelLanConnection" + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 }
