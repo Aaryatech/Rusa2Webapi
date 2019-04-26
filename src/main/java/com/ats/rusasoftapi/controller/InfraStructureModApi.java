@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.infra.GetInstInfraAreaInfo;
 import com.ats.rusasoftapi.model.infra.InfraAreaName;
 import com.ats.rusasoftapi.model.infra.InfraAreaType;
 import com.ats.rusasoftapi.model.infra.InstInfraAreaInfo;
+import com.ats.rusasoftapi.model.infra.ItInfrastructure;
 import com.ats.rusasoftapi.model.instprofile.InstituteTraining;
 import com.ats.rusasoftapi.repo.infra.GetInstInfraAreaInfoRepo;
 import com.ats.rusasoftapi.repo.infra.InfraAreaNameRepo;
@@ -26,8 +28,12 @@ import com.ats.rusasoftapi.repo.infra.InfraAreaTypeRepo;
 public class InfraStructureModApi {
 	
 	@Autowired InfraAreaTypeRepo infraAreaTypeRepo;
+	
 	@Autowired InfraAreaNameRepo infraAreaNameRepo;
+	
 	@Autowired InstInfraAreaInfoRepo instInfraAreaInfoRepo;
+	
+	@Autowired ItInfrastructureRepo infraRepo;
 
 	
 	@RequestMapping(value = { "/getInfraAreaTypeList" }, method = RequestMethod.GET)
@@ -117,4 +123,109 @@ public class InfraStructureModApi {
 
 		return infrAreaInfoRes;
 	}
+	
+	@RequestMapping(value = { "/saveItInfrastructureInfo" }, method = RequestMethod.POST)
+	public @ResponseBody ItInfrastructure saveItInfrastructureInfo(@RequestBody ItInfrastructure infrastur) {
+		ItInfrastructure itInfra = null;
+		try {
+		 itInfra = infraRepo.save(infrastur);
+	}catch(Exception e) {
+		System.out.println(e.getMessage());
+		e.printStackTrace();
+	}
+		
+		
+		return itInfra;
+		
+	}
+	
+	
+	@RequestMapping(value = { "/showAllItInfrastructure" }, method = RequestMethod.POST)
+	public @ResponseBody List<ItInfrastructure> showAllItInfrastructure(
+			@RequestParam int instituteId) {
+
+		List<ItInfrastructure> itInfraList = new ArrayList<ItInfrastructure>();
+
+		try {
+			itInfraList = infraRepo.findByInstIdAndDelStatusOrderByInstItInfraInfoIdDesc(instituteId, 1);
+		} catch (Exception e) {
+			System.err.println("Exce in showAllItInfrastructure " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return itInfraList;
+	}
+	
+	@RequestMapping(value = { "/getItInfraStructureById" }, method = RequestMethod.POST)
+	public @ResponseBody ItInfrastructure getItInfraStructureById(
+			@RequestParam int infraId) {
+
+		ItInfrastructure itInfraList = null;
+
+		try {
+			itInfraList = infraRepo.findByInstItInfraInfoId(infraId);
+		} catch (Exception e) {
+			System.err.println("Exce in getItInfraStructureById " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return itInfraList;
+	}
+	
+	
+	@RequestMapping(value = { "/deletetInfraById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteItInfraById(@RequestParam int infraId) {
+		Info info = new Info();
+		try {
+			int res = infraRepo.delItInfraStructrById(infraId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteItInfraById " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+				
+	}
+	
+	@RequestMapping(value = { "/delSelItInfraId" }, method = RequestMethod.POST)
+	public @ResponseBody Info delPubicationDetails(@RequestParam List<String> infraIdList) {
+
+		Info info = new Info();
+		try {
+			int res = infraRepo.deleteItInfraInfo(infraIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 }
