@@ -174,6 +174,27 @@ public class YesNoRestApiController {
 	}
 	
 	
+	@RequestMapping(value = { "/editYesNoRecord" }, method = RequestMethod.POST)
+	public @ResponseBody Info editYesNoRecord(@RequestParam("id") int id,@RequestParam String yesNoResponse ) {
+
+		Info info = new Info();
+
+		try {
+			
+			int yesNoRes = instituteYesNoRepository.editYesNoRecord(id, yesNoResponse);
+			info.setError(false);
+			info.setMessage("edited");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("editYesNoRecord failed");
+		}
+
+		return info;
+
+	}
+	
 	@RequestMapping(value = { "/deleteYesNoRecord" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteYesNoRecord(@RequestParam("id") int id ) {
 

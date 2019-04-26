@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.runners.Parameterized.Parameters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +26,13 @@ public interface InstituteYesNoRepository extends JpaRepository<InstituteYesNo, 
 	@Modifying
 	@Query(value = "UPDATE t_institute_yesno SET del_status=0 WHERE inst_yesno_id IN (:id) ", nativeQuery = true)
 	int deleteYesNoRecord(@Param("id") int id);
+
+	
+	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE t_institute_yesno SET inst_yesno_response=:yesNoResponse WHERE inst_yesno_id=:id ", nativeQuery = true)
+	int editYesNoRecord(@Param("id") int id, @Param("yesNoResponse") String yesNoResponse);
 
 	InstituteYesNo findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndInstYesnoId(int instituteId, int i,
 			int j, int yearId, int id);
