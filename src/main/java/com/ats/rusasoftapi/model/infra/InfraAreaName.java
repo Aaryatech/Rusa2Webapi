@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-//@Table(name = "m_infra_area_name")
+@Table(name = "m_infra_area_name")
 public class InfraAreaName {
 	
 	@Id

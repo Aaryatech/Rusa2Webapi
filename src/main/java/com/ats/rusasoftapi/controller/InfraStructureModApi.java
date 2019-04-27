@@ -91,13 +91,14 @@ public class InfraStructureModApi {
 	
 	
 	@RequestMapping(value = { "/findByDelStatusAndIsActiveAndInstIdAndInfraAreaId" }, method = RequestMethod.POST)
-	public @ResponseBody InstInfraAreaInfo saveInstInfraAreaInfo(
+	public @ResponseBody InstInfraAreaInfo findByDelStatusAndIsActiveAndInstIdAndInfraAreaId(
 			@RequestParam int instId,@RequestParam int areaId) {
 
 		InstInfraAreaInfo infrAreaInfoRes = new InstInfraAreaInfo();
 
 		try {
 			infrAreaInfoRes = instInfraAreaInfoRepo.findByDelStatusAndIsActiveAndInstIdAndInfraAreaId(1,1,instId,areaId);
+			System.err.println("res " +infrAreaInfoRes.toString());
 		if(infrAreaInfoRes==null){
 			infrAreaInfoRes = new InstInfraAreaInfo();
 		}
@@ -109,6 +110,27 @@ public class InfraStructureModApi {
 		return infrAreaInfoRes;
 	}
 	
+	
+	
+	@RequestMapping(value = { "/findByDelStatusAndIsActiveAndInstIdAndInstInfraAreaId" }, method = RequestMethod.POST)
+	public @ResponseBody InstInfraAreaInfo findByDelStatusAndIsActiveAndInstIdAndInstInfraAreaId(
+			@RequestParam int instId,@RequestParam int instInfraAreaId) {
+
+		InstInfraAreaInfo infrAreaInfoRes = new InstInfraAreaInfo();
+
+		try {
+			infrAreaInfoRes = instInfraAreaInfoRepo.findByDelStatusAndIsActiveAndInstIdAndInfraAreaId(1,1,instId,instInfraAreaId);
+			System.err.println("res " +infrAreaInfoRes.toString());
+		if(infrAreaInfoRes==null){
+			infrAreaInfoRes = new InstInfraAreaInfo();
+		}
+		} catch (Exception e) {
+			System.err.println("Exce in findByDelStatusAndIsActiveAndInstIdAndInfraAreaId " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return infrAreaInfoRes;
+	}
 	
 	@Autowired GetInstInfraAreaInfoRepo getInstInfraAreaInfoRepo;
 	

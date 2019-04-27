@@ -12,6 +12,10 @@ public interface InstInfraAreaInfoRepo extends JpaRepository<InstInfraAreaInfo, 
 
 	InstInfraAreaInfo findByDelStatusAndIsActiveAndInstIdAndInfraAreaId(int delStatus, int isActive, int instId,
 			int areaId);
+	
+	
+	InstInfraAreaInfo findByDelStatusAndIsActiveAndInstIdAndInstInfraAreaId(int delStatus, int isActive, int instId,
+			int instInfraAreaId);
 
 	
 }
