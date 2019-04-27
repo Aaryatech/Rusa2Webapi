@@ -33,12 +33,14 @@ import com.ats.rusasoftapi.mstrepo.QuolificationRepo;
 import com.ats.rusasoftapi.mstrepo.UserService;
 import com.ats.rusasoftapi.repositories.DeanRepo;
 import com.ats.rusasoftapi.repositories.DeansListRepo;
+import com.ats.rusasoftapi.repositories.ExtActOfficerRepo;
 import com.ats.rusasoftapi.repositories.IqacRepo;
 import com.ats.rusasoftapi.repositories.NewDeanListRepo;
 import com.ats.rusasoftapi.repositories.StaffListRepo;
 import com.ats.rusasoftapi.repositories.StaffRepo;
 import com.ats.rusasoftapi.repositories.StudentSchemeRepo;
 import com.ats.rusasoftapi.repositories.StudentSupprtSchemeRepo;
+import com.ats.rusasoftapi.repositories.TrainingPlacementOfficerRepo;
 
 @RestController
 public class IqacRestController {
@@ -616,4 +618,61 @@ public class IqacRestController {
 				return quolList;
 
 			}
+			
+			
+			
+/*****************************************Training & Placement Officer*****************************************/
+			@Autowired TrainingPlacementOfficerRepo tpoRepo;
+			
+			@RequestMapping(value= {"/getTraningOfficerList"}, method=RequestMethod.POST)
+			  public @ResponseBody List<NewDeanList> getTraningOfficerList(@RequestParam int facultyId,
+						@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod,@RequestParam List<Integer> deptIdList,
+						@RequestParam int instituteId ,@RequestParam int isDean){
+			
+				  System.out.println(" facultyId ==" + facultyId + " isPrincipal " + isPrincipal + " isIQAC " + isIQAC + " Institute Id="+instituteId+
+						  "isHod "+ isHod +  " deptIdList" + deptIdList);
+			 
+			  List<NewDeanList> tpoList = null; try {
+				  if (isPrincipal == 1 || isIQAC == 1) {
+					  tpoList = tpoRepo.getTpoByInst( instituteId);
+					} else if ( isDean == 1 || isHod == 1) {
+						tpoList = tpoRepo.getTpoByDept(deptIdList, instituteId);
+					} else {
+						tpoList = tpoRepo.getTpoRepo(facultyId, instituteId);
+					}
+			  
+			  //deansList = deanlistrepo.findByIsActiveAndDelStatus();
+			  
+			  }catch(Exception e){ e.printStackTrace(); }
+			  
+			  return tpoList;
+			  
+			  }
+			
+	/*******************************************Extension Activity Officer***************************************/
+			@Autowired ExtActOfficerRepo extRepo;
+			@RequestMapping(value= {"/getExtActList"}, method=RequestMethod.POST)
+			  public @ResponseBody List<NewDeanList> getExtActList(@RequestParam int facultyId,
+						@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod,@RequestParam List<Integer> deptIdList,
+						@RequestParam int instituteId ,@RequestParam int isDean){
+			
+				  System.out.println(" facultyId ==" + facultyId + " isPrincipal " + isPrincipal + " isIQAC " + isIQAC + " Institute Id="+instituteId+
+						  "isHod "+ isHod +  " deptIdList" + deptIdList);
+			 
+			  List<NewDeanList> extoFFList = null; try {
+				  if (isPrincipal == 1 || isIQAC == 1) {
+					  extoFFList = extRepo.getextOffByInst( instituteId);
+					} else if ( isDean == 1 || isHod == 1) {
+						extoFFList = extRepo.getextOffByDept(deptIdList, instituteId);
+					} else {
+						extoFFList = extRepo.getextOffRepo(facultyId, instituteId);
+					}
+			  
+			  //deansList = deanlistrepo.findByIsActiveAndDelStatus();
+			  
+			  }catch(Exception e){ e.printStackTrace(); }
+			  
+			  return extoFFList;
+			  
+			  }
 }

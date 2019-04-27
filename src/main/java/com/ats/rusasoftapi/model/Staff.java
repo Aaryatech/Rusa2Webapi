@@ -63,7 +63,8 @@ public class Staff {
 	private int isStudent;
 	private int isEnrolled;////default 0 once login then 1
 	private int isBlocked; //default 0 if blocked then 1
-	
+	private int isTpo;
+	private int isExtActOff;
 
 	public int getIsBlocked() {
 		return isBlocked;
@@ -370,6 +371,23 @@ public class Staff {
 	public void setExtravarchar1(String extravarchar1) {
 		this.extravarchar1 = extravarchar1;
 	}
+	
+
+	public int getIsTpo() {
+		return isTpo;
+	}
+
+	public void setIsTpo(int isTpo) {
+		this.isTpo = isTpo;
+	}
+
+	public int getIsExtActOff() {
+		return isExtActOff;
+	}
+
+	public void setIsExtActOff(int isExtActOff) {
+		this.isExtActOff = isExtActOff;
+	}
 
 	@Override
 	public String toString() {
@@ -386,7 +404,9 @@ public class Staff {
 				+ ", password=" + password + ", type=" + type + ", isPrincipal=" + isPrincipal + ", isIqac=" + isIqac
 				+ ", isHod=" + isHod + ", isFaculty=" + isFaculty + ", isAccOff=" + isAccOff + ", isDean=" + isDean
 				+ ", isLibrarian=" + isLibrarian + ", isStudent=" + isStudent + ", isEnrolled=" + isEnrolled
-				+ ", isBlocked=" + isBlocked + "]";
+				+ ", isBlocked=" + isBlocked + ", isTpo=" + isTpo + ", isExtActOff=" + isExtActOff + "]";
 	}
 
+	
+	
 }
