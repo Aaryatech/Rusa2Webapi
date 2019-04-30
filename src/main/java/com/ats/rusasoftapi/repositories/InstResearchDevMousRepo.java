@@ -61,7 +61,7 @@ public interface InstResearchDevMousRepo extends JpaRepository<InstResearchDevMo
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE t_inst_research_dev_mous SET del_status=0  WHERE inst_reasearch_dev_mou_id IN (:mouRsrchDevIdList)",nativeQuery=true)
-	int deletetRsrchMous(List<String> mouRsrchDevIdList);
+	int deletetRsrchMous(@Param("mouRsrchDevIdList")List<String> mouRsrchDevIdList);
 	
 	
 

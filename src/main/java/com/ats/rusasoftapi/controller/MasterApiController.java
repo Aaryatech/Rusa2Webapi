@@ -1134,7 +1134,7 @@ public class MasterApiController {
 
 		try {
 
-			eCont = econtentRepo.findByDelStatusAndInstId(1,instituteId);
+			eCont = econtentRepo. findByDelStatusAndInstIdOrderByInstEContentDevFacilityIdDesc(1,instituteId);
 			System.err.println("eCont="+eCont);
 
 		} catch (Exception e) {

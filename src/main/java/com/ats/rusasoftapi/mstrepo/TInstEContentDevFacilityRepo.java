@@ -13,7 +13,7 @@ import com.ats.rusasoftapi.model.EContentDevFacility;
 
 public interface TInstEContentDevFacilityRepo extends JpaRepository<EContentDevFacility, Integer> {
 	
-	List<EContentDevFacility> findByDelStatusAndInstId(@Param("i") int i,@Param("instituteId") int instituteId);
+	List<EContentDevFacility> findByDelStatusAndInstIdOrderByInstEContentDevFacilityIdDesc(@Param("i") int i,@Param("instituteId") int instituteId);
 	
 	EContentDevFacility findByInstEContentDevFacilityIdAndDelStatus(@Param("contentId") int contentId,@Param("i") int i);
 
@@ -25,5 +25,5 @@ public interface TInstEContentDevFacilityRepo extends JpaRepository<EContentDevF
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE e_content_dev_facility SET del_status=0  WHERE inst_e_content_dev_facility_id IN (:contentIdsList)",nativeQuery=true)
-	int deleteEContents(List<String> contentIdsList); 
+	int deleteEContents(@Param("contentIdsList") List<String> contentIdsList); 
 }

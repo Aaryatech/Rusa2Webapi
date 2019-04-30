@@ -26,5 +26,5 @@ public interface TNeighbourhoodCommActivitiesRepo extends JpaRepository<TNeighbo
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE t_neighbourhood_comm_activities SET del_status=0  WHERE inst_neighbourhood_comm_act_id IN (:actIdList)",nativeQuery=true)
-	int deleteActivities(List<String> actIdList);
+	int deleteActivities(@Param("actIdList")List<String> actIdList);
 }
