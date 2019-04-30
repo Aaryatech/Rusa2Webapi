@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.ats.rusasoftapi.model.MExtActList;
 public interface MExtActListRepo extends JpaRepository<MExtActList, Integer> {
@@ -40,7 +41,7 @@ public interface MExtActListRepo extends JpaRepository<MExtActList, Integer> {
 			"\n" + 
 			"    t_extension_activity.del_status=1 AND\n" + 
 			"    t_extension_activity.inst_id=:instituteId Order By t_extension_activity.inst_extension_act_id Desc",nativeQuery=true)
-	List<MExtActList> getAllExtActByInstId(int instituteId);
+	List<MExtActList> getAllExtActByInstId(@Param("instituteId") int instituteId);
 
 	
 	

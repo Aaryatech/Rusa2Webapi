@@ -119,11 +119,9 @@ public class InfraStructureModApi {
 		InstInfraAreaInfo infrAreaInfoRes = new InstInfraAreaInfo();
 
 		try {
-			infrAreaInfoRes = instInfraAreaInfoRepo.findByDelStatusAndIsActiveAndInstIdAndInfraAreaId(1,1,instId,instInfraAreaId);
+			infrAreaInfoRes = instInfraAreaInfoRepo.findByDelStatusAndIsActiveAndInstIdAndInstInfraAreaId(1,1,instId,instInfraAreaId);
 			System.err.println("res " +infrAreaInfoRes.toString());
-		if(infrAreaInfoRes==null){
-			infrAreaInfoRes = new InstInfraAreaInfo();
-		}
+	
 		} catch (Exception e) {
 			System.err.println("Exce in findByDelStatusAndIsActiveAndInstIdAndInfraAreaId " + e.getMessage());
 			e.printStackTrace();
@@ -132,6 +130,35 @@ public class InfraStructureModApi {
 		return infrAreaInfoRes;
 	}
 	
+	
+	
+	
+	@RequestMapping(value = { "/deleteInstInfraArea" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteInstInfraArea(@RequestParam List<String> instInfraAreaIdList) {
+		Info info = new Info();
+		try {
+			int res = instInfraAreaInfoRepo.deleteInstInfraArea(instInfraAreaIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteInstInfraArea " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+				
+	}
 	@Autowired GetInstInfraAreaInfoRepo getInstInfraAreaInfoRepo;
 	
 	@RequestMapping(value = { "/getInstInfraAreaInfoByInstId" }, method = RequestMethod.POST)
