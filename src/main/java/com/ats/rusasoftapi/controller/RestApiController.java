@@ -169,6 +169,55 @@ public class RestApiController {
 		return info;
 
 	}
+	
+	/***********************************Update Contact No*******************************/
+	
+	@RequestMapping(value = { "/changeContctNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info changeContctNo(@RequestParam String contact) {
+
+		OTPVerification.setConNumber(null);
+		OTPVerification.setEmailId(null);
+		OTPVerification.setOtp(null);
+		OTPVerification.setPass(null);
+
+		System.err.println("Its Cont No " + contact);
+		Info info = new Info();
+		
+
+		Staff userDetail = staffRepo.findByDelStatusAndIsActiveAndContactNo(1, 1, contact);
+
+		if (userDetail != null) {
+			OTPVerification.setUserId(userDetail.getFacultyId());
+
+			String emailId = userDetail.getEmail();
+			String conNumber = userDetail.getContactNo();
+
+			System.err.println("User data is" + userDetail.toString());
+			char[] otp = Commons.OTP(6);
+
+			otp1 = String.valueOf(otp);
+			// info.setMsg(" Matched");
+			System.err.println("User otp is" + otp1);
+			Info inf = EmailUtility.sendOtp(otp1, conNumber, "Rusa OTP Verification");
+
+			System.out.println("info ires" + inf.toString());
+
+			OTPVerification.setConNumber(conNumber);
+			OTPVerification.setEmailId(emailId);
+			OTPVerification.setOtp(otp1);
+			OTPVerification.setPass(userDetail.getPassword());
+
+		} else {
+			System.err.println("In Else ");
+
+			info.setError(true);
+			info.setMsg("not Matched");
+			System.err.println(" not Matched ");
+		}
+
+		return info;
+
+	}
 
 	@RequestMapping(value = { "/VerifyOTP" }, method = RequestMethod.POST)
 	public @ResponseBody Staff VerifyOTP(@RequestParam String otp) {
@@ -331,6 +380,73 @@ System.err.println("Matched " +pass);
 		}
 
 		return instInfo;
+
+	}
+	
+	@RequestMapping(value= {"/updateMyNo"}, method=RequestMethod.POST)
+	public @ResponseBody Info updateMyNo(@RequestParam("id") int id, @RequestParam("no") String no){
+		
+		
+		int isDelete=0;
+		 isDelete= staffRepo.updateNewNo(id, no);
+		 Info inf = new Info();
+		 if(isDelete>0) {
+			 inf.setError(false);
+			 inf.setMsg("No. Updated Sucessfully");
+		 }
+		 else{
+			 inf.setError(true);
+			 inf.setMsg("Fail");
+		 }
+		 return inf;
+	}
+	
+	
+
+	@RequestMapping(value = { "/sndOTPOnNewNo" }, method = RequestMethod.POST)
+	public @ResponseBody Info sndOTPOnNewNo(@RequestParam String no) {
+
+		OTPVerification.setConNumber(null);
+		OTPVerification.setEmailId(null);
+		OTPVerification.setOtp(null);
+		OTPVerification.setPass(null);
+
+		System.err.println("Its Cont No " + no);
+		Info info = new Info();
+		
+
+	
+
+		if (no != null) {
+			
+
+		
+			String conNumber = no;
+
+			
+			char[] otp = Commons.OTP(6);
+
+			otp1 = String.valueOf(otp);
+			// info.setMsg(" Matched");
+			System.err.println("User otp is" + otp1);
+			Info inf = EmailUtility.sendOtp(otp1, conNumber, "Rusa OTP Verification");
+
+			System.out.println("info ires" + inf.toString());
+
+			OTPVerification.setConNumber(conNumber);
+			
+			OTPVerification.setOtp(otp1);
+		
+
+		} else {
+			System.err.println("In Else ");
+
+			info.setError(true);
+			info.setMsg("not Matched");
+			System.err.println(" not Matched ");
+		}
+
+		return info;
 
 	}
 
