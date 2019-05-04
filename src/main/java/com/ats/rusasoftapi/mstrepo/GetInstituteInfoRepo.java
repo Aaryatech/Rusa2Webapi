@@ -12,7 +12,7 @@ import com.ats.rusasoftapi.model.GetInstituteInfo;
 public interface GetInstituteInfoRepo  extends JpaRepository<GetInstituteInfo, Integer>  {
 
 	
-	@Query(value=" SELECT t_institute_info_detail.info_detail_id,t_institute_info_detail.institute_id, "
+	@Query(value=" SELECT t_institute_info_detail.info_detail_id,t_institute_info_detail.institute_id, t_institute_info_detail.ex_int1,"
 			+ " t_institute_info_detail.no_of_fulltime_faculty, " 
 			+ " t_institute_info_detail.no_nonteaching_including_office_staff,t_institute_info_detail.no_support_staff, "
 			+ " t_institute_info_detail.no_current_admited_stnt,t_institute_info_detail.treasury_code, "
