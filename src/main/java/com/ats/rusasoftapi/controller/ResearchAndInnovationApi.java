@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.model.AwrdRecgAgnstExtActivity;
 import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.InstResearchDevMous;
 import com.ats.rusasoftapi.model.MExtActList;
@@ -23,6 +24,7 @@ import com.ats.rusasoftapi.repositories.MExtensionActivityRepo;
 import com.ats.rusasoftapi.repositories.ResearchDevMouRepo;
 import com.ats.rusasoftapi.repositories.TExtensionActivityRepo;
 import com.ats.rusasoftapi.repositories.TNeighbourhoodCommActivitiesRepo;
+import com.ats.rusasoftapi.repository.AwrdRecgAgnstExtActRepo;
 
 @RestController
 public class ResearchAndInnovationApi {
@@ -38,6 +40,7 @@ public class ResearchAndInnovationApi {
 	
 	@Autowired TNeighbourhoodCommActivitiesRepo neghComActRepo;
 	
+	@Autowired AwrdRecgAgnstExtActRepo awrdRecgExtActRepo;
 	
 /******************Extension Activity********************/
 	
@@ -383,5 +386,108 @@ public class ResearchAndInnovationApi {
 		return info;
 	}
 	
+/*********************************Award Recognition  against Extension Activity*******************************/
+	@RequestMapping(value = { "/saveAwrdRecgAgnstExtAct" }, method = RequestMethod.POST)
+	public @ResponseBody AwrdRecgAgnstExtActivity saveEcontentDevFacilities(@RequestBody AwrdRecgAgnstExtActivity araea) {
+		AwrdRecgAgnstExtActivity awrdrecgagnstext = null;
+		awrdrecgagnstext = awrdRecgExtActRepo.save(araea);
+		
+		return awrdrecgagnstext;
 	
+	}
+	
+	@RequestMapping(value = { "/showAwrdRecgExtAct" }, method = RequestMethod.POST)
+	public @ResponseBody List<AwrdRecgAgnstExtActivity> showAwrdRecgExtAct(@RequestParam("instituteId") int instituteId) {
+
+		List<AwrdRecgAgnstExtActivity> awrdRecgList = null;
+
+		try {
+
+			awrdRecgList = awrdRecgExtActRepo.findByInstIdAndDelStatusOrderByAwrdRecgAgnstExtActIdDesc(instituteId, 1);
+			System.err.println("links="+awrdRecgList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in showAwrdRecgExtAct Resrch&Inonv " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return awrdRecgList;
+
+	}
+	
+	@RequestMapping(value = { "/getAwrdRecgAgnstExtActById" }, method = RequestMethod.POST)
+	public @ResponseBody AwrdRecgAgnstExtActivity getAwrdRecgAgnstExtActById(@RequestParam("awrdRecgid") int awrdRecgid) {
+
+		AwrdRecgAgnstExtActivity awrdExt = null;
+
+		try {
+
+			awrdExt = awrdRecgExtActRepo.findByAwrdRecgAgnstExtActIdAndDelStatus(awrdRecgid, 1);
+			System.err.println("act="+awrdExt);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getneighbCommActivityById" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return awrdExt;
+
+	}
+	
+	@RequestMapping(value = { "/deleteAwrdRecgAgnstExtActById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteAwrdRecgAgnstExtActById(@RequestParam("awrdRecgid") int awrdRecgid) {
+		
+		Info info = new Info();
+		try {
+			int res = awrdRecgExtActRepo.deleteAwrdRecgExtActById(awrdRecgid);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteAwrdRecgAgnstExtActById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	@RequestMapping(value = { "/deleteSelAwardRecgExtAct" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelAwardRecgExtAct(@RequestParam List<String> exActIdList) {
+
+		Info info = new Info();
+		try {
+			int res = awrdRecgExtActRepo.delAwrdRecgAct(exActIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
 }
