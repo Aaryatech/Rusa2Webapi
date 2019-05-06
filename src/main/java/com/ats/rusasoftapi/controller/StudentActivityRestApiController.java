@@ -25,6 +25,11 @@ import com.ats.rusasoftapi.model.ProgramMission;
 import com.ats.rusasoftapi.model.ProgramOutcome;
 import com.ats.rusasoftapi.model.ProgramSpeceficOutcome;
 import com.ats.rusasoftapi.model.ProgramVision;
+import com.ats.rusasoftapi.model.StudPerformFinalYr;
+import com.ats.rusasoftapi.model.StudPerformFinalYrList;
+import com.ats.rusasoftapi.model.TExtensionActivity;
+import com.ats.rusasoftapi.prodetailrepo.StudPerformFinalYrListRepo;
+import com.ats.rusasoftapi.repositories.StudPerformFinalYearRepo;
 import com.ats.rusasoftapi.repository.GetProgramActivityRepo;
 import com.ats.rusasoftapi.repository.GetProgramRepository;
 import com.ats.rusasoftapi.repository.ProgramEducationObjectiveRepository;
@@ -731,5 +736,118 @@ public class StudentActivityRestApiController {
 		return program;
 
 	}
+/****************************Student Passed in Final Year******************************************/
+	@Autowired StudPerformFinalYearRepo studPerfomRepo;
+	@RequestMapping(value = { "/addStudPerformFinalYear" }, method = RequestMethod.POST)
+	public @ResponseBody StudPerformFinalYr addStudPerformFinalYear(
+			@RequestBody StudPerformFinalYr studPer) {
 
+		StudPerformFinalYr save = new StudPerformFinalYr();
+
+		try {
+
+			save = studPerfomRepo.saveAndFlush(studPer);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return save;
+
+	}
+	@Autowired StudPerformFinalYrListRepo studPerfomlistRepo;
+	@RequestMapping(value = { "/getstudPassingPer"}, method = RequestMethod.POST)
+	public @ResponseBody List<StudPerformFinalYrList> getstudPassingPer(
+			@RequestParam("instituteId") int instituteId) {
+
+		List<StudPerformFinalYrList> list = new ArrayList<StudPerformFinalYrList>();
+
+		try {
+
+			list = studPerfomlistRepo.getStudPassingInfo(instituteId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+	
+	@RequestMapping(value = { "/getStudPerformanceById"}, method = RequestMethod.POST)
+	public @ResponseBody StudPerformFinalYr getStudPerformanceById(@RequestParam("studperId") int studperId) {
+
+		StudPerformFinalYr finalYearPerform = null;
+
+		try {
+
+			finalYearPerform = studPerfomRepo.findByStudPerformIdAndDelStatus(studperId,1);
+			System.err.println("Ext="+finalYearPerform);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getStudPerformanceById Stud Act " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return finalYearPerform;
+
+	}
+	
+	@RequestMapping(value = { "/deleteStudPerformanceById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelExtAct(@RequestParam("studperId") int studperId) {
+
+		Info info = new Info();
+		try {
+			int res = studPerfomRepo.deletetStudFinalYearPerformance(studperId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	
+	@RequestMapping(value = { "/deleteSelStudperformnc" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelStudperformnc(@RequestParam List<String> studInfoList) {
+
+		Info info = new Info();
+		try {
+			int res = studPerfomRepo.deletetSelStudInfo(studInfoList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
 }
