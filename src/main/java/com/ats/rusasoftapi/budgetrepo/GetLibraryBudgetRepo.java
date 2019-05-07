@@ -12,7 +12,7 @@ public interface GetLibraryBudgetRepo extends JpaRepository<GetLibraryBudget, In
 	
 	
 	@Query(value = " SELECT t_library_budget.lib_budget_id,t_library_budget.fin_year_id,t_library_budget.institute_id,t_library_budget.ac_year_id,t_library_budget.lib_budget_title,t_library_budget.budget_allocated,t_library_budget.budget_utilized," + 
-			" m_academic_year.academic_year,m_financial_year.fin_year " + 
+			" m_academic_year.academic_year,m_financial_year.fin_year,t_library_budget.ex_int1 " + 
 			" FROM t_library_budget " + 
 			" LEFT JOIN m_financial_year " + 
 			" ON t_library_budget.fin_year_id=m_financial_year.fin_year_id " + 
