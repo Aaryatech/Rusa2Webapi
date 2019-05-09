@@ -22,6 +22,7 @@ import com.ats.rusasoftapi.model.GetFacultyOutrea;
 import com.ats.rusasoftapi.model.GetFacultyPatent;
 import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.OutreachType;
+import com.ats.rusasoftapi.model.faculty.FacultyEmpowerment;
 import com.ats.rusasoftapi.model.faculty.GetFacultyOutreach;
 import com.ats.rusasoftapi.model.faculty.GetJournal;
 import com.ats.rusasoftapi.model.faculty.GetResearchProject;
@@ -31,6 +32,7 @@ import com.ats.rusasoftapi.mstrepo.FacultyPatentRepo;
 import com.ats.rusasoftapi.mstrepo.GetFacultyPatentRepo;
 import com.ats.rusasoftapi.mstrepo.OutreachTypeRepo;
 import com.ats.rusasoftapi.prodetailrepo.FacultyAwardRepo;
+import com.ats.rusasoftapi.prodetailrepo.FacultyEmpowermentRepo;
 import com.ats.rusasoftapi.prodetailrepo.GetFacultyAwardRepo;
 import com.ats.rusasoftapi.repo.faculty.GetFacultyOutreaRepo;
 import com.ats.rusasoftapi.repo.faculty.GetFacultyOutreachRepo;
@@ -500,5 +502,89 @@ public class FacultyWebController {
 		}
 		return jouList;
 	}
+	
+	/**********************************************Faculty Empowerment******************************************/
+	@Autowired FacultyEmpowermentRepo facEmpRepo;
+	
+	@RequestMapping(value = { "/saveFacultyEmpowerment" }, method = RequestMethod.POST)
+	public @ResponseBody FacultyEmpowerment saveFacultyEmpowerment(@RequestBody FacultyEmpowerment fac) {
 
+		FacultyEmpowerment facEmp = null;
+		try {
+			facEmp = facEmpRepo.saveAndFlush(fac);
+
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facEmp;
+	}
+
+	@RequestMapping(value = { "/getFacEmpowerList" }, method = RequestMethod.POST)
+	public @ResponseBody List<FacultyEmpowerment> getFacEmpowerList(@RequestParam int instituteId, @RequestParam int yearId) {
+
+		List<FacultyEmpowerment> facEmp = new ArrayList<>();
+
+		try {
+			facEmp = facEmpRepo.findByInstIdAndAcYearIdAndDelStatusOrderByFacultyEmpwrmntIdDesc(instituteId, yearId, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getFacEmpowerList  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facEmp;
+	}
+	
+	
+	@RequestMapping(value = { "/getFacultyEmpowerById" }, method = RequestMethod.POST)
+	public @ResponseBody FacultyEmpowerment getFacultyEmpowerById(@RequestParam int facEmpwrId) {
+
+		FacultyEmpowerment facEmp = new FacultyEmpowerment();
+
+		try {
+			facEmp = facEmpRepo.findByFacultyEmpwrmntId(facEmpwrId);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getFacultyEmpowerById  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return facEmp;
+	}
+	
+	@RequestMapping(value = { "/deleteFacultyEmpowerById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteFacultyEmpowerById(@RequestParam("facEmpwrId") int facEmpwrId) {
+
+		Info info = new Info();
+		try {
+
+			try {
+				int res = facEmpRepo.deleteFacultyEmpowr(facEmpwrId);
+				if (res > 0) {
+					info.setError(false);
+					info.setMsg("success");
+
+				} else {
+					info.setError(true);
+					info.setMsg("failed");
+
+				}
+			} catch (Exception e) {
+
+				System.err.println("Exce in deleteHods  " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMsg("excep");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
 }

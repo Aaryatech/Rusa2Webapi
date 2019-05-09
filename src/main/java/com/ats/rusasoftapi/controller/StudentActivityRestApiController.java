@@ -28,7 +28,9 @@ import com.ats.rusasoftapi.model.ProgramVision;
 import com.ats.rusasoftapi.model.StudPerformFinalYr;
 import com.ats.rusasoftapi.model.StudPerformFinalYrList;
 import com.ats.rusasoftapi.model.TExtensionActivity;
+import com.ats.rusasoftapi.model.progdetail.StudQualifyingExam;
 import com.ats.rusasoftapi.prodetailrepo.StudPerformFinalYrListRepo;
+import com.ats.rusasoftapi.prodetailrepo.StudQualifyingExamRepo;
 import com.ats.rusasoftapi.repositories.StudPerformFinalYearRepo;
 import com.ats.rusasoftapi.repository.GetProgramActivityRepo;
 import com.ats.rusasoftapi.repository.GetProgramRepository;
@@ -850,4 +852,121 @@ public class StudentActivityRestApiController {
 		return info;
 
 	}
+	
+	/*************************************Students Qualifying Exam Details*************************************/
+	
+	@Autowired StudQualifyingExamRepo studQulifyExmRepo;
+	
+	@RequestMapping(value = { "/saveStudQualifyExam" }, method = RequestMethod.POST)
+	public @ResponseBody StudQualifyingExam saveStudQualifyExam(
+			@RequestBody StudQualifyingExam stud) {
+
+		StudQualifyingExam saveStud = new StudQualifyingExam();
+
+		try {
+
+			stud = studQulifyExmRepo.saveAndFlush(stud);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return saveStud;
+
+	}
+	
+	@RequestMapping(value = { "/getStudQualifiedExamList"}, method = RequestMethod.POST)
+	public @ResponseBody List<StudQualifyingExam> getStudQualifiedExamList(
+			@RequestParam("instituteId") int instituteId,@RequestParam("yearId") int yearId) {
+
+		List<StudQualifyingExam> list = new ArrayList<StudQualifyingExam>();
+
+		try {
+
+			list = studQulifyExmRepo.findByInstIdAndAcYearIdAndDelStatusOrderByStudExmIdDesc(instituteId, yearId,1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+	
+	@RequestMapping(value = { "/getStudQulifExmById"}, method = RequestMethod.POST)
+	public @ResponseBody StudQualifyingExam getStudQulifExmById(@RequestParam("studExmId") int studExmId) {
+
+		StudQualifyingExam studQualif = null;
+
+		try {
+
+			studQualif = studQulifyExmRepo.findByStudExmId(studExmId);
+			System.err.println("Ext="+studQualif);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getStudQulifExmById Stud Act " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return studQualif;
+
+	}
+	
+	@RequestMapping(value = { "/deleteStudQulifExmByById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteStudQulifExmByById(@RequestParam("studExmId") int studExmId) {
+
+		Info info = new Info();
+		try {
+			int res = studQulifyExmRepo.deletetStudQualifiedExamDetail(studExmId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	@RequestMapping(value = { "/deleteSelStudQulifiedExm" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelStudQulifiedExm(@RequestParam List<String> studQlfExmIdList) {
+
+		Info info = new Info();
+		try {
+			int res = studQulifyExmRepo.deletetSelStudQlifExmInfo(studQlfExmIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 }
