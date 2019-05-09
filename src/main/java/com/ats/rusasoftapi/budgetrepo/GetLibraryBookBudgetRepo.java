@@ -10,7 +10,7 @@ import com.ats.rusasoftapi.model.budget.GetLibraryBookBudget;
 
 public interface GetLibraryBookBudgetRepo extends JpaRepository<GetLibraryBookBudget, Integer> {
 
-	@Query(value = " 	SELECT t_library_book_budget.library_book_budget_id,"
+	@Query(value = " 	SELECT t_library_book_budget.library_book_budget_id,t_library_book_budget.ex_int1,"
 			+ " t_library_book_budget.institute_id,t_library_book_budget.fin_year_id,t_library_book_budget.ac_year_id,"
 			+ " t_library_book_budget.expenditure_on_book_purchase,t_library_book_budget.expenditure_on_journals_purchase,"
 			+ " t_library_book_budget.expenditure_on_ejournals_purchase,t_library_book_budget.expenditure_on_eresources_purchase,"
@@ -20,7 +20,7 @@ public interface GetLibraryBookBudgetRepo extends JpaRepository<GetLibraryBookBu
 			+ "   m_academic_year ON t_library_book_budget.ac_year_id=m_academic_year.year_id  "
 			+ "  WHERE  t_library_book_budget.del_status=1 AND t_library_book_budget.is_active=1 "
 			+ "   AND t_library_book_budget.institute_id=:instId "
-			+ " AND t_library_book_budget.ac_year_id=:acYearId ", nativeQuery = true)
+			+ " AND t_library_book_budget.ac_year_id=:acYearId ORDER By t_library_book_budget.library_book_budget_id Desc", nativeQuery = true)
 
 	List<GetLibraryBookBudget> getLibraryBookBudgetList(@Param("instId") int instId, @Param("acYearId") int acYearId);
 

@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.GenderEqalityPrg;
+import com.ats.rusasoftapi.model.GovtScholarships;
 import com.ats.rusasoftapi.model.IctEnabledFacilities;
 import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.InstituteActivity;
 import com.ats.rusasoftapi.model.InstituteSupport;
 import com.ats.rusasoftapi.model.IntelPrpoRight;
+import com.ats.rusasoftapi.mstrepo.GovtScholarshipsRepo;
 import com.ats.rusasoftapi.repositories.GenderEqualityPrgRepo;
 import com.ats.rusasoftapi.repositories.IctEnabledFacilitiesRepo;
 import com.ats.rusasoftapi.repositories.InstituteActivityRepo;
@@ -392,4 +394,94 @@ public class InstituteRestApiController {
 		return info;
 
 	}
+	
+	/******************************************
+		Government Scholarship
+	 *********************************************/
+	@Autowired
+	GovtScholarshipsRepo govtSchmRepo;
+
+	@RequestMapping(value = { "/saveGovtScheme" }, method = RequestMethod.POST)
+	public @ResponseBody GovtScholarships saveIctEnabledFacility(@RequestBody GovtScholarships govt) {
+		GovtScholarships govtSchm = null;
+		try {
+
+			govtSchm = govtSchmRepo.save(govt);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return govtSchm;
+	}
+	
+	@RequestMapping(value = { "/getAllGovtScholrSch" }, method = RequestMethod.POST)
+	public @ResponseBody List<GovtScholarships> getAllGovtScholrSch(@RequestParam("instituteId") int instituteId,@RequestParam("yId") int yId) {
+		List<GovtScholarships> sch = new ArrayList<GovtScholarships>();
+		try {
+			sch=govtSchmRepo.findByInstIdAndAcYearIdAndDelStatusOrderByGovtScholarIdDesc(instituteId, yId, 1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return sch;
+
+	}
+	
+	
+	@RequestMapping(value = { "/editGovtScholrScghmById" }, method = RequestMethod.POST)
+	public @ResponseBody GovtScholarships editGovtScholrScghmById(@RequestParam("schmId") int schmId) {
+		GovtScholarships sch = new GovtScholarships();
+		try {
+			sch=govtSchmRepo.findByGovtScholarId(schmId);
+			System.out.println(sch);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return sch;
+		
+	}
+	
+	@RequestMapping(value = { "/delGovtScholrSchmById" }, method = RequestMethod.POST)
+	public @ResponseBody Info delGovtScholrSchmById(@RequestParam("schmId") int schmId) {
+
+		int isDelete = 0;
+		isDelete = govtSchmRepo.deleteGovtSchem(schmId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+
+	}
+	
+	@RequestMapping(value = { "/deleteSelGovtSchm" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelGovtSchm(@RequestParam List<String> schmIdList) {
+
+		Info info = new Info();
+		try {
+			int res = govtSchmRepo.deleteGovtSchm(schmIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
 }

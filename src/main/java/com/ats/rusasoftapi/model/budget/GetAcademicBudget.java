@@ -14,6 +14,7 @@ public class GetAcademicBudget {
 	private int finYearId;
 	private int acYearId;
 	private int instituteId;
+	private int exInt1;
 
 	private String academicBudgetTitle;
 
@@ -95,12 +96,22 @@ public class GetAcademicBudget {
 		this.finYear = finYear;
 	}
 
+	public int getExInt1() {
+		return exInt1;
+	}
+
+	public void setExInt1(int exInt1) {
+		this.exInt1 = exInt1;
+	}
+
 	@Override
 	public String toString() {
 		return "GetAcademicBudget [academicBudgetId=" + academicBudgetId + ", finYearId=" + finYearId + ", acYearId="
-				+ acYearId + ", instituteId=" + instituteId + ", academicBudgetTitle=" + academicBudgetTitle
-				+ ", budgetAllocated=" + budgetAllocated + ", budgetUtilized=" + budgetUtilized + ", academicYear="
-				+ academicYear + ", finYear=" + finYear + "]";
+				+ acYearId + ", instituteId=" + instituteId + ", exInt1=" + exInt1 + ", academicBudgetTitle="
+				+ academicBudgetTitle + ", budgetAllocated=" + budgetAllocated + ", budgetUtilized=" + budgetUtilized
+				+ ", academicYear=" + academicYear + ", finYear=" + finYear + "]";
 	}
+
+	
 
 }

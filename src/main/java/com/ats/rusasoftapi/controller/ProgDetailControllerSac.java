@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.model.GovtScholarships;
 import com.ats.rusasoftapi.model.Info;
+import com.ats.rusasoftapi.model.progdetail.AlumniAssocAct;
 import com.ats.rusasoftapi.model.progdetail.AlumniDetail;
 import com.ats.rusasoftapi.model.progdetail.Cast;
 import com.ats.rusasoftapi.model.progdetail.GetAlumni;
@@ -42,6 +44,7 @@ import com.ats.rusasoftapi.prodetailrepo.ProgramTypeRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmCatwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmLocwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.TrainPlacementRepo;
+import com.ats.rusasoftapi.repository.AlumniAssocActRepo;
 
 @RestController
 public class ProgDetailControllerSac {
@@ -549,6 +552,93 @@ public class ProgDetailControllerSac {
 		}
 
 		return highEdList;
+
+	}
+
+	/***************************************Alumni Association Activity**********************************/
+	
+	@Autowired AlumniAssocActRepo almActRepo;
+	
+	@RequestMapping(value = { "/saveAlumniAssoAct" }, method = RequestMethod.POST)
+	public @ResponseBody AlumniAssocAct saveIctEnabledFacility(@RequestBody AlumniAssocAct alumni) {
+		AlumniAssocAct alm = null;
+		try {
+
+			alm = almActRepo.save(alumni);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return alm;
+	}
+	
+	@RequestMapping(value = { "/getAlumniAssocActivitiesList" }, method = RequestMethod.POST)
+	public @ResponseBody List<AlumniAssocAct> getAlumniAssocActivitiesList(@RequestParam("instituteId") int instituteId,@RequestParam("yId") int yId) {
+		List<AlumniAssocAct> alm = new ArrayList<AlumniAssocAct>();
+		try {
+			alm=almActRepo.findByInstIdAndAcYearIdAndDelStatusOrderByAlmAssocActIdDesc(instituteId, yId, 1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return alm;
+
+	}
+	
+	@RequestMapping(value = { "/editAlumniAssocActivityById" }, method = RequestMethod.POST)
+	public @ResponseBody AlumniAssocAct editAlumniAssocActivityById(@RequestParam("almniActivityId") int almniActivityId) {
+		AlumniAssocAct alm = new AlumniAssocAct();
+		try {
+			alm=almActRepo.findByAlmAssocActId(almniActivityId);
+			
+			System.out.println(alm);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return alm;
+		
+	}
+	
+	@RequestMapping(value = { "/delAlumniAssocActivityById" }, method = RequestMethod.POST)
+	public @ResponseBody Info delGovtScholrSchmById(@RequestParam("almniActivityId") int almniActivityId) {
+
+		int isDelete = 0;
+		isDelete = almActRepo.deleteAlmniActivity(almniActivityId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+
+	}
+	
+	@RequestMapping(value = { "/deleteSelAlumni" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelAlumni(@RequestParam List<String> alumniList) {
+
+		Info info = new Info();
+		try {
+			int res = almActRepo.deleteSelAlumniAssoActivitys(alumniList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
 
 	}
 }
