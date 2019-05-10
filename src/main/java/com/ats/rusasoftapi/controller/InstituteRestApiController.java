@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.model.ActCndctPrmtngUnivrslVal;
 import com.ats.rusasoftapi.model.GenderEqalityPrg;
 import com.ats.rusasoftapi.model.GovtScholarships;
 import com.ats.rusasoftapi.model.IctEnabledFacilities;
@@ -18,7 +19,10 @@ import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.InstituteActivity;
 import com.ats.rusasoftapi.model.InstituteSupport;
 import com.ats.rusasoftapi.model.IntelPrpoRight;
+import com.ats.rusasoftapi.model.SpecificLocalAdvntgDisadvntg;
 import com.ats.rusasoftapi.mstrepo.GovtScholarshipsRepo;
+import com.ats.rusasoftapi.repo.institute.ActCndctPrmtngUnivrslValRepo;
+import com.ats.rusasoftapi.repo.institute.SpecificLocalAdvntgDisadvntgRepo;
 import com.ats.rusasoftapi.repositories.GenderEqualityPrgRepo;
 import com.ats.rusasoftapi.repositories.IctEnabledFacilitiesRepo;
 import com.ats.rusasoftapi.repositories.InstituteActivityRepo;
@@ -484,4 +488,178 @@ public class InstituteRestApiController {
 
 	}
 	
+
+	/******************************************
+		 * Activities Conducted for Promoting Universal Values
+	 *********************************************/
+	@Autowired
+	ActCndctPrmtngUnivrslValRepo actCondctRepo;
+
+	@RequestMapping(value = { "/saveActivityConductPromtUniVal" }, method = RequestMethod.POST)
+	public @ResponseBody ActCndctPrmtngUnivrslVal saveActivityConductPromtUniVal(@RequestBody ActCndctPrmtngUnivrslVal actCndct) {
+		ActCndctPrmtngUnivrslVal act = null;
+		try {
+
+			act = actCondctRepo.save(actCndct);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return act;
+	}
+		
+	@RequestMapping(value = { "/getAllActivitiesCondctPromtUnivrsalValue" }, method = RequestMethod.POST)
+	public @ResponseBody List<ActCndctPrmtngUnivrslVal> getAllActivitiesCondctPromtUnivrsalValue(@RequestParam("instituteId") int instituteId,@RequestParam("yId") int yId) {
+		List<ActCndctPrmtngUnivrslVal> act = new ArrayList<ActCndctPrmtngUnivrslVal>();
+		try {
+			act=actCondctRepo.findByInstIdAndAcYearIdAndDelStatusOrderByActCndctIdDesc(instituteId, yId, 1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return act;
+
+	}
+	
+	@RequestMapping(value = { "/editActivityCndtPrmtUnivrslValById" }, method = RequestMethod.POST)
+	public @ResponseBody ActCndctPrmtngUnivrslVal editActivityCndtPrmtUnivrslValById(@RequestParam("actId") int actId) {
+		ActCndctPrmtngUnivrslVal act = new ActCndctPrmtngUnivrslVal();
+		
+		try {
+			act=actCondctRepo.findByActCndctId(actId);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return act;
+	}
+	
+	@RequestMapping(value = { "/delActCndctPrmtUniValById" }, method = RequestMethod.POST)
+	public @ResponseBody Info delActCndctPrmtUniValById(@RequestParam("actId") int actId) {
+
+		int isDelete = 0;
+		isDelete = actCondctRepo.deleteActCndct(actId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+
+	}
+	
+	@RequestMapping(value = { "/deleteSelActivity" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelActivity(@RequestParam List<String> activityIdlist) {
+
+		Info info = new Info();
+		try {
+			int res = actCondctRepo.deleteActCndct(activityIdlist);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+
+	}
+	
+	/************************Specific Initiatives for Local Advantages & Disadvantages*********************/
+	
+	@Autowired SpecificLocalAdvntgDisadvntgRepo inItRepo;
+	
+	@RequestMapping(value = { "/saveInitiativeAdvDisadv" }, method = RequestMethod.POST)
+	public @ResponseBody SpecificLocalAdvntgDisadvntg saveInitiativeAdvDisadv(@RequestBody SpecificLocalAdvntgDisadvntg specify) {
+		SpecificLocalAdvntgDisadvntg inIt = null;
+		try {
+
+			inIt = inItRepo.save(specify);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return inIt;
+	}
+	
+	@RequestMapping(value = { "/getAllInitiativeAdvntgDisadvntg" }, method = RequestMethod.POST)
+	public @ResponseBody List<SpecificLocalAdvntgDisadvntg> getAllInitiativeAdvntgDisadvntg(@RequestParam("instituteId") int instituteId,@RequestParam("yId") int yId) {
+		List<SpecificLocalAdvntgDisadvntg> init = new ArrayList<SpecificLocalAdvntgDisadvntg>();
+		try {
+			init=inItRepo.findByInstIdAndAcYearIdAndDelStatusOrderBySpciAdvIdDesc(instituteId, yId, 1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return init;
+
+	}
+	
+	@RequestMapping(value = { "/editInitiativeById" }, method = RequestMethod.POST)
+	public @ResponseBody SpecificLocalAdvntgDisadvntg editInitiativeById(@RequestParam("inItId") int inItId) {
+		SpecificLocalAdvntgDisadvntg init = new SpecificLocalAdvntgDisadvntg();
+		
+		try {
+			init=inItRepo.findBySpciAdvId(inItId);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return init;
+	}
+	
+	
+	@RequestMapping(value = { "/delInitiativeAdvDisadvById" }, method = RequestMethod.POST)
+	public @ResponseBody Info delInitiativeAdvDisadvById(@RequestParam("inItId") int inItId) {
+
+		int isDelete = 0;
+		isDelete = inItRepo.deleteInitiative(inItId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+
+	}
+	
+	@RequestMapping(value = { "/deleteSelInitives" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelInitives(@RequestParam List<String> initAdvIdList) {
+
+		Info info = new Info();
+		try {
+			int res = inItRepo.deleteInitives(initAdvIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
 }

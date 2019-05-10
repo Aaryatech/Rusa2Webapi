@@ -11,7 +11,7 @@ import com.ats.rusasoftapi.model.instprofile.GetInstTrainTeachDetail;
 public interface GetInstTrainTeachDetailRepo extends JpaRepository<GetInstTrainTeachDetail, Integer> {
 
 	@Query(value = " SELECT t_institute_training.training_id,t_institute_training.training_title,"
-			+ " t_institute_training.training_fromdt,"
+			+ " t_institute_training.training_fromdt, t_institute_training.ex_var1,"
 			+ " t_institute_training.training_todt,t_institute_training.training_pcount,"
 			+ " t_institute_training.year_id,t_institute_training.training_type "
 			+ " FROM t_institute_training  "
@@ -23,7 +23,7 @@ public interface GetInstTrainTeachDetailRepo extends JpaRepository<GetInstTrainT
 			@Param("trainningType") int trainningType);
 	
 	@Query(value = " SELECT t_institute_training.training_id,t_institute_training.training_title,"
-			+ " t_institute_training.training_fromdt,"
+			+ " t_institute_training.training_fromdt, t_institute_training.ex_var1,"
 			+ " t_institute_training.training_todt,t_institute_training.training_pcount,"
 			+ " t_institute_training.year_id,t_institute_training.training_type "
 			+ " FROM t_institute_training  "
