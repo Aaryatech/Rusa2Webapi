@@ -65,6 +65,9 @@ public class Staff {
 	private int isBlocked; //default 0 if blocked then 1
 	private int isTpo;
 	private int isExtActOff;
+	
+	
+	private int isSame;
 
 	public int getIsBlocked() {
 		return isBlocked;
@@ -388,6 +391,14 @@ public class Staff {
 	public void setIsExtActOff(int isExtActOff) {
 		this.isExtActOff = isExtActOff;
 	}
+	
+	public int getIsSame() {
+		return isSame;
+	}
+
+	public void setIsSame(int isSame) {
+		this.isSame = isSame;
+	}
 
 	@Override
 	public String toString() {
@@ -404,7 +415,8 @@ public class Staff {
 				+ ", password=" + password + ", type=" + type + ", isPrincipal=" + isPrincipal + ", isIqac=" + isIqac
 				+ ", isHod=" + isHod + ", isFaculty=" + isFaculty + ", isAccOff=" + isAccOff + ", isDean=" + isDean
 				+ ", isLibrarian=" + isLibrarian + ", isStudent=" + isStudent + ", isEnrolled=" + isEnrolled
-				+ ", isBlocked=" + isBlocked + ", isTpo=" + isTpo + ", isExtActOff=" + isExtActOff + "]";
+				+ ", isBlocked=" + isBlocked + ", isTpo=" + isTpo + ", isExtActOff=" + isExtActOff + ", isSame="
+				+ isSame + "]";
 	}
 
 	
