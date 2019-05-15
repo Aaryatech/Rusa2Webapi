@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.GovtScholarships;
 import com.ats.rusasoftapi.model.Info;
+import com.ats.rusasoftapi.model.NewCourseInfo;
+import com.ats.rusasoftapi.model.NewCourseInfoList;
 import com.ats.rusasoftapi.model.progdetail.AlumniAssocAct;
 import com.ats.rusasoftapi.model.progdetail.AlumniDetail;
 import com.ats.rusasoftapi.model.progdetail.Cast;
@@ -40,6 +42,8 @@ import com.ats.rusasoftapi.prodetailrepo.GetStudAdmLocwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.GetTrainPlaceRepo;
 import com.ats.rusasoftapi.prodetailrepo.HigherEducDetailRepo;
 import com.ats.rusasoftapi.prodetailrepo.LocationRepo;
+import com.ats.rusasoftapi.prodetailrepo.NewCourseInfoListRepo;
+import com.ats.rusasoftapi.prodetailrepo.NewCourseInfoRepo;
 import com.ats.rusasoftapi.prodetailrepo.ProgramTypeRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmCatwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmLocwiseRepo;
@@ -641,4 +645,66 @@ public class ProgDetailControllerSac {
 		return info;
 
 	}
+	
+	/***********************************New Course Information*********************************/
+	@Autowired NewCourseInfoRepo courseRepo;
+	
+	@RequestMapping(value = { "/saveNewCourseInfo" }, method = RequestMethod.POST)
+	public @ResponseBody NewCourseInfo saveNewCourseInfo(@RequestBody NewCourseInfo course) {
+		NewCourseInfo crs = null;
+		try {
+
+			crs = courseRepo.save(course);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return crs;
+	}
+	
+	@RequestMapping(value = { "/getByCourseId" }, method = RequestMethod.POST)
+	public @ResponseBody NewCourseInfo getByCourseId(@RequestParam("courseId") int courseId) {
+		NewCourseInfo course = new NewCourseInfo();
+		try {
+			course=courseRepo.findByCourseId(courseId);
+			
+			System.out.println(course);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return course;
+		
+	}
+	
+	
+	@RequestMapping(value = { "/delCourseById" }, method = RequestMethod.POST)
+	public @ResponseBody Info delCourseById(@RequestParam("courseId") int courseId) {
+
+		int isDelete = 0;
+		isDelete = courseRepo.deleteCourseInfo(courseId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+
+	}
+	
+	@Autowired NewCourseInfoListRepo courseListRepo;
+	@RequestMapping(value = { "/getAllNewCourseList" }, method = RequestMethod.POST)
+	public @ResponseBody List<NewCourseInfoList> getAllNewCourseList(@RequestParam("instId") int instId,@RequestParam("yearId") int yearId) {
+		List<NewCourseInfoList> crs = new ArrayList<NewCourseInfoList>();
+		try {
+			crs=courseListRepo.getAllByInstituteAndAcadmicYear(instId, yearId);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return crs;
+
+	}
+	
 }
