@@ -18,6 +18,8 @@ import com.ats.rusasoftapi.model.NewCourseInfoList;
 import com.ats.rusasoftapi.model.progdetail.AlumniAssocAct;
 import com.ats.rusasoftapi.model.progdetail.AlumniDetail;
 import com.ats.rusasoftapi.model.progdetail.Cast;
+import com.ats.rusasoftapi.model.progdetail.FieldProjectsIntern;
+import com.ats.rusasoftapi.model.progdetail.FieldProjectsInternList;
 import com.ats.rusasoftapi.model.progdetail.GetAlumni;
 import com.ats.rusasoftapi.model.progdetail.GetHigherEduDetail;
 import com.ats.rusasoftapi.model.progdetail.GetStudAdmCatwise;
@@ -31,8 +33,11 @@ import com.ats.rusasoftapi.model.progdetail.ProgramType;
 import com.ats.rusasoftapi.model.progdetail.StudAdmCatwise;
 import com.ats.rusasoftapi.model.progdetail.StudAdmLocwise;
 import com.ats.rusasoftapi.model.progdetail.TrainPlacement;
+import com.ats.rusasoftapi.model.progdetail.ValueAddedCourses;
 import com.ats.rusasoftapi.prodetailrepo.AlumniDetailRepo;
 import com.ats.rusasoftapi.prodetailrepo.CastRepo;
+import com.ats.rusasoftapi.prodetailrepo.FieldProjectsInternListRepo;
+import com.ats.rusasoftapi.prodetailrepo.FieldProjectsInternRepo;
 import com.ats.rusasoftapi.prodetailrepo.GetAlumniRepo;
 import com.ats.rusasoftapi.prodetailrepo.GetHigherEduDetailRepo;
 import com.ats.rusasoftapi.prodetailrepo.GetStudAdmCatwiseGrpByProgRepo;
@@ -48,6 +53,7 @@ import com.ats.rusasoftapi.prodetailrepo.ProgramTypeRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmCatwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmLocwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.TrainPlacementRepo;
+import com.ats.rusasoftapi.prodetailrepo.ValueAddedCoursesRepo;
 import com.ats.rusasoftapi.repository.AlumniAssocActRepo;
 
 @RestController
@@ -706,5 +712,126 @@ public class ProgDetailControllerSac {
 		return crs;
 
 	}
+	/***********************************Value Added Courses********************************/
+	
+@Autowired ValueAddedCoursesRepo valAddCourseRepo;
+	
+	@RequestMapping(value = { "/saveValueAddedCourse" }, method = RequestMethod.POST)
+	public @ResponseBody ValueAddedCourses saveValAddCourse(@RequestBody ValueAddedCourses course) {
+		ValueAddedCourses val = null;
+		try {
+
+			val = valAddCourseRepo.save(course);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return val;
+	}
+	
+	@RequestMapping(value = { "/getValueAddedCurseList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ValueAddedCourses> getValueAddedCurseList(@RequestParam("instId") int instId,@RequestParam("yearId") int yearId) {
+		List<ValueAddedCourses> val = new ArrayList<ValueAddedCourses>();
+		try {
+			val = valAddCourseRepo.findByInstIdAndAcademicYearIdAndDelStatusOrderByValueAddedCourseIdDesc(instId, yearId,1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return val;
+
+	}
+	
+	@RequestMapping(value = { "/getValueAddedCourseById" }, method = RequestMethod.POST)
+	public @ResponseBody ValueAddedCourses getValueAddedCourseById(@RequestParam("courseId") int courseId) {
+		ValueAddedCourses val = new ValueAddedCourses();
+		try {
+			val = valAddCourseRepo.findByValueAddedCourseId(courseId);
+			
+			System.out.println(val);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return val;
+		
+	}
+	
+	@RequestMapping(value = { "/deleteValueAddedCourse" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteCourse(@RequestParam("courseId") int courseId) {
+
+		int isDelete = 0;
+		isDelete = valAddCourseRepo.deleteValueAddedCourse(courseId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+	}
+	
+	/*******************************************************************/
+	
+	@Autowired FieldProjectsInternRepo fieldRepo;
+	
+	@RequestMapping(value = { "/saveFieldProjectsIntern" }, method = RequestMethod.POST)
+	public @ResponseBody FieldProjectsIntern saveValAddCourse(@RequestBody FieldProjectsIntern field) {
+		FieldProjectsIntern val = null;
+		try {
+
+			val = fieldRepo.save(field);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return val;
+	}
+	
+	@RequestMapping(value = { "/getFieldProjectInternById" }, method = RequestMethod.POST)
+	public @ResponseBody FieldProjectsIntern getFieldProjectInternById(@RequestParam("fieldId") int fieldId) {
+		FieldProjectsIntern fld = new FieldProjectsIntern();
+		try {
+			fld = fieldRepo.findByFieldProjectInternId(fieldId);
+			
+			System.out.println(fld);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return fld;
+		
+	}
+	
+	@RequestMapping(value = { "/deleteFieldProjectById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteFieldProjectById(@RequestParam("fieldId") int fieldId) {
+
+		int isDelete = 0;
+		isDelete = fieldRepo.deleteInternProjectField(fieldId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+	}
+	
+	@Autowired FieldProjectsInternListRepo fieldRepoList;
+	@RequestMapping(value = { "/getProjectInternFieldList" }, method = RequestMethod.POST)
+	public @ResponseBody List<FieldProjectsInternList> getProjectInternFieldList(@RequestParam("instId") int instId,@RequestParam("yearId") int yearId) {
+		List<FieldProjectsInternList> fieldList = new ArrayList<FieldProjectsInternList>();
+		try {
+			fieldList = fieldRepoList.getAllByIntituteIdYrIdAndDelStatus(instId, yearId);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return fieldList;
+
+	}
+	
 	
 }
