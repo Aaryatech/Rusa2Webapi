@@ -18,6 +18,8 @@ import com.ats.rusasoftapi.model.NewCourseInfoList;
 import com.ats.rusasoftapi.model.progdetail.AlumniAssocAct;
 import com.ats.rusasoftapi.model.progdetail.AlumniDetail;
 import com.ats.rusasoftapi.model.progdetail.Cast;
+import com.ats.rusasoftapi.model.progdetail.DifrentlyAbledStud;
+import com.ats.rusasoftapi.model.progdetail.DifrentlyAbledStudList;
 import com.ats.rusasoftapi.model.progdetail.FieldProjectsIntern;
 import com.ats.rusasoftapi.model.progdetail.FieldProjectsInternList;
 import com.ats.rusasoftapi.model.progdetail.GetAlumni;
@@ -36,6 +38,8 @@ import com.ats.rusasoftapi.model.progdetail.TrainPlacement;
 import com.ats.rusasoftapi.model.progdetail.ValueAddedCourses;
 import com.ats.rusasoftapi.prodetailrepo.AlumniDetailRepo;
 import com.ats.rusasoftapi.prodetailrepo.CastRepo;
+import com.ats.rusasoftapi.prodetailrepo.DifrentlyAbledStudListRepo;
+import com.ats.rusasoftapi.prodetailrepo.DifrentlyAbledStudRepo;
 import com.ats.rusasoftapi.prodetailrepo.FieldProjectsInternListRepo;
 import com.ats.rusasoftapi.prodetailrepo.FieldProjectsInternRepo;
 import com.ats.rusasoftapi.prodetailrepo.GetAlumniRepo;
@@ -833,5 +837,63 @@ public class ProgDetailControllerSac {
 
 	}
 	
+	/***************************Differently Abled_Student****************************/
+	@Autowired DifrentlyAbledStudRepo difDisStudRepo;
 	
+	@RequestMapping(value = { "/saveDifferentlyDisabledStudent" }, method = RequestMethod.POST)
+	public @ResponseBody DifrentlyAbledStud saveDifferentlyDisabledStudent(@RequestBody DifrentlyAbledStud stud) {
+		DifrentlyAbledStud difstud = null;
+		try {
+
+			difstud = difDisStudRepo.save(stud);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return difstud;
+	}
+	
+	@RequestMapping(value = { "/getDifferntDisabelStudentById" }, method = RequestMethod.POST)
+	public @ResponseBody DifrentlyAbledStud getDifferntDisabelStudentById(@RequestParam("studId") int studId) {
+		DifrentlyAbledStud stud = new DifrentlyAbledStud();
+		try {
+			stud = difDisStudRepo.findByDifAbleStudId(studId);
+			
+			System.out.println(stud);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return stud;
+		
+	}
+	
+	@RequestMapping(value = { "/deleteDifDisStudById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteDifDisStudById(@RequestParam("studId") int studId) {
+
+		int isDelete = 0;
+		isDelete = difDisStudRepo.deleteDiferentlyDisabledStudent(studId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+	}
+	
+	@Autowired DifrentlyAbledStudListRepo disStudList;
+	@RequestMapping(value = { "/getAllDifferentlyDisableStudentsList" }, method = RequestMethod.POST)
+	public @ResponseBody List<DifrentlyAbledStudList> getAllDifferentlyDisableStudentsList(@RequestParam("instId") int instId,@RequestParam("yearId") int yearId) {
+		List<DifrentlyAbledStudList> disStud = new ArrayList<DifrentlyAbledStudList>();
+		try {
+			disStud = disStudList.getAllByIntituteIdYrIdAndDelStatus(instId, yearId);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return disStud;
+
+	}
 }
