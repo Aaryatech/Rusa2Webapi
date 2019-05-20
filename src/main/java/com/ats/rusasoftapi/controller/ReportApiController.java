@@ -11,14 +11,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.MExtActList;
+import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.NoOfPrograms;
+import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
 
 @RestController
 public class ReportApiController {
 	
 	@Autowired NoOfProgramsRepo getNoOfProgramsRepo;
-	
+	@Autowired FacParticipationInBodiesRepo getFacParticipationInBodiesRepo;
 	
 	@RequestMapping(value = { "/getNoOfProgramsList"}, method = RequestMethod.POST)
 	public @ResponseBody List<NoOfPrograms> getNoOfProgramsList(@RequestParam  int instId) {
@@ -40,5 +42,25 @@ public class ReportApiController {
 
 	}
 	
+	@RequestMapping(value = { "/getFacParticipationInBodies"}, method = RequestMethod.POST)
+	public @ResponseBody List<FacParticipationInBodies> getFacParticipationInBodies(@RequestParam  int instId,
+			@RequestParam List<String> acYearList) {
 
+		List<FacParticipationInBodies> facPartInVarBodies = new ArrayList<>();
+
+		try {
+			facPartInVarBodies = getFacParticipationInBodiesRepo.getFacParticipationInBodies(instId, acYearList);
+			System.err.println("List="+facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
 }

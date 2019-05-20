@@ -253,13 +253,13 @@ public class StudentActivityRestApiController {
 	}
 
 	@RequestMapping(value = { "/getProgramByProgramTypeId" }, method = RequestMethod.POST)
-	public @ResponseBody List<Program> getProgramByProgramTypeId(@RequestParam("programTypeId") int programTypeId) {
+	public @ResponseBody List<Program> getProgramByProgramTypeId(@RequestParam("programTypeId") int programTypeId,@RequestParam("instituteId") int instituteId ) {
 
 		List<Program> list = new ArrayList<Program>();
 
 		try {
 
-			list = programRepository.findByProgramTypeAndDelStatus(programTypeId, 1);
+			list = programRepository.findByProgramTypeAndDelStatusAndInstituteId(programTypeId, 1, instituteId);
 
 		} catch (Exception e) {
 
