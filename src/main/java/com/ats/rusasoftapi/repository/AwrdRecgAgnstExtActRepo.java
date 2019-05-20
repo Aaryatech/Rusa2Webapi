@@ -26,5 +26,7 @@ public interface AwrdRecgAgnstExtActRepo extends JpaRepository<AwrdRecgAgnstExtA
 	@Modifying
 	@Query(value="UPDATE t_awd_rec_agn_exact SET del_status=0  WHERE awrd_recg_agnst_ext_act_id IN (:exActIdList)",nativeQuery=true)
 	int delAwrdRecgAct(List<String> exActIdList);
+
+	
 	
 }

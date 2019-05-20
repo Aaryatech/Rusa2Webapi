@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.master.repo.PlagiarismCodeEthicsRepo;
 import com.ats.rusasoftapi.model.AwrdRecgAgnstExtActivity;
 import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.InstResearchDevMous;
@@ -18,6 +19,7 @@ import com.ats.rusasoftapi.model.MExtensionActivity;
 import com.ats.rusasoftapi.model.ResearchDevMou;
 import com.ats.rusasoftapi.model.TExtensionActivity;
 import com.ats.rusasoftapi.model.TNeighbourhoodCommActivities;
+import com.ats.rusasoftapi.model.infra.PlagiarismCodeEthics;
 import com.ats.rusasoftapi.repositories.InstResearchDevMousRepo;
 import com.ats.rusasoftapi.repositories.MExtActListRepo;
 import com.ats.rusasoftapi.repositories.MExtensionActivityRepo;
@@ -471,6 +473,112 @@ public class ResearchAndInnovationApi {
 		Info info = new Info();
 		try {
 			int res = awrdRecgExtActRepo.delAwrdRecgAct(exActIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	/*****************************Plagiarism & Code of Ethics******************************/
+	@Autowired PlagiarismCodeEthicsRepo plagRepo;
+	
+	@RequestMapping(value = { "/savePlagCodeEthic" }, method = RequestMethod.POST)
+	public @ResponseBody PlagiarismCodeEthics savePlagCodeEthic(@RequestBody PlagiarismCodeEthics soft) {
+		PlagiarismCodeEthics plag = null;
+		plag = plagRepo.save(soft);
+		
+		return plag;
+	
+	}
+	
+	@RequestMapping(value = { "/getAllPlagiarismEcthcCodList" }, method = RequestMethod.POST)
+	public @ResponseBody List<PlagiarismCodeEthics> getAllPlagiarismEcthcCodList(@RequestParam("instituteId") int instituteId) {
+
+		List<PlagiarismCodeEthics> plagEthcCodeList = null;
+
+		try {
+
+			plagEthcCodeList = plagRepo.findByInstIdAndDelStatusOrderByPlagCodeEthcIdDesc(instituteId, 1);
+			System.err.println("links="+plagEthcCodeList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in showAwrdRecgExtAct Resrch&Inonv " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return plagEthcCodeList;
+
+	}
+	
+	@RequestMapping(value = { "/getPlagrismEthicsCodeById" }, method = RequestMethod.POST)
+	public @ResponseBody PlagiarismCodeEthics getPlagrismEthicsCodeById(@RequestParam("plagId") int plagId) {
+
+		PlagiarismCodeEthics plg = null;
+
+		try {
+
+			plg = plagRepo.findByPlagCodeEthcId(plagId);
+			System.err.println("act="+plg);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getPlagrismEthicsCodeById" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return plg;
+
+	}
+	
+	@RequestMapping(value = { "/deletePlagiarismCodeEthicsById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deletePlagiarismCodeEthicsById(@RequestParam("plagId") int plagId) {
+		
+		Info info = new Info();
+		try {
+			int res = plagRepo.deletePlagrismEthicSCodeById(plagId);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteAwrdRecgAgnstExtActById  " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
+	}
+	
+	@RequestMapping(value = { "/deleteSelPlagrismEithcsCode" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSelPlagrismEithcsCode(@RequestParam List<String> plagIdList) {
+
+		Info info = new Info();
+		try {
+			int res = plagRepo.deletePlagEthcCodes(plagIdList);
 
 			if (res > 0) {
 				info.setError(false);
