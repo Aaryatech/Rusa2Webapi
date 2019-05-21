@@ -2,7 +2,8 @@ package com.ats.rusasoftapi.repository;
 
 import java.util.List;
 
-import org.junit.runners.Parameterized.Parameters;
+
+//import org.junit.runners.Parameterized.Parameters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
