@@ -73,6 +73,17 @@ public class ProgramActivity {
 	
 	@Column(name="type")
 	private int type;
+	
+	@Column(name="aadhar_no")
+	private String aadharNo;
+	
+	
+	public String getAadharNo() {
+		return aadharNo;
+	}
+	public void setAadharNo(String aadharNo) {
+		this.aadharNo = aadharNo;
+	}
 
 	public int getStudentActivityId() {
 		return studentActivityId;
@@ -225,7 +236,6 @@ public class ProgramActivity {
 	public void setType(int type) {
 		this.type = type;
 	}
-
 	@Override
 	public String toString() {
 		return "ProgramActivity [studentActivityId=" + studentActivityId + ", instituteId=" + instituteId + ", yearId="
@@ -233,9 +243,8 @@ public class ProgramActivity {
 				+ date + ", year=" + year + ", branch=" + branch + ", participatedStudent=" + participatedStudent
 				+ ", level=" + level + ", isActive=" + isActive + ", delStatus=" + delStatus + ", addDate=" + addDate
 				+ ", makerUserId=" + makerUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", type=" + type + "]";
+				+ ", exVar2=" + exVar2 + ", type=" + type + ", aadharNo=" + aadharNo + "]";
 	}
-	
-	
 
+	
 }

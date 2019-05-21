@@ -32,6 +32,7 @@ import com.ats.rusasoftapi.model.progdetail.GetTrainPlace;
 import com.ats.rusasoftapi.model.progdetail.HigherEducDetail;
 import com.ats.rusasoftapi.model.progdetail.Location;
 import com.ats.rusasoftapi.model.progdetail.ProgramType;
+import com.ats.rusasoftapi.model.progdetail.RedressedStudGrievance;
 import com.ats.rusasoftapi.model.progdetail.StudAdmCatwise;
 import com.ats.rusasoftapi.model.progdetail.StudAdmLocwise;
 import com.ats.rusasoftapi.model.progdetail.TrainPlacement;
@@ -54,6 +55,7 @@ import com.ats.rusasoftapi.prodetailrepo.LocationRepo;
 import com.ats.rusasoftapi.prodetailrepo.NewCourseInfoListRepo;
 import com.ats.rusasoftapi.prodetailrepo.NewCourseInfoRepo;
 import com.ats.rusasoftapi.prodetailrepo.ProgramTypeRepo;
+import com.ats.rusasoftapi.prodetailrepo.RedressedStudGrievanceRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmCatwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmLocwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.TrainPlacementRepo;
@@ -894,6 +896,94 @@ public class ProgDetailControllerSac {
 			e.printStackTrace();
 		}
 		return disStud;
+
+	}
+	
+	/*********************************************Redressed Student Grievance********************************************/
+	@Autowired RedressedStudGrievanceRepo redressedRepo;
+	
+	@RequestMapping(value = { "/saveStudGrievance" }, method = RequestMethod.POST)
+	public @ResponseBody RedressedStudGrievance saveStudGrievance(@RequestBody RedressedStudGrievance redInfo) {
+		RedressedStudGrievance redress = null;
+		try {
+
+			redress = redressedRepo.save(redInfo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return redress;
+	}
+	
+	
+	@RequestMapping(value = { "/getAllStudGrievByInstituteIdAndAcademicYear" }, method = RequestMethod.POST)
+	public @ResponseBody List<RedressedStudGrievance> getAllStudGrievByInstituteId(@RequestParam("instId") int instId,@RequestParam("yearId") int yearId) {
+		List<RedressedStudGrievance> stud = new ArrayList<RedressedStudGrievance>();
+		try {
+			stud = redressedRepo.findByInstIdAndAcadYearIdAndDelStatusOrderByRedrsStudGrvncIdDesc(instId, yearId,1);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return stud;
+
+	}
+	
+	@RequestMapping(value = { "/getStudGrievanceById" }, method = RequestMethod.POST)
+	public @ResponseBody RedressedStudGrievance getStudGrievanceById(@RequestParam("studGrievancId") int studGrievancId) {
+		RedressedStudGrievance stud = new RedressedStudGrievance();
+		try {
+			stud = redressedRepo.findByRedrsStudGrvncId(studGrievancId);
+			
+			System.out.println(stud);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return stud;
+		
+	}
+	
+	@RequestMapping(value = { "/deleteStudGrievanceById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteStudGrievanceById(@RequestParam("studGrievancId") int studGrievancId) {
+
+		int isDelete = 0;
+		isDelete = redressedRepo.deleteStudGrivance(studGrievancId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
+	}
+	
+	@RequestMapping(value = { "/deleteStudentGrievance" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteInstBestPractices(@RequestParam List<String> grievanceIdList) {
+
+		Info info = new Info();
+		try {
+			int res = redressedRepo.deleteSelStudGriev(grievanceIdList);
+
+			if (res > 0) {
+				info.setError(false);
+				info.setMsg("success");
+
+			} else {
+				info.setError(true);
+				info.setMsg("failed");
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in deleteStudentGrievance Prog " + e.getMessage());
+			e.printStackTrace();
+			info.setError(true);
+			info.setMsg("excep");
+		}
+
+		return info;
 
 	}
 }

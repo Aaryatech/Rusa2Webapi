@@ -75,6 +75,15 @@ public class GetProgramActivity {
 	@Column(name="year_name")
 	private String yearName;
 
+private String aadharNo;
+	
+	
+	public String getAadharNo() {
+		return aadharNo;
+	}
+	public void setAadharNo(String aadharNo) {
+		this.aadharNo = aadharNo;
+	}
 	public int getStudentActivityId() {
 		return studentActivityId;
 	}
