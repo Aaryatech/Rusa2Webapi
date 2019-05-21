@@ -28,6 +28,23 @@ public class IntelPrpoRight {
 	private String makerDatetime;
 	private int exInt1;
 	private String exVar1;
+	private String reportLink;
+	private Date establishDate;
+	
+	
+	public String getReportLink() {
+		return reportLink;
+	}
+	public void setReportLink(String reportLink) {
+		this.reportLink = reportLink;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getEstablishDate() {
+		return establishDate;
+	}
+	public void setEstablishDate(Date establishDate) {
+		this.establishDate = establishDate;
+	}
 	public int getConId() {
 		return conId;
 	}
@@ -113,8 +130,8 @@ public class IntelPrpoRight {
 		return "IntelPrpoRight [conId=" + conId + ", instituteId=" + instituteId + ", yearId=" + yearId + ", conName="
 				+ conName + ", conFromdt=" + conFromdt + ", conTodt=" + conTodt + ", conPcount=" + conPcount
 				+ ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId=" + makerUserId
-				+ ", makerDatetime=" + makerDatetime + ", exInt1=" + exInt1 + ", exVar1=" + exVar1 + "]";
+				+ ", makerDatetime=" + makerDatetime + ", exInt1=" + exInt1 + ", exVar1=" + exVar1 + ", reportLink="
+				+ reportLink + ", establishDate=" + establishDate + "]";
 	}
-
 	
 }

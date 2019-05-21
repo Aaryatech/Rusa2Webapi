@@ -179,8 +179,8 @@ public class InstituteRestApiController {
 	/**********************************
 	 * Intelectual Property Right
 	 ********************************/
-	@RequestMapping(value = { "/andNewIntelPropRight" }, method = RequestMethod.POST)
-	public @ResponseBody IntelPrpoRight andNewIntelPropRight(@RequestBody IntelPrpoRight intelProp) {
+	@RequestMapping(value = { "/addNewIntelPropRight" }, method = RequestMethod.POST)
+	public @ResponseBody IntelPrpoRight addNewIntelPropRight(@RequestBody IntelPrpoRight intelProp) {
 
 		return intelRepo.save(intelProp);
 
