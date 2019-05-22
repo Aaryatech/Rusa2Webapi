@@ -12,20 +12,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.instprofilerepo.GetInstituteLinkageRepo;
+import com.ats.rusasoftapi.instprofilerepo.InstStakeholderFeedbackRepo;
 import com.ats.rusasoftapi.instprofilerepo.InstituteAMCRepo;
 import com.ats.rusasoftapi.instprofilerepo.InstituteBestPracticesRepo;
 import com.ats.rusasoftapi.instprofilerepo.InstituteFunctionalMOURepo;
 import com.ats.rusasoftapi.instprofilerepo.InstituteLinkageRepo;
 import com.ats.rusasoftapi.model.Info;
+import com.ats.rusasoftapi.model.InstituteYesNo;
 import com.ats.rusasoftapi.model.IqacBasicInfo;
 import com.ats.rusasoftapi.model.LinkageMaster;
+import com.ats.rusasoftapi.model.StakeholderFb;
 import com.ats.rusasoftapi.model.instprofile.GetInstituteLinkage;
+import com.ats.rusasoftapi.model.instprofile.InstStakeholderFeedback;
 import com.ats.rusasoftapi.model.instprofile.InstituteAMC;
 import com.ats.rusasoftapi.model.instprofile.InstituteBestPractices;
 import com.ats.rusasoftapi.model.instprofile.InstituteFunctionalMOU;
 import com.ats.rusasoftapi.model.instprofile.InstituteLinkage;
 import com.ats.rusasoftapi.mstrepo.IqacBasicInfoRepo;
 import com.ats.rusasoftapi.mstrepo.LinkageMasterRepo;
+import com.ats.rusasoftapi.repositories.StakeholderFbRepo;
 
 @RestController
 public class InstituteProfInfoApiController {
@@ -577,5 +582,68 @@ public class InstituteProfInfoApiController {
 
 	}
 	
+	//****************************Stake holder fb new*******************************************
+	@Autowired
+	StakeholderFbRepo stakeholderFbRepo;
 	
+	@RequestMapping(value = { "/getAllStakeHolderFb" }, method = RequestMethod.GET)
+	public @ResponseBody List<StakeholderFb> getAllStakeHolderFb() {
+
+		List<StakeholderFb> libResp = new ArrayList<>();
+
+		try {
+			libResp = stakeholderFbRepo.findByDelStatusAndIsActive(1,1);
+			System.err.println("lib are" + libResp.toString());
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllLibrarian Librarian " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return libResp;
+
+	}
+	
+	@Autowired
+	InstStakeholderFeedbackRepo instStakeholderFeedbackRepo;
+	
+	@RequestMapping(value = { "/getAllStakeByInstituteId" }, method = RequestMethod.POST)
+	public @ResponseBody List<InstStakeholderFeedback> getAllStakeByInstituteId(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<InstStakeholderFeedback> libResp = new ArrayList<>();
+
+		try {
+			libResp = instStakeholderFeedbackRepo.getAllStlFb(instId, yearId);
+			System.err.println("lib are" + libResp.toString());
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllStakeByInstituteId   " + e.getMessage());
+			e.printStackTrace();
+		} 
+
+		return libResp;
+
+	}
+	
+	
+	@RequestMapping(value = { "/saveInstStakeholder" }, method = RequestMethod.POST)
+	public @ResponseBody List<InstStakeholderFeedback>  saveInstStakeholder(@RequestBody List<InstStakeholderFeedback> instituteYesNo) {
+
+		System.err.println("date of stb "+instituteYesNo.toString());
+		List<InstStakeholderFeedback> save = new ArrayList<InstStakeholderFeedback>();
+
+		try {
+
+			save = instStakeholderFeedbackRepo.saveAll(instituteYesNo);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return save;
+
+	}
+
 }
