@@ -16,8 +16,14 @@ public class GetStudAdmCatwiseGrpByProg {
 	
 	private String progType;
 	private String progName;
+	private int exInt1;
 	
-	
+	public int getExInt1() {
+		return exInt1;
+	}
+	public void setExInt1(int exInt1) {
+		this.exInt1 = exInt1;
+	}
 	public int getProgramId() {
 		return programId;
 	}
@@ -61,12 +67,13 @@ public class GetStudAdmCatwiseGrpByProg {
 	public void setProgName(String progName) {
 		this.progName = progName;
 	}
-	
 	@Override
 	public String toString() {
 		return "GetStudAdmCatwiseGrpByProg [programId=" + programId + ", maleStudent=" + maleStudent
 				+ ", femaleStudent=" + femaleStudent + ", transStudent=" + transStudent + ", totStudent=" + totStudent
-				+ ", progType=" + progType + ", progName=" + progName + "]";
+				+ ", progType=" + progType + ", progName=" + progName + ", exInt1=" + exInt1 + "]";
 	}
+	
+
 	
 }

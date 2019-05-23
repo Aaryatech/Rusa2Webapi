@@ -17,6 +17,7 @@ public interface GetStudAdmCatwiseGrpByProgRepo  extends JpaRepository<GetStudAd
 			"        sum(t_program_student_category.female_student) as female_student," + 
 			"        sum(t_program_student_category.trans_student) as trans_student," + 
 			"        sum(t_program_student_category.cat_tot_student) as tot_student," + 
+			"        sum(t_program_student_category.ex_int1) as ex_int1," + 
 			"        t_program.name_of_program as prog_type," + 
 			"        m_program_type.program_name as prog_name" + 
 			"    FROM" + 

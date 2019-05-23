@@ -12,9 +12,18 @@ public class GetStudAdmCatwise {
 	private int femaleStudent;
 	private int transStudent;
 	private int catTotStudent;
-	
+	private int seats;
 	private int castId;
 	private String castName;
+	
+
+	public int getSeats() {
+		return seats;
+	}
+
+	public void setSeats(int seats) {
+		this.seats = seats;
+	}
 
 	public int getStudentCatId() {
 		return studentCatId;
@@ -75,9 +84,11 @@ public class GetStudAdmCatwise {
 	@Override
 	public String toString() {
 		return "GetStudAdmCatwise [studentCatId=" + studentCatId + ", maleStudent=" + maleStudent + ", femaleStudent="
-				+ femaleStudent + ", transStudent=" + transStudent + ", catTotStudent=" + catTotStudent + ", castId="
-				+ castId + ", castName=" + castName + "]";
+				+ femaleStudent + ", transStudent=" + transStudent + ", catTotStudent=" + catTotStudent + ", seats="
+				+ seats + ", castId=" + castId + ", castName=" + castName + "]";
 	}
+
+	
 	
 	
 	/*
