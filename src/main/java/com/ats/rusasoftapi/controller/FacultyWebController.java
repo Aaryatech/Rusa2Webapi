@@ -23,6 +23,7 @@ import com.ats.rusasoftapi.model.GetFacultyPatent;
 import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.OutreachType;
 import com.ats.rusasoftapi.model.faculty.FacultyEmpowerment;
+import com.ats.rusasoftapi.model.faculty.GetFacultyEmpwrList;
 import com.ats.rusasoftapi.model.faculty.GetFacultyOutreach;
 import com.ats.rusasoftapi.model.faculty.GetJournal;
 import com.ats.rusasoftapi.model.faculty.GetResearchProject;
@@ -34,6 +35,7 @@ import com.ats.rusasoftapi.mstrepo.OutreachTypeRepo;
 import com.ats.rusasoftapi.prodetailrepo.FacultyAwardRepo;
 import com.ats.rusasoftapi.prodetailrepo.FacultyEmpowermentRepo;
 import com.ats.rusasoftapi.prodetailrepo.GetFacultyAwardRepo;
+import com.ats.rusasoftapi.prodetailrepo.GetFacultyEmpwrListRepo;
 import com.ats.rusasoftapi.repo.faculty.GetFacultyOutreaRepo;
 import com.ats.rusasoftapi.repo.faculty.GetFacultyOutreachRepo;
 import com.ats.rusasoftapi.repositories.GetFacultyActivityRepo;
@@ -521,20 +523,52 @@ public class FacultyWebController {
 		return facEmp;
 	}
 
+	
+	
+	/*
+	 * @RequestMapping(value = { "/getFacEmpowerList" }, method =
+	 * RequestMethod.POST) public @ResponseBody List<FacultyEmpowerment>
+	 * getFacEmpowerList(@RequestParam int instituteId, @RequestParam int yearId) {
+	 * 
+	 * List<FacultyEmpowerment> facEmp = new ArrayList<>();
+	 * 
+	 * try { facEmp =
+	 * facEmpRepo.findByInstIdAndAcYearIdAndDelStatusOrderByFacultyEmpwrmntIdDesc(
+	 * instituteId, yearId, 1);
+	 * 
+	 * } catch (Exception e) { System.err.println("Exce in getFacEmpowerList  " +
+	 * e.getMessage()); e.printStackTrace();
+	 * 
+	 * } return facEmp; }
+	 */
+	
+	@Autowired GetFacultyEmpwrListRepo getFacEmpwrList;
+	
 	@RequestMapping(value = { "/getFacEmpowerList" }, method = RequestMethod.POST)
-	public @ResponseBody List<FacultyEmpowerment> getFacEmpowerList(@RequestParam int instituteId, @RequestParam int yearId) {
+	public @ResponseBody List<GetFacultyEmpwrList> getFacEmpowerList(@RequestParam int facultyId,
+			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
+			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
+		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
-		List<FacultyEmpowerment> facEmp = new ArrayList<>();
+		List<GetFacultyEmpwrList> facEmpwrList = new ArrayList<>();
 
 		try {
-			facEmp = facEmpRepo.findByInstIdAndAcYearIdAndDelStatusOrderByFacultyEmpwrmntIdDesc(instituteId, yearId, 1);
+
+			if (isPrincipal == 1 || isIQAC == 1) {
+				facEmpwrList = getFacEmpwrList.getFacultyEmpwrListByYearAndInstId(yearId, instituteId);
+			} else if (isHod == 1) {
+				facEmpwrList = getFacEmpwrList.getFacultyEmpwrListByDept(deptIdList, yearId, instituteId);
+			} else {
+				facEmpwrList = getFacEmpwrList.getFacultyEmpowerList(facultyId, yearId, instituteId);
+			}
 
 		} catch (Exception e) {
-			System.err.println("Exce in getFacEmpowerList  " + e.getMessage());
+			System.err.println("Exce in getJournalListByFacultyIdAndtype  " + e.getMessage());
 			e.printStackTrace();
 
 		}
-		return facEmp;
+		return facEmpwrList;
 	}
 	
 	
@@ -585,6 +619,5 @@ public class FacultyWebController {
 		}
 
 		return info;
-
 	}
 }
