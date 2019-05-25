@@ -552,10 +552,13 @@ public class MasterApiController {
 			
 			String deptIdString=deptRepo.getDeptIdString(instId);
 			System.err.println("dept String " +deptIdString);
-			
+			if(deptIdString!=null) {
 			List<Integer> deptIds = Stream.of(deptIdString.split(",")).map(Integer::parseInt)
 					.collect(Collectors.toList());
 		deptList = deptRepo.getDeptForHodReg(deptIds,instId);
+			}else {
+				deptList = deptRepo.findByDelStatusAndIsActiveAndInstituteIdOrderByDeptIdDesc(1, 1, instId);
+			}
 		System.err.println("Dept List " +deptList.toString());
 		}catch (Exception e) {
 			e.printStackTrace();
