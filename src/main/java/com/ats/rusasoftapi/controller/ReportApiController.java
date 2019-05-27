@@ -13,20 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
+import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.GetAvgStudYearwise;
 import com.ats.rusasoftapi.model.report.GetTeachersUsingICT;
 import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
 import com.ats.rusasoftapi.model.report.NoOfPrograms;
+import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
+import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
 import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.GetAvgStudYearwiseRepo;
 import com.ats.rusasoftapi.reportrepo.GetTeachersUsingICTRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
+import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
 
 @RestController
 public class ReportApiController {
@@ -223,7 +227,7 @@ public class ReportApiController {
 	@Autowired
 	NoOfMentorsAssignedStudentRepo noOfMentorsAssignedStudentRepo;
 	
-	@RequestMapping(value = { "/getNoOfMentorsAssignedStudentRepo" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getNoOfMentorsAssignedStudent" }, method = RequestMethod.POST)
 	public @ResponseBody List<NoOfMentorsAssignedStudent> getNoOfMentorsAssignedStudentRepo(@RequestParam int instId,
 			@RequestParam List<String> acYearList) {
  		List<NoOfMentorsAssignedStudent> facPartInVarBodies = new ArrayList<>();
@@ -243,6 +247,62 @@ public class ReportApiController {
 
 	}
 	
+	@Autowired
+	StudentPerformanceOutcomeRepo studentPerformanceOutcomeRepo;
 	
+	@RequestMapping(value = { "/getStudPerformancePo" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudentPerformanceOutcome> getStudPerformancePo(@RequestParam int instId,
+			@RequestParam int programId) {
+ 		List<StudentPerformanceOutcome> facPartInVarBodies = new ArrayList<>();
+		try {
+ 
+ 				facPartInVarBodies = studentPerformanceOutcomeRepo.getStudPerformanceOutcome(instId,programId );
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	AdmissionsAgainstCategoryRepo admissionsAgainstCategoryRepo;
+	
+	@RequestMapping(value = { "/getAdmisssionsAgainstCat" }, method = RequestMethod.POST)
+	public @ResponseBody List<AdmissionsAgainstCategory> getAdmisssionsAgainstCat(@RequestParam int instId,@RequestParam int catId
+			,@RequestParam List<String> acYearList) {
+
+		List<AdmissionsAgainstCategory> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+		 
+	 
+		try {
+
+			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				for (int i = 0; i < acYrList.size(); i++) {
+					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}  
+ 				facPartInVarBodies = admissionsAgainstCategoryRepo.getAdmissionsAgainstCat(instId, catId,acYearList);
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
 	
 }
