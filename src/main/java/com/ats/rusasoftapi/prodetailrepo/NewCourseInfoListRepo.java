@@ -29,6 +29,6 @@ public interface NewCourseInfoListRepo extends JpaRepository<NewCourseInfoList, 
 			"    course.introduce_from=acdYear.year_id" + 
 			"    AND course.introduce_from=:yearId" + 
 			"    ORDER BY course.course_id DESC",nativeQuery=true)
-	List<NewCourseInfoList> getAllByInstituteAndAcadmicYear(@Param("instId") int instId,@Param("yearId") int yearId);
+	List<NewCourseInfoList> getAllByInstituteAndAcadmicYear(int instId, int yearId);
 
 }

@@ -11,7 +11,7 @@ import com.ats.rusasoftapi.model.NewCourseInfo;
 
 public interface NewCourseInfoRepo extends JpaRepository<NewCourseInfo, Integer> {
 
-	NewCourseInfo findByCourseId(@Param("courseId") int courseId);
+	NewCourseInfo findByCourseId(int courseId);
 
 	@Transactional
 	@Modifying

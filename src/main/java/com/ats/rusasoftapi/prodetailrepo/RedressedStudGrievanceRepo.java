@@ -14,9 +14,9 @@ import com.ats.rusasoftapi.model.progdetail.RedressedStudGrievance;
 public interface RedressedStudGrievanceRepo extends JpaRepository<RedressedStudGrievance, Integer> {
 
 	
-	List<RedressedStudGrievance> findByInstIdAndAcadYearIdAndDelStatusOrderByRedrsStudGrvncIdDesc(@Param("instId")int instId,@Param("yearId") int yearId,@Param("i") int i);
+	List<RedressedStudGrievance> findByInstIdAndAcadYearIdAndDelStatusOrderByRedrsStudGrvncIdDesc(int instId, int yearId, int i);
 
-	RedressedStudGrievance findByRedrsStudGrvncId(@Param("studGrievancId")int studGrievancId);
+	RedressedStudGrievance findByRedrsStudGrvncId(int studGrievancId);
 
 	@Transactional
 	@Modifying

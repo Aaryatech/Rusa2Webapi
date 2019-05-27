@@ -46,5 +46,5 @@ public interface NoOfMentorsAssignedStudentRepo extends JpaRepository<NoOfMentor
 			"WHERE\n" + 
 			"    m_institute.institute_id = :instId",nativeQuery=true)
 
-	List<NoOfMentorsAssignedStudent> getNoOfMentorsAssignedStudent(@Param("instId")   int instId);
+	List<NoOfMentorsAssignedStudent> getNoOfMentorsAssignedStudent(@Param("instId") int instId);
 }

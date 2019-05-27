@@ -13,11 +13,11 @@ import com.ats.rusasoftapi.model.progdetail.StudQualifyingExam;
 
 public interface StudQualifyingExamRepo extends JpaRepository<StudQualifyingExam, Integer> {
 
-	//List<StudQualifyingExam> findByInstIdAndAcYearIdAndDelStatusOrderByStudExmIdDesc(@Param("instituteId") int instituteId,@Param("yearId") int yearId, int i);
+	
 	List<StudQualifyingExam> findByInstIdAndAcYearIdAndDelStatusOrderByStudExmIdDesc(int instituteId,  int yearId, int i);
 
 
-	StudQualifyingExam findByStudExmId(@Param("studExmId")int studExmId);
+	StudQualifyingExam findByStudExmId(int studExmId);
 
 	@Transactional
 	@Modifying

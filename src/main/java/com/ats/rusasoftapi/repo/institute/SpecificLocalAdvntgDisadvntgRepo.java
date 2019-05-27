@@ -13,9 +13,9 @@ import com.ats.rusasoftapi.model.SpecificLocalAdvntgDisadvntg;
 
 public interface SpecificLocalAdvntgDisadvntgRepo extends JpaRepository<SpecificLocalAdvntgDisadvntg, Integer> {
 
-	List<SpecificLocalAdvntgDisadvntg> findByInstIdAndAcYearIdAndDelStatusOrderBySpciAdvIdDesc(@Param("instituteId") int instituteId, @Param("yId")int yId, @Param("i") int i);
+	List<SpecificLocalAdvntgDisadvntg> findByInstIdAndAcYearIdAndDelStatusOrderBySpciAdvIdDesc(int instituteId, int yId, int i);
 
-	SpecificLocalAdvntgDisadvntg findBySpciAdvId(@Param("inItId") int inItId);
+	SpecificLocalAdvntgDisadvntg findBySpciAdvId(int inItId);
 
 	@Transactional
 	@Modifying

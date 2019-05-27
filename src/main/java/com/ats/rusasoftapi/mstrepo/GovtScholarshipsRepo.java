@@ -13,9 +13,9 @@ import com.ats.rusasoftapi.model.GovtScholarships;
 
 public interface GovtScholarshipsRepo extends JpaRepository<GovtScholarships, Integer> {
 
-	List<GovtScholarships> findByInstIdAndAcYearIdAndDelStatusOrderByGovtScholarIdDesc(@Param("instituteId") int instituteId, @Param("yId") int yId, @Param("del") int del);
+	List<GovtScholarships> findByInstIdAndAcYearIdAndDelStatusOrderByGovtScholarIdDesc(int instituteId, int yId, int del);
 
-	GovtScholarships findByGovtScholarId(@Param("schmId") int schmId);
+	GovtScholarships findByGovtScholarId(int schmId);
 
 	@Transactional
 	@Modifying

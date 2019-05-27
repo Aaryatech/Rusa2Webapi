@@ -13,7 +13,7 @@ import com.ats.rusasoftapi.model.StudPerformFinalYr;
 
 public interface StudPerformFinalYearRepo extends JpaRepository<StudPerformFinalYr, Integer> {
 	
-	StudPerformFinalYr findByStudPerformIdAndDelStatus(@Param("studperId") int studperId,@Param("del") int del);
+	StudPerformFinalYr findByStudPerformIdAndDelStatus(int studperId, int del);
 	
 	
 	
@@ -26,6 +26,6 @@ public interface StudPerformFinalYearRepo extends JpaRepository<StudPerformFinal
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE stud_perform_final_yr SET del_status=0  WHERE stud_perform_id IN (:studInfoList)",nativeQuery=true)
-	int deletetSelStudInfo(List<String> studInfoList);
+	int deletetSelStudInfo(@Param("studInfoList") List<String> studInfoList);
 
 }
