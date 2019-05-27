@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.ats.rusasoftapi.model.report.TeacExpFullTimFac;
 
@@ -33,6 +34,6 @@ public interface TeacExpFullTimFacRepo extends JpaRepository<TeacExpFullTimFac, 
 			"    WHERE" + 
 			"        m_faculty.institute_id = m_institute.institute_id AND m_faculty.current_designation_id = m_designation.designation_id AND "
 			+ "m_dept.dept_id = m_faculty.dept_id AND m_faculty.del_status = 1 AND m_faculty.is_active = 1 AND m_faculty.institute_id = :instId",nativeQuery=true)
-	List<TeacExpFullTimFac> getAllTeachingExpOfFillTimFac(int instId);
+	List<TeacExpFullTimFac> getAllTeachingExpOfFillTimFac(@Param("instId")int instId);
 
 }

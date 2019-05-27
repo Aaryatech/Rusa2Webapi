@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPostOthrState;
 
@@ -14,6 +15,6 @@ public interface FacAgnstSanctnPostOthrStateRepo extends JpaRepository<FacAgnstS
 			"COALESCE(( SELECT t_institute_info_detail.ex_int1 from t_institute_info_detail\n" + 
 			"WHERE t_institute_info_detail.institute_id=m_institute.is_registration AND t_institute_info_detail.del_status=1 AND t_institute_info_detail.year_id=m_academic_year.year_id),0) as sanctioned_post                  \n" + 
 			"FROM m_institute,m_academic_year WHERE m_institute.institute_id=:instId and m_academic_year.year_id=:acYear",nativeQuery=true)
-	List<FacAgnstSanctnPostOthrState> getAllFacultyAgnstSanctionPostOthrState(int instId, int acYear, int stkId);
+	List<FacAgnstSanctnPostOthrState> getAllFacultyAgnstSanctionPostOthrState(@Param("instId")int instId,@Param("acYear") int acYear,@Param("stkId") int stkId);
 
 }

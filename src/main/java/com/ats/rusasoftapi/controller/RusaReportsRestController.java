@@ -17,6 +17,7 @@ import com.ats.rusasoftapi.model.report.DifferentlyAbldStudReport;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPost;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPostOthrState;
 import com.ats.rusasoftapi.model.report.FulTimFacultyWithPhd;
+import com.ats.rusasoftapi.model.report.ICtEnbldFaclitiesReport;
 import com.ats.rusasoftapi.model.report.StudPrfrmInFinlYr;
 import com.ats.rusasoftapi.model.report.StudTeachrRatio;
 import com.ats.rusasoftapi.model.report.TeacExpFullTimFac;
@@ -25,6 +26,7 @@ import com.ats.rusasoftapi.mstrepo.DifferentlyAbldStudReportRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmsnAgnstResrvCatRepo;
 import com.ats.rusasoftapi.reportrepo.FulTimFacultyWithPhdRepo;
+import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
 import com.ats.rusasoftapi.reportrepo.TeacExpFullTimFacRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostOthrStateRepo;
@@ -195,5 +197,31 @@ public class RusaReportsRestController {
  			System.err.println(e.getMessage());
  		}
 		return studPerfrmncList;
+ 	}
+	
+	
+	
+	@Autowired ICtEnbldFaclitiesReportRepo ictFacRepo;
+	@RequestMapping(value = { "/getICTEnbldFaclties" }, method = RequestMethod.POST)
+	public @ResponseBody List<ICtEnbldFaclitiesReport> getICTEnbldFaclties(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+ 		List<ICtEnbldFaclitiesReport> ictFacList = new ArrayList<ICtEnbldFaclitiesReport>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				for (int i = 0; i < acYrList.size(); i++) {
+					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}  
+ 			ictFacList = ictFacRepo.getAllICTEnbldFaclties(instId, acYearList);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return ictFacList;
  	}
 }
