@@ -19,9 +19,9 @@ public interface AcademicYearRepo extends JpaRepository<AcademicYear, Integer>  
 
 	AcademicYear findByIsCurrentAndDelStatus(int isCurrent, int delStatus);
 	
-	@Query(value=" SELECT * FROM m_academic_year where m_academic_year.seq_no <= "
-			+ "(select m_academic_year.seq_no from m_academic_year where m_academic_year.is_current=1)"
-			+ " AND m_academic_year.del_status=1 ",nativeQuery=true)
+	@Query(value=" SELECT * FROM m_academic_year where m_academic_year.seq_no <= " + 
+			" (select m_academic_year.seq_no from m_academic_year where m_academic_year.is_current=1)" + 
+			" AND m_academic_year.del_status=1 order by seq_no desc limit 5",nativeQuery=true)
 
 	List<AcademicYear> getLastFiveYears();
 }
