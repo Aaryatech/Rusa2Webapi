@@ -15,7 +15,7 @@ public interface PlagiarismCodeEthicsRepo extends JpaRepository<PlagiarismCodeEt
 
 	List<PlagiarismCodeEthics> findByInstIdAndDelStatusOrderByPlagCodeEthcIdDesc(@Param("instituteId")int instituteId,@Param("i") int i);
 
-	PlagiarismCodeEthics findByPlagCodeEthcId(@Param("plagId")int plagId);
+	PlagiarismCodeEthics findByPlagCodeEthcId(int plagId);
 	
 	 @Transactional
 	 @Modifying

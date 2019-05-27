@@ -11,7 +11,7 @@ import com.ats.rusasoftapi.model.progdetail.FieldProjectsIntern;
 
 public interface FieldProjectsInternRepo extends JpaRepository<FieldProjectsIntern, Integer> {
 
-	FieldProjectsIntern findByFieldProjectInternId(@Param("fieldId")int fieldId);
+	FieldProjectsIntern findByFieldProjectInternId(int fieldId);
 
 	@Transactional
 	@Modifying
