@@ -7,5 +7,5 @@ import com.ats.rusasoftapi.model.faculty.FacultyPersonalDetail;
 
 public interface FacultyPersonalDetailRepo extends JpaRepository<FacultyPersonalDetail, Integer> {
 	
-	FacultyPersonalDetail findByFacultyId(@Param("facultyId")  int facultyId);
+	FacultyPersonalDetail findByFacultyId(int facultyId);
 }

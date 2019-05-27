@@ -14,9 +14,9 @@ import com.ats.rusasoftapi.model.progdetail.ValueAddedCourses;
 public interface ValueAddedCoursesRepo extends JpaRepository<ValueAddedCourses, Integer> {
 
 
-	List<ValueAddedCourses> findByInstIdAndAcademicYearIdAndDelStatusOrderByValueAddedCourseIdDesc(@Param("instId") int instId,@Param("yearId") int yearId, @Param("i")int i);
+	List<ValueAddedCourses> findByInstIdAndAcademicYearIdAndDelStatusOrderByValueAddedCourseIdDesc(int instId, int yearId, int i);
 
-	ValueAddedCourses findByValueAddedCourseId(@Param("courseId") int courseId);
+	ValueAddedCourses findByValueAddedCourseId(int courseId);
 
 	@Transactional
 	@Modifying

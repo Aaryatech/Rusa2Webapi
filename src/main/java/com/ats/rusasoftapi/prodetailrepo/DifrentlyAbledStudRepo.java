@@ -11,7 +11,7 @@ import com.ats.rusasoftapi.model.progdetail.DifrentlyAbledStud;
 
 public interface DifrentlyAbledStudRepo extends JpaRepository<DifrentlyAbledStud, Integer> {
 
-	DifrentlyAbledStud findByDifAbleStudId(@Param("studId")int studId);
+	DifrentlyAbledStud findByDifAbleStudId(int studId);
 
 	@Transactional
 	@Modifying

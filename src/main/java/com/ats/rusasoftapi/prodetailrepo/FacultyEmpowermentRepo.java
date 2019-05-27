@@ -13,10 +13,9 @@ import com.ats.rusasoftapi.model.faculty.FacultyEmpowerment;
 
 public interface FacultyEmpowermentRepo extends JpaRepository<FacultyEmpowerment, Integer> {
 
-	List<FacultyEmpowerment> findByInstIdAndAcYearIdAndDelStatusOrderByFacultyEmpwrmntIdDesc(@Param("instituteId") int instituteId,
-			@Param("yearId") int yearId,@Param("i") int i);
+	List<FacultyEmpowerment> findByInstIdAndAcYearIdAndDelStatusOrderByFacultyEmpwrmntIdDesc(int instituteId, int yearId,int i);
 
-	FacultyEmpowerment findByFacultyEmpwrmntId(@Param("facEmpwrId") int facEmpwrId);
+	FacultyEmpowerment findByFacultyEmpwrmntId(int facEmpwrId);
 
 	@Transactional
 	@Modifying
