@@ -18,8 +18,11 @@ import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.GetAvgStudYearwise;
 import com.ats.rusasoftapi.model.report.GetTeachersUsingICT;
+import com.ats.rusasoftapi.model.report.LibAutoLMSInfo;
+import com.ats.rusasoftapi.model.report.LibSpecFacilities;
 import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
 import com.ats.rusasoftapi.model.report.NoOfPrograms;
+import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
@@ -28,8 +31,11 @@ import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.GetAvgStudYearwiseRepo;
 import com.ats.rusasoftapi.reportrepo.GetTeachersUsingICTRepo;
+import com.ats.rusasoftapi.reportrepo.LibAutoLMSInfoRepo;
+import com.ats.rusasoftapi.reportrepo.LibSpecFacilitiesRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
+import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
 import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
 
 @RestController
@@ -304,5 +310,90 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
+	
+	@Autowired
+	LibAutoLMSInfoRepo libAutoLMSInfoRepo;
+	
+	@RequestMapping(value = { "/getLibLMSInfo" }, method = RequestMethod.POST)
+	public @ResponseBody List<LibAutoLMSInfo> getLibLMSInfo(@RequestParam int instId
+			 ) {
+ 		List<LibAutoLMSInfo> facPartInVarBodies = new ArrayList<>();
+		try {
+ 
+ 				facPartInVarBodies = libAutoLMSInfoRepo.getLMSInfo(instId );
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+
+		return facPartInVarBodies;
+
+	}
+	
+	
+	@Autowired
+	RareBookManuscriptSpecRepo rareBookManuscriptSpecRepo;
+	
+	@RequestMapping(value = { "/getRareBookManuscript" }, method = RequestMethod.POST)
+	public @ResponseBody List<RareBookManuscriptSpec> getRareBookManuscript(@RequestParam int instId
+			 ) {
+ 		List<RareBookManuscriptSpec> facPartInVarBodies = new ArrayList<>();
+		try {
+ 
+ 				facPartInVarBodies = rareBookManuscriptSpecRepo.getRareBookInfo(instId );
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	LibSpecFacilitiesRepo libSpecFacilitiesRepo;
+	
+	@RequestMapping(value = { "/getLibSpecFacilities" }, method = RequestMethod.POST)
+	public @ResponseBody List<LibSpecFacilities> getLibSpecFacilities(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<LibSpecFacilities> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+		 
+	 
+		try {
+
+			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				for (int i = 0; i < acYrList.size(); i++) {
+					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}  
+ 				facPartInVarBodies = libSpecFacilitiesRepo.getLibSpecialFacilities(instId,acYearList);
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
 	
 }

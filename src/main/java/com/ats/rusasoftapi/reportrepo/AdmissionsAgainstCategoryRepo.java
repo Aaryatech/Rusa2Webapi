@@ -16,7 +16,7 @@ public interface AdmissionsAgainstCategoryRepo extends JpaRepository<AdmissionsA
 			"    m_cast.cast_id,\n" + 
 			"    t_program_student_category.student_cat_id,\n" + 
 			"    t_program_student_category.cat_tot_student,\n" + 
-			"    t_program_student_category.ex_int1 AS seats_available,\n" + 
+			"    t_program_student_category.ex_int1 AS seats_avaailable,\n" + 
 			"    m_academic_year.academic_year,\n" + 
 			"    t_program_student_category.year_id,\n" + 
 			"    m_institute.institute_name\n" + 

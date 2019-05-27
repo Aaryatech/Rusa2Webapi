@@ -7,12 +7,12 @@ import javax.persistence.Id;
 public class GetTeachersUsingICT {
 
 	@Id
-private int yearId;
-	
+	private int yearId;
+
 	private float techersUsingIct;
-	
+
 	private float totalFaculty;
-	
+
 	private String academicYear;
 
 	private String instituteName;
@@ -25,7 +25,6 @@ private int yearId;
 		this.yearId = yearId;
 	}
 
-	 
 	public float getTechersUsingIct() {
 		return techersUsingIct;
 	}
@@ -67,7 +66,5 @@ private int yearId;
 				+ ", getInstituteName()=" + getInstituteName() + ", getClass()=" + getClass() + ", hashCode()="
 				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
-
-	 
 
 }
