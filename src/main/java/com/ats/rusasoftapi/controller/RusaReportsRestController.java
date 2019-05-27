@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.report.AdmsnAgnstResrvCat;
+import com.ats.rusasoftapi.model.report.BudgetInfraAugmntn;
 import com.ats.rusasoftapi.model.report.DifferentlyAbldStudReport;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPost;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPostOthrState;
@@ -25,6 +26,7 @@ import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.DifferentlyAbldStudReportRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmsnAgnstResrvCatRepo;
+import com.ats.rusasoftapi.reportrepo.BudgetInfraAugmntnRepo;
 import com.ats.rusasoftapi.reportrepo.FulTimFacultyWithPhdRepo;
 import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
@@ -217,11 +219,39 @@ public class RusaReportsRestController {
 				}
 				 System.err.println("new id list" + acYearList.toString());
 			}  
+ 			System.err.println("id list" + acYearList.toString());
  			ictFacList = ictFacRepo.getAllICTEnbldFaclties(instId, acYearList);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
  		}
 		return ictFacList;
+ 	}
+	
+	
+	
+	@Autowired BudgetInfraAugmntnRepo budgtInfraAugRepo;
+	@RequestMapping(value = { "/getBudgetInfraAugmentn" }, method = RequestMethod.POST)
+	public @ResponseBody List<BudgetInfraAugmntn> getBudgetInfraAugmentn(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+ 		List<BudgetInfraAugmntn> budgtInfraList = new ArrayList<BudgetInfraAugmntn>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				for (int i = 0; i < acYrList.size(); i++) {
+					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}  
+ 			System.err.println("id list" + acYearList.toString());
+ 			budgtInfraList = budgtInfraAugRepo.getAllBudgetInfraAugmentn(instId, acYearList);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return budgtInfraList;
  	}
 }
