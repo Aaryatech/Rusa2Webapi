@@ -1,0 +1,67 @@
+package com.ats.rusasoftapi.model.report;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class StudPrfrmInFinlYr {
+@Id
+	private int studPerformId;
+	private int noStudAppear;
+	private int noStudPass;
+	private int passingPer;
+	private String nameOfProgram;
+	private String programName;
+	private String instituteName;
+	public int getStudPerformId() {
+		return studPerformId;
+	}
+	public void setStudPerformId(int studPerformId) {
+		this.studPerformId = studPerformId;
+	}
+	public int getNoStudPass() {
+		return noStudPass;
+	}
+	public void setNoStudPass(int noStudPass) {
+		this.noStudPass = noStudPass;
+	}
+	public int getPassingPer() {
+		return passingPer;
+	}
+	public void setPassingPer(int passingPer) {
+		this.passingPer = passingPer;
+	}
+	public String getNameOfProgram() {
+		return nameOfProgram;
+	}
+	public void setNameOfProgram(String nameOfProgram) {
+		this.nameOfProgram = nameOfProgram;
+	}
+	public String getProgramName() {
+		return programName;
+	}
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
+	public String getInstituteName() {
+		return instituteName;
+	}
+	public void setInstituteName(String instituteName) {
+		this.instituteName = instituteName;
+	}
+	
+	public int getNoStudAppear() {
+		return noStudAppear;
+	}
+	public void setNoStudAppear(int noStudAppear) {
+		this.noStudAppear = noStudAppear;
+	}
+	@Override
+	public String toString() {
+		return "StudPrfrmInFinlYr [studPerformId=" + studPerformId + ", noStudAppear=" + noStudAppear + ", noStudPass="
+				+ noStudPass + ", passingPer=" + passingPer + ", nameOfProgram=" + nameOfProgram + ", programName="
+				+ programName + ", instituteName=" + instituteName + "]";
+	}
+	
+	
+}
