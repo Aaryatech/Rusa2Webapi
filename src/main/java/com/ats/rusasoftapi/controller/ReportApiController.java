@@ -190,6 +190,7 @@ public class ReportApiController {
 		try {
 
 			List<Integer> lastFiveYears=new ArrayList<>();
+		//	List<Integer> locId=new ArrayList<>();
  			if (acYearList.contains("-5")) {
 				//System.err.println("in if ");
 				//System.err.println("in -5");
@@ -202,7 +203,7 @@ public class ReportApiController {
 				}
 				
 					//acYrList.remove(acYrList.size());
-					 //System.err.println("new id list" + acYearList.toString());
+					// System.err.println("new id list" + acYearList.toString());
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -213,14 +214,16 @@ public class ReportApiController {
 			 
 				setKey=settingKeyValueRepo.findBySettingKeyAndDelStatus("Report10",1);
 				System.err.println("stk ids :"+setKey.toString());
-				String stkId=setKey.getStringValue();
+				
+ 				List<Integer> locIds = Stream.of(setKey.getStringValue().split(",")).map(Integer::parseInt)
+						.collect(Collectors.toList());
 				int acId1=lastFiveYears.get(0);
 				int acId2=lastFiveYears.get(1);
 				int acId3=lastFiveYears.get(2);
 				int acId4=lastFiveYears.get(3);
 				int acId5=lastFiveYears.get(4);
 
-  				facPartInVarBodies = getAvgStudYearwiseRepo.getAvgStudYearwiseLocWise(instId, stkId,acId1,acId2,acId3,acId4,acId5);
+  				facPartInVarBodies = getAvgStudYearwiseRepo.getAvgStudYearwiseLocWise(instId, locIds,acId1,acId2,acId3,acId4,acId5);
 				System.err.println("List=" + facPartInVarBodies);
  
 		} catch (Exception e) {
