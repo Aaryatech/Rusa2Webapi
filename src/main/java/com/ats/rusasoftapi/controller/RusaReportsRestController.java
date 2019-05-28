@@ -15,11 +15,13 @@ import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.report.AdmsnAgnstResrvCat;
 import com.ats.rusasoftapi.model.report.BudgetInfraAugmntn;
 import com.ats.rusasoftapi.model.report.DifferentlyAbldStudReport;
+import com.ats.rusasoftapi.model.report.EContntDevFacReport;
 import com.ats.rusasoftapi.model.report.ExpenditureOnPrchaseBooksJournal;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPost;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPostOthrState;
 import com.ats.rusasoftapi.model.report.FulTimFacultyWithPhd;
 import com.ats.rusasoftapi.model.report.ICtEnbldFaclitiesReport;
+import com.ats.rusasoftapi.model.report.StudCompRatioReport;
 import com.ats.rusasoftapi.model.report.StudPrfrmInFinlYr;
 import com.ats.rusasoftapi.model.report.StudTeachrRatio;
 import com.ats.rusasoftapi.model.report.TeacExpFullTimFac;
@@ -28,9 +30,11 @@ import com.ats.rusasoftapi.mstrepo.DifferentlyAbldStudReportRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmsnAgnstResrvCatRepo;
 import com.ats.rusasoftapi.reportrepo.BudgetInfraAugmntnRepo;
+import com.ats.rusasoftapi.reportrepo.EContntDevFacReportRepo;
 import com.ats.rusasoftapi.reportrepo.ExpenditureOnPrchaseBooksJournalRepo;
 import com.ats.rusasoftapi.reportrepo.FulTimFacultyWithPhdRepo;
 import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
+import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
 import com.ats.rusasoftapi.reportrepo.TeacExpFullTimFacRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostOthrStateRepo;
@@ -282,6 +286,36 @@ public class RusaReportsRestController {
  			System.err.println(e.getMessage());
  		}
 		return bookExpdList;
+ 	}
+	
+	@Autowired StudCompRatioReportRepo studCompRepo;
+	@RequestMapping(value = { "/getStudentCompterRatio" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudCompRatioReport> getStudentCompterRatio(@RequestParam int instId) {
+ 		List<StudCompRatioReport> compList = new ArrayList<StudCompRatioReport>();
+ 		 		
+ 		try {
+ 			
+ 			compList = studCompRepo.getAllStudentCompterRatio(instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return compList;
+ 	}
+	
+	@Autowired EContntDevFacReportRepo eContRepo;
+	@RequestMapping(value = { "/getEContntDevFac" }, method = RequestMethod.POST)
+	public @ResponseBody List<EContntDevFacReport> getEContntDevFac(@RequestParam int instId,@RequestParam String eContFacility) {
+ 		List<EContntDevFacReport> eContDevList = new ArrayList<EContntDevFacReport>();
+ 		 		
+ 		try {
+ 			
+ 			eContDevList = eContRepo.getAllEContntDevFac(instId, eContFacility);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return eContDevList;
  	}
 	
 }

@@ -15,15 +15,15 @@ public interface ExpenditureOnPrchaseBooksJournalRepo extends JpaRepository<Expe
 			" lib_book_purchase.cost_of_books," + 
 			" lib_book_purchase.cost_of_journal," + 
 			" lib_book_purchase.cost_of_ejournal," + 
-			" (lib_book_purchase.cost_of_books+lib_book_purchase.cost_of_journal+lib_book_purchase.cost_of_ejournal) AS 		total_expenditures," + 
+			" (lib_book_purchase.cost_of_books+lib_book_purchase.cost_of_journal+lib_book_purchase.cost_of_ejournal) AS total_expenditures," + 
 			" m_academic_year.academic_year," + 
-			" m_institute.institute_name" + 
-			"FROM lib_book_purchase, m_academic_year, m_institute" + 
+			" m_institute.institute_name " + 
+			"FROM lib_book_purchase, m_academic_year, m_institute " + 
 			"WHERE lib_book_purchase.del_status=1 AND" + 
-			"	m_academic_year.year_id=lib_book_purchase.academic_yrid AND" + 
-			"    m_institute.institute_id=lib_book_purchase.institute_id AND" + 
-			"	lib_book_purchase.institute_id=:instId AND" + 
-			"    lib_book_purchase.academic_yrid IN (:acYearList)",nativeQuery=true)
+			" m_academic_year.year_id=lib_book_purchase.academic_yrid AND" + 
+			" m_institute.institute_id=lib_book_purchase.institute_id AND" + 
+			" lib_book_purchase.institute_id=:instId AND" + 
+			" lib_book_purchase.academic_yrid IN (:acYearList)",nativeQuery=true)
 	List<ExpenditureOnPrchaseBooksJournal> getAllExpenditureOnPrchaseBooksJournal(@Param("instId") int instId,@Param("acYearList") List<String> acYearList);
 
 }
