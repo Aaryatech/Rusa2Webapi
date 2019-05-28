@@ -13,6 +13,14 @@ public class StudPrfrmInFinlYr {
 	private String nameOfProgram;
 	private String programName;
 	private String instituteName;
+	private String acadYear;
+	
+	public String getAcadYear() {
+		return acadYear;
+	}
+	public void setAcadYear(String acadYear) {
+		this.acadYear = acadYear;
+	}
 	public int getStudPerformId() {
 		return studPerformId;
 	}

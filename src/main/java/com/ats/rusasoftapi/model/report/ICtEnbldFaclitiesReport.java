@@ -11,6 +11,14 @@ public class ICtEnbldFaclitiesReport {
 	private int noClassroomWifi;
 	private int ictSeminarHall;
 	private String instituteName;
+	private String academicYear;
+	
+	public String getAcademicYear() {
+		return academicYear;
+	}
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
 	private int instId;
 	public int getIctEnbFacId() {
 		return ictEnbFacId;
@@ -53,8 +61,8 @@ public class ICtEnbldFaclitiesReport {
 	public String toString() {
 		return "ICtEnbldFaclitiesReport [ictEnbFacId=" + ictEnbFacId + ", noClassromLcd=" + noClassromLcd
 				+ ", noClassroomWifi=" + noClassroomWifi + ", ictSeminarHall=" + ictSeminarHall + ", instituteName="
-				+ instituteName + ", instId=" + instId + "]";
+				+ instituteName + ", academicYear=" + academicYear + ", instId=" + instId + "]";
 	}
-
+	
 	
 }

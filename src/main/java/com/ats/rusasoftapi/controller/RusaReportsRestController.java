@@ -21,6 +21,7 @@ import com.ats.rusasoftapi.model.report.FacAgnstSanctnPost;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPostOthrState;
 import com.ats.rusasoftapi.model.report.FulTimFacultyWithPhd;
 import com.ats.rusasoftapi.model.report.ICtEnbldFaclitiesReport;
+import com.ats.rusasoftapi.model.report.IntrnetConnInfo;
 import com.ats.rusasoftapi.model.report.StudCompRatioReport;
 import com.ats.rusasoftapi.model.report.StudPrfrmInFinlYr;
 import com.ats.rusasoftapi.model.report.StudTeachrRatio;
@@ -34,6 +35,7 @@ import com.ats.rusasoftapi.reportrepo.EContntDevFacReportRepo;
 import com.ats.rusasoftapi.reportrepo.ExpenditureOnPrchaseBooksJournalRepo;
 import com.ats.rusasoftapi.reportrepo.FulTimFacultyWithPhdRepo;
 import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
+import com.ats.rusasoftapi.reportrepo.IntrnetConnInfoRepo;
 import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
 import com.ats.rusasoftapi.reportrepo.TeacExpFullTimFacRepo;
@@ -316,6 +318,21 @@ public class RusaReportsRestController {
  			System.err.println(e.getMessage());
  		}
 		return eContDevList;
+ 	}
+	
+	@Autowired IntrnetConnInfoRepo intrntRepo;
+	@RequestMapping(value = { "/getInternetConnInfo" }, method = RequestMethod.POST)
+	public @ResponseBody List<IntrnetConnInfo> getInternetConnInfo(@RequestParam int instId) {
+ 		List<IntrnetConnInfo> intrntConList = new ArrayList<IntrnetConnInfo>();
+ 		 		
+ 		try {
+ 			
+ 			intrntConList = intrntRepo.getAllInternetConnInfo(instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return intrntConList;
  	}
 	
 }
