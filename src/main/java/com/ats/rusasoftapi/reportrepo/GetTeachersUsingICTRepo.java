@@ -45,6 +45,6 @@ public interface GetTeachersUsingICTRepo  extends JpaRepository<GetTeachersUsing
 			"WHERE\n" + 
 			"    m_academic_year.year_id IN(:acYearList) AND m_institute.institute_id = :instId",nativeQuery=true)
 
-	List<GetTeachersUsingICT> getTeachersUsingICT(@Param("instId") int instId,@Param("acYearList")   List<String> acYearList);
+	List<GetTeachersUsingICT> getTeachersUsingICT(@Param("instId") int instId,@Param("acYearList")   List<Integer> acYearList);
 
 }

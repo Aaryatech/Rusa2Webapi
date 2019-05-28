@@ -3,6 +3,8 @@ package com.ats.rusasoftapi.controller;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
 import com.ats.rusasoftapi.model.report.NoOfPrograms;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
+import com.ats.rusasoftapi.model.report.TeacherStudUsingLib;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
@@ -37,6 +40,7 @@ import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
 import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
 import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
+import com.ats.rusasoftapi.reportrepo.TeacherStudUsingLibRepo;
 
 @RestController
 public class ReportApiController {
@@ -95,16 +99,27 @@ public class ReportApiController {
 		 
 	 
 		try {
+			List<Integer> lastFiveYears=new ArrayList<>();
 
 			if (acYearList.contains("-5")) {
-				System.err.println("in -5");
+				//System.err.println("in if ");
+				//System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
+				 
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
- 				facPartInVarBodies = getFacParticipationInBodiesRepo.getFacParticipationInBodies(instId, acYearList);
+				
+					//acYrList.remove(acYrList.size());
+					 //System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 				facPartInVarBodies = getFacParticipationInBodiesRepo.getFacParticipationInBodies(instId, lastFiveYears);
 				System.err.println("List=" + facPartInVarBodies);
  
 		} catch (Exception e) {
@@ -129,15 +144,27 @@ public class ReportApiController {
 	 
 		try {
 
-			if (acYearList.contains("-5")) {
-				System.err.println("in -5");
+			List<Integer> lastFiveYears=new ArrayList<>();
+ 			if (acYearList.contains("-5")) {
+				//System.err.println("in if ");
+				//System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
+				 
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
- 				facPartInVarBodies = avgEnrollmentPrcntRepo.getAvgEnrollmentPrcnt(instId, acYearList);
+				
+					//acYrList.remove(acYrList.size());
+					 //System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+			 
+ 				facPartInVarBodies = avgEnrollmentPrcntRepo.getAvgEnrollmentPrcnt(instId, lastFiveYears);
 				System.err.println("List=" + facPartInVarBodies);
  
 		} catch (Exception e) {
@@ -162,25 +189,36 @@ public class ReportApiController {
 	 
 		try {
 
-			if (acYearList.contains("-5")) {
-				System.err.println("in -5");
+			List<Integer> lastFiveYears=new ArrayList<>();
+ 			if (acYearList.contains("-5")) {
+				//System.err.println("in if ");
+				//System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
+				 
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
+				
+					//acYrList.remove(acYrList.size());
+					 //System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
 			
 			SettingKeyValue setKey=new SettingKeyValue();
 			 
 				setKey=settingKeyValueRepo.findBySettingKeyAndDelStatus("Report10",1);
 				System.err.println("stk ids :"+setKey.toString());
 				String stkId=setKey.getStringValue();
-				String acId1=acYearList.get(0);
-				String acId2=acYearList.get(0);
-				String acId3=acYearList.get(0);
-				String acId4=acYearList.get(0);
- 				String acId5=acYearList.get(0);
+				int acId1=lastFiveYears.get(0);
+				int acId2=lastFiveYears.get(1);
+				int acId3=lastFiveYears.get(2);
+				int acId4=lastFiveYears.get(3);
+				int acId5=lastFiveYears.get(4);
 
   				facPartInVarBodies = getAvgStudYearwiseRepo.getAvgStudYearwiseLocWise(instId, stkId,acId1,acId2,acId3,acId4,acId5);
 				System.err.println("List=" + facPartInVarBodies);
@@ -208,15 +246,26 @@ public class ReportApiController {
 	 
 		try {
 
-			if (acYearList.contains("-5")) {
-				System.err.println("in -5");
+			List<Integer> lastFiveYears=new ArrayList<>();
+ 			if (acYearList.contains("-5")) {
+				//System.err.println("in if ");
+				//System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
+				 
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
- 				facPartInVarBodies = getTeachersUsingICTRepo.getTeachersUsingICT(instId, acYearList);
+				
+					//acYrList.remove(acYrList.size());
+					 //System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 				facPartInVarBodies = getTeachersUsingICTRepo.getTeachersUsingICT(instId, lastFiveYears);
 				System.err.println("List=" + facPartInVarBodies);
  
 		} catch (Exception e) {
@@ -289,15 +338,26 @@ public class ReportApiController {
 	 
 		try {
 
-			if (acYearList.contains("-5")) {
-				System.err.println("in -5");
-				acYrList =academicYearRepo.getLastFiveYears();
-				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
-				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
- 				facPartInVarBodies = admissionsAgainstCategoryRepo.getAdmissionsAgainstCat(instId, catId,acYearList);
+			 List<Integer> lastFiveYears=new ArrayList<>();
+	 			if (acYearList.contains("-5")) {
+					//System.err.println("in if ");
+					//System.err.println("in -5");
+					acYrList =academicYearRepo.getLastFiveYears();
+					 
+					for (int i = 0; i < acYrList.size(); i++) {
+						//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+						System.err.println("acYrList" +acYrList.get(i).toString());
+						lastFiveYears.add(acYrList.get(i).getYearId());
+					}
+					
+						//acYrList.remove(acYrList.size());
+						 //System.err.println("new id list" + acYearList.toString());
+				} else {
+					System.err.println("in else ");
+					lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+					
+				} 
+ 				facPartInVarBodies = admissionsAgainstCategoryRepo.getAdmissionsAgainstCat(instId, catId,lastFiveYears);
 				System.err.println("List=" + facPartInVarBodies);
  
 		} catch (Exception e) {
@@ -369,19 +429,28 @@ public class ReportApiController {
 
 		List<LibSpecFacilities> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
-		 
 	 
 		try {
-
-			if (acYearList.contains("-5")) {
-				System.err.println("in -5");
+			 List<Integer> lastFiveYears=new ArrayList<>();
+ 			if (acYearList.contains("-5")) {
+				//System.err.println("in if ");
+				//System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
+				 
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
- 				facPartInVarBodies = libSpecFacilitiesRepo.getLibSpecialFacilities(instId,acYearList);
+				
+					//acYrList.remove(acYrList.size());
+					 //System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 				facPartInVarBodies = libSpecFacilitiesRepo.getLibSpecialFacilities(instId,lastFiveYears);
 				System.err.println("List=" + facPartInVarBodies);
  
 		} catch (Exception e) {
@@ -395,5 +464,50 @@ public class ReportApiController {
 
 	}
 	
+	@Autowired
+	TeacherStudUsingLibRepo teacherStudUsingLibRepo;
+	
+	@RequestMapping(value = { "/getTeachersStudUsingLib" }, method = RequestMethod.POST)
+	public @ResponseBody List<TeacherStudUsingLib> getTeachersStudUsingLib(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<TeacherStudUsingLib> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+		 
+	 List<Integer> lastFiveYears=new ArrayList<>();
+		try {
+
+			if (acYearList.contains("-5")) {
+				//System.err.println("in if ");
+				//System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				 
+				for (int i = 0; i < acYrList.size(); i++) {
+					//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				
+					//acYrList.remove(acYrList.size());
+					 //System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			}
+		System.err.println("Last five " +lastFiveYears.toString());
+ 				facPartInVarBodies = teacherStudUsingLibRepo.getTechStudUsingLib(instId,lastFiveYears);
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
 	
 }

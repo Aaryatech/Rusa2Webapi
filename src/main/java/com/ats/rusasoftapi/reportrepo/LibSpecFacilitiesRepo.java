@@ -25,5 +25,5 @@ public interface LibSpecFacilitiesRepo extends JpaRepository<LibSpecFacilities, 
 			"WHERE\n" + 
 			"    t_institute_yesno.yesno_id = md_yesno.yesno_id AND m_institute.institute_id = t_institute_yesno.institute_id AND t_institute_yesno.del_status = 1 AND t_institute_yesno.is_active = 1 AND md_yesno.yesno_pagecode = 'PAGE6' AND t_institute_yesno.institute_id =:instId AND t_institute_yesno.year_id IN(:acYearList) AND m_academic_year.year_id = t_institute_yesno.year_id",nativeQuery=true)
 
-	List<LibSpecFacilities> getLibSpecialFacilities(@Param("instId")   int instId,@Param("acYearList")   List<String> acYearList);
+	List<LibSpecFacilities> getLibSpecialFacilities(@Param("instId")   int instId,@Param("acYearList")   List<Integer> acYearList);
 }

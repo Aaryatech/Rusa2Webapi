@@ -30,6 +30,6 @@ public interface GetAvgStudYearwiseRepo extends JpaRepository<GetAvgStudYearwise
 			"          FROM m_institute,m_location\n" + 
 			"          WHERE m_institute.institute_id=:instId AND m_location.location_id IN (:stkId) group by m_location.location_id ORDER by m_location.location_id desc",nativeQuery=true)
 
-	List<GetAvgStudYearwise> getAvgStudYearwiseLocWise(@Param("instId") int instId,@Param("stkId")   String stkId,@Param("acId1")   String acId1,@Param("acId2")   String acId2,@Param("acId3")   String acId3,@Param("acId4")   String acId4,@Param("acId5")   String acId5);
+	List<GetAvgStudYearwise> getAvgStudYearwiseLocWise(@Param("instId") int instId,@Param("stkId")   String stkId,@Param("acId1")   int acId1,@Param("acId2")   int acId2,@Param("acId3")   int acId3,@Param("acId4")   int acId4,@Param("acId5")   int acId5);
 
 }

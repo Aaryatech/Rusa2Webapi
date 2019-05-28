@@ -20,7 +20,7 @@ public interface FacParticipationInBodiesRepo extends JpaRepository<FacParticipa
 			" m_faculty.institute_id=m_institute.institute_id " + 
 			" AND m_institute.institute_id=:instId AND t_faculty_contribution.year_id IN (:acYearList)",nativeQuery=true)
 
-	List<FacParticipationInBodies> getFacParticipationInBodies(@Param("instId")   int instId,@Param("acYearList")   List<String> acYearList);
+	List<FacParticipationInBodies> getFacParticipationInBodies(@Param("instId")   int instId,@Param("acYearList")   List<Integer> acYearList);
 	
 
 }

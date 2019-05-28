@@ -27,6 +27,6 @@ public interface AdmissionsAgainstCategoryRepo extends JpaRepository<AdmissionsA
 			"    m_institute\n" + 
 			"WHERE\n" + 
 			"    t_program_student_category.del_status = 1 AND t_program_student_category.is_active = 1 AND t_program_student_category.cast_id = m_cast.cast_id AND t_program_student_category.year_id = m_academic_year.year_id AND t_program_student_category.institute_id = m_institute.institute_id AND t_program_student_category.year_id IN(:acYearList) AND t_program_student_category.institute_id =:instId AND t_program_student_category.cast_id =:catId ",nativeQuery=true)
-	List<AdmissionsAgainstCategory> getAdmissionsAgainstCat(@Param("instId")int instId,@Param("catId")int catId,@Param("acYearList")   List<String> acYearList);
+	List<AdmissionsAgainstCategory> getAdmissionsAgainstCat(@Param("instId")int instId,@Param("catId")int catId,@Param("acYearList")   List<Integer> acYearList);
 	
 }
