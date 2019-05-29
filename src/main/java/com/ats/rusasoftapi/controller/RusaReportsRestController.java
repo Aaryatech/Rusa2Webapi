@@ -141,18 +141,19 @@ public class RusaReportsRestController {
  	}
 	
 	@Autowired FulTimFacultyWithPhdRepo facultyPhdRepo; 
-	@RequestMapping(value = { "/getFulTimFacAvalblePhd" }, method = RequestMethod.GET)
-	public @ResponseBody List<FulTimFacultyWithPhd> getFulTimFacAvalblePhd() {
+	@RequestMapping(value = { "/getFulTimFacAvalblePhd" }, method = RequestMethod.POST)
+	public @ResponseBody List<FulTimFacultyWithPhd> getFulTimFacAvalblePhd(@RequestParam int instId) {
  		List<FulTimFacultyWithPhd> phdFacList = new ArrayList<FulTimFacultyWithPhd>();
  		
  		SettingKeyValue setKey=new SettingKeyValue();
+ 		
  		try {
  			
  			setKey=settingKeyValueRepo.findBySettingKeyAndDelStatus("QlifPhd",1);
 			System.err.println("stk ids :"+setKey.toString());
 			int stkId=setKey.getIntValue();
  			
- 			phdFacList = facultyPhdRepo.getAllFulTimFacAvalblePhd(stkId);
+ 			phdFacList = facultyPhdRepo.getAllFulTimFacAvalblePhd(stkId, instId);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
