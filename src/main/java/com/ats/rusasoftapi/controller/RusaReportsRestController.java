@@ -87,19 +87,27 @@ public class RusaReportsRestController {
 	@RequestMapping(value = { "/getFacAgnstSanctnPostList" }, method = RequestMethod.POST)
 	public @ResponseBody List<FacAgnstSanctnPost> getFacAgnstSanctnPostList(@RequestParam int instId,
 			@RequestParam List<String> acYearList) {
- 		List<FacAgnstSanctnPost> postList = new ArrayList<FacAgnstSanctnPost>();
+ 	
+		List<FacAgnstSanctnPost> postList = new ArrayList<FacAgnstSanctnPost>();
  		List<AcademicYear> acYrList = new ArrayList<>();
  		
  		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
+ 	
  			if (acYearList.contains("-5")) {
 				System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
+				
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
 				 System.err.println("new id list" + acYearList.toString());
-			}  
- 			postList = facRepo.getAllFacAgnstSanctnPost(instId, acYearList);
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 			postList = facRepo.getAllFacAgnstSanctnPost(instId, lastFiveYears);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
@@ -161,29 +169,31 @@ public class RusaReportsRestController {
 		return phdFacList;
  	}
 	
-	@Autowired AdmsnAgnstResrvCatRepo admRepo;
-	@RequestMapping(value = { "/getAdmisionAgnstResrvCat" }, method = RequestMethod.POST)
-	public @ResponseBody List<AdmsnAgnstResrvCat> getAdmisionAgnstResrvCat(@RequestParam int instId,
-			@RequestParam List<String> acYearList) {
- 		List<AdmsnAgnstResrvCat> admList = new ArrayList<AdmsnAgnstResrvCat>();
- 		List<AcademicYear> acYrList = new ArrayList<>();
- 		
- 		try {
- 			if (acYearList.contains("-5")) {
-				System.err.println("in -5");
-				acYrList =academicYearRepo.getLastFiveYears();
-				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
-				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
- 			admList = admRepo.getAllAdmisionAgnstResrvCat(instId, acYearList);
- 			
- 		}catch(Exception e) {
- 			System.err.println(e.getMessage());
- 		}
-		return admList;
- 	}
+	/*
+	 * @Autowired AdmsnAgnstResrvCatRepo admRepo;
+	 * 
+	 * @RequestMapping(value = { "/getAdmisionAgnstResrvCat" }, method =
+	 * RequestMethod.POST) public @ResponseBody List<AdmsnAgnstResrvCat>
+	 * getAdmisionAgnstResrvCat(@RequestParam int instId,
+	 * 
+	 * @RequestParam List<String> acYearList) { List<AdmsnAgnstResrvCat> admList =
+	 * new ArrayList<AdmsnAgnstResrvCat>(); List<AcademicYear> acYrList = new
+	 * ArrayList<>();
+	 * 
+	 * try { List<Integer> lastFiveYears=new ArrayList<>();
+	 * 
+	 * if (acYearList.contains("-5")) { System.err.println("in -5"); acYrList
+	 * =academicYearRepo.getLastFiveYears(); for (int i = 0; i < acYrList.size();
+	 * i++) { System.err.println("acYrList" +acYrList.get(i).toString());
+	 * lastFiveYears.add(acYrList.get(i).getYearId()); }
+	 * System.err.println("new id list" + acYearList.toString()); }else {
+	 * System.err.println("in else ");
+	 * lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+	 * 
+	 * } admList = admRepo.getAllAdmisionAgnstResrvCat(instId, lastFiveYears);
+	 * 
+	 * }catch(Exception e) { System.err.println(e.getMessage()); } return admList; }
+	 */
 	
 	
 	@Autowired StudPrfrmInFinlYrRepo studPerformRepo;
@@ -194,15 +204,22 @@ public class RusaReportsRestController {
  		List<AcademicYear> acYrList = new ArrayList<>();
  		
  		try {
+ 			 List<Integer> lastFiveYears=new ArrayList<>();
  			if (acYearList.contains("-5")) {
 				System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
- 			studPerfrmncList = studPerformRepo.getAllStudPerformInFinalYear(instId, acYearList);
+				 
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			}   
+ 			
+ 			studPerfrmncList = studPerformRepo.getAllStudPerformInFinalYear(instId, lastFiveYears);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
@@ -220,16 +237,22 @@ public class RusaReportsRestController {
  		List<AcademicYear> acYrList = new ArrayList<>();
  		
  		try {
+ 			 List<Integer> lastFiveYears=new ArrayList<>();
  			if (acYearList.contains("-5")) {
 				System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
+				 
+			}  else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
  			System.err.println("id list" + acYearList.toString());
- 			ictFacList = ictFacRepo.getAllICTEnbldFaclties(instId, acYearList);
+ 			ictFacList = ictFacRepo.getAllICTEnbldFaclties(instId, lastFiveYears);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
@@ -247,24 +270,27 @@ public class RusaReportsRestController {
  		List<AcademicYear> acYrList = new ArrayList<>();
  		
  		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
  			if (acYearList.contains("-5")) {
 				System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
+				
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 			}  
  			System.err.println("id list" + acYearList.toString());
- 			budgtInfraList = budgtInfraAugRepo.getAllBudgetInfraAugmentn(instId, acYearList);
+ 			budgtInfraList = budgtInfraAugRepo.getAllBudgetInfraAugmentn(instId, lastFiveYears);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
  		}
 		return budgtInfraList;
  	}
-	
-	
 	
 	@Autowired ExpenditureOnPrchaseBooksJournalRepo bookExpdRepo;
 	@RequestMapping(value = { "/getExpenditureOnPrchaseBooksJournal" }, method = RequestMethod.POST)
@@ -274,16 +300,22 @@ public class RusaReportsRestController {
  		List<AcademicYear> acYrList = new ArrayList<>();
  		
  		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
  			if (acYearList.contains("-5")) {
 				System.err.println("in -5");
 				acYrList =academicYearRepo.getLastFiveYears();
 				for (int i = 0; i < acYrList.size(); i++) {
-					acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
-				 System.err.println("new id list" + acYearList.toString());
-			}  
+				
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
  			System.err.println("id list" + acYearList.toString());
- 			bookExpdList = bookExpdRepo.getAllExpenditureOnPrchaseBooksJournal(instId, acYearList);
+ 			bookExpdList = bookExpdRepo.getAllExpenditureOnPrchaseBooksJournal(instId, lastFiveYears);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());

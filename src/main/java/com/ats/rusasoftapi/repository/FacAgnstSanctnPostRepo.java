@@ -15,5 +15,5 @@ public interface FacAgnstSanctnPostRepo extends JpaRepository<FacAgnstSanctnPost
 			+ "m_academic_year WHERE t_institute_info_detail.institute_id=m_institute.institute_id and t_institute_info_detail.del_status=1 and "
 			+ "t_institute_info_detail.year_id=m_academic_year.year_id AND t_institute_info_detail.institute_id=:instId AND m_academic_year.year_id IN (:acYearList)",
 			nativeQuery=true)
-	List<FacAgnstSanctnPost> getAllFacAgnstSanctnPost(int instId, @Param("acYearList") List<String> acYearList);
+	List<FacAgnstSanctnPost> getAllFacAgnstSanctnPost(int instId, @Param("acYearList") List<Integer> acYearList);
 }

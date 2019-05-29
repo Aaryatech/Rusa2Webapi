@@ -11,6 +11,6 @@ public interface CastRepo extends JpaRepository<Cast, Integer>{
 	
 	List<Cast> findByDelStatusAndIsActiveOrderByCastIdDesc(int delStatus, int isActive);
 	
-	
+	Cast findByDelStatusAndIsActiveAndCastId(int delStatus, int isActive, int castId);	
 
 }

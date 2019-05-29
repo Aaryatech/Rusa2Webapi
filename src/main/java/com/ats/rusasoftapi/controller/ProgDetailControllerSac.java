@@ -124,6 +124,23 @@ public class ProgDetailControllerSac {
 		return castList;
 
 	}
+	
+	
+	@RequestMapping(value = { "/getCastCategoryById" }, method = RequestMethod.GET)
+	public @ResponseBody Cast getCastCategoryById(@RequestParam int castId) {
+
+		Cast cast = new Cast();
+
+		try {
+			cast = castRepo.findByDelStatusAndIsActiveAndCastId(1 , 1, castId);
+		} catch (Exception e) {
+			System.err.println("Exce in getCastCategoryById  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return cast;
+
+	}
 
 	@Autowired
 	LocationRepo locRepo;

@@ -14,6 +14,6 @@ public interface BudgetInfraAugmntnRepo extends JpaRepository<BudgetInfraAugmntn
 			"FROM t_infrastructure_budget,m_institute,m_financial_year,m_academic_year\n" + 
 			"WHERE t_infrastructure_budget.institute_id=m_institute.institute_id AND t_infrastructure_budget.ac_year_id=m_academic_year.year_id  \n" + 
 			"AND t_infrastructure_budget.fin_year_id=m_financial_year.fin_year_id AND m_institute.institute_id=:instId AND t_infrastructure_budget.ac_year_id IN (:acYearList)",nativeQuery=true)
-	List<BudgetInfraAugmntn> getAllBudgetInfraAugmentn(@Param("instId") int instId,@Param("acYearList") List<String> acYearList);
+	List<BudgetInfraAugmntn> getAllBudgetInfraAugmentn(@Param("instId") int instId,@Param("acYearList") List<Integer> acYearList);
 
 }

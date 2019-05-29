@@ -18,6 +18,6 @@ public interface AdmsnAgnstResrvCatRepo extends JpaRepository<AdmsnAgnstResrvCat
 			+ "t_program_student_category.cast_id=m_cast.cast_id AND t_program_student_category.year_id=m_academic_year.year_id AND "
 			+ "t_program_student_category.institute_id=m_institute.institute_id and t_program_student_category.year_id IN (:acYearList) AND "
 			+ "t_program_student_category.institute_id=:instId",nativeQuery=true)
-	List<AdmsnAgnstResrvCat> getAllAdmisionAgnstResrvCat(@Param("instId")int instId,@Param("acYearList") List<String> acYearList);
+	List<AdmsnAgnstResrvCat> getAllAdmisionAgnstResrvCat(@Param("instId")int instId,@Param("acYearList") List<Integer> acYearList);
 
 }

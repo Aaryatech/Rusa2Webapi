@@ -30,6 +30,6 @@ public interface StudPrfrmInFinlYrRepo extends JpaRepository<StudPrfrmInFinlYr, 
 					+ "stud_perform_final_yr.is_active=1 AND "
 					+ "m_institute.institute_id=:instId AND "
 					+ "m_academic_year.year_id=stud_perform_final_yr.ex_int1",nativeQuery=true)
-	List<StudPrfrmInFinlYr> getAllStudPerformInFinalYear(@Param("instId") int instId,@Param("acYearList") List<String> acYearList);
+	List<StudPrfrmInFinlYr> getAllStudPerformInFinalYear(@Param("instId") int instId,@Param("acYearList") List<Integer> acYearList);
 
 }

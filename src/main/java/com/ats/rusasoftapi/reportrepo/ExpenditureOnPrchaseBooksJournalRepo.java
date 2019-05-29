@@ -24,6 +24,6 @@ public interface ExpenditureOnPrchaseBooksJournalRepo extends JpaRepository<Expe
 			" m_institute.institute_id=lib_book_purchase.institute_id AND" + 
 			" lib_book_purchase.institute_id=:instId AND" + 
 			" lib_book_purchase.academic_yrid IN (:acYearList)",nativeQuery=true)
-	List<ExpenditureOnPrchaseBooksJournal> getAllExpenditureOnPrchaseBooksJournal(@Param("instId") int instId,@Param("acYearList") List<String> acYearList);
+	List<ExpenditureOnPrchaseBooksJournal> getAllExpenditureOnPrchaseBooksJournal(@Param("instId") int instId,@Param("acYearList") List<Integer> acYearList);
 
 }

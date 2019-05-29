@@ -29,6 +29,5 @@ public interface ICtEnbldFaclitiesReportRepo extends JpaRepository<ICtEnbldFacli
 			"        AND  m_institute.institute_id=:instId" + 
 			"        AND  ict_enabled_facilities.year_id=m_academic_year.year_id" + 
 			"        AND ict_enabled_facilities.year_id IN (:acYearList)", nativeQuery=true)
-	List<ICtEnbldFaclitiesReport> getAllICTEnbldFaclties(@Param("instId")int instId,@Param("acYearList") List<String> acYearList);
-
+	List<ICtEnbldFaclitiesReport> getAllICTEnbldFaclties(@Param("instId")int instId,@Param("acYearList") List<Integer> acYearList);
 }
