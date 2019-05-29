@@ -17,6 +17,7 @@ import com.ats.rusasoftapi.model.report.BudgetInfraAugmntn;
 import com.ats.rusasoftapi.model.report.DifferentlyAbldStudReport;
 import com.ats.rusasoftapi.model.report.EContntDevFacReport;
 import com.ats.rusasoftapi.model.report.ExpenditureOnPrchaseBooksJournal;
+import com.ats.rusasoftapi.model.report.ExpndturOnPhysclAcademicSupprt;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPost;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPostOthrState;
 import com.ats.rusasoftapi.model.report.FulTimFacultyWithPhd;
@@ -33,6 +34,7 @@ import com.ats.rusasoftapi.reportrepo.AdmsnAgnstResrvCatRepo;
 import com.ats.rusasoftapi.reportrepo.BudgetInfraAugmntnRepo;
 import com.ats.rusasoftapi.reportrepo.EContntDevFacReportRepo;
 import com.ats.rusasoftapi.reportrepo.ExpenditureOnPrchaseBooksJournalRepo;
+import com.ats.rusasoftapi.reportrepo.ExpndturOnPhysclAcademicSupprtRepo;
 import com.ats.rusasoftapi.reportrepo.FulTimFacultyWithPhdRepo;
 import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
 import com.ats.rusasoftapi.reportrepo.IntrnetConnInfoRepo;
@@ -358,14 +360,28 @@ public class RusaReportsRestController {
 	public @ResponseBody List<IntrnetConnInfo> getInternetConnInfo(@RequestParam int instId) {
  		List<IntrnetConnInfo> intrntConList = new ArrayList<IntrnetConnInfo>();
  		 		
- 		try {
- 			
+ 		try { 			
  			intrntConList = intrntRepo.getAllInternetConnInfo(instId);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
  		}
 		return intrntConList;
+ 	}
+	
+	@Autowired ExpndturOnPhysclAcademicSupprtRepo expdRepo;
+	@RequestMapping(value = { "/getExpndPhyAcdSupprtFacilities" }, method = RequestMethod.POST)
+	public @ResponseBody List<ExpndturOnPhysclAcademicSupprt> getExpndPhyAcdSupprtFacilities(@RequestParam int instId) {
+ 		List<ExpndturOnPhysclAcademicSupprt> expndList = new ArrayList<ExpndturOnPhysclAcademicSupprt>();
+ 		 		
+ 		try {
+ 			
+ 			expndList = expdRepo.getAllExpndPhyAcdSupprtFacilities(instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return expndList;
  	}
 	
 }
