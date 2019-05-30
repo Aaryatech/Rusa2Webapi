@@ -17,6 +17,7 @@ import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
+import com.ats.rusasoftapi.model.report.EGovernenceOperation;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.GetAvgStudYearwise;
 import com.ats.rusasoftapi.model.report.GetTeachersUsingICT;
@@ -27,10 +28,12 @@ import com.ats.rusasoftapi.model.report.NoOfPrograms;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.model.report.TeacherStudUsingLib;
+import com.ats.rusasoftapi.model.report.TrainProgForTeacherStaff;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
 import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
+import com.ats.rusasoftapi.reportrepo.EGovernenceOperationRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.GetAvgStudYearwiseRepo;
 import com.ats.rusasoftapi.reportrepo.GetTeachersUsingICTRepo;
@@ -41,6 +44,7 @@ import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
 import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
 import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
 import com.ats.rusasoftapi.reportrepo.TeacherStudUsingLibRepo;
+import com.ats.rusasoftapi.reportrepo.TrainProgForTeacherStaffRepo;
 
 @RestController
 public class ReportApiController {
@@ -512,5 +516,106 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
+	
+	@Autowired
+	TrainProgForTeacherStaffRepo trainProgForTeacherStaffRepo;
+	
+	@RequestMapping(value = { "/getTrainProgForTeachStaffDetail" }, method = RequestMethod.POST)
+	public @ResponseBody List<TrainProgForTeacherStaff> getTrainProgForTeachStaffDetail(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<TrainProgForTeacherStaff> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+		 
+	 List<Integer> lastFiveYears=new ArrayList<>();
+		try {
+
+			if (acYearList.contains("-5")) {
+				//System.err.println("in if ");
+				//System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				 
+				for (int i = 0; i < acYrList.size(); i++) {
+					//acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				
+					//acYrList.remove(acYrList.size());
+					 //System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			}
+		System.err.println("Last five " +lastFiveYears.toString());
+ 				facPartInVarBodies = trainProgForTeacherStaffRepo.getTrainProgForTeachStaff(instId,lastFiveYears);
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	@Autowired
+	EGovernenceOperationRepo eGovernenceOperationRepo;
+	@RequestMapping(value = { "/geteGovernanceOpt" }, method = RequestMethod.POST)
+	public @ResponseBody List<EGovernenceOperation> geteGovernanceOpt(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<EGovernenceOperation> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+		 
+	 
+		try {
+
+			List<Integer> lastFiveYears=new ArrayList<>();
+  			if (acYearList.contains("-5")) {
+				 
+				acYrList =academicYearRepo.getLastFiveYears();
+				 
+				for (int i = 0; i < acYrList.size(); i++) {
+ 					System.err.println("acYrList" +acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				
+					//acYrList.remove(acYrList.size());
+					// System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+			
+			SettingKeyValue setKey=new SettingKeyValue();
+ 			setKey=settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC",1);
+ 			
+ 			SettingKeyValue setKey1=new SettingKeyValue();
+ 			setKey1=settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE",1);
+ 			
+ 			String seccode =setKey.getStringValue();
+ 			
+ 			String pagecode =setKey1.getStringValue();
+ 			 
+
+  				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt(instId,lastFiveYears,seccode,pagecode );
+				System.err.println("List=" + facPartInVarBodies);
+ 
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
 	
 }
