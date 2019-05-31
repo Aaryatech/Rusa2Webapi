@@ -20,15 +20,19 @@ import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
 import com.ats.rusasoftapi.model.report.EGovernenceOperation;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.FinancialSuppToProfMem;
+import com.ats.rusasoftapi.model.report.GenderEquityProg;
 import com.ats.rusasoftapi.model.report.GetAvgStudYearwise;
 import com.ats.rusasoftapi.model.report.GetMissions;
 import com.ats.rusasoftapi.model.report.GetTeachersUsingICT;
 import com.ats.rusasoftapi.model.report.GetVisions;
+import com.ats.rusasoftapi.model.report.IQACQualInititive;
 import com.ats.rusasoftapi.model.report.LibAutoLMSInfo;
 import com.ats.rusasoftapi.model.report.LibSpecFacilities;
 import com.ats.rusasoftapi.model.report.NoFacultyFinSupp;
+import com.ats.rusasoftapi.model.report.NoOfGenderEquityProg;
 import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
 import com.ats.rusasoftapi.model.report.NoOfPrograms;
+import com.ats.rusasoftapi.model.report.QualInitiativeAssurance;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.model.report.TeacherStudUsingLib;
@@ -41,15 +45,19 @@ import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
 import com.ats.rusasoftapi.reportrepo.EGovernenceOperationRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.FinancialSuppToProfMemRepo;
+import com.ats.rusasoftapi.reportrepo.GenderEquityProgRepo;
 import com.ats.rusasoftapi.reportrepo.GetAvgStudYearwiseRepo;
 import com.ats.rusasoftapi.reportrepo.GetMissionsRepo;
 import com.ats.rusasoftapi.reportrepo.GetTeachersUsingICTRepo;
 import com.ats.rusasoftapi.reportrepo.GetVisionsRepo;
+import com.ats.rusasoftapi.reportrepo.IQACQualInititiveRepo;
 import com.ats.rusasoftapi.reportrepo.LibAutoLMSInfoRepo;
 import com.ats.rusasoftapi.reportrepo.LibSpecFacilitiesRepo;
 import com.ats.rusasoftapi.reportrepo.NoFacultyFinSuppRepo;
+import com.ats.rusasoftapi.reportrepo.NoOfGenderEquityProgRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
+import com.ats.rusasoftapi.reportrepo.QualInitiativeAssuranceRepo;
 import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
 import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
@@ -815,4 +823,161 @@ public class ReportApiController {
 		return progList;
 
 	}
+	
+	@Autowired
+	IQACQualInititiveRepo iQACQualInititiveRepo;
+
+	@RequestMapping(value = { "/getQualInititiveList" }, method = RequestMethod.POST)
+	public @ResponseBody List<IQACQualInititive> getQualInititiveList(@RequestParam int instId) {
+
+		List<IQACQualInititive> progList = new ArrayList<>();
+ 		try {
+			 
+			progList = iQACQualInititiveRepo.getQualInitiative(instId);
+			System.err.println("List=" + progList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getNoOfProgramsList R1 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return progList;
+
+	}
+	
+	
+	@Autowired
+	QualInitiativeAssuranceRepo qualInitiativeAssuranceRepo;
+
+	@RequestMapping(value = { "/getInstQualAssurance" }, method = RequestMethod.POST)
+	public @ResponseBody List<QualInitiativeAssurance> getInstQualAssurance(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<QualInitiativeAssurance> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		List<Integer> lastFiveYears = new ArrayList<>();
+		try {
+
+			if (acYearList.contains("-5")) {
+				// System.err.println("in if ");
+				// System.err.println("in -5");
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+					// acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+				// acYrList.remove(acYrList.size());
+				// System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			System.err.println("Last five " + lastFiveYears.toString());
+			facPartInVarBodies = qualInitiativeAssuranceRepo.getAllQualAssurance(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	GenderEquityProgRepo genderEquityProgRepo;
+
+	@RequestMapping(value = { "/getGenderEquityProgDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<GenderEquityProg> getGenderEquityProgDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<GenderEquityProg> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		List<Integer> lastFiveYears = new ArrayList<>();
+		try {
+
+			if (acYearList.contains("-5")) {
+ 				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+ 					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			System.err.println("Last five " + lastFiveYears.toString());
+			facPartInVarBodies = genderEquityProgRepo.getAllGenderEquityInfo(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	NoOfGenderEquityProgRepo getNoOfGenderEquityProgRepo;
+
+	@RequestMapping(value = { "/getNoOfGenderEquityProg" }, method = RequestMethod.POST)
+	public @ResponseBody List<NoOfGenderEquityProg> getNoOfGenderEquityProg(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<NoOfGenderEquityProg> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				// System.err.println("in if ");
+				// System.err.println("in -5");
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+					// acYearList.add(i, String.valueOf(acYrList.get(i).getYearId()));
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+				// acYrList.remove(acYrList.size());
+				// System.err.println("new id list" + acYearList.toString());
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = getNoOfGenderEquityProgRepo.getAllNoOfGenderEquityProg(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
 }
