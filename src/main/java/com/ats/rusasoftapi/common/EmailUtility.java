@@ -41,6 +41,8 @@ public class EmailUtility {
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.starttls.enable", "true");
+
 
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -60,7 +62,7 @@ public class EmailUtility {
 			mimeMessage.setFrom(new InternetAddress(username));
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 			mimeMessage.setSubject(subject);
-			mimeMessage.setText(" User Name " + defUsrName + "\n Password " + defPass);
+			mimeMessage.setText("User Registration Successful for RUSA Software \n Username: " + defUsrName + "\n Password: " + password);
 			
 		
 			Transport.send(mimeMessage);
@@ -103,7 +105,7 @@ public class EmailUtility {
 				map.add("user", "spdrusamah@gmail.com:Cyber@mva");
 				map.add("receipientno", phoneNo.trim());
 				map.add("dcs", "0");
-				map.add("msgtxt","Login Credentials For RUSA  User Name " +userName + "Password "+pass);
+				map.add("msgtxt","User Registration Successful for RUSA Software \n Username: " + userName + "\n Password: " + pass);
 				map.add("state", "4");
 				
 				
@@ -140,7 +142,7 @@ public class EmailUtility {
 			map.add("user", "spdrusamah@gmail.com:Cyber@mva");
 			map.add("receipientno", phoneNo.trim());
 			map.add("dcs", "0");
-			map.add("msgtxt",msg +OTP);
+			map.add("msgtxt",msg + " " +OTP);
 			map.add("state", "4"); 
 			
 			String response = restTemplate.postForObject("http://api.mVaayoo.com/mvaayooapi/MessageCompose", map,

@@ -149,7 +149,7 @@ public class RestApiController {
 			otp1 = String.valueOf(otp);
 			// info.setMsg(" Matched");
 			System.err.println("User otp is" + otp1);
-			Info inf = EmailUtility.sendOtp(otp1, conNumber, "Rusa OTP Verification");
+			Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
 
 			System.out.println("info ires" + inf.toString());
 
@@ -198,7 +198,9 @@ public class RestApiController {
 			otp1 = String.valueOf(otp);
 			// info.setMsg(" Matched");
 			System.err.println("User otp is" + otp1);
-			Info inf = EmailUtility.sendOtp(otp1, conNumber, "Rusa OTP Verification");
+			Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
+
+			//Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
 
 			System.out.println("info ires" + inf.toString());
 
