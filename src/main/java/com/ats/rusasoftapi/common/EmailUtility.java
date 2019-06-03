@@ -114,7 +114,7 @@ public class EmailUtility {
 				String response = restTemplate.postForObject("http://api.mVaayoo.com/mvaayooapi/MessageCompose", map,
 						String.class);	
 				
-				
+				 
 				info.setError(false);
 				info.setMsg(response);
 			  
