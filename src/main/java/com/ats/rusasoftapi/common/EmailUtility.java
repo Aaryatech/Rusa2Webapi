@@ -62,7 +62,7 @@ public class EmailUtility {
 			mimeMessage.setFrom(new InternetAddress(username));
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 			mimeMessage.setSubject(subject);
-			mimeMessage.setText("User Registration Successful for RUSA Software \n Username: " + defUsrName + "\n Password: " + password);
+			mimeMessage.setText("User Registration Successful for RUSA Software \n Username: " + defUsrName + "\n Password: " + defPass);
 			
 		
 			Transport.send(mimeMessage);
