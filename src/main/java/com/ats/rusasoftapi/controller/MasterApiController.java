@@ -323,15 +323,15 @@ public class MasterApiController {
 
 				user.setExInt2(acOfRes.getInstituteId()); //
 				user.setRoleId(6);// 6 for acc officer
-				user.setUserName( acOfRes.getEmail());
+				user.setUserName(acOfRes.getEmail());
 				user.setUserType(5);// 5 for acc Officer user Default
 
 				UserLogin userRes = userServiceRepo.save(user);
 
 				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, acOfRes.getEmail(), mailsubject,
-						 acOfRes.getEmail(), userRes.getPass());
+						acOfRes.getEmail(), userRes.getPass());
 
-				Info smsRes = EmailUtility.sendMsg( acOfRes.getEmail(), userRes.getPass(), acOfRes.getContactNo());
+				Info smsRes = EmailUtility.sendMsg(acOfRes.getEmail(), userRes.getPass(), acOfRes.getContactNo());
 
 			} else {
 
@@ -500,29 +500,29 @@ public class MasterApiController {
 
 		try {
 			hodListByInstId = getHodRepo.getHodListByInstId(instId);
-			
-			for(int i=0;i<hodListByInstId.size();i++) {
-				
+
+			for (int i = 0; i < hodListByInstId.size(); i++) {
+
 				List<Integer> deptIds = Stream.of(hodListByInstId.get(i).getDeptId().split(",")).map(Integer::parseInt)
 						.collect(Collectors.toList());
 				List<Dept> deptList = new ArrayList<>();
-				
-					deptList = deptRepo.findByDelStatusAndIsActiveAndDeptIdIn(1, 1, deptIds);
-					
-					String deptName="";
-					for(int j=0;j<deptList.size();j++) {
-						
-						deptName=deptList.get(j).getDeptName()+","+deptName;
-						deptName.substring(0, deptName.length());
-					}
-					
-					hodListByInstId.get(i).setDeptName(deptName);
+
+				deptList = deptRepo.findByDelStatusAndIsActiveAndDeptIdIn(1, 1, deptIds);
+
+				String deptName = "";
+				for (int j = 0; j < deptList.size(); j++) {
+
+					deptName = deptList.get(j).getDeptName() + "," + deptName;
+					deptName.substring(0, deptName.length());
+				}
+
+				hodListByInstId.get(i).setDeptName(deptName);
 			}
-			
-			System.err.println("hodListByInstId " +hodListByInstId.toString());
+
+			System.err.println("hodListByInstId " + hodListByInstId.toString());
 
 		} catch (Exception e) {
-			
+
 			System.err.println("Exce in getHodListByInstId  " + e.getMessage());
 			e.printStackTrace();
 		}
@@ -530,46 +530,81 @@ public class MasterApiController {
 		return hodListByInstId;
 
 	}
-	//23Apr
+
+	// 23Apr
 	@RequestMapping(value = { "/getDeptListDeptIdIn" }, method = RequestMethod.POST)
 	public @ResponseBody List<Dept> getDeptListDeptIdIn(@RequestParam List<Integer> deptIds) {
 		List<Dept> deptList = new ArrayList<>();
 		try {
-		deptList = deptRepo.findByDelStatusAndIsActiveAndDeptIdIn(1, 1, deptIds);
-		}catch (Exception e) {
+			deptList = deptRepo.findByDelStatusAndIsActiveAndDeptIdIn(1, 1, deptIds);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return deptList;
-		
+
 	}
-	
-	
+
 	@RequestMapping(value = { "/getDeptForHodReg" }, method = RequestMethod.POST)
-	public @ResponseBody List<Dept> getDeptForHodReg(@RequestParam int  instId) {
+	public @ResponseBody List<Dept> getDeptForHodReg(@RequestParam int instId) {
 		List<Dept> deptList = new ArrayList<>();
 		try {
-			
-			String deptIdString=deptRepo.getDeptIdString(instId);
-			System.err.println("dept String " +deptIdString);
-			if(deptIdString!=null) {
-			List<Integer> deptIds = Stream.of(deptIdString.split(",")).map(Integer::parseInt)
-					.collect(Collectors.toList());
-		deptList = deptRepo.getDeptForHodReg(deptIds,instId);
-			}else {
+
+			String deptIdString = deptRepo.getDeptIdString(instId);
+			System.err.println("dept String " + deptIdString);
+			if (deptIdString != null) {
+				List<Integer> deptIds = Stream.of(deptIdString.split(",")).map(Integer::parseInt)
+						.collect(Collectors.toList());
+
+				deptList = deptRepo.getDeptForHodReg(deptIds, instId);
+			} else {
 				deptList = deptRepo.findByDelStatusAndIsActiveAndInstituteIdOrderByDeptIdDesc(1, 1, instId);
 			}
-		System.err.println("Dept List " +deptList.toString());
-		}catch (Exception e) {
+			System.err.println("Dept List " + deptList.toString());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return deptList;
-		
-	}
-	
-	
 
+		return deptList;
+
+	}
+
+	@RequestMapping(value = { "/getDeptForHodRegForEdit" }, method = RequestMethod.POST)
+	public @ResponseBody List<Dept> getDeptForHodRegForEdit(@RequestParam int instId,
+			@RequestParam List<Integer> deptIdList) {
+		List<Dept> deptList = new ArrayList<>();
+		try {
+
+			System.err.println("dept String from admin " + deptIdList.toString());
+			String deptIdString = deptRepo.getDeptIdString(instId);
+			System.err.println("dept String " + deptIdString);
+			if (deptIdString != null) {
+				List<Integer> deptIds = Stream.of(deptIdString.split(",")).map(Integer::parseInt)
+						.collect(Collectors.toList());
+
+				for (int j = 0; j < deptIdList.size(); j++) {
+					for (int i = 0; i < deptIds.size(); i++) {
+
+						if (deptIds.get(i) == deptIdList.get(j)) {
+
+							deptIds.remove(i);
+						}
+					}
+
+				}
+
+				deptList = deptRepo.getDeptForHodReg(deptIds, instId);
+			} else {
+				deptList = deptRepo.findByDelStatusAndIsActiveAndInstituteIdOrderByDeptIdDesc(1, 1, instId);
+			}
+			System.err.println("Dept List " + deptList.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return deptList;
+
+	}
 
 	@RequestMapping(value = { "/deleteHods" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteHods(@RequestParam List<String> hodIdList) {
@@ -698,6 +733,7 @@ public class MasterApiController {
 
 	@Autowired
 	StaffRepo staffRepo;
+
 	@RequestMapping(value = { "/saveInstitute" }, method = RequestMethod.POST)
 	public @ResponseBody Institute saveInstitute(@RequestBody Institute institute) {
 
@@ -719,13 +755,13 @@ public class MasterApiController {
 				princi.setPrincipalName(insResp.getPrincipalName());
 				princi.setIsEnroll(0);
 				pincipalRepo.saveAndFlush(princi);
-				
+
 				//
-				
+
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
 				String curDateTime = dateFormat.format(cal.getTime());
-				
+
 				Staff staff = new Staff();
 
 				staff.setContactNo(insResp.getContactNo());
@@ -756,7 +792,7 @@ public class MasterApiController {
 				staff.setTeachingTo(0);
 
 				staff.setInstituteId(insResp.getInstituteId());
-				//staff.setJoiningDate(new Date());
+				// staff.setJoiningDate(new Date());
 				staff.setDelStatus(1);
 				staff.setIsActive(1);
 				staff.setMakerUserId(0);
@@ -767,24 +803,25 @@ public class MasterApiController {
 				staff.setType(1);
 
 				staff.setExtravarchar1("NA");
-				
+
 				staffRepo.save(staff);
-				
+
 				//
-				
 
 			} else {
 				insResp = instituteRepo.saveAndFlush(institute);
 
 				System.err.println("Old Isntitute Old   Principal  update if any");
 
-				/*Principal princi = pincipalRepo.findByInstituteId(insResp.getInstituteId());
-
-				princi.setEmail(insResp.getEmail());
-				princi.setInstituteId(insResp.getInstituteId());
-				princi.setPhoneNo(insResp.getContactNo());
-				princi.setPrincipalName(insResp.getPrincipalName());
-				pincipalRepo.saveAndFlush(princi);*/
+				/*
+				 * Principal princi = pincipalRepo.findByInstituteId(insResp.getInstituteId());
+				 * 
+				 * princi.setEmail(insResp.getEmail());
+				 * princi.setInstituteId(insResp.getInstituteId());
+				 * princi.setPhoneNo(insResp.getContactNo());
+				 * princi.setPrincipalName(insResp.getPrincipalName());
+				 * pincipalRepo.saveAndFlush(princi);
+				 */
 
 			}
 
@@ -977,8 +1014,9 @@ public class MasterApiController {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
 				String curDateTime = dateFormat.format(cal.getTime());
-				
-				Staff staff=staffRepo.findByDelStatusAndIsActiveAndIsBlockedAndInstituteId(1,1,0,instIdList.get(i));
+
+				Staff staff = staffRepo.findByDelStatusAndIsActiveAndIsBlockedAndInstituteId(1, 1, 0,
+						instIdList.get(i));
 				staff.setPassword(pass);
 				staffRepo.save(staff);
 
@@ -1080,66 +1118,65 @@ public class MasterApiController {
 
 		return sb.toString();
 	}
-	
+
 	@RequestMapping(value = { "/showInstituteData" }, method = RequestMethod.POST)
 	public @ResponseBody Institute approveInstitutes(@RequestParam("instId") int instId) {
-		
-		Institute instiData = null; 
+
+		Institute instiData = null;
 		try {
-			
+
 			instiData = instituteRepo.findByInstituteId(instId);
-			 
-			
-		}catch(Exception e) {
-			
+
+		} catch (Exception e) {
+
 		}
 		return instiData;
-		
+
 	}
-	
-	@RequestMapping(value= {"/deleteInstituteById"}, method=RequestMethod.POST)
-	public @ResponseBody Info deleteByIqacById(@RequestParam("instId") int instId){
-		int isDelete=0;
-		 isDelete= instituteRepo.delPendingInst(instId);
-		 Info inf = new Info();
-		 if(isDelete>0) {
-			 inf.setError(false);
-			 inf.setMsg("Sucessfully Deleted");
-		 }
-		 else{
-			 inf.setError(true);
-			 inf.setMsg("Fail");
-		 }
-		 return inf;
+
+	@RequestMapping(value = { "/deleteInstituteById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteByIqacById(@RequestParam("instId") int instId) {
+		int isDelete = 0;
+		isDelete = instituteRepo.delPendingInst(instId);
+		Info inf = new Info();
+		if (isDelete > 0) {
+			inf.setError(false);
+			inf.setMsg("Sucessfully Deleted");
+		} else {
+			inf.setError(true);
+			inf.setMsg("Fail");
+		}
+		return inf;
 	}
-	
+
 	@Autowired
 	TInstEContentDevFacilityRepo econtentRepo;
+
 	@RequestMapping(value = { "/saveEcontentDevFacilities" }, method = RequestMethod.POST)
 	public @ResponseBody EContentDevFacility saveEcontentDevFacilities(@RequestBody EContentDevFacility eCont) {
-	
+
 		EContentDevFacility contentres = null;
 
 		try {
 			contentres = econtentRepo.saveAndFlush(eCont);
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println("Exce in saveEcontentDevFacilities " + e.getMessage());
 			e.printStackTrace();
 		}
 		return contentres;
 	}
-	
-	
+
 	@RequestMapping(value = { "/showEComtentDevFaclity" }, method = RequestMethod.POST)
-	public @ResponseBody List<EContentDevFacility> showEComtentDevFaclity(@RequestParam("instituteId") int instituteId) {
+	public @ResponseBody List<EContentDevFacility> showEComtentDevFaclity(
+			@RequestParam("instituteId") int instituteId) {
 
 		List<EContentDevFacility> eCont = new ArrayList<>();
 
 		try {
 
-			eCont = econtentRepo. findByDelStatusAndInstIdOrderByInstEContentDevFacilityIdDesc(1,instituteId);
-			System.err.println("eCont="+eCont);
+			eCont = econtentRepo.findByDelStatusAndInstIdOrderByInstEContentDevFacilityIdDesc(1, instituteId);
+			System.err.println("eCont=" + eCont);
 
 		} catch (Exception e) {
 
@@ -1151,21 +1188,19 @@ public class MasterApiController {
 		return eCont;
 
 	}
-	
-	
 
 	@RequestMapping(value = { "/getEContentDevFecilityById" }, method = RequestMethod.POST)
 	public @ResponseBody EContentDevFacility getEContentDevFecilityById(@RequestParam("contentId") int contentId) {
-		
+
 		EContentDevFacility eCon = null;
 		eCon = econtentRepo.findByInstEContentDevFacilityIdAndDelStatus(contentId, 1);
 		return eCon;
-		
+
 	}
-	
+
 	@RequestMapping(value = { "/deleteEContentById" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteLibBookById(@RequestParam("contentId") int contentId) {
-		
+
 		Info info = new Info();
 		try {
 			int res = econtentRepo.deleteContentById(contentId);
@@ -1189,7 +1224,7 @@ public class MasterApiController {
 
 		return info;
 	}
-	
+
 	@RequestMapping(value = { "/deleteSelContent" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteSelContent(@RequestParam List<String> contentIdsList) {
 
@@ -1215,17 +1250,19 @@ public class MasterApiController {
 
 		return info;
 	}
-	
-	/*******************************Research & Innovation******************************/
+
+	/*******************************
+	 * Research & Innovation
+	 ******************************/
 	@RequestMapping(value = { "/newstudFacLink" }, method = RequestMethod.POST)
-		public @ResponseBody TFacultyStudLinkage saveEcontentDevFacilities(@RequestBody TFacultyStudLinkage linkage) {
-			TFacultyStudLinkage link = null;
-			link = studFacLinkRepo.save(linkage);
-			
-			return link;
-		
+	public @ResponseBody TFacultyStudLinkage saveEcontentDevFacilities(@RequestBody TFacultyStudLinkage linkage) {
+		TFacultyStudLinkage link = null;
+		link = studFacLinkRepo.save(linkage);
+
+		return link;
+
 	}
-		
+
 	@RequestMapping(value = { "/showStudFacLinks" }, method = RequestMethod.POST)
 	public @ResponseBody List<TFacultyStudLinkage> showStudFacLinks(@RequestParam("instituteId") int instituteId) {
 
@@ -1234,7 +1271,7 @@ public class MasterApiController {
 		try {
 
 			links = studFacLinkRepo.findByInstIdAndDelStatusOrderByFacultyStudLinkageIdDesc(instituteId, 1);
-			System.err.println("linls="+links);
+			System.err.println("linls=" + links);
 
 		} catch (Exception e) {
 
@@ -1246,7 +1283,7 @@ public class MasterApiController {
 		return links;
 
 	}
-	
+
 	@RequestMapping(value = { "/getStudFacLinksById" }, method = RequestMethod.POST)
 	public @ResponseBody TFacultyStudLinkage getStudFacLinksById(@RequestParam("linkId") int linkId) {
 
@@ -1255,7 +1292,7 @@ public class MasterApiController {
 		try {
 
 			link = studFacLinkRepo.findByFacultyStudLinkageId(linkId);
-			System.err.println("link="+link);
+			System.err.println("link=" + link);
 
 		} catch (Exception e) {
 
@@ -1266,10 +1303,10 @@ public class MasterApiController {
 
 		return link;
 	}
-	
+
 	@RequestMapping(value = { "/deleteLinkById" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteLinkById(@RequestParam("linkId") int linkId) {
-		
+
 		Info info = new Info();
 		try {
 			int res = studFacLinkRepo.deleteFacStudLinkById(linkId);
@@ -1293,6 +1330,7 @@ public class MasterApiController {
 
 		return info;
 	}
+
 	@Autowired
 	TFacultyStudLinkageRepo studFacLinkRepo;
 
@@ -1321,8 +1359,5 @@ public class MasterApiController {
 
 		return info;
 	}
-
-	
-
 
 }

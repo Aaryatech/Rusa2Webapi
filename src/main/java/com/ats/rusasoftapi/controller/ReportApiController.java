@@ -573,7 +573,7 @@ public class ReportApiController {
 
 	@RequestMapping(value = { "/geteGovernanceOpt" }, method = RequestMethod.POST)
 	public @ResponseBody List<EGovernenceOperation> geteGovernanceOpt(@RequestParam int instId,
-			@RequestParam List<String> acYearList) {
+			@RequestParam List<String> acYearList,@RequestParam int typeId) {
 
 		List<EGovernenceOperation> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -581,6 +581,10 @@ public class ReportApiController {
 		try {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
+			List<Integer> temp = new ArrayList<>();
+			temp.add(19);
+			temp.add(22);
+			
 			if (acYearList.contains("-5")) {
 
 				acYrList = academicYearRepo.getLastFiveYears();
@@ -590,20 +594,40 @@ public class ReportApiController {
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
 
-				// acYrList.remove(acYrList.size());
-				// System.err.println("new id list" + acYearList.toString());
+			 
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-
 			SettingKeyValue setKey = new SettingKeyValue();
-			setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC", 1);
-
 			SettingKeyValue setKey1 = new SettingKeyValue();
-			setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE", 1);
+			if(typeId==1) {
+			// for R66
+				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC", 1);
+ 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE", 1);
+			}else if(typeId==2) {
+				// for R78
+				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC1", 1);
+ 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE1", 1);
+				
+			}
+			else if(typeId==3) {
+				// for R79
+				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC2", 1);
+ 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE2", 1);
+				
+			}
+			else if(typeId==4) {
+				// for R79
+				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC2", 1);
+ 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE2", 1);
+ 				String seccode1 = setKey.getStringValue();
 
+ 				String pagecode1 = setKey1.getStringValue();
+ 				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt4(instId, lastFiveYears, seccode1, pagecode1,temp);
+			}
+ 
 			String seccode = setKey.getStringValue();
 
 			String pagecode = setKey1.getStringValue();
