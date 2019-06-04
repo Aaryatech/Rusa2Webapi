@@ -25,19 +25,24 @@ import com.ats.rusasoftapi.model.report.GetAvgStudYearwise;
 import com.ats.rusasoftapi.model.report.GetMissions;
 import com.ats.rusasoftapi.model.report.GetTeachersUsingICT;
 import com.ats.rusasoftapi.model.report.GetVisions;
+import com.ats.rusasoftapi.model.report.GovtScheme;
 import com.ats.rusasoftapi.model.report.IQACQualInititive;
+import com.ats.rusasoftapi.model.report.IniToEngageLocComm;
 import com.ats.rusasoftapi.model.report.LibAutoLMSInfo;
 import com.ats.rusasoftapi.model.report.LibSpecFacilities;
 import com.ats.rusasoftapi.model.report.NoFacultyFinSupp;
 import com.ats.rusasoftapi.model.report.NoOfGenderEquityProg;
 import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
 import com.ats.rusasoftapi.model.report.NoOfPrograms;
+import com.ats.rusasoftapi.model.report.NoOfUniversalvalues;
+import com.ats.rusasoftapi.model.report.OtherThanGovtScheme;
 import com.ats.rusasoftapi.model.report.QualInitiativeAssurance;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.model.report.TeacherStudUsingLib;
 import com.ats.rusasoftapi.model.report.TrainProgForTeacherStaff;
 import com.ats.rusasoftapi.model.report.TrainProgOrgnizedForTeach;
+import com.ats.rusasoftapi.model.report.UniversalValPromot;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
@@ -50,20 +55,24 @@ import com.ats.rusasoftapi.reportrepo.GetAvgStudYearwiseRepo;
 import com.ats.rusasoftapi.reportrepo.GetMissionsRepo;
 import com.ats.rusasoftapi.reportrepo.GetTeachersUsingICTRepo;
 import com.ats.rusasoftapi.reportrepo.GetVisionsRepo;
+import com.ats.rusasoftapi.reportrepo.GovtSchemeRepo;
 import com.ats.rusasoftapi.reportrepo.IQACQualInititiveRepo;
+import com.ats.rusasoftapi.reportrepo.IniToEngageLocCommRepo;
 import com.ats.rusasoftapi.reportrepo.LibAutoLMSInfoRepo;
 import com.ats.rusasoftapi.reportrepo.LibSpecFacilitiesRepo;
 import com.ats.rusasoftapi.reportrepo.NoFacultyFinSuppRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfGenderEquityProgRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
+import com.ats.rusasoftapi.reportrepo.NoOfUniversalvaluesRepo;
+import com.ats.rusasoftapi.reportrepo.OtherThanGovtSchemeRepo;
 import com.ats.rusasoftapi.reportrepo.QualInitiativeAssuranceRepo;
 import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
-import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
-import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
+ import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
 import com.ats.rusasoftapi.reportrepo.TeacherStudUsingLibRepo;
 import com.ats.rusasoftapi.reportrepo.TrainProgForTeacherStaffRepo;
 import com.ats.rusasoftapi.reportrepo.TrainProgOrgnizedForTeachRepo;
+import com.ats.rusasoftapi.reportrepo.UniversalValPromotRepo;
 
 @RestController
 public class ReportApiController {
@@ -1003,5 +1012,217 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
+	
+	@Autowired
+	IniToEngageLocCommRepo iniToEngageLocCommRepo;
+
+	@RequestMapping(value = { "/getInitiativeOfLocalCommunityProg" }, method = RequestMethod.POST)
+	public @ResponseBody List<IniToEngageLocComm> getInitiativeOfLocalCommunityProg(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<IniToEngageLocComm> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = iniToEngageLocCommRepo.getIniToEngageLocCommunity(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	UniversalValPromotRepo universalValPromotRepo;
+	
+	@RequestMapping(value = { "/getUniversalValues" }, method = RequestMethod.POST)
+	public @ResponseBody List<UniversalValPromot> getUniversalValues(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<UniversalValPromot> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = universalValPromotRepo.getAllUniversalVal(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	NoOfUniversalvaluesRepo noOfUniversalvaluesRepo;
+	 
+	@RequestMapping(value = { "/getNoUniversalValues" }, method = RequestMethod.POST)
+	public @ResponseBody List<NoOfUniversalvalues> getNoUniversalValues(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<NoOfUniversalvalues> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = noOfUniversalvaluesRepo.getNoOfUniversalValues(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	GovtSchemeRepo govtSchemeRepo;
+	 
+	@RequestMapping(value = { "/getGovtScheme" }, method = RequestMethod.POST)
+	public @ResponseBody List<GovtScheme> getGovtScheme(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<GovtScheme> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = govtSchemeRepo.getAllGovtScheme(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	OtherThanGovtSchemeRepo otherThanGovtSchemeRepo;
+	
+	@RequestMapping(value = { "/getOtherThanGovtScheme" }, method = RequestMethod.POST)
+	public @ResponseBody List<OtherThanGovtScheme> getOtherThanGovtScheme(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<OtherThanGovtScheme> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = otherThanGovtSchemeRepo.getAllOtherThanGovtScheme(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	
 	
 }
