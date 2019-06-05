@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
+import com.ats.rusasoftapi.model.progdetail.StudQualifyingExam;
 import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
 import com.ats.rusasoftapi.model.report.AluminiEngagement;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
+import com.ats.rusasoftapi.model.report.CapabilityEnhancementDev;
 import com.ats.rusasoftapi.model.report.DistinguishedAlumini;
 import com.ats.rusasoftapi.model.report.EGovernenceOperation;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
@@ -40,6 +42,7 @@ import com.ats.rusasoftapi.model.report.NoOfUniversalvalues;
 import com.ats.rusasoftapi.model.report.OtherThanGovtScheme;
 import com.ats.rusasoftapi.model.report.QualInitiativeAssurance;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
+import com.ats.rusasoftapi.model.report.SportsCulturalActivityComp;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.model.report.TeacherStudUsingLib;
 import com.ats.rusasoftapi.model.report.TrainProgForTeacherStaff;
@@ -47,9 +50,11 @@ import com.ats.rusasoftapi.model.report.TrainProgOrgnizedForTeach;
 import com.ats.rusasoftapi.model.report.UniversalValPromot;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
+import com.ats.rusasoftapi.prodetailrepo.StudQualifyingExamRepo;
 import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
 import com.ats.rusasoftapi.reportrepo.AluminiEngagementRepo;
 import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
+import com.ats.rusasoftapi.reportrepo.CapabilityEnhancementDevRepo;
 import com.ats.rusasoftapi.reportrepo.DistinguishedAluminiRepo;
 import com.ats.rusasoftapi.reportrepo.EGovernenceOperationRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
@@ -72,7 +77,9 @@ import com.ats.rusasoftapi.reportrepo.NoOfUniversalvaluesRepo;
 import com.ats.rusasoftapi.reportrepo.OtherThanGovtSchemeRepo;
 import com.ats.rusasoftapi.reportrepo.QualInitiativeAssuranceRepo;
 import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
- import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
+import com.ats.rusasoftapi.reportrepo.SportsCulturalActivityCompRepo;
+import com.ats.rusasoftapi.reportrepo.StudQualifyingExamReportRepo;
+import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
 import com.ats.rusasoftapi.reportrepo.TeacherStudUsingLibRepo;
 import com.ats.rusasoftapi.reportrepo.TrainProgForTeacherStaffRepo;
 import com.ats.rusasoftapi.reportrepo.TrainProgOrgnizedForTeachRepo;
@@ -1312,6 +1319,144 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
+	
+	@Autowired
+	SportsCulturalActivityCompRepo sportsCulturalActivityCompRepo;
+	
+	@RequestMapping(value = { "/getSportsActivityComp" }, method = RequestMethod.POST)
+	public @ResponseBody List<SportsCulturalActivityComp> getSportsActivityComp(@RequestParam int instId,
+			@RequestParam List<String> acYearList,@RequestParam int typeId) {
+
+		List<SportsCulturalActivityComp> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = sportsCulturalActivityCompRepo.getAllSportsCulturalActivityComp(instId, lastFiveYears,typeId);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	CapabilityEnhancementDevRepo capabilityEnhancementDevRepo;
+	
+	@RequestMapping(value = { "/getCapabilityEnhancementDev" }, method = RequestMethod.POST)
+	public @ResponseBody List<CapabilityEnhancementDev> getCapabilityEnhancementDev(@RequestParam int instId,
+			@RequestParam List<String> acYearList,@RequestParam int typeId) {
+
+		List<CapabilityEnhancementDev> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			if(typeId==1) {
+				facPartInVarBodies = capabilityEnhancementDevRepo.getAllCapabilityEnhancementDev(instId, lastFiveYears);
+	
+			}else if(typeId==2) {
+				facPartInVarBodies = capabilityEnhancementDevRepo.getAllCapabilityEnhancementDevVET(instId);
+
+			}
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	
+	@Autowired
+	StudQualifyingExamReportRepo studQualifyingExamReportRepo;
+	
+	@RequestMapping(value = { "/getStudQualifyingExam" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudQualifyingExam> getStudQualifyingExam(@RequestParam int instId,
+			@RequestParam List<String> acYearList ) {
+
+		List<StudQualifyingExam> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			 
+				facPartInVarBodies = studQualifyingExamReportRepo.getAllStudQualifyingExam(instId, lastFiveYears);
+	
+			 
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	
 	
 	
 }
