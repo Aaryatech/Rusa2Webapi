@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
+import com.ats.rusasoftapi.model.report.AluminiEngagement;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
+import com.ats.rusasoftapi.model.report.DistinguishedAlumini;
 import com.ats.rusasoftapi.model.report.EGovernenceOperation;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.FinancialSuppToProfMem;
@@ -46,7 +48,9 @@ import com.ats.rusasoftapi.model.report.UniversalValPromot;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
+import com.ats.rusasoftapi.reportrepo.AluminiEngagementRepo;
 import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
+import com.ats.rusasoftapi.reportrepo.DistinguishedAluminiRepo;
 import com.ats.rusasoftapi.reportrepo.EGovernenceOperationRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.FinancialSuppToProfMemRepo;
@@ -1223,6 +1227,91 @@ public class ReportApiController {
 
 	}
 	
+	@Autowired
+	DistinguishedAluminiRepo distinguishedAluminiRepo;
+	
+
+	@RequestMapping(value = { "/getDistinctAlumini" }, method = RequestMethod.POST)
+	public @ResponseBody List<DistinguishedAlumini> getDistinctAlumini(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<DistinguishedAlumini> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = distinguishedAluminiRepo.getAllDistinguishedAlumini(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	AluminiEngagementRepo aluminiEngagementRepo;
+	
+
+	@RequestMapping(value = { "/getAluminiEngg" }, method = RequestMethod.POST)
+	public @ResponseBody List<AluminiEngagement> getAluminiEngg(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<AluminiEngagement> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = aluminiEngagementRepo.getAllAluminiEngg(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
 	
 	
 }
