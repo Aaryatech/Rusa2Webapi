@@ -27,6 +27,9 @@ public class GetProgramActivity {
 	@Column(name="activity_name")
 	private String activityName;
 	
+	@Column(name="venue")
+	private String venue;
+	
 	@Column(name="other_compitition")
 	private String otherCompitition;
 	
@@ -243,17 +246,23 @@ private String aadharNo;
 	public void setYearName(String yearName) {
 		this.yearName = yearName;
 	}
-
+	
+	public String getVenue() {
+		return venue;
+	}
+	public void setVenue(String venue) {
+		this.venue = venue;
+	}
 	@Override
 	public String toString() {
 		return "GetProgramActivity [studentActivityId=" + studentActivityId + ", instituteId=" + instituteId
-				+ ", yearId=" + yearId + ", activityName=" + activityName + ", otherCompitition=" + otherCompitition
-				+ ", date=" + date + ", year=" + year + ", branch=" + branch + ", participatedStudent="
-				+ participatedStudent + ", level=" + level + ", isActive=" + isActive + ", delStatus=" + delStatus
-				+ ", addDate=" + addDate + ", makerUserId=" + makerUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", type=" + type + ", yearName=" + yearName + "]";
+				+ ", yearId=" + yearId + ", activityName=" + activityName + ", venue=" + venue + ", otherCompitition="
+				+ otherCompitition + ", date=" + date + ", year=" + year + ", branch=" + branch
+				+ ", participatedStudent=" + participatedStudent + ", level=" + level + ", isActive=" + isActive
+				+ ", delStatus=" + delStatus + ", addDate=" + addDate + ", makerUserId=" + makerUserId + ", exInt1="
+				+ exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", type=" + type
+				+ ", yearName=" + yearName + ", aadharNo=" + aadharNo + "]";
 	}
-	
 	
 
 }

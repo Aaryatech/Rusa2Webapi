@@ -23,6 +23,7 @@ public class GetInfraStructureBudget {
 	private String academicYear;
 	private String finYear ;
 	private int exInt1;
+	private String exVar1;
 	
 	
 	public int getInfraBudgetId() {
@@ -85,12 +86,19 @@ public class GetInfraStructureBudget {
 	public void setExInt1(int exInt1) {
 		this.exInt1 = exInt1;
 	}
+	
+	public String getExVar1() {
+		return exVar1;
+	}
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
+	}
 	@Override
 	public String toString() {
 		return "GetInfraStructureBudget [infraBudgetId=" + infraBudgetId + ", finYearId=" + finYearId + ", acYearId="
 				+ acYearId + ", instituteId=" + instituteId + ", infraBudgetTitle=" + infraBudgetTitle
 				+ ", budgetAllocated=" + budgetAllocated + ", budgetUtilized=" + budgetUtilized + ", academicYear="
-				+ academicYear + ", finYear=" + finYear + ", exInt1=" + exInt1 + "]";
+				+ academicYear + ", finYear=" + finYear + ", exInt1=" + exInt1 + ", exVar1=" + exVar1 + "]";
 	}
-	
+
 }

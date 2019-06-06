@@ -32,6 +32,9 @@ public class ProgramActivity {
 	@Column(name="other_compitition")
 	private String otherCompitition;
 	
+	@Column(name="venue")
+	private String venue;
+	
 	@Column(name="date")
 	private Date date;
 	
@@ -144,7 +147,13 @@ public class ProgramActivity {
 	public String getBranch() {
 		return branch;
 	}
-
+	
+	public String getVenue() {
+		return venue;
+	}
+	public void setVenue(String venue) {
+		this.venue = venue;
+	}
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
@@ -239,12 +248,11 @@ public class ProgramActivity {
 	@Override
 	public String toString() {
 		return "ProgramActivity [studentActivityId=" + studentActivityId + ", instituteId=" + instituteId + ", yearId="
-				+ yearId + ", activityName=" + activityName + ", otherCompitition=" + otherCompitition + ", date="
-				+ date + ", year=" + year + ", branch=" + branch + ", participatedStudent=" + participatedStudent
-				+ ", level=" + level + ", isActive=" + isActive + ", delStatus=" + delStatus + ", addDate=" + addDate
-				+ ", makerUserId=" + makerUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", type=" + type + ", aadharNo=" + aadharNo + "]";
+				+ yearId + ", activityName=" + activityName + ", otherCompitition=" + otherCompitition + ", venue="
+				+ venue + ", date=" + date + ", year=" + year + ", branch=" + branch + ", participatedStudent="
+				+ participatedStudent + ", level=" + level + ", isActive=" + isActive + ", delStatus=" + delStatus
+				+ ", addDate=" + addDate + ", makerUserId=" + makerUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
+				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", type=" + type + ", aadharNo=" + aadharNo + "]";
 	}
-
-	
+		
 }

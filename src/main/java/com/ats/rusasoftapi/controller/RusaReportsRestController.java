@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.report.AdmsnAgnstResrvCat;
+import com.ats.rusasoftapi.model.report.AwrdRecgAgnstExtActivityReport;
 import com.ats.rusasoftapi.model.report.BudgetInfraAugmntn;
 import com.ats.rusasoftapi.model.report.DifferentlyAbldStudReport;
 import com.ats.rusasoftapi.model.report.EContntDevFacReport;
@@ -25,7 +26,9 @@ import com.ats.rusasoftapi.model.report.FulTimFacultyWithPhd;
 import com.ats.rusasoftapi.model.report.FunctionalMou;
 import com.ats.rusasoftapi.model.report.ICtEnbldFaclitiesReport;
 import com.ats.rusasoftapi.model.report.InitivAddrsLoctnAdvDisadv;
+import com.ats.rusasoftapi.model.report.IntelectulPropRightReport;
 import com.ats.rusasoftapi.model.report.IntrnetConnInfo;
+import com.ats.rusasoftapi.model.report.NoAwardRecogExtAct;
 import com.ats.rusasoftapi.model.report.NoInitivAddrsLoctnAdvDisadv;
 import com.ats.rusasoftapi.model.report.NoOfLinkages;
 import com.ats.rusasoftapi.model.report.StudCompRatioReport;
@@ -36,6 +39,7 @@ import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.DifferentlyAbldStudReportRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmsnAgnstResrvCatRepo;
+import com.ats.rusasoftapi.reportrepo.AwrdRecgAgnstExtActivityReportRepo;
 import com.ats.rusasoftapi.reportrepo.BudgetInfraAugmntnRepo;
 import com.ats.rusasoftapi.reportrepo.EContntDevFacReportRepo;
 import com.ats.rusasoftapi.reportrepo.ExpenditureOnPrchaseBooksJournalRepo;
@@ -45,7 +49,9 @@ import com.ats.rusasoftapi.reportrepo.FulTimFacultyWithPhdRepo;
 import com.ats.rusasoftapi.reportrepo.FunctionalMouRepo;
 import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
 import com.ats.rusasoftapi.reportrepo.InitivAddrsLoctnAdvDisadvRepo;
+import com.ats.rusasoftapi.reportrepo.IntelectulPropRightReportRepo;
 import com.ats.rusasoftapi.reportrepo.IntrnetConnInfoRepo;
+import com.ats.rusasoftapi.reportrepo.NoAwardRecogExtActRepo;
 import com.ats.rusasoftapi.reportrepo.NoInitivAddrsLoctnAdvDisadvRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfLinkagesRepo;
 import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
@@ -517,5 +523,103 @@ public class RusaReportsRestController {
  			System.err.println(e.getMessage());
  		}
 		return mouList;
+ 	}
+	
+	@Autowired AwrdRecgAgnstExtActivityReportRepo awardRepo;
+	@RequestMapping(value = { "/getAwardRecog" }, method = RequestMethod.POST)
+	public @ResponseBody List<AwrdRecgAgnstExtActivityReport> getAwardRecog(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+ 	
+		List<AwrdRecgAgnstExtActivityReport> awrdList = new ArrayList<AwrdRecgAgnstExtActivityReport>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
+ 	
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				
+				for (int i = 0; i < acYrList.size(); i++) {
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 			awrdList = awardRepo.getAllAwardRecog(instId, lastFiveYears);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return awrdList;
+ 	}
+	
+	
+	
+	@Autowired NoAwardRecogExtActRepo noAwardRepo;
+	@RequestMapping(value = { "/getNoAwardRecogExtAct" }, method = RequestMethod.POST)
+	public @ResponseBody List<NoAwardRecogExtAct> getNoAwardRecogExtAct(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+ 	
+		List<NoAwardRecogExtAct> awrdList = new ArrayList<NoAwardRecogExtAct>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
+ 	
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				
+				for (int i = 0; i < acYrList.size(); i++) {
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 			awrdList = noAwardRepo.getAllNoAwardRecogExtAct(instId, lastFiveYears);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return awrdList;
+ 	}
+	
+	@Autowired IntelectulPropRightReportRepo intelPropRepo;
+	@RequestMapping(value = { "/getIntelPropRght" }, method = RequestMethod.POST)
+	public @ResponseBody List<IntelectulPropRightReport> getIntelPropRght(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+ 	
+		List<IntelectulPropRightReport> awrdList = new ArrayList<IntelectulPropRightReport>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
+ 	
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				
+				for (int i = 0; i < acYrList.size(); i++) {
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 			awrdList = intelPropRepo.getAllIntelPropRght(instId, lastFiveYears);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return awrdList;
  	}
 }

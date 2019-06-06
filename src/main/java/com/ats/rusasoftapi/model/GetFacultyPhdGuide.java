@@ -17,6 +17,8 @@ public class GetFacultyPhdGuide {
 	private int isCoGuide;
 	private String coGuideName;
 	private String phdScholarName;
+	private String aadhaarNo;
+	private String placeOfWork;
 	private int phdRegYear;
 	private String phdTopic;
 	private int isPhdAwarded;
@@ -201,18 +203,33 @@ public class GetFacultyPhdGuide {
 	public void setFacultyFirstName(String facultyFirstName) {
 		this.facultyFirstName = facultyFirstName;
 	}
+ 
+	public String getAadhaarNo() {
+		return aadhaarNo;
+	}
+
+	public void setAadhaarNo(String aadhaarNo) {
+		this.aadhaarNo = aadhaarNo;
+	}
+
+	public String getPlaceOfWork() {
+		return placeOfWork;
+	}
+
+	public void setPlaceOfWork(String placeOfWork) {
+		this.placeOfWork = placeOfWork;
+	}
 
 	@Override
 	public String toString() {
 		return "GetFacultyPhdGuide [phdId=" + phdId + ", facultyId=" + facultyId + ", yearId=" + yearId
 				+ ", isPhdGuide=" + isPhdGuide + ", isCoGuide=" + isCoGuide + ", coGuideName=" + coGuideName
-				+ ", phdScholarName=" + phdScholarName + ", phdRegYear=" + phdRegYear + ", phdTopic=" + phdTopic
-				+ ", isPhdAwarded=" + isPhdAwarded + ", phdAwardedYear=" + phdAwardedYear + ", delStatus=" + delStatus
-				+ ", isActive=" + isActive + ", makerUserId=" + makerUserId + ", makerEnterDatetime="
-				+ makerEnterDatetime + ", exInt1=" + exInt1 + ", exVar1=" + exVar1 + ", deptName=" + deptName
-				+ ", facultyFirstName=" + facultyFirstName + ", university=" + university + ", academicYear="
-				+ academicYear + "]";
+				+ ", phdScholarName=" + phdScholarName + ", aadhaarNo=" + aadhaarNo + ", placeOfWork=" + placeOfWork
+				+ ", phdRegYear=" + phdRegYear + ", phdTopic=" + phdTopic + ", isPhdAwarded=" + isPhdAwarded
+				+ ", phdAwardedYear=" + phdAwardedYear + ", delStatus=" + delStatus + ", isActive=" + isActive
+				+ ", makerUserId=" + makerUserId + ", makerEnterDatetime=" + makerEnterDatetime + ", exInt1=" + exInt1
+				+ ", exVar1=" + exVar1 + ", deptName=" + deptName + ", facultyFirstName=" + facultyFirstName
+				+ ", university=" + university + ", academicYear=" + academicYear + "]";
 	}
-
 
 }

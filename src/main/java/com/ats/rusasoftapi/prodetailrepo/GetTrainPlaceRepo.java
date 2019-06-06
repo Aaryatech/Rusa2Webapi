@@ -18,6 +18,7 @@ public interface GetTrainPlaceRepo extends JpaRepository<GetTrainPlace, Integer>
 			"        t_traning_placement.no_student_placed,\n" + 
 			"        t_traning_placement.empyr_add,  \n" + 
 			"        t_traning_placement.contact_detail,\n" + 
+			"        t_traning_placement.ex_var1,\n" + 
 			"        t_traning_placement.pakage_offerd\n" + 
 			"FROM \n" + 
 			"		t_traning_placement, m_program_type, t_program  \n" + 
