@@ -20,6 +20,7 @@ import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
 import com.ats.rusasoftapi.model.report.AluminiAssoMeetReport;
 import com.ats.rusasoftapi.model.report.AluminiEngagement;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
+import com.ats.rusasoftapi.model.report.AwardRecogDetailReport;
 import com.ats.rusasoftapi.model.report.CapabilityEnhancementDev;
 import com.ats.rusasoftapi.model.report.DistinguishedAlumini;
 import com.ats.rusasoftapi.model.report.EGovernenceOperation;
@@ -40,6 +41,7 @@ import com.ats.rusasoftapi.model.report.NoFacultyFinSupp;
 import com.ats.rusasoftapi.model.report.NoOfGenderEquityProg;
 import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
 import com.ats.rusasoftapi.model.report.NoOfPrograms;
+import com.ats.rusasoftapi.model.report.NoOfStudTeachLinkageReport;
 import com.ats.rusasoftapi.model.report.NoOfUniversalvalues;
 import com.ats.rusasoftapi.model.report.OtherThanGovtScheme;
 import com.ats.rusasoftapi.model.report.QualInitiativeAssurance;
@@ -58,6 +60,7 @@ import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
 import com.ats.rusasoftapi.reportrepo.AluminiAssoMeetReportRepo;
 import com.ats.rusasoftapi.reportrepo.AluminiEngagementRepo;
 import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
+import com.ats.rusasoftapi.reportrepo.AwardRecogDetailReportRepo;
 import com.ats.rusasoftapi.reportrepo.CapabilityEnhancementDevRepo;
 import com.ats.rusasoftapi.reportrepo.DistinguishedAluminiRepo;
 import com.ats.rusasoftapi.reportrepo.EGovernenceOperationRepo;
@@ -78,6 +81,7 @@ import com.ats.rusasoftapi.reportrepo.NoFacultyFinSuppRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfGenderEquityProgRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
+import com.ats.rusasoftapi.reportrepo.NoOfStudTeachLinkageReportRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfUniversalvaluesRepo;
 import com.ats.rusasoftapi.reportrepo.OtherThanGovtSchemeRepo;
 import com.ats.rusasoftapi.reportrepo.QualInitiativeAssuranceRepo;
@@ -1559,4 +1563,98 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
+	
+	
+	@Autowired
+	NoOfStudTeachLinkageReportRepo noOfStudTeachLinkageReportRepo;
+	 
+	@RequestMapping(value = { "/getNoOfStudTeachLinkageDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<NoOfStudTeachLinkageReport> getNoOfStudTeachLinkageDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList ) {
+
+		List<NoOfStudTeachLinkageReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			 
+				facPartInVarBodies = noOfStudTeachLinkageReportRepo.getAllNoOfStudTeachLinkage(instId, lastFiveYears);
+	
+			 
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	AwardRecogDetailReportRepo awardRecogDetailReportRepo;
+	
+	@RequestMapping(value = { "/getAwardRecogDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<AwardRecogDetailReport> getAwardRecogDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList ) {
+
+		List<AwardRecogDetailReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					//System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			 
+				facPartInVarBodies = awardRecogDetailReportRepo.getAllAwardRecogDetailReport(instId, lastFiveYears);
+	
+			 
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	
+	
 }
