@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ats.rusasoftapi.model.progdetail.StudQualifyingExam;
+import com.ats.rusasoftapi.model.report.StudQualifyingExamReport;
  
-public interface StudQualifyingExamReportRepo extends JpaRepository<StudQualifyingExam, Integer> {
+public interface StudQualifyingExamReportRepo extends JpaRepository<StudQualifyingExamReport, Integer> {
 
 	
 	@Query(value="SELECT\n" + 
@@ -28,5 +29,5 @@ public interface StudQualifyingExamReportRepo extends JpaRepository<StudQualifyi
 			"WHERE\n" + 
 			"    stud_qualifying_exam.inst_id =:instId AND\n" + 
 			"    stud_qualifying_exam.ac_year_id In(:acYearList) AND stud_qualifying_exam.inst_id = m_institute.institute_id AND stud_qualifying_exam.ac_year_id = m_academic_year.year_id AND stud_qualifying_exam.del_status = 1 AND stud_qualifying_exam.is_active = 1", nativeQuery=true)
-	List<StudQualifyingExam> getAllStudQualifyingExam(@Param("instId")int instId,@Param("acYearList") List<Integer> acYearList);
+	List<StudQualifyingExamReport> getAllStudQualifyingExam(@Param("instId")int instId,@Param("acYearList") List<Integer> acYearList);
 }

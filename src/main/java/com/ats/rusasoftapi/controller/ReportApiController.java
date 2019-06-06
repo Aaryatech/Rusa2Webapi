@@ -17,11 +17,13 @@ import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.progdetail.StudQualifyingExam;
 import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
+import com.ats.rusasoftapi.model.report.AluminiAssoMeetReport;
 import com.ats.rusasoftapi.model.report.AluminiEngagement;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
 import com.ats.rusasoftapi.model.report.CapabilityEnhancementDev;
 import com.ats.rusasoftapi.model.report.DistinguishedAlumini;
 import com.ats.rusasoftapi.model.report.EGovernenceOperation;
+import com.ats.rusasoftapi.model.report.ExtensionActivityReport;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.FinancialSuppToProfMem;
 import com.ats.rusasoftapi.model.report.GenderEquityProg;
@@ -43,6 +45,7 @@ import com.ats.rusasoftapi.model.report.OtherThanGovtScheme;
 import com.ats.rusasoftapi.model.report.QualInitiativeAssurance;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
 import com.ats.rusasoftapi.model.report.SportsCulturalActivityComp;
+import com.ats.rusasoftapi.model.report.StudQualifyingExamReport;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.model.report.TeacherStudUsingLib;
 import com.ats.rusasoftapi.model.report.TrainProgForTeacherStaff;
@@ -52,11 +55,13 @@ import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudQualifyingExamRepo;
 import com.ats.rusasoftapi.reportrepo.AdmissionsAgainstCategoryRepo;
+import com.ats.rusasoftapi.reportrepo.AluminiAssoMeetReportRepo;
 import com.ats.rusasoftapi.reportrepo.AluminiEngagementRepo;
 import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
 import com.ats.rusasoftapi.reportrepo.CapabilityEnhancementDevRepo;
 import com.ats.rusasoftapi.reportrepo.DistinguishedAluminiRepo;
 import com.ats.rusasoftapi.reportrepo.EGovernenceOperationRepo;
+import com.ats.rusasoftapi.reportrepo.ExtensionActivityReportRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.FinancialSuppToProfMemRepo;
 import com.ats.rusasoftapi.reportrepo.GenderEquityProgRepo;
@@ -646,6 +651,15 @@ public class ReportApiController {
 
  				String pagecode1 = setKey1.getStringValue();
  				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt4(instId, lastFiveYears, seccode1, pagecode1,temp);
+			}
+			else if(typeId==5) {
+				// for 85
+				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC3", 1);
+ 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE3", 1);
+ 				String seccode1 = setKey.getStringValue();
+
+ 				String pagecode1 = setKey1.getStringValue();
+ 				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt(instId, lastFiveYears, seccode1, pagecode1);
 			}
  
 			String seccode = setKey.getStringValue();
@@ -1415,10 +1429,10 @@ public class ReportApiController {
 	StudQualifyingExamReportRepo studQualifyingExamReportRepo;
 	
 	@RequestMapping(value = { "/getStudQualifyingExam" }, method = RequestMethod.POST)
-	public @ResponseBody List<StudQualifyingExam> getStudQualifyingExam(@RequestParam int instId,
+	public @ResponseBody List<StudQualifyingExamReport> getStudQualifyingExam(@RequestParam int instId,
 			@RequestParam List<String> acYearList ) {
 
-		List<StudQualifyingExam> facPartInVarBodies = new ArrayList<>();
+		List<StudQualifyingExamReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
 
 		try {
@@ -1456,7 +1470,93 @@ public class ReportApiController {
 
 	}
 	
+	@Autowired
+	AluminiAssoMeetReportRepo aluminiAssoMeetReportRepo;
 	
+	@RequestMapping(value = { "/getAluminiAssoMeetDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<AluminiAssoMeetReport> getAluminiAssoMeetDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList ) {
+
+		List<AluminiAssoMeetReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			 
+				facPartInVarBodies = aluminiAssoMeetReportRepo.getAllAluminiAsso(instId, lastFiveYears);
 	
+			 
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
 	
+	@Autowired
+	ExtensionActivityReportRepo extensionActivityReportRepo;
+	
+	@RequestMapping(value = { "/getExtesionActivityDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<ExtensionActivityReport> getExtesionActivityDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList ) {
+
+		List<ExtensionActivityReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			 
+				facPartInVarBodies = extensionActivityReportRepo.getAllExtensionActivity(instId, lastFiveYears);
+	
+			 
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
 }
