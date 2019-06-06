@@ -14,22 +14,23 @@ public class InstituteMaster {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	
 	private int mhInstId;
-	private int aisheCode;
+	private String aisheCode;
 	private String instName;
 	private String district;
 	private String taluka;
 	private String affUniversity;
 	private String estYear;
+	
 	public int getMhInstId() {
 		return mhInstId;
 	}
 	public void setMhInstId(int mhInstId) {
 		this.mhInstId = mhInstId;
 	}
-	public int getAisheCode() {
+	public String getAisheCode() {
 		return aisheCode;
 	}
-	public void setAisheCode(int aisheCode) {
+	public void setAisheCode(String aisheCode) {
 		this.aisheCode = aisheCode;
 	}
 	public String getInstName() {
