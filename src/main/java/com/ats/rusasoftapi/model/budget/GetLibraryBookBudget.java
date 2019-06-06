@@ -19,6 +19,7 @@ public class GetLibraryBookBudget {
 	private int expenditureOnEjournalsPurchase;
 	private int expenditureOnEresourcesPurchase;
 
+	private String exVar1;
 	private String academicYear;
 	private String finYear;
 	
@@ -28,6 +29,13 @@ public class GetLibraryBookBudget {
 	}
 	public void setExInt1(int exInt1) {
 		this.exInt1 = exInt1;
+	}
+	
+	public String getExVar1() {
+		return exVar1;
+	}
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
 	}
 	public int getLibraryBookBudgetId() {
 		return libraryBookBudgetId;
@@ -95,8 +103,8 @@ public class GetLibraryBookBudget {
 				+ ", acYearId=" + acYearId + ", instituteId=" + instituteId + ", exInt1=" + exInt1
 				+ ", expenditureOnBookPurchase=" + expenditureOnBookPurchase + ", expenditureOnJournalsPurchase="
 				+ expenditureOnJournalsPurchase + ", expenditureOnEjournalsPurchase=" + expenditureOnEjournalsPurchase
-				+ ", expenditureOnEresourcesPurchase=" + expenditureOnEresourcesPurchase + ", academicYear="
-				+ academicYear + ", finYear=" + finYear + "]";
+				+ ", expenditureOnEresourcesPurchase=" + expenditureOnEresourcesPurchase + ", exVar1=" + exVar1
+				+ ", academicYear=" + academicYear + ", finYear=" + finYear + "]";
 	}
 	
 	

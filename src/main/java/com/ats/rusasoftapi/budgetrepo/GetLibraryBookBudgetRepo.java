@@ -10,7 +10,7 @@ import com.ats.rusasoftapi.model.budget.GetLibraryBookBudget;
 
 public interface GetLibraryBookBudgetRepo extends JpaRepository<GetLibraryBookBudget, Integer> {
 
-	@Query(value = " 	SELECT t_library_book_budget.library_book_budget_id,t_library_book_budget.ex_int1,"
+	@Query(value = " 	SELECT t_library_book_budget.library_book_budget_id, t_library_book_budget.ex_var1,t_library_book_budget.ex_int1,"
 			+ " t_library_book_budget.institute_id,t_library_book_budget.fin_year_id,t_library_book_budget.ac_year_id,"
 			+ " t_library_book_budget.expenditure_on_book_purchase,t_library_book_budget.expenditure_on_journals_purchase,"
 			+ " t_library_book_budget.expenditure_on_ejournals_purchase,t_library_book_budget.expenditure_on_eresources_purchase,"

@@ -10,7 +10,7 @@ import com.ats.rusasoftapi.model.budget.GetPhysicalFacilityBudget;
 
 public interface GetPhysicalFacilityBudgetRepo extends JpaRepository<GetPhysicalFacilityBudget, Integer> {
 
-	@Query(value = " SELECT t_physical_facility_budget.physical_facility_budget_id,t_physical_facility_budget.ex_int1,t_physical_facility_budget.fin_year_id,t_physical_facility_budget.institute_id,t_physical_facility_budget.ac_year_id,\n"
+	@Query(value = " SELECT t_physical_facility_budget.physical_facility_budget_id,t_physical_facility_budget.ex_int1,t_physical_facility_budget.ex_var1,t_physical_facility_budget.fin_year_id,t_physical_facility_budget.institute_id,t_physical_facility_budget.ac_year_id,\n"
 			+ " t_physical_facility_budget.physical_facility_budget_title, t_physical_facility_budget.budget_allocated,t_physical_facility_budget.budget_utilized,\n"
 			+ "		m_academic_year.academic_year,m_financial_year.fin_year FROM t_physical_facility_budget \n"
 			+ "			LEFT JOIN m_financial_year  ON t_physical_facility_budget.fin_year_id=m_financial_year.fin_year_id \n"
