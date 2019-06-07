@@ -15,7 +15,7 @@ public interface NoOfBookReportRepo extends JpaRepository<NoOfBookReport, Intege
 			"            \n" + 
 			"    ),\n" + 
 			"    0\n" + 
-			"    ) AS paper_ount,\n" + 
+			"    ) AS paper_count,\n" + 
 			"    COALESCE(\n" + 
 			"        (\n" + 
 			"        SELECT\n" + 
@@ -31,7 +31,7 @@ public interface NoOfBookReportRepo extends JpaRepository<NoOfBookReport, Intege
 			"                       \n" + 
 			"    \n" + 
 			"    m_institute.institute_name,\n" + 
-			"    m_academic_year.academic_year\n" + 
+			"    m_academic_year.academic_year, m_academic_year.year_id\n" + 
 			"FROM\n" + 
 			"    m_institute,\n" + 
 			"    m_academic_year\n" + 
