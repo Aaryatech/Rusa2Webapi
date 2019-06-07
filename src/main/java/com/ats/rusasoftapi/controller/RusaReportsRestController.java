@@ -37,9 +37,13 @@ import com.ats.rusasoftapi.model.report.StudPrfrmInFinlYr;
 import com.ats.rusasoftapi.model.report.StudProgression;
 import com.ats.rusasoftapi.model.report.StudTeachrRatio;
 import com.ats.rusasoftapi.model.report.TeacExpFullTimFac;
+import com.ats.rusasoftapi.model.report.TeacherAwardRecognitn;
+import com.ats.rusasoftapi.model.report.TechrResrchPaprJournlInfo;
+import com.ats.rusasoftapi.model.report.TechrResrchPaprJournlRatio;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.DifferentlyAbldStudReportRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
+import com.ats.rusasoftapi.repo.faculty.TechrResrchPaprJournlRatioRepo;
 import com.ats.rusasoftapi.reportrepo.AdmsnAgnstResrvCatRepo;
 import com.ats.rusasoftapi.reportrepo.AvgPerPlacementRepo;
 import com.ats.rusasoftapi.reportrepo.AwrdRecgAgnstExtActivityReportRepo;
@@ -61,6 +65,8 @@ import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
 import com.ats.rusasoftapi.reportrepo.StudProgressionRepo;
 import com.ats.rusasoftapi.reportrepo.TeacExpFullTimFacRepo;
+import com.ats.rusasoftapi.reportrepo.TeacherAwardRecognitnRepo;
+import com.ats.rusasoftapi.reportrepo.TechrResrchPaprJournlInfoRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostOthrStateRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostRepo;
 
@@ -673,5 +679,69 @@ public class RusaReportsRestController {
  			System.err.println(e.getMessage());
  		}
 		return studProgList;
+ 	}
+	
+	@Autowired TeacherAwardRecognitnRepo techrAwrdRepo;
+	@RequestMapping(value = { "/getTeacherAwardRecognitn" }, method = RequestMethod.POST)
+	public @ResponseBody List<TeacherAwardRecognitn> getTeacherAwardRecognitn(@RequestParam int instId, @RequestParam int acYear) {
+ 		List<TeacherAwardRecognitn> tchrAwrdList = new ArrayList<TeacherAwardRecognitn>();
+ 		 		
+ 		try {
+ 			
+ 			tchrAwrdList = techrAwrdRepo.getAllTeacherAwardRecognitn(acYear, instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return tchrAwrdList;
+ 	}
+	
+	@Autowired TechrResrchPaprJournlInfoRepo techrResrchRepo;
+	@RequestMapping(value = { "/getTechrResrchPaprJournlInfo" }, method = RequestMethod.POST)
+	public @ResponseBody List<TechrResrchPaprJournlInfo> getTechrResrchPaprJournlInfo(@RequestParam int instId, @RequestParam int acYear) {
+ 		List<TechrResrchPaprJournlInfo> tchrAwrdList = new ArrayList<TechrResrchPaprJournlInfo>();
+ 		 		
+ 		try {
+ 			
+ 			tchrAwrdList = techrResrchRepo.getAllTechrResrchPaprJournlInfo(acYear, instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return tchrAwrdList;
+ 	}
+	
+	
+	
+	@Autowired TechrResrchPaprJournlRatioRepo tchrResrchRatioRepo;
+	@RequestMapping(value = { "/getTechrResrchPaprJournlRatio" }, method = RequestMethod.POST)
+	public @ResponseBody List<TechrResrchPaprJournlRatio> getTechrResrchPaprJournlRatio(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+ 	
+		List<TechrResrchPaprJournlRatio> tchrResrchRatioList = new ArrayList<TechrResrchPaprJournlRatio>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
+ 	
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				
+				for (int i = 0; i < acYrList.size(); i++) {
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 			tchrResrchRatioList = tchrResrchRatioRepo.getAllTechrResrchPaprJournlRatio(instId, lastFiveYears);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return tchrResrchRatioList;
  	}
 }
