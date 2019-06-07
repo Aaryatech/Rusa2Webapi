@@ -2,6 +2,7 @@ package com.ats.rusasoftapi.controller;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
-import com.ats.rusasoftapi.model.progdetail.StudQualifyingExam;
-import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
+ import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
 import com.ats.rusasoftapi.model.report.AluminiAssoMeetReport;
 import com.ats.rusasoftapi.model.report.AluminiEngagement;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
 import com.ats.rusasoftapi.model.report.AwardRecogDetailReport;
+import com.ats.rusasoftapi.model.report.BookPublicationDetReport;
 import com.ats.rusasoftapi.model.report.CapabilityEnhancementDev;
 import com.ats.rusasoftapi.model.report.DistinguishedAlumini;
 import com.ats.rusasoftapi.model.report.EGovernenceOperation;
@@ -38,9 +39,10 @@ import com.ats.rusasoftapi.model.report.IniToEngageLocComm;
 import com.ats.rusasoftapi.model.report.LibAutoLMSInfo;
 import com.ats.rusasoftapi.model.report.LibSpecFacilities;
 import com.ats.rusasoftapi.model.report.NoFacultyFinSupp;
+import com.ats.rusasoftapi.model.report.NoOfBookReport;
 import com.ats.rusasoftapi.model.report.NoOfGenderEquityProg;
 import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
-import com.ats.rusasoftapi.model.report.NoOfPrograms;
+ import com.ats.rusasoftapi.model.report.NoOfPrograms;
 import com.ats.rusasoftapi.model.report.NoOfStudTeachLinkageReport;
 import com.ats.rusasoftapi.model.report.NoOfUniversalvalues;
 import com.ats.rusasoftapi.model.report.OtherThanGovtScheme;
@@ -61,6 +63,7 @@ import com.ats.rusasoftapi.reportrepo.AluminiAssoMeetReportRepo;
 import com.ats.rusasoftapi.reportrepo.AluminiEngagementRepo;
 import com.ats.rusasoftapi.reportrepo.AvgEnrollmentPrcntRepo;
 import com.ats.rusasoftapi.reportrepo.AwardRecogDetailReportRepo;
+import com.ats.rusasoftapi.reportrepo.BookPublicationDetReportRepo;
 import com.ats.rusasoftapi.reportrepo.CapabilityEnhancementDevRepo;
 import com.ats.rusasoftapi.reportrepo.DistinguishedAluminiRepo;
 import com.ats.rusasoftapi.reportrepo.EGovernenceOperationRepo;
@@ -78,9 +81,10 @@ import com.ats.rusasoftapi.reportrepo.IniToEngageLocCommRepo;
 import com.ats.rusasoftapi.reportrepo.LibAutoLMSInfoRepo;
 import com.ats.rusasoftapi.reportrepo.LibSpecFacilitiesRepo;
 import com.ats.rusasoftapi.reportrepo.NoFacultyFinSuppRepo;
+import com.ats.rusasoftapi.reportrepo.NoOfBookReportRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfGenderEquityProgRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
-import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
+ import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfStudTeachLinkageReportRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfUniversalvaluesRepo;
 import com.ats.rusasoftapi.reportrepo.OtherThanGovtSchemeRepo;
@@ -1655,6 +1659,98 @@ public class ReportApiController {
 
 	}
 	
+	@Autowired
+	BookPublicationDetReportRepo bookPublicationDetReportRepo;
 	
+	
+	@RequestMapping(value = { "/getBookPublicationDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<BookPublicationDetReport> getBookPublicationDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList ) {
+
+		List<BookPublicationDetReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					//System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			 
+				facPartInVarBodies = bookPublicationDetReportRepo.getBookPublicationDetReport(instId, lastFiveYears);
+	
+			 
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	NoOfBookReportRepo noOfBookReportRepo;
+	
+
+	@RequestMapping(value = { "/getNoOfBookPaperDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<NoOfBookReport> getNoOfBookDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList ) {
+
+		List<NoOfBookReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+				 
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+				 
+					//System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+ 
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			 
+				facPartInVarBodies = noOfBookReportRepo.getAllNoOfBookReport(instId, lastFiveYears);
+	
+			 
+ 			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	 
 	
 }
