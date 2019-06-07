@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.report.AdmsnAgnstResrvCat;
+import com.ats.rusasoftapi.model.report.AvgPerPlacement;
 import com.ats.rusasoftapi.model.report.AwrdRecgAgnstExtActivityReport;
 import com.ats.rusasoftapi.model.report.BudgetInfraAugmntn;
 import com.ats.rusasoftapi.model.report.DifferentlyAbldStudReport;
@@ -33,12 +34,14 @@ import com.ats.rusasoftapi.model.report.NoInitivAddrsLoctnAdvDisadv;
 import com.ats.rusasoftapi.model.report.NoOfLinkages;
 import com.ats.rusasoftapi.model.report.StudCompRatioReport;
 import com.ats.rusasoftapi.model.report.StudPrfrmInFinlYr;
+import com.ats.rusasoftapi.model.report.StudProgression;
 import com.ats.rusasoftapi.model.report.StudTeachrRatio;
 import com.ats.rusasoftapi.model.report.TeacExpFullTimFac;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.DifferentlyAbldStudReportRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.reportrepo.AdmsnAgnstResrvCatRepo;
+import com.ats.rusasoftapi.reportrepo.AvgPerPlacementRepo;
 import com.ats.rusasoftapi.reportrepo.AwrdRecgAgnstExtActivityReportRepo;
 import com.ats.rusasoftapi.reportrepo.BudgetInfraAugmntnRepo;
 import com.ats.rusasoftapi.reportrepo.EContntDevFacReportRepo;
@@ -56,6 +59,7 @@ import com.ats.rusasoftapi.reportrepo.NoInitivAddrsLoctnAdvDisadvRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfLinkagesRepo;
 import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
+import com.ats.rusasoftapi.reportrepo.StudProgressionRepo;
 import com.ats.rusasoftapi.reportrepo.TeacExpFullTimFacRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostOthrStateRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostRepo;
@@ -621,5 +625,53 @@ public class RusaReportsRestController {
  			System.err.println(e.getMessage());
  		}
 		return awrdList;
+ 	}
+	
+	
+	@Autowired AvgPerPlacementRepo studPlaceRepo;
+	@RequestMapping(value = { "/getAvgPerPlacement" }, method = RequestMethod.POST)
+	public @ResponseBody List<AvgPerPlacement> getAvgPerPlacement(@RequestParam int instId,
+			@RequestParam List<String> acYearList,@RequestParam String prgName) {
+ 	
+		List<AvgPerPlacement> studPlaceList = new ArrayList<AvgPerPlacement>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
+ 	
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				
+				for (int i = 0; i < acYrList.size(); i++) {
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 			studPlaceList = studPlaceRepo.getAllAvgPerPlacement(instId, lastFiveYears, prgName);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return studPlaceList;
+ 	}
+	
+	@Autowired StudProgressionRepo studProgRepo;
+	@RequestMapping(value = { "/getStudProgression" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudProgression> getStudProgression(@RequestParam int instId, @RequestParam int acYear) {
+ 		List<StudProgression> studProgList = new ArrayList<StudProgression>();
+ 		 		
+ 		try {
+ 			
+ 			studProgList = studProgRepo.getAllStudProgression(instId, acYear);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return studProgList;
  	}
 }
