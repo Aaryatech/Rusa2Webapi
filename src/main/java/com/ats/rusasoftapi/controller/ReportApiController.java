@@ -2,7 +2,6 @@ package com.ats.rusasoftapi.controller;
 
 import java.util.ArrayList;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
- import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
+import com.ats.rusasoftapi.model.report.AdmissionsAgainstCategory;
 import com.ats.rusasoftapi.model.report.AluminiAssoMeetReport;
 import com.ats.rusasoftapi.model.report.AluminiEngagement;
 import com.ats.rusasoftapi.model.report.AvgEnrollmentPrcnt;
@@ -42,19 +41,24 @@ import com.ats.rusasoftapi.model.report.NoFacultyFinSupp;
 import com.ats.rusasoftapi.model.report.NoOfBookReport;
 import com.ats.rusasoftapi.model.report.NoOfGenderEquityProg;
 import com.ats.rusasoftapi.model.report.NoOfMentorsAssignedStudent;
- import com.ats.rusasoftapi.model.report.NoOfPrograms;
+import com.ats.rusasoftapi.model.report.NoOfPrograms;
 import com.ats.rusasoftapi.model.report.NoOfStudTeachLinkageReport;
 import com.ats.rusasoftapi.model.report.NoOfUniversalvalues;
 import com.ats.rusasoftapi.model.report.OtherThanGovtScheme;
+import com.ats.rusasoftapi.model.report.PhdGuideReport;
+import com.ats.rusasoftapi.model.report.PlagarismCodeEthicsReport;
 import com.ats.rusasoftapi.model.report.QualInitiativeAssurance;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
 import com.ats.rusasoftapi.model.report.SportsCulturalActivityComp;
+import com.ats.rusasoftapi.model.report.StakeHolderFBReport;
+import com.ats.rusasoftapi.model.report.StudEnrooledForProgramReport;
 import com.ats.rusasoftapi.model.report.StudQualifyingExamReport;
 import com.ats.rusasoftapi.model.report.StudentPerformanceOutcome;
 import com.ats.rusasoftapi.model.report.TeacherStudUsingLib;
 import com.ats.rusasoftapi.model.report.TrainProgForTeacherStaff;
 import com.ats.rusasoftapi.model.report.TrainProgOrgnizedForTeach;
 import com.ats.rusasoftapi.model.report.UniversalValPromot;
+import com.ats.rusasoftapi.model.report.ValueAddedCoursesReport;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
 import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudQualifyingExamRepo;
@@ -84,19 +88,24 @@ import com.ats.rusasoftapi.reportrepo.NoFacultyFinSuppRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfBookReportRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfGenderEquityProgRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfMentorsAssignedStudentRepo;
- import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
+import com.ats.rusasoftapi.reportrepo.NoOfProgramsRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfStudTeachLinkageReportRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfUniversalvaluesRepo;
 import com.ats.rusasoftapi.reportrepo.OtherThanGovtSchemeRepo;
+import com.ats.rusasoftapi.reportrepo.PhdGuideReportReport;
+import com.ats.rusasoftapi.reportrepo.PlagarismCodeEthicsReportRepo;
 import com.ats.rusasoftapi.reportrepo.QualInitiativeAssuranceRepo;
 import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
 import com.ats.rusasoftapi.reportrepo.SportsCulturalActivityCompRepo;
+import com.ats.rusasoftapi.reportrepo.StakeHolderFBReportRepo;
+import com.ats.rusasoftapi.reportrepo.StudEnrooledForProgramReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudQualifyingExamReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudentPerformanceOutcomeRepo;
 import com.ats.rusasoftapi.reportrepo.TeacherStudUsingLibRepo;
 import com.ats.rusasoftapi.reportrepo.TrainProgForTeacherStaffRepo;
 import com.ats.rusasoftapi.reportrepo.TrainProgOrgnizedForTeachRepo;
 import com.ats.rusasoftapi.reportrepo.UniversalValPromotRepo;
+import com.ats.rusasoftapi.reportrepo.ValueAddedCoursesReportRepo;
 
 @RestController
 public class ReportApiController {
@@ -606,7 +615,7 @@ public class ReportApiController {
 
 	@RequestMapping(value = { "/geteGovernanceOpt" }, method = RequestMethod.POST)
 	public @ResponseBody List<EGovernenceOperation> geteGovernanceOpt(@RequestParam int instId,
-			@RequestParam List<String> acYearList,@RequestParam int typeId) {
+			@RequestParam List<String> acYearList, @RequestParam int typeId) {
 
 		List<EGovernenceOperation> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -617,7 +626,7 @@ public class ReportApiController {
 			List<Integer> temp = new ArrayList<>();
 			temp.add(19);
 			temp.add(22);
-			
+
 			if (acYearList.contains("-5")) {
 
 				acYrList = academicYearRepo.getLastFiveYears();
@@ -627,7 +636,6 @@ public class ReportApiController {
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
 
-			 
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -635,41 +643,40 @@ public class ReportApiController {
 			}
 			SettingKeyValue setKey = new SettingKeyValue();
 			SettingKeyValue setKey1 = new SettingKeyValue();
-			if(typeId==1) {
-			// for R66
+			if (typeId == 1) {
+				// for R66
 				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC", 1);
- 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE", 1);
-			}else if(typeId==2) {
+				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE", 1);
+			} else if (typeId == 2) {
 				// for R78
 				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC1", 1);
- 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE1", 1);
-				
-			}
-			else if(typeId==3) {
-				// for R79
-				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC2", 1);
- 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE2", 1);
-				
-			}
-			else if(typeId==4) {
-				// for R79
-				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC2", 1);
- 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE2", 1);
- 				String seccode1 = setKey.getStringValue();
+				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE1", 1);
 
- 				String pagecode1 = setKey1.getStringValue();
- 				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt4(instId, lastFiveYears, seccode1, pagecode1,temp);
-			}
-			else if(typeId==5) {
+			} else if (typeId == 3) {
+				// for R79
+				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC2", 1);
+				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE2", 1);
+
+			} else if (typeId == 4) {
+				// for R79
+				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC2", 1);
+				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE2", 1);
+				String seccode1 = setKey.getStringValue();
+
+				String pagecode1 = setKey1.getStringValue();
+				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt4(instId, lastFiveYears, seccode1,
+						pagecode1, temp);
+			} else if (typeId == 5) {
 				// for 85
 				setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYSEC3", 1);
- 				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE3", 1);
- 				String seccode1 = setKey.getStringValue();
+				setKey1 = settingKeyValueRepo.findBySettingKeyAndDelStatus("KEYCODE3", 1);
+				String seccode1 = setKey.getStringValue();
 
- 				String pagecode1 = setKey1.getStringValue();
- 				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt(instId, lastFiveYears, seccode1, pagecode1);
+				String pagecode1 = setKey1.getStringValue();
+				facPartInVarBodies = eGovernenceOperationRepo.getEGovernanceOpt(instId, lastFiveYears, seccode1,
+						pagecode1);
 			}
- 
+
 			String seccode = setKey.getStringValue();
 
 			String pagecode = setKey1.getStringValue();
@@ -693,7 +700,7 @@ public class ReportApiController {
 
 	@RequestMapping(value = { "/getFinancialSuppToProfMemDetail" }, method = RequestMethod.POST)
 	public @ResponseBody List<FinancialSuppToProfMem> getFinancialSuppToProfMemDetail(@RequestParam int instId,
-			@RequestParam List<String> acYearList,@RequestParam int typeId) {
+			@RequestParam List<String> acYearList, @RequestParam int typeId) {
 
 		List<FinancialSuppToProfMem> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -722,15 +729,15 @@ public class ReportApiController {
 			System.err.println("Last five " + lastFiveYears.toString());
 			SettingKeyValue setKey = new SettingKeyValue();
 			setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("Inst", 1);
-			String keyVal=setKey.getStringValue();
-			if(typeId==1) {
-				facPartInVarBodies = financialSuppToProfMemRepo.getAllFinancialSuppToProfMemInst(instId, lastFiveYears,keyVal);
+			String keyVal = setKey.getStringValue();
+			if (typeId == 1) {
+				facPartInVarBodies = financialSuppToProfMemRepo.getAllFinancialSuppToProfMemInst(instId, lastFiveYears,
+						keyVal);
 
-			}
-			else if(typeId==2) {
-				facPartInVarBodies = financialSuppToProfMemRepo.getAllFinancialSuppToProfMem(instId, lastFiveYears,keyVal);
+			} else if (typeId == 2) {
+				facPartInVarBodies = financialSuppToProfMemRepo.getAllFinancialSuppToProfMem(instId, lastFiveYears,
+						keyVal);
 
-				
 			}
 			System.err.println("List=" + facPartInVarBodies);
 
@@ -850,8 +857,8 @@ public class ReportApiController {
 	public @ResponseBody List<GetVisions> getInstVisionList(@RequestParam int instId) {
 
 		List<GetVisions> progList = new ArrayList<>();
- 		try {
-			 
+		try {
+
 			progList = getVisionsRepo.getInstVision(instId);
 			System.err.println("List=" + progList);
 
@@ -865,8 +872,7 @@ public class ReportApiController {
 		return progList;
 
 	}
-	
-	
+
 	@Autowired
 	GetMissionsRepo getMissionsRepo;
 
@@ -874,8 +880,8 @@ public class ReportApiController {
 	public @ResponseBody List<GetMissions> getInstMissionList(@RequestParam int instId) {
 
 		List<GetMissions> progList = new ArrayList<>();
- 		try {
-			 
+		try {
+
 			progList = getMissionsRepo.getInstMission(instId);
 			System.err.println("List=" + progList);
 
@@ -889,7 +895,7 @@ public class ReportApiController {
 		return progList;
 
 	}
-	
+
 	@Autowired
 	IQACQualInititiveRepo iQACQualInititiveRepo;
 
@@ -897,8 +903,8 @@ public class ReportApiController {
 	public @ResponseBody List<IQACQualInititive> getQualInititiveList(@RequestParam int instId) {
 
 		List<IQACQualInititive> progList = new ArrayList<>();
- 		try {
-			 
+		try {
+
 			progList = iQACQualInititiveRepo.getQualInitiative(instId);
 			System.err.println("List=" + progList);
 
@@ -912,8 +918,7 @@ public class ReportApiController {
 		return progList;
 
 	}
-	
-	
+
 	@Autowired
 	QualInitiativeAssuranceRepo qualInitiativeAssuranceRepo;
 
@@ -959,7 +964,7 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	GenderEquityProgRepo genderEquityProgRepo;
 
@@ -974,13 +979,13 @@ public class ReportApiController {
 		try {
 
 			if (acYearList.contains("-5")) {
- 				acYrList = academicYearRepo.getLastFiveYears();
+				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
- 					System.err.println("acYrList" + acYrList.get(i).toString());
+					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1000,7 +1005,7 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	NoOfGenderEquityProgRepo getNoOfGenderEquityProgRepo;
 
@@ -1045,7 +1050,7 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	IniToEngageLocCommRepo iniToEngageLocCommRepo;
 
@@ -1060,15 +1065,15 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1087,10 +1092,10 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	UniversalValPromotRepo universalValPromotRepo;
-	
+
 	@RequestMapping(value = { "/getUniversalValues" }, method = RequestMethod.POST)
 	public @ResponseBody List<UniversalValPromot> getUniversalValues(@RequestParam int instId,
 			@RequestParam List<String> acYearList) {
@@ -1102,15 +1107,15 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1129,10 +1134,10 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	NoOfUniversalvaluesRepo noOfUniversalvaluesRepo;
-	 
+
 	@RequestMapping(value = { "/getNoUniversalValues" }, method = RequestMethod.POST)
 	public @ResponseBody List<NoOfUniversalvalues> getNoUniversalValues(@RequestParam int instId,
 			@RequestParam List<String> acYearList) {
@@ -1144,15 +1149,15 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1171,10 +1176,10 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	GovtSchemeRepo govtSchemeRepo;
-	 
+
 	@RequestMapping(value = { "/getGovtScheme" }, method = RequestMethod.POST)
 	public @ResponseBody List<GovtScheme> getGovtScheme(@RequestParam int instId,
 			@RequestParam List<String> acYearList) {
@@ -1186,15 +1191,15 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1213,10 +1218,10 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	OtherThanGovtSchemeRepo otherThanGovtSchemeRepo;
-	
+
 	@RequestMapping(value = { "/getOtherThanGovtScheme" }, method = RequestMethod.POST)
 	public @ResponseBody List<OtherThanGovtScheme> getOtherThanGovtScheme(@RequestParam int instId,
 			@RequestParam List<String> acYearList) {
@@ -1228,15 +1233,15 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1255,10 +1260,9 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	DistinguishedAluminiRepo distinguishedAluminiRepo;
-	
 
 	@RequestMapping(value = { "/getDistinctAlumini" }, method = RequestMethod.POST)
 	public @ResponseBody List<DistinguishedAlumini> getDistinctAlumini(@RequestParam int instId,
@@ -1271,15 +1275,15 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1298,10 +1302,9 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	AluminiEngagementRepo aluminiEngagementRepo;
-	
 
 	@RequestMapping(value = { "/getAluminiEngg" }, method = RequestMethod.POST)
 	public @ResponseBody List<AluminiEngagement> getAluminiEngg(@RequestParam int instId,
@@ -1314,15 +1317,15 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
@@ -1341,13 +1344,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	SportsCulturalActivityCompRepo sportsCulturalActivityCompRepo;
-	
+
 	@RequestMapping(value = { "/getSportsActivityComp" }, method = RequestMethod.POST)
 	public @ResponseBody List<SportsCulturalActivityComp> getSportsActivityComp(@RequestParam int instId,
-			@RequestParam List<String> acYearList,@RequestParam int typeId) {
+			@RequestParam List<String> acYearList, @RequestParam int typeId) {
 
 		List<SportsCulturalActivityComp> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1356,21 +1359,22 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			facPartInVarBodies = sportsCulturalActivityCompRepo.getAllSportsCulturalActivityComp(instId, lastFiveYears,typeId);
+			facPartInVarBodies = sportsCulturalActivityCompRepo.getAllSportsCulturalActivityComp(instId, lastFiveYears,
+					typeId);
 			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
@@ -1383,13 +1387,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	CapabilityEnhancementDevRepo capabilityEnhancementDevRepo;
-	
+
 	@RequestMapping(value = { "/getCapabilityEnhancementDev" }, method = RequestMethod.POST)
 	public @ResponseBody List<CapabilityEnhancementDev> getCapabilityEnhancementDev(@RequestParam int instId,
-			@RequestParam List<String> acYearList,@RequestParam int typeId) {
+			@RequestParam List<String> acYearList, @RequestParam int typeId) {
 
 		List<CapabilityEnhancementDev> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1398,28 +1402,28 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			if(typeId==1) {
+			if (typeId == 1) {
 				facPartInVarBodies = capabilityEnhancementDevRepo.getAllCapabilityEnhancementDev(instId, lastFiveYears);
-	
-			}else if(typeId==2) {
+
+			} else if (typeId == 2) {
 				facPartInVarBodies = capabilityEnhancementDevRepo.getAllCapabilityEnhancementDevVET(instId);
 
 			}
- 			System.err.println("List=" + facPartInVarBodies);
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1431,14 +1435,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
-	
+
 	@Autowired
 	StudQualifyingExamReportRepo studQualifyingExamReportRepo;
-	
+
 	@RequestMapping(value = { "/getStudQualifyingExam" }, method = RequestMethod.POST)
 	public @ResponseBody List<StudQualifyingExamReport> getStudQualifyingExam(@RequestParam int instId,
-			@RequestParam List<String> acYearList ) {
+			@RequestParam List<String> acYearList) {
 
 		List<StudQualifyingExamReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1447,25 +1450,24 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			 
-				facPartInVarBodies = studQualifyingExamReportRepo.getAllStudQualifyingExam(instId, lastFiveYears);
-	
-			 
- 			System.err.println("List=" + facPartInVarBodies);
+
+			facPartInVarBodies = studQualifyingExamReportRepo.getAllStudQualifyingExam(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1477,13 +1479,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	AluminiAssoMeetReportRepo aluminiAssoMeetReportRepo;
-	
+
 	@RequestMapping(value = { "/getAluminiAssoMeetDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<AluminiAssoMeetReport> getAluminiAssoMeetDetails(@RequestParam int instId,
-			@RequestParam List<String> acYearList ) {
+			@RequestParam List<String> acYearList) {
 
 		List<AluminiAssoMeetReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1492,25 +1494,24 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			 
-				facPartInVarBodies = aluminiAssoMeetReportRepo.getAllAluminiAsso(instId, lastFiveYears);
-	
-			 
- 			System.err.println("List=" + facPartInVarBodies);
+
+			facPartInVarBodies = aluminiAssoMeetReportRepo.getAllAluminiAsso(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1522,13 +1523,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	ExtensionActivityReportRepo extensionActivityReportRepo;
-	
+
 	@RequestMapping(value = { "/getExtesionActivityDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<ExtensionActivityReport> getExtesionActivityDetails(@RequestParam int instId,
-			@RequestParam List<String> acYearList ) {
+			@RequestParam List<String> acYearList) {
 
 		List<ExtensionActivityReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1537,25 +1538,24 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			 
-				facPartInVarBodies = extensionActivityReportRepo.getAllExtensionActivity(instId, lastFiveYears);
-	
-			 
- 			System.err.println("List=" + facPartInVarBodies);
+
+			facPartInVarBodies = extensionActivityReportRepo.getAllExtensionActivity(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1567,14 +1567,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
-	
+
 	@Autowired
 	NoOfStudTeachLinkageReportRepo noOfStudTeachLinkageReportRepo;
-	 
+
 	@RequestMapping(value = { "/getNoOfStudTeachLinkageDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<NoOfStudTeachLinkageReport> getNoOfStudTeachLinkageDetails(@RequestParam int instId,
-			@RequestParam List<String> acYearList ) {
+			@RequestParam List<String> acYearList) {
 
 		List<NoOfStudTeachLinkageReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1583,25 +1582,24 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
+
 					System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			 
-				facPartInVarBodies = noOfStudTeachLinkageReportRepo.getAllNoOfStudTeachLinkage(instId, lastFiveYears);
-	
-			 
- 			System.err.println("List=" + facPartInVarBodies);
+
+			facPartInVarBodies = noOfStudTeachLinkageReportRepo.getAllNoOfStudTeachLinkage(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1613,13 +1611,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	AwardRecogDetailReportRepo awardRecogDetailReportRepo;
-	
+
 	@RequestMapping(value = { "/getAwardRecogDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<AwardRecogDetailReport> getAwardRecogDetails(@RequestParam int instId,
-			@RequestParam List<String> acYearList ) {
+			@RequestParam List<String> acYearList) {
 
 		List<AwardRecogDetailReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1628,25 +1626,24 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
-					//System.err.println("acYrList" + acYrList.get(i).toString());
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			 
-				facPartInVarBodies = awardRecogDetailReportRepo.getAllAwardRecogDetailReport(instId, lastFiveYears);
-	
-			 
- 			System.err.println("List=" + facPartInVarBodies);
+
+			facPartInVarBodies = awardRecogDetailReportRepo.getAllAwardRecogDetailReport(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1658,14 +1655,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	BookPublicationDetReportRepo bookPublicationDetReportRepo;
-	
-	
+
 	@RequestMapping(value = { "/getBookPublicationDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<BookPublicationDetReport> getBookPublicationDetails(@RequestParam int instId,
-			@RequestParam List<String> acYearList ) {
+			@RequestParam List<String> acYearList) {
 
 		List<BookPublicationDetReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1674,25 +1670,24 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
-					//System.err.println("acYrList" + acYrList.get(i).toString());
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			 
-				facPartInVarBodies = bookPublicationDetReportRepo.getBookPublicationDetReport(instId, lastFiveYears);
-	
-			 
- 			System.err.println("List=" + facPartInVarBodies);
+
+			facPartInVarBodies = bookPublicationDetReportRepo.getBookPublicationDetReport(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1704,14 +1699,13 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
+
 	@Autowired
 	NoOfBookReportRepo noOfBookReportRepo;
-	
 
 	@RequestMapping(value = { "/getNoOfBookPaperDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<NoOfBookReport> getNoOfBookDetails(@RequestParam int instId,
-			@RequestParam List<String> acYearList ) {
+			@RequestParam List<String> acYearList) {
 
 		List<NoOfBookReport> facPartInVarBodies = new ArrayList<>();
 		List<AcademicYear> acYrList = new ArrayList<>();
@@ -1720,25 +1714,24 @@ public class ReportApiController {
 
 			List<Integer> lastFiveYears = new ArrayList<>();
 			if (acYearList.contains("-5")) {
-				 
+
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-				 
-					//System.err.println("acYrList" + acYrList.get(i).toString());
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
- 
+
 			} else {
 				System.err.println("in else ");
 				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
 
 			}
-			 
-				facPartInVarBodies = noOfBookReportRepo.getAllNoOfBookReport(instId, lastFiveYears);
-	
-			 
- 			System.err.println("List=" + facPartInVarBodies);
+
+			facPartInVarBodies = noOfBookReportRepo.getAllNoOfBookReport(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -1750,7 +1743,224 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
-	
-	 
-	
+
+	@Autowired
+	PhdGuideReportReport phdGuideReportReport;
+
+	@RequestMapping(value = { "/getPddGuideDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<PhdGuideReport> getPddGuideDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<PhdGuideReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+
+			facPartInVarBodies = phdGuideReportReport.getAllPhdGuideR(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+
+	@Autowired
+	PlagarismCodeEthicsReportRepo plagarismCodeEthicsReportRepo;
+
+	@RequestMapping(value = { "/getPlagarismCodeEthicsDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<PlagarismCodeEthicsReport> getPlagarismCodeEthicsDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<PlagarismCodeEthicsReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+
+			facPartInVarBodies = plagarismCodeEthicsReportRepo.getAllPlagarismCodeEthicsReport(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+
+	@Autowired
+	StudEnrooledForProgramReportRepo studEnrooledForProgramReportRepo;
+
+	@RequestMapping(value = { "/getStudEnrooledForProgram" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudEnrooledForProgramReport> studEnrooledForProgram(@RequestParam int instId,
+			@RequestParam List<String> acYearList, @RequestParam int programId) {
+		List<StudEnrooledForProgramReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+
+			facPartInVarBodies = studEnrooledForProgramReportRepo.getStudEnrooledForProgramReport(instId, lastFiveYears,
+					programId);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+
+	@Autowired
+	ValueAddedCoursesReportRepo valueAddedCoursesReportRepo;
+
+	@RequestMapping(value = { "/getValueAddedCoursesDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<ValueAddedCoursesReport> getValueAddedCoursesDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<ValueAddedCoursesReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+
+			facPartInVarBodies = valueAddedCoursesReportRepo.getAllValueAddedCoursesReport(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+
+	@Autowired
+	StakeHolderFBReportRepo stakeHolderFBReportRepo;
+
+	@RequestMapping(value = { "/getStakeHolderFBDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<StakeHolderFBReport> getStakeHolderFBDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<StakeHolderFBReport> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+
+			facPartInVarBodies = stakeHolderFBReportRepo.getAllStakeHolderFBReport(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+
 }
