@@ -34,4 +34,7 @@ public interface InstituteRepo extends JpaRepository<Institute, Integer> {
 	@Query(value="UPDATE m_institute SET del_status=0 WHERE institute_id=:instId",nativeQuery=true)
 	int delPendingInst(int instId);
 	
+	Institute findByAisheCodeAndDelStatus(String aisheCode,int delStatus);
+	
+	
 }

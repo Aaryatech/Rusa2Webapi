@@ -11,7 +11,7 @@ import com.ats.rusasoftapi.model.Designation;
 
 public interface DesignationRepo extends JpaRepository<Designation, Integer> {
 
-	//List<Designation> findByDelStatusAndIsActiveOrderByDesignationIdDesc(@Param("i") int i, @Param("j") int j);
+	List<Designation> findByDelStatusAndIsActiveOrderByDesignationIdDesc(@Param("i") int i, @Param("j") int j);
 
 	@Query(value="SELECT * FROM m_designation WHERE del_status = 1 AND is_active = 1 And desg_no IN(:desgList)",nativeQuery=true)
 	List<Designation> findByDelStatusAndIsActiveOrderByDesignationIdDesc(@Param("desgList") List<Integer> desgList);

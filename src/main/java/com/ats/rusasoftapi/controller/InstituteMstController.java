@@ -8,15 +8,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.model.Institute;
 import com.ats.rusasoftapi.model.InstituteMaster;
+import com.ats.rusasoftapi.mstrepo.InstituteRepo;
 import com.ats.rusasoftapi.repository.InstituteMasterRepo;
-
+//06-06-2019
 @RestController
 public class InstituteMstController {
 
 	@Autowired InstituteMasterRepo instituteMasterRepo;
-	
-	
+	@Autowired
+	InstituteRepo instituteRepo;
+	@RequestMapping(value = { "/checkAisheCodeDuplication" }, method = RequestMethod.POST)
+	public @ResponseBody String checkAisheCodeDuplication(@RequestParam String aisheCode) {
+String response=null;
+		Institute insResp = new Institute();
+		try {
+			
+			insResp=instituteRepo.findByAisheCodeAndDelStatus(aisheCode, 1);
+			//System.err.println("Inst with aishe " +insResp.toString());
+			if(insResp==null) {
+				response= "unique";
+			}else {
+				response= "duplicate";
+			}
+		}catch (Exception e) {
+			System.err.println("");
+			
+		}
+		//System.err.println("Inst with aishe " +insResp.toString());
+		
+		return response;
+	}
+		
 	@RequestMapping(value = { "/getInstituteMasterByAishe" }, method = RequestMethod.POST)
 	public @ResponseBody InstituteMaster getInstituteMasterByAishe(@RequestParam String aisheCode) {
 
