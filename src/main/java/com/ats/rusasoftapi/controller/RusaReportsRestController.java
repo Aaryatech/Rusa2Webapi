@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
-import com.ats.rusasoftapi.model.report.AdmsnAgnstResrvCat;
 import com.ats.rusasoftapi.model.report.AvgPerPlacement;
 import com.ats.rusasoftapi.model.report.AwrdRecgAgnstExtActivityReport;
 import com.ats.rusasoftapi.model.report.BudgetInfraAugmntn;
