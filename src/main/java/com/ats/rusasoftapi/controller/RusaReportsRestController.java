@@ -23,7 +23,9 @@ import com.ats.rusasoftapi.model.report.ExpndGreenInitveWsteMgmt;
 import com.ats.rusasoftapi.model.report.ExpndturOnPhysclAcademicSupprt;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPost;
 import com.ats.rusasoftapi.model.report.FacAgnstSanctnPostOthrState;
+import com.ats.rusasoftapi.model.report.FildeProjectInternReport;
 import com.ats.rusasoftapi.model.report.FulTimFacultyWithPhd;
+import com.ats.rusasoftapi.model.report.FullTimeTechrInstResrchGuide;
 import com.ats.rusasoftapi.model.report.FunctionalMou;
 import com.ats.rusasoftapi.model.report.ICtEnbldFaclitiesReport;
 import com.ats.rusasoftapi.model.report.InitivAddrsLoctnAdvDisadv;
@@ -32,6 +34,9 @@ import com.ats.rusasoftapi.model.report.IntrnetConnInfo;
 import com.ats.rusasoftapi.model.report.NoAwardRecogExtAct;
 import com.ats.rusasoftapi.model.report.NoInitivAddrsLoctnAdvDisadv;
 import com.ats.rusasoftapi.model.report.NoOfLinkages;
+import com.ats.rusasoftapi.model.report.PerNewCource;
+import com.ats.rusasoftapi.model.report.PerProgCbseElectiveCourse;
+import com.ats.rusasoftapi.model.report.ResrchProjectGrants;
 import com.ats.rusasoftapi.model.report.StudCompRatioReport;
 import com.ats.rusasoftapi.model.report.StudPrfrmInFinlYr;
 import com.ats.rusasoftapi.model.report.StudProgression;
@@ -52,7 +57,9 @@ import com.ats.rusasoftapi.reportrepo.EContntDevFacReportRepo;
 import com.ats.rusasoftapi.reportrepo.ExpenditureOnPrchaseBooksJournalRepo;
 import com.ats.rusasoftapi.reportrepo.ExpndGreenInitveWsteMgmtRepo;
 import com.ats.rusasoftapi.reportrepo.ExpndturOnPhysclAcademicSupprtRepo;
+import com.ats.rusasoftapi.reportrepo.FildeProjectInternReportRepo;
 import com.ats.rusasoftapi.reportrepo.FulTimFacultyWithPhdRepo;
+import com.ats.rusasoftapi.reportrepo.FullTimeTechrInstResrchGuideRepo;
 import com.ats.rusasoftapi.reportrepo.FunctionalMouRepo;
 import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
 import com.ats.rusasoftapi.reportrepo.InitivAddrsLoctnAdvDisadvRepo;
@@ -61,6 +68,9 @@ import com.ats.rusasoftapi.reportrepo.IntrnetConnInfoRepo;
 import com.ats.rusasoftapi.reportrepo.NoAwardRecogExtActRepo;
 import com.ats.rusasoftapi.reportrepo.NoInitivAddrsLoctnAdvDisadvRepo;
 import com.ats.rusasoftapi.reportrepo.NoOfLinkagesRepo;
+import com.ats.rusasoftapi.reportrepo.PerNewCourceRepo;
+import com.ats.rusasoftapi.reportrepo.PerProgCbseElectiveCourseRepo;
+import com.ats.rusasoftapi.reportrepo.ResrchProjectGrantsRepo;
 import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
 import com.ats.rusasoftapi.reportrepo.StudProgressionRepo;
@@ -743,5 +753,104 @@ public class RusaReportsRestController {
  			System.err.println(e.getMessage());
  		}
 		return tchrResrchRatioList;
+ 	}
+	
+	@Autowired ResrchProjectGrantsRepo resrchProJGrntRepo;
+	@RequestMapping(value = { "/getResrchProjectGrants" }, method = RequestMethod.POST)
+	public @ResponseBody List<ResrchProjectGrants> getResrchProjectGrants(@RequestParam int instId, @RequestParam int acYear) {
+ 		List<ResrchProjectGrants> projGranList = new ArrayList<ResrchProjectGrants>();
+ 		 		
+ 		try {
+ 			
+ 			projGranList = resrchProJGrntRepo.getAllResrchProjectGrants(acYear, instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return projGranList;
+ 	}
+	
+	
+	@Autowired FullTimeTechrInstResrchGuideRepo resrchGuideRepo;
+	@RequestMapping(value = { "/getFullTimeTechrInstResrchGuide" }, method = RequestMethod.POST)
+	public @ResponseBody List<FullTimeTechrInstResrchGuide> getFullTimeTechrInstResrchGuide(@RequestParam int instId, @RequestParam int acYear) {
+ 		List<FullTimeTechrInstResrchGuide> guideList = new ArrayList<FullTimeTechrInstResrchGuide>();
+ 		 		
+ 		try {
+ 			
+ 			guideList = resrchGuideRepo.getAllFullTimeTechrInstResrchGuide(acYear, instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return guideList;
+ 	}
+	
+	@Autowired PerNewCourceRepo newCourseRepo;
+	@RequestMapping(value = { "/getPerNewCource" }, method = RequestMethod.POST)
+	public @ResponseBody List<PerNewCource> getPerNewCource(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+ 	
+		List<PerNewCource> courseList = new ArrayList<PerNewCource>();
+ 		List<AcademicYear> acYrList = new ArrayList<>();
+ 		
+ 		try {
+ 			List<Integer> lastFiveYears=new ArrayList<>();
+ 	
+ 			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				
+				for (int i = 0; i < acYrList.size(); i++) {
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+ 			courseList = newCourseRepo.getAllPerNewCource(instId, lastFiveYears);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return courseList;
+ 	}
+	
+	
+	
+	@Autowired PerProgCbseElectiveCourseRepo electivCrsRepo;
+	@RequestMapping(value = { "/getPerProgCbseElectiveCourse" }, method = RequestMethod.POST)
+	public @ResponseBody List<PerProgCbseElectiveCourse> getPerProgCbseElectiveCourse(@RequestParam int instId) {
+ 		List<PerProgCbseElectiveCourse> crsList = new ArrayList<PerProgCbseElectiveCourse>();
+ 		 		
+ 		try {
+ 			
+ 			crsList = electivCrsRepo.getAllPerProgCbseElectiveCourse(instId);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+		return crsList;
+ 	}
+	
+	
+	
+	@Autowired FildeProjectInternReportRepo fieldProInternRepo;
+	@RequestMapping(value = { "/getFildeProjectInternReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<FildeProjectInternReport> getFildeProjectInternReport(@RequestParam int instId,
+			@RequestParam int prog_name, @RequestParam int acYear) {
+ 		List<FildeProjectInternReport> fileInternList = new ArrayList<FildeProjectInternReport>();
+ 		 		
+ 		try {
+ 			
+ 			fileInternList = fieldProInternRepo.getAllFildeProjectInternReport(instId, prog_name, acYear);
+ 			
+ 		}catch(Exception e) {
+ 			System.err.println(e.getMessage());
+ 		}
+ 		
+		return fileInternList;
  	}
 }
