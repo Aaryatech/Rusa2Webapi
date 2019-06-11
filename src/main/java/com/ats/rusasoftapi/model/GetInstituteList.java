@@ -1,7 +1,11 @@
 package com.ats.rusasoftapi.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetInstituteList {
@@ -14,11 +18,20 @@ public class GetInstituteList {
 	private String principalName;
 	private String contactNo;
 	private String email;
+	private Date makerEnterDatetime;
+	
 	public int getInstituteId() {
 		return instituteId;
 	}
 	public void setInstituteId(int instituteId) {
 		this.instituteId = instituteId;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getMakerEnterDatetime() {
+		return makerEnterDatetime;
+	}
+	public void setMakerEnterDatetime(Date makerEnterDatetime) {
+		this.makerEnterDatetime = makerEnterDatetime;
 	}
 	public String getInstituteName() {
 		return instituteName;
@@ -44,11 +57,12 @@ public class GetInstituteList {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 	@Override
 	public String toString() {
 		return "GetInstituteList [instituteId=" + instituteId + ", instituteName=" + instituteName + ", principalName="
-				+ principalName + ", contactNo=" + contactNo + ", email=" + email + "]";
+				+ principalName + ", contactNo=" + contactNo + ", email=" + email + ", makerEnterDatetime="
+				+ makerEnterDatetime + "]";
 	}
-
+	
+	
 }

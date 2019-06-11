@@ -17,7 +17,7 @@ public interface NoOfProgramsRepo extends JpaRepository<NoOfPrograms, Integer> {
 			" WHERE t_program.del_status=1 AND t_program.is_active=1 and m_program_type.program_id IN (:stkId)  AND m_program_type.program_id=t_program.program_type " + 
 			" AND  t_program.institute_id=m_institute.institute_id AND t_program.institute_id IN(:instId)",nativeQuery=true)
 
-	List<NoOfPrograms> getNoOfPrograms(@Param("instId")   int instId,@Param("stkId")   String stkId);
+	List<NoOfPrograms> getNoOfPrograms(@Param("instId") int instId,@Param("stkId") String stkId);
 	
 
 }

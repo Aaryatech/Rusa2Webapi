@@ -13,7 +13,7 @@ public interface FildeProjectInternReportRepo extends JpaRepository<FildeProject
 	@Query(value="SELECT field_projects_intern.field_project_intern_id, field_projects_intern.provision_for_undertaking," + 
 			"field_projects_intern.no_of_stud_undertaking," + 
 			"field_projects_intern.document," + 
-			"t_program.program_type," + 
+			"t_program.name_of_program AS program_type," + 
 			"m_institute.institute_name," + 
 			"m_academic_year.academic_year " + 
 			"FROM field_projects_intern, m_institute, m_academic_year, t_program " + 
