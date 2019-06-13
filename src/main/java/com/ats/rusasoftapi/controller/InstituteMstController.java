@@ -30,9 +30,9 @@ String response=null;
 			if(insResp==null) {
 				response= "unique";
 			}else {
-				response= "duplicate";
+				response= "	";
 			}
-		}catch (Exception e) {
+		}catch (Exception e) {	
 			System.err.println("");
 			
 		}

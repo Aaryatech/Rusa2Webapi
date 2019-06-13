@@ -49,7 +49,7 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 	Staff findByDelStatusAndIsActiveAndEmailAndPasswordContainingAndIsBlocked(int delStatus, int isActive, String email,
 			String password,int isBlocked);
 
-	Staff findByDelStatusAndIsActiveAndEmail(int delStatus, int isActive, String email);
+	Staff findByDelStatusAndIsActiveAndEmailAndIsBlocked(int delStatus, int isActive, String email,int blocked);
 
 	Staff findByDelStatusAndIsActiveAndIsBlockedAndInstituteIdAndEmailIgnoreCase(int delStatus, int isActive,
 			int isBlocked, int instId, String email);

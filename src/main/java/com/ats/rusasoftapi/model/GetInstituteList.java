@@ -26,8 +26,8 @@ public class GetInstituteList {
 	public void setInstituteId(int instituteId) {
 		this.instituteId = instituteId;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getMakerEnterDatetime() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy HH:mm")
+	public Date getMakerEnterDatetime() {	
 		return makerEnterDatetime;
 	}
 	public void setMakerEnterDatetime(Date makerEnterDatetime) {

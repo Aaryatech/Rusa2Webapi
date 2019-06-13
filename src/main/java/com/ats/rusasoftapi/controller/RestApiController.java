@@ -135,7 +135,7 @@ public class RestApiController {
 		 * System.err.println("User data is"+userDetail.toString()); }
 		 */
 
-		Staff userDetail = staffRepo.findByDelStatusAndIsActiveAndEmail(1, 1, inputValue);
+		Staff userDetail = staffRepo.findByDelStatusAndIsActiveAndEmailAndIsBlocked(1, 1, inputValue,0);
 
 		if (userDetail != null) {
 			OTPVerification.setUserId(userDetail.getFacultyId());
