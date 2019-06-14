@@ -79,7 +79,14 @@ public class GetProgramActivity {
 	private String yearName;
 
 private String aadharNo;
-	
+private String rawActivityName;	
+
+public String getRawActivityName() {
+	return rawActivityName;
+}
+public void setRawActivityName(String rawActivityName) {
+	this.rawActivityName = rawActivityName;
+}
 	
 	public String getAadharNo() {
 		return aadharNo;

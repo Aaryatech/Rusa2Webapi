@@ -32,6 +32,7 @@ public class ProgramActivity {
 	@Column(name="other_compitition")
 	private String otherCompitition;
 	
+	
 	@Column(name="venue")
 	private String venue;
 	
@@ -80,7 +81,18 @@ public class ProgramActivity {
 	@Column(name="aadhar_no")
 	private String aadharNo;
 	
+	@Column(name="raw_activity_name")
+	private String rawActivityName;
 	
+	
+	
+	
+	public String getRawActivityName() {
+		return rawActivityName;
+	}
+	public void setRawActivityName(String rawActivityName) {
+		this.rawActivityName = rawActivityName;
+	}
 	public String getAadharNo() {
 		return aadharNo;
 	}
@@ -252,7 +264,19 @@ public class ProgramActivity {
 				+ venue + ", date=" + date + ", year=" + year + ", branch=" + branch + ", participatedStudent="
 				+ participatedStudent + ", level=" + level + ", isActive=" + isActive + ", delStatus=" + delStatus
 				+ ", addDate=" + addDate + ", makerUserId=" + makerUserId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
-				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", type=" + type + ", aadharNo=" + aadharNo + "]";
+				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", type=" + type + ", aadharNo=" + aadharNo
+				+ ", rawActivityName=" + rawActivityName + ", getRawActivityName()=" + getRawActivityName()
+				+ ", getAadharNo()=" + getAadharNo() + ", getStudentActivityId()=" + getStudentActivityId()
+				+ ", getInstituteId()=" + getInstituteId() + ", getYearId()=" + getYearId() + ", getActivityName()="
+				+ getActivityName() + ", getOtherCompitition()=" + getOtherCompitition() + ", getDate()=" + getDate()
+				+ ", getYear()=" + getYear() + ", getBranch()=" + getBranch() + ", getVenue()=" + getVenue()
+				+ ", getParticipatedStudent()=" + getParticipatedStudent() + ", getLevel()=" + getLevel()
+				+ ", getIsActive()=" + getIsActive() + ", getDelStatus()=" + getDelStatus() + ", getAddDate()="
+				+ getAddDate() + ", getMakerUserId()=" + getMakerUserId() + ", getExInt1()=" + getExInt1()
+				+ ", getExInt2()=" + getExInt2() + ", getExVar1()=" + getExVar1() + ", getExVar2()=" + getExVar2()
+				+ ", getType()=" + getType() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
+	
 		
 }
