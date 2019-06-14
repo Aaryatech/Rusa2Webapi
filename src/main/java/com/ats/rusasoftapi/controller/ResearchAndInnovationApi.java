@@ -393,7 +393,6 @@ public class ResearchAndInnovationApi {
 	public @ResponseBody AwrdRecgAgnstExtActivity saveEcontentDevFacilities(@RequestBody AwrdRecgAgnstExtActivity araea) {
 		AwrdRecgAgnstExtActivity awrdrecgagnstext = null;
 		awrdrecgagnstext = awrdRecgExtActRepo.save(araea);
-		
 		return awrdrecgagnstext;
 	
 	}

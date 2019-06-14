@@ -64,4 +64,9 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 	@Modifying
 	@Query(value = "UPDATE m_faculty SET contact_no=:no  WHERE faculty_id =:id", nativeQuery = true)
 	int updateNewNo(@Param("id") int id,@Param("no") String no);
+	
+	
+	List<Staff> findByContactNoAndDelStatusAndIsBlocked(String inputValue, int del, int isBlocked);
+	
+	List<Staff> findByEmailAndDelStatusAndIsBlocked(String inputValue, int del, int isBlocked);
 }

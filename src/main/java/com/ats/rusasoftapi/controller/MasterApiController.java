@@ -94,6 +94,9 @@ public class MasterApiController {
 
 	@Autowired
 	StudentRepo studRepo;
+	
+	@Autowired
+	StaffRepo staffRepo;
 
 	@RequestMapping(value = { "/checkUniqueField" }, method = RequestMethod.POST)
 	public @ResponseBody Info checkUniqueField(@RequestParam String inputValue, @RequestParam int valueType,
@@ -105,7 +108,7 @@ public class MasterApiController {
 
 		if (tableId == 1) {
 			List<Institute> instList = new ArrayList<>();
-
+			System.err.println("******From Institute Table******");
 			if (valueType == 1) {
 				System.err.println("Its Contact No check");
 				if (isEditCall == 0) {
@@ -139,6 +142,41 @@ public class MasterApiController {
 			}
 
 		}
+		
+		
+	if (tableId == 1) {
+			List<Staff> instList = new ArrayList<>();
+			System.err.println("******From Faculty Table*******");
+			if (valueType == 1) {
+				System.err.println("Its Contact No check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					instList = staffRepo.findByContactNoAndDelStatusAndIsBlocked(inputValue.trim(), 1, 0);
+				} else {
+					System.err.println("Its Edit Record ");
+					
+				}
+
+			} else if (valueType == 2) {
+				System.err.println("Its Email check");
+				if (isEditCall == 0) {
+					System.err.println("Its New Record Insert ");
+					instList = staffRepo.findByEmailAndDelStatusAndIsBlocked(inputValue.trim(), 1, 0);
+				}
+
+			}
+
+			if (instList.size() > 0) {
+				info.setError(true);
+				info.setMsg("duplicate");
+			} else {
+				info.setError(false);
+				info.setMsg("unique");
+			}
+
+		}
+		
+		
 
 		else if (tableId == 2) {
 
@@ -731,8 +769,8 @@ public class MasterApiController {
 
 	}
 
-	@Autowired
-	StaffRepo staffRepo;
+	//@Autowired
+	//StaffRepo staffRepo;
 
 	@RequestMapping(value = { "/saveInstitute" }, method = RequestMethod.POST)
 	public @ResponseBody Institute saveInstitute(@RequestBody Institute institute) {
