@@ -13,7 +13,7 @@ import com.ats.rusasoftapi.model.ProgramOutcome;
 
 public interface ProgramOutcomeRepository extends JpaRepository<ProgramOutcome, Integer>{
 
-	List<ProgramOutcome> findByDelStatusAndIsActiveAndProgramIdOrderByProgramIdDesc(int i, int j, int programId);
+	List<ProgramOutcome> findByDelStatusAndIsActiveAndProgramIdOrderByPoIdDesc(int i, int j, int programId);
 			
 	@Transactional
 	@Modifying

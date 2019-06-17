@@ -492,7 +492,7 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programEducationObjectiveRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPeoId(1, 1,
+			list = programEducationObjectiveRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPeoIdDesc(1, 1,
 					programId);
 
 		} catch (Exception e) {
@@ -583,7 +583,7 @@ public class StudentActivityRestApiController {
 
 		try {
 
-			list = programOutcomeRepository.findByDelStatusAndIsActiveAndProgramIdOrderByProgramIdDesc(1, 1, programId);
+			list = programOutcomeRepository.findByDelStatusAndIsActiveAndProgramIdOrderByPoIdDesc(1, 1, programId);
 
 		} catch (Exception e) {
 
