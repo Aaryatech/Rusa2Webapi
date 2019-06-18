@@ -434,11 +434,11 @@ public class ReportApiController {
 	LibAutoLMSInfoRepo libAutoLMSInfoRepo;
 
 	@RequestMapping(value = { "/getLibLMSInfo" }, method = RequestMethod.POST)
-	public @ResponseBody List<LibAutoLMSInfo> getLibLMSInfo(@RequestParam int instId) {
+	public @ResponseBody List<LibAutoLMSInfo> getLibLMSInfo(@RequestParam int instId, @RequestParam int acadYear ) {
 		List<LibAutoLMSInfo> facPartInVarBodies = new ArrayList<>();
 		try {
 
-			facPartInVarBodies = libAutoLMSInfoRepo.getLMSInfo(instId);
+			facPartInVarBodies = libAutoLMSInfoRepo.getLMSInfo(instId, acadYear);
 			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {

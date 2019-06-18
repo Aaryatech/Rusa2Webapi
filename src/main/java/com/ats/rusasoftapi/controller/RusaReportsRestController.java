@@ -392,11 +392,11 @@ public class RusaReportsRestController {
 	
 	@Autowired IntrnetConnInfoRepo intrntRepo;
 	@RequestMapping(value = { "/getInternetConnInfo" }, method = RequestMethod.POST)
-	public @ResponseBody List<IntrnetConnInfo> getInternetConnInfo(@RequestParam int instId) {
+	public @ResponseBody List<IntrnetConnInfo> getInternetConnInfo(@RequestParam int instId,@RequestParam int ac_year) {
  		List<IntrnetConnInfo> intrntConList = new ArrayList<IntrnetConnInfo>();
  		 		
  		try { 			
- 			intrntConList = intrntRepo.getAllInternetConnInfo(instId);
+ 			intrntConList = intrntRepo.getAllInternetConnInfo(instId, ac_year);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());

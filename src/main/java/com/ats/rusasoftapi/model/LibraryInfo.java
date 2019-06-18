@@ -45,6 +45,7 @@ public class LibraryInfo {
 	private int delStatus;
 	private int exInt1;
 	private String exVar1;
+	private int acYearId;
 	public int getLibInfoId() {
 		return libInfoId;
 	}
@@ -225,6 +226,13 @@ public class LibraryInfo {
 	public void setExVar1(String exVar1) {
 		this.exVar1 = exVar1;
 	}
+	
+	public int getAcYearId() {
+		return acYearId;
+	}
+	public void setAcYearId(int acYearId) {
+		this.acYearId = acYearId;
+	}
 	@Override
 	public String toString() {
 		return "LibraryInfo [libInfoId=" + libInfoId + ", instituteId=" + instituteId + ", isLibAutomated="
@@ -241,7 +249,4 @@ public class LibraryInfo {
 				+ ", dateOfExaminationEstablishment=" + dateOfExaminationEstablishment + ", delStatus=" + delStatus
 				+ ", exInt1=" + exInt1 + ", exVar1=" + exVar1 + "]";
 	}
-	
-	
-	
 }

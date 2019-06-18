@@ -20,6 +20,7 @@ public class LibAutoLMSInfo {
 	private String usersOfLms;
 	
 	private String year;
+		
 
 	public int getLibInfoId() {
 		return libInfoId;

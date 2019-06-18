@@ -25,6 +25,7 @@ import com.ats.rusasoftapi.model.InstituteInfo;
 import com.ats.rusasoftapi.model.LibBookPurchase;
 import com.ats.rusasoftapi.model.Librarian;
 import com.ats.rusasoftapi.model.LibraryInfo;
+import com.ats.rusasoftapi.model.MAcademicYr;
 import com.ats.rusasoftapi.model.Principal;
 import com.ats.rusasoftapi.model.Quolification;
 import com.ats.rusasoftapi.model.RareBook;
@@ -43,6 +44,7 @@ import com.ats.rusasoftapi.mstrepo.UserService;
 import com.ats.rusasoftapi.prodetailrepo.StudentSuppSchemeRepo;
 import com.ats.rusasoftapi.repositories.LibBookPurchaseRepo;
 import com.ats.rusasoftapi.repository.LibraryInfoRepo;
+import com.ats.rusasoftapi.repository.MAcademicYrRepo;
 import com.ats.rusasoftapi.repository.RareBookRepo;
 
 @RestController
@@ -229,11 +231,7 @@ public class LibraryApiController {
 		return yearList;
 
 	}
-
 	
-	
-	
-
 
 	@RequestMapping(value = { "/getAcademicYearByIsCurrent" }, method = RequestMethod.POST)
 	public @ResponseBody AcademicYear getAcademicYearByIsClosed(@RequestParam int isCurrent) {
@@ -252,8 +250,23 @@ public class LibraryApiController {
 
 	}
 
-
 	
+	@Autowired MAcademicYrRepo mAcdYrRepo;
+	@RequestMapping(value = { "/getLastAcademicYearByYearId" }, method = RequestMethod.POST)
+	public @ResponseBody MAcademicYr getLastAcademicYearByYearId(@RequestParam int yearId) {
+
+		MAcademicYr year = new MAcademicYr();
+
+		try {
+			year = mAcdYrRepo.findByYearIdAndDelStatus(yearId, 1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getLastAcademicYearByYearId  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return year;
+	}
 	
 	@RequestMapping(value = { "/getAcademicYearByYearId" }, method = RequestMethod.POST)
 	public @ResponseBody AcademicYear getAcademicYearByYearId(@RequestParam int yearId) {
@@ -531,6 +544,63 @@ public class LibraryApiController {
 		return libList;
 	}
 	
+	@RequestMapping(value = { "/getlibBasicInfo" }, method = RequestMethod.POST)
+	public @ResponseBody LibraryInfo getlibBasicInfo(@RequestParam int instituteId, @RequestParam int acadYear) {
+		
+		LibraryInfo lib = null;
+		LibraryInfo libInfo = null;
+		int lastYear =acadYear;
+		try {
+			
+			lib = libInfoRepo.findByInstituteIdAndAcYearIdAndDelStatus(instituteId, acadYear, 1);
+			
+		     System.out.println("Lib List="+lib);
+		     libInfo=libInfoRepo.getLastYerRecord(instituteId);
+		    if(libInfo!=null){ 
+				     if(lib==null) {
+				    	 System.err.println("null found");
+				    	 do {
+				    		 		    	
+				    	 lastYear = lastYear-1;
+				    	 System.err.println("ly" +lastYear);
+				    	 lib = libInfoRepo.findByInstituteIdAndAcYearIdAndDelStatus(instituteId, lastYear, 1);
+				    	 }while(lib==null);
+			    		
+		    	 
+				    		
+				    		lib.setLibInfoId(0);
+				    		lib.setUsersOfLms(0);
+				    		lib.setAvgStudent(0);
+				    		lib.setAvgTeacher(0);
+				    		lib.setNoCompLan(0);
+				    		lib.setExInt1(0);
+				    		lib.setExVar1(null);
+				    	
+		
+				     }
+		    }
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return lib;
+	}
+	
+	
+	
+
+	/*@RequestMapping(value = { "/getlastYearLibBasicInfo" }, method = RequestMethod.POST)
+	public @ResponseBody LibraryInfo getlastYearLibBasicInfo(@RequestParam int instituteId, @RequestParam int lastYear) {
+		
+		LibraryInfo lib = null;
+		try {
+			
+			lib = libInfoRepo.findByInstituteIdAndAcYearIdAndDelStatus(instituteId, lastYear, 1);
+		     System.out.println("Lib List="+lib);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return lib;
+	}*/
 	
 	@RequestMapping(value = { "/editlibBasicInfoById" }, method = RequestMethod.POST)
 	public @ResponseBody LibraryInfo editlibBasicInfoById(@RequestParam int libInfoId) {
