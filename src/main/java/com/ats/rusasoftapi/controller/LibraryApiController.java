@@ -15,19 +15,14 @@ import com.ats.rusasoftapi.common.Commons;
 import com.ats.rusasoftapi.common.EmailUtility;
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.GetInstituteInfo;
-import com.ats.rusasoftapi.model.GetInstituteList;
 import com.ats.rusasoftapi.model.GetLib;
 import com.ats.rusasoftapi.model.GetStudentDetail;
-import com.ats.rusasoftapi.model.Hod;
 import com.ats.rusasoftapi.model.Info;
-import com.ats.rusasoftapi.model.Institute;
 import com.ats.rusasoftapi.model.InstituteInfo;
 import com.ats.rusasoftapi.model.LibBookPurchase;
 import com.ats.rusasoftapi.model.Librarian;
 import com.ats.rusasoftapi.model.LibraryInfo;
-import com.ats.rusasoftapi.model.MAcademicYr;
-import com.ats.rusasoftapi.model.Principal;
-import com.ats.rusasoftapi.model.Quolification;
+
 import com.ats.rusasoftapi.model.RareBook;
 import com.ats.rusasoftapi.model.Student;
 import com.ats.rusasoftapi.model.UserLogin;
@@ -37,14 +32,12 @@ import com.ats.rusasoftapi.mstrepo.GetLibRepo;
 import com.ats.rusasoftapi.mstrepo.GetStudentDetailRepo;
 import com.ats.rusasoftapi.mstrepo.InstituteInfoRepo;
 import com.ats.rusasoftapi.mstrepo.LibrarianRepo;
-import com.ats.rusasoftapi.mstrepo.LoginLogRepo;
-import com.ats.rusasoftapi.mstrepo.QuolificationRepo;
 import com.ats.rusasoftapi.mstrepo.StudentRepo;
 import com.ats.rusasoftapi.mstrepo.UserService;
 import com.ats.rusasoftapi.prodetailrepo.StudentSuppSchemeRepo;
 import com.ats.rusasoftapi.repositories.LibBookPurchaseRepo;
 import com.ats.rusasoftapi.repository.LibraryInfoRepo;
-import com.ats.rusasoftapi.repository.MAcademicYrRepo;
+
 import com.ats.rusasoftapi.repository.RareBookRepo;
 
 @RestController
@@ -251,22 +244,7 @@ public class LibraryApiController {
 	}
 
 	
-	@Autowired MAcademicYrRepo mAcdYrRepo;
-	@RequestMapping(value = { "/getLastAcademicYearByYearId" }, method = RequestMethod.POST)
-	public @ResponseBody MAcademicYr getLastAcademicYearByYearId(@RequestParam int yearId) {
-
-		MAcademicYr year = new MAcademicYr();
-
-		try {
-			year = mAcdYrRepo.findByYearIdAndDelStatus(yearId, 1);
-
-		} catch (Exception e) {
-			System.err.println("Exce in getLastAcademicYearByYearId  " + e.getMessage());
-			e.printStackTrace();
-		}
-
-		return year;
-	}
+	
 	
 	@RequestMapping(value = { "/getAcademicYearByYearId" }, method = RequestMethod.POST)
 	public @ResponseBody AcademicYear getAcademicYearByYearId(@RequestParam int yearId) {
