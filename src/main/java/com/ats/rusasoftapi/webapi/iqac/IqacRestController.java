@@ -411,7 +411,7 @@ public class IqacRestController {
 	@RequestMapping(value= {"/getStaffById"}, method=RequestMethod.POST)
 	public @ResponseBody Staff getStaffById(@RequestParam("id") int id){
 		
-		return staffrepo.findByFacultyIdAndDelStatus(id,1);
+		return staffrepo.findByFacultyIdAndDelStatusAndIsBlocked(id,1,0);
 		
 	}
 	

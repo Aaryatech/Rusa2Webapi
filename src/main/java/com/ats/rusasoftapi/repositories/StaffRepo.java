@@ -13,7 +13,7 @@ import com.ats.rusasoftapi.model.Staff;
 
 public interface StaffRepo extends JpaRepository<Staff, Integer> {
 
-	Staff findByFacultyIdAndDelStatus(@Param("id") int id, @Param("i") int i);
+	Staff findByFacultyIdAndDelStatusAndIsBlocked(@Param("id") int id, @Param("i") int i,@Param("j") int j);
 
 	Staff findByFacultyIdAndDelStatusAndIsPrincipalAndIsActive(@Param("facultyId") int facultyId, @Param("i") int i,
 			@Param("j") int j, @Param("k") int k);

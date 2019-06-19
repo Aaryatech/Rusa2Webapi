@@ -242,7 +242,7 @@ public class RestApiController {
 				// System.out.println("pass");
 				//int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
 				
-				staff=staffrepo.findByFacultyIdAndDelStatus(OTPVerification.getUserId(),1);
+				staff=staffrepo.findByFacultyIdAndDelStatusAndIsBlocked(OTPVerification.getUserId(),1,0);
 				hashMap.put(1, staff);
 				
 				//Info inf = EmailUtility.sendOtp(pass, mobile, "Password From RUSA ");
