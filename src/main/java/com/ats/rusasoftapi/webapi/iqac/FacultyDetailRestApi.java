@@ -82,18 +82,18 @@ public class FacultyDetailRestApi {
 	public @ResponseBody List<StudMentorList> getFacultyMonitorList(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId){
-		System.out.println("facultyId ==" + facultyId + " isPrincipal=" + isPrincipal + " sIQAC=" + isIQAC + " isHod="
-				+ isHod + " yearId=" + yearId + " deptIdList=" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + " isPrincipal=" + isPrincipal + " sIQAC=" + isIQAC + " isHod="
+		//		+ isHod + " yearId=" + yearId + " deptIdList=" + deptIdList);
 
 		
 		List<StudMentorList> studMentr = new ArrayList<>();
 		try {
 
 			if (isPrincipal == 1 || isIQAC == 1) {
-				System.out.println("1");
+				// System.out.println("1");
 				studMentr = smRepo.getStudMentrByYear(yearId, instituteId, facultyId);
 			} else if (isHod == 1) {
-				System.out.println("2");
+				// System.out.println("2");
 				studMentr = smRepo.getStudMentrByDept(deptIdList, yearId, instituteId);
 			} 
 			else { 
@@ -174,8 +174,8 @@ public class FacultyDetailRestApi {
 	public @ResponseBody List<FacultyConferenceList> getFacultyConfList(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId){
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+		//		+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 		
 		List<FacultyConferenceList> facConfList = new ArrayList<>();
 
@@ -266,8 +266,8 @@ public class FacultyDetailRestApi {
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId){
 		
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+		//		+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<FacultyBookList> fBookList = new ArrayList<>();
 		
@@ -428,8 +428,8 @@ public class FacultyDetailRestApi {
 	public @ResponseBody List<FacultiContributionList> getAllOutReachContri(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+		//		+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<FacultiContributionList> facContriList = new ArrayList<>();
 

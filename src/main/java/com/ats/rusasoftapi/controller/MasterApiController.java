@@ -1075,8 +1075,8 @@ public class MasterApiController {
 				final String username = "atsinfosoft@gmail.com";
 				final String password = "atsinfosoft@123";
 
-				System.out.println("username" + username);
-				System.out.println("password" + password);
+				// System.out.println("username" + username);
+				// System.out.println("password" + password);
 
 				Properties props = new Properties();
 				props.put("mail.smtp.host", "smtp.gmail.com");

@@ -163,7 +163,7 @@ public class YesNoRestApiController {
 		try {
 
 			instyn = instituteYesNoRepository.findByInstituteIdAndDelStatusAndIsActiveAndYearIdAndInstYesnoId(instituteId,1,1,yearId,id);
-			System.out.println("res="+instyn.toString());
+			// System.out.println("res="+instyn.toString());
 		} catch (Exception e) {
 
 			e.printStackTrace();

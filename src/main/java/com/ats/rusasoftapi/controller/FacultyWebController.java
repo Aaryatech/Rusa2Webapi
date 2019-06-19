@@ -71,8 +71,8 @@ public class FacultyWebController {
 	public @ResponseBody List<GetFacultyActivity> getFacultyActivityListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+		//		+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetFacultyActivity> facOutList = new ArrayList<>();
 
@@ -98,8 +98,8 @@ public class FacultyWebController {
 	public @ResponseBody List<GetFacultyOutrea> getOutReachListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+		//		+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetFacultyOutrea> facOutList = new ArrayList<>();
 
@@ -161,8 +161,8 @@ public class FacultyWebController {
 	public @ResponseBody List<GetFacultyPatent> getPatentListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+			//	+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetFacultyPatent> patentList = new ArrayList<>();
 
@@ -188,8 +188,8 @@ public class FacultyWebController {
 	public @ResponseBody List<GetFacultyAward> getAwardListByFacultyIdAndtype(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+		//	+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetFacultyAward> awardList = new ArrayList<>();
 
@@ -404,7 +404,7 @@ public class FacultyWebController {
 	public @ResponseBody FacultyOutreach saveFacultyOutReach(@RequestBody FacultyOutreach patent) {
 
 		FacultyOutreach patentRes = null;
-		System.out.println("date:::" + patent.getOutreachDate());
+		// System.out.println("date:::" + patent.getOutreachDate());
 		try {
 			patentRes = facultyOutreachRepo.saveAndFlush(patent);
 
@@ -548,8 +548,8 @@ public class FacultyWebController {
 	public @ResponseBody List<GetFacultyEmpwrList> getFacEmpowerList(@RequestParam int facultyId,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+			//	+ isHod + "yearId" + yearId + "deptIdList" + deptIdList);
 
 		List<GetFacultyEmpwrList> facEmpwrList = new ArrayList<>();
 

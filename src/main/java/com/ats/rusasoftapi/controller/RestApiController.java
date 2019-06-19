@@ -151,7 +151,7 @@ public class RestApiController {
 			System.err.println("User otp is" + otp1);
 			Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
 
-			System.out.println("info ires" + inf.toString());
+			// System.out.println("info ires" + inf.toString());
 
 			OTPVerification.setConNumber(conNumber);
 			OTPVerification.setEmailId(emailId);
@@ -202,7 +202,7 @@ public class RestApiController {
 
 			//Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
 
-			System.out.println("info ires" + inf.toString());
+			// System.out.println("info ires" + inf.toString());
 
 			OTPVerification.setConNumber(conNumber);
 			OTPVerification.setEmailId(emailId);
@@ -239,7 +239,7 @@ public class RestApiController {
 				String mobile = OTPVerification.getConNumber();
 				String email = OTPVerification.getEmailId();
 				String pass = Commons.getAlphaNumericString(7);
-				System.out.println("pass");
+				// System.out.println("pass");
 				//int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
 				
 				staff=staffrepo.findByFacultyIdAndDelStatus(OTPVerification.getUserId(),1);
@@ -433,7 +433,7 @@ System.err.println("Matched " +pass);
 			System.err.println("User otp is" + otp1);
 			Info inf = EmailUtility.sendOtp(otp1, conNumber, "Rusa OTP Verification");
 
-			System.out.println("info ires" + inf.toString());
+			// System.out.println("info ires" + inf.toString());
 
 			OTPVerification.setConNumber(conNumber);
 			

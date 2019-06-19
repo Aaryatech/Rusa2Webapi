@@ -347,7 +347,7 @@ public class InstituteRestApiController {
 		IctEnabledFacilities ict = new IctEnabledFacilities();
 		try {
 			ict=ictRepo.findByIctEnbFacId(ictId);
-			System.out.println(ict);
+			// System.out.println(ict);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -436,7 +436,7 @@ public class InstituteRestApiController {
 		GovtScholarships sch = new GovtScholarships();
 		try {
 			sch=govtSchmRepo.findByGovtScholarId(schmId);
-			System.out.println(sch);
+			// System.out.println(sch);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

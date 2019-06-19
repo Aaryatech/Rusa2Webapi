@@ -240,7 +240,7 @@ if(x==1)
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
 		/*
-		 * System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal +
+		 * // System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal +
 		 * "isIQAC" + isIQAC + "isHod" + isHod + "yearId" + yearId + "deptIdList" +
 		 * deptIdList);
 		 */
@@ -625,9 +625,9 @@ if(x==1)
 
 		try {
 
-			System.out.println("swocId" + swocId);
+			// System.out.println("swocId" + swocId);
 			swocRes = sWOCRepo.findBySwocIdAndDelStatus(swocId, 1);
-			System.out.println("swocRes" + swocRes.toString());
+			// System.out.println("swocRes" + swocRes.toString());
 
 		} catch (Exception e) {
 			System.err.println("Exce in getSubjectBySubId  " + e.getMessage());

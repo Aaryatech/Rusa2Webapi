@@ -183,7 +183,7 @@ public class InfraStructureModApi {
 		try {
 		 itInfra = infraRepo.save(infrastur);
 	}catch(Exception e) {
-		System.out.println(e.getMessage());
+		// System.out.println(e.getMessage());
 		e.printStackTrace();
 	}
 		
@@ -289,7 +289,7 @@ public class InfraStructureModApi {
 		try {
 			interConc = internetRepo.save(internet);
 	}catch(Exception e) {
-		System.out.println(e.getMessage());
+		// System.out.println(e.getMessage());
 		e.printStackTrace();
 	}
 		

@@ -532,7 +532,7 @@ public class LibraryApiController {
 			
 			lib = libInfoRepo.findByInstituteIdAndAcYearIdAndDelStatus(instituteId, acadYear, 1);
 			
-		     System.out.println("Lib List="+lib);
+		     // System.out.println("Lib List="+lib);
 		     libInfo=libInfoRepo.getLastYerRecord(instituteId);
 		    if(libInfo!=null){ 
 				     if(lib==null) {
@@ -564,21 +564,6 @@ public class LibraryApiController {
 	}
 	
 	
-	
-
-	/*@RequestMapping(value = { "/getlastYearLibBasicInfo" }, method = RequestMethod.POST)
-	public @ResponseBody LibraryInfo getlastYearLibBasicInfo(@RequestParam int instituteId, @RequestParam int lastYear) {
-		
-		LibraryInfo lib = null;
-		try {
-			
-			lib = libInfoRepo.findByInstituteIdAndAcYearIdAndDelStatus(instituteId, lastYear, 1);
-		     System.out.println("Lib List="+lib);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return lib;
-	}*/
 	
 	@RequestMapping(value = { "/editlibBasicInfoById" }, method = RequestMethod.POST)
 	public @ResponseBody LibraryInfo editlibBasicInfoById(@RequestParam int libInfoId) {

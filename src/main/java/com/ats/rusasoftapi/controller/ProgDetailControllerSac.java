@@ -623,7 +623,7 @@ public class ProgDetailControllerSac {
 		try {
 			alm=almActRepo.findByAlmAssocActId(almniActivityId);
 			
-			System.out.println(alm);
+			// System.out.println(alm);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -696,7 +696,7 @@ public class ProgDetailControllerSac {
 		try {
 			course=courseRepo.findByCourseId(courseId);
 			
-			System.out.println(course);
+			// System.out.println(course);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -771,7 +771,7 @@ public class ProgDetailControllerSac {
 		try {
 			val = valAddCourseRepo.findByValueAddedCourseId(courseId);
 			
-			System.out.println(val);
+			// System.out.println(val);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -818,7 +818,7 @@ public class ProgDetailControllerSac {
 		try {
 			fld = fieldRepo.findByFieldProjectInternId(fieldId);
 			
-			System.out.println(fld);
+			// System.out.println(fld);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -878,7 +878,7 @@ public class ProgDetailControllerSac {
 		try {
 			stud = difDisStudRepo.findByDifAbleStudId(studId);
 			
-			System.out.println(stud);
+			// System.out.println(stud);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -952,7 +952,7 @@ public class ProgDetailControllerSac {
 		try {
 			stud = redressedRepo.findByRedrsStudGrvncId(studGrievancId);
 			
-			System.out.println(stud);
+			// System.out.println(stud);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

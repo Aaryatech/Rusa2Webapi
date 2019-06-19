@@ -49,11 +49,11 @@ public class ResearchAndInnovationApi {
 	
 	@RequestMapping(value = { "/getAllExtensionActivities" }, method = RequestMethod.GET)
 	public @ResponseBody List<MExtensionActivity> getAllExtensionActivities() {
-		System.out.println("List");
+		// System.out.println("List");
 		List<MExtensionActivity> extList = null;
 		
 		extList = mExtRepo.findByDelStatusOrderBySequenceAsc(1);
-		System.out.println("List"+extList);
+		// System.out.println("List"+extList);
 		return extList;
 	
 	}
@@ -167,11 +167,11 @@ public class ResearchAndInnovationApi {
 	
 	@RequestMapping(value = { "/getAllRsrchDevMous" }, method = RequestMethod.GET)
 	public @ResponseBody List<ResearchDevMou> getAllRsrchDevMous() {
-		System.out.println("List");
+		// System.out.println("List");
 		List<ResearchDevMou> extList = null;
 		
 		extList = mouRepo.findBydelStatus(1);
-		System.out.println("List"+extList);
+		// System.out.println("List"+extList);
 		return extList;
 	
 	}
@@ -190,7 +190,7 @@ public class ResearchAndInnovationApi {
 
 		List<InstResearchDevMous> extActList = null;
 
-		try {System.out.println("Inst="+instituteId);
+		try {// System.out.println("Inst="+instituteId);
 
 			extActList = rsrcMouRepo.getAllRsrchDevMousByInstId(instituteId);
 			System.err.println("List="+extActList);

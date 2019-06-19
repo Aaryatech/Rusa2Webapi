@@ -75,7 +75,7 @@ public class IqacRestController {
 	public @ResponseBody Info chkUniqueFields(@RequestParam String inputValue, @RequestParam int valueType,
 			@RequestParam int tableId, @RequestParam int isEditCall, @RequestParam int primaryKey) {
 		
-		System.out.println("Values:"+inputValue+" "+valueType+" "+primaryKey+" "+isEditCall+" "+tableId);
+		// System.out.println("Values:"+inputValue+" "+valueType+" "+primaryKey+" "+isEditCall+" "+tableId);
 		
 		Info info = new Info();
 
@@ -277,7 +277,7 @@ public class IqacRestController {
 				  user.setIsBlock(1);
 				  
 				  UserLogin userRes = userrepo.save(user);
-				  System.out.println("IQac LOg:"+userRes);
+				  // System.out.println("IQac LOg:"+userRes);
 				 
 					Info info=EmailUtility.sendEmail(senderEmail, senderPassword, iqacRes.getEmail(), mailsubject,
 							userRes.getUserName(), userRes.getPass());
@@ -300,7 +300,7 @@ public class IqacRestController {
 	@RequestMapping(value= {"/getAllIqac"}, method=RequestMethod.POST)
 	public @ResponseBody List<IqacList> getAllIqac(@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int instituteId){
 
-	  System.out.println("isIQAC" + isIQAC+ " "+instituteId+" "+isPrincipal);
+	  // System.out.println("isIQAC" + isIQAC+ " "+instituteId+" "+isPrincipal);
  
 	  List<IqacList> iqcList = null; 
   try {
@@ -313,7 +313,7 @@ public class IqacRestController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-  System.out.println("List="+iqcList);
+  // System.out.println("List="+iqcList);
 		return iqcList;
 	}
 	
@@ -363,7 +363,7 @@ public class IqacRestController {
 			  user.setIsBlock(1);
 			  
 			  UserLogin userRes = userrepo.save(user);
-			  System.out.println("IQac LOg:"+userRes);*/
+			  // System.out.println("IQac LOg:"+userRes);*/
 		
 			  Info info=EmailUtility.sendEmail(senderEmail, senderPassword, staffRes.getEmail(), mailsubject,
 					  staffRes.getEmail(), staffRes.getPassword());
@@ -383,8 +383,8 @@ public class IqacRestController {
 	public @ResponseBody List<StaffList> getListStaff(@RequestParam int facultyId, @RequestParam int user,
 			@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod, @RequestParam int yearId,
 			@RequestParam List<Integer> deptIdList, @RequestParam int instituteId) {
-		System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-				+ isHod + "yearId" + yearId + "deptIdList" + deptIdList+" " +user);
+		// System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+		//		+ isHod + "yearId" + yearId + "deptIdList" + deptIdList+" " +user);
 
 		List<StaffList> staffList = null;
 		try {
@@ -505,8 +505,8 @@ public class IqacRestController {
 				@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod,@RequestParam List<Integer> deptIdList,
 				@RequestParam int instituteId ,@RequestParam int isDean){
 	
-		  System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
-					+ isHod +  "deptIdList" + deptIdList);
+		  // System.out.println("facultyId ==" + facultyId + "isPrincipal" + isPrincipal + "isIQAC" + isIQAC + "isHod"
+			//		+ isHod +  "deptIdList" + deptIdList);
 	 
 	  List<NewDeanList> deansList = null; try {
 		  if (isPrincipal == 1 || isIQAC == 1) {
@@ -629,8 +629,8 @@ public class IqacRestController {
 						@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod,@RequestParam List<Integer> deptIdList,
 						@RequestParam int instituteId ,@RequestParam int isDean){
 			
-				  System.out.println(" facultyId ==" + facultyId + " isPrincipal " + isPrincipal + " isIQAC " + isIQAC + " Institute Id="+instituteId+
-						  "isHod "+ isHod +  " deptIdList" + deptIdList);
+				  // System.out.println(" facultyId ==" + facultyId + " isPrincipal " + isPrincipal + " isIQAC " + isIQAC + " Institute Id="+instituteId+
+				//		  "isHod "+ isHod +  " deptIdList" + deptIdList);
 			 
 			  List<NewDeanList> tpoList = null; try {
 				  if (isPrincipal == 1 || isIQAC == 1) {
@@ -656,8 +656,8 @@ public class IqacRestController {
 						@RequestParam int isPrincipal, @RequestParam int isIQAC, @RequestParam int isHod,@RequestParam List<Integer> deptIdList,
 						@RequestParam int instituteId ,@RequestParam int isDean){
 			
-				  System.out.println(" facultyId ==" + facultyId + " isPrincipal " + isPrincipal + " isIQAC " + isIQAC + " Institute Id="+instituteId+
-						  "isHod "+ isHod +  " deptIdList" + deptIdList);
+				  // System.out.println(" facultyId ==" + facultyId + " isPrincipal " + isPrincipal + " isIQAC " + isIQAC + " Institute Id="+instituteId+
+					//	  "isHod "+ isHod +  " deptIdList" + deptIdList);
 			 
 			  List<NewDeanList> extoFFList = null; try {
 				  if (isPrincipal == 1 || isIQAC == 1) {

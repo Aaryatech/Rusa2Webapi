@@ -82,7 +82,7 @@ public class AccessRightApiController {
 	@RequestMapping(value = { "/saveAssignRole" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveAssignRole(@RequestBody AssignRoleDetailList assignRoleDetailList) {
 
-		System.out.println(assignRoleDetailList.toString());
+		// System.out.println(assignRoleDetailList.toString());
 
 		Info info = accessRightService.saveAssignRole(assignRoleDetailList);
 
