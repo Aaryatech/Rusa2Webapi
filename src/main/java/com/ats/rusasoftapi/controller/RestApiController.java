@@ -85,7 +85,7 @@ public class RestApiController {
 	
 
 	@RequestMapping(value = { "/checkUserName" }, method = RequestMethod.POST)
-	public @ResponseBody Info checkUserName(@RequestParam String inputValue) {
+	public @ResponseBody Info checkUserName(@RequestParam String inputValue,@RequestParam int  flag) {
 
 		OTPVerification.setConNumber(null);
 		OTPVerification.setEmailId(null);
@@ -149,7 +149,14 @@ public class RestApiController {
 			otp1 = String.valueOf(otp);
 			// info.setMsg(" Matched");
 			System.err.println("User otp is" + otp1);
-			Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
+			if(flag==1) {
+				Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
+
+			}
+			else if(flag==2){
+				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword,emailId, mailsubject,
+						emailId, otp1);
+			}
 
 			// System.out.println("info ires" + inf.toString());
 
@@ -220,6 +227,9 @@ public class RestApiController {
 		return info;
 
 	}
+
+	
+
 
 	@RequestMapping(value = { "/VerifyOTP" }, method = RequestMethod.POST)
 	public @ResponseBody Staff VerifyOTP(@RequestParam String otp) {
@@ -433,9 +443,125 @@ System.err.println("Matched " +pass);
 			System.err.println("User otp is" + otp1);
 			Info inf = EmailUtility.sendOtp(otp1, conNumber, "Rusa OTP Verification");
 
-			// System.out.println("info ires" + inf.toString());
+ 
+			OTPVerification.setConNumber(conNumber);
+			
+			OTPVerification.setOtp(otp1);
+		
+
+		} else {
+			System.err.println("In Else ");
+
+			info.setError(true);
+			info.setMsg("not Matched");
+			System.err.println(" not Matched ");
+		}
+
+		return info;
+
+	}
+
+	/***********************************Update Contact No*******************************/
+
+
+	@RequestMapping(value = { "/changeEmailId" }, method = RequestMethod.POST)
+	public @ResponseBody Info changeEmailId(@RequestParam String emailID) {
+
+		OTPVerification.setConNumber(null);
+		OTPVerification.setEmailId(null);
+		OTPVerification.setOtp(null);
+		OTPVerification.setPass(null);
+
+		System.err.println("Its changeEmailId emailID " + emailID);
+		Info info = new Info();
+		
+
+		Staff userDetail = staffRepo.findByDelStatusAndIsActiveAndEmail(1, 1, emailID);
+
+		if (userDetail != null) {
+			OTPVerification.setUserId(userDetail.getFacultyId());
+
+			String emailId = userDetail.getEmail();
+			String conNumber = userDetail.getContactNo();
+
+			System.err.println("User data is" + userDetail.toString());
+			char[] otp = Commons.OTP(6);
+
+			otp1 = String.valueOf(otp);
+		 
+			System.err.println("User otp is" + otp1);
+			  
+			Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword,emailID, mailsubject,
+					emailID, otp1);
+			System.err.println("User emailRes" + emailRes.getMsg());
 
 			OTPVerification.setConNumber(conNumber);
+			OTPVerification.setEmailId(emailId);
+			OTPVerification.setOtp(otp1);
+			OTPVerification.setPass(userDetail.getPassword());
+
+		} else {
+			System.err.println("In Else ");
+
+			info.setError(true);
+			info.setMsg("not Matched");
+			System.err.println(" not Matched ");
+		}
+
+		return info;
+
+	}
+	
+	@RequestMapping(value= {"/updateMyEmail"}, method=RequestMethod.POST)
+	public @ResponseBody Info updateMyEmail(@RequestParam("id") int id, @RequestParam("email") String email){
+		
+		
+		int isDelete=0;
+		 isDelete= staffRepo.updateNewEmail(id, email);
+		 Info inf = new Info();
+		 if(isDelete>0) {
+			 inf.setError(false);
+			 inf.setMsg("email Updated Sucessfully");
+		 }
+		 else{
+			 inf.setError(true);
+			 inf.setMsg("Fail");
+		 }
+		 return inf;
+	}
+	
+	
+
+	
+	@RequestMapping(value = { "/sndOTPOnNewEmailId" }, method = RequestMethod.POST)
+	public @ResponseBody Info sndOTPOnNewEmailId(@RequestParam String emailId) {
+
+		OTPVerification.setConNumber(null);
+		OTPVerification.setEmailId(null);
+		OTPVerification.setOtp(null);
+		OTPVerification.setPass(null);
+
+		System.err.println("Its emailId " + emailId);
+		Info info = new Info();
+		 
+		if (emailId != null) {
+			
+
+		
+			String emailId1 = emailId;
+
+			
+			char[] otp = Commons.OTP(6);
+
+			otp1 = String.valueOf(otp);
+			// info.setMsg(" Matched");
+			System.err.println("User otp is" + otp1);
+			Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword,emailId1, mailsubject,
+					emailId1, otp1);
+			System.err.println("User emailRes" + emailRes.getMsg());
+
+ 
+			OTPVerification.setEmailId(emailId1); 
 			
 			OTPVerification.setOtp(otp1);
 		
