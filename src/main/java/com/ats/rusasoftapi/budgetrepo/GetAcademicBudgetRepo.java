@@ -10,7 +10,7 @@ import com.ats.rusasoftapi.model.budget.GetAcademicBudget;
 
 public interface GetAcademicBudgetRepo extends JpaRepository<GetAcademicBudget, Integer> {
 
-	@Query(value = " SELECT\n" + "    t_academic_budget.academic_budget_id, t_academic_budget.ex_var1, t_academic_budget.ex_int1,\n" + "    t_academic_budget.fin_year_id,\n"
+	@Query(value = " SELECT\n" + "    t_academic_budget.academic_budget_id, t_academic_budget.ex_var1, t_academic_budget.ex_var2, t_academic_budget.ex_int1,\n" + "    t_academic_budget.fin_year_id,\n"
 			+ "    t_academic_budget.institute_id,\n" + "    t_academic_budget.ac_year_id,\n"
 			+ "    t_academic_budget.academic_budget_title,\n" + "    t_academic_budget.budget_allocated,\n"
 			+ "    t_academic_budget.budget_utilized,\n" + "    m_academic_year.academic_year,\n"

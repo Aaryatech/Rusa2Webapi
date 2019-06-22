@@ -10,7 +10,7 @@ import com.ats.rusasoftapi.model.budget.GetInfraStructureBudget;
 
 public interface GetInfraStructureBudgetRepo extends JpaRepository<GetInfraStructureBudget, Integer> {
 
-	@Query(value = " SELECT t_infrastructure_budget.infra_budget_id,t_infrastructure_budget.ex_var1,t_infrastructure_budget.fin_year_id,t_infrastructure_budget.institute_id,t_infrastructure_budget.ac_year_id,"
+	@Query(value = " SELECT t_infrastructure_budget.infra_budget_id,t_infrastructure_budget.ex_var1, t_infrastructure_budget.ex_var2,t_infrastructure_budget.fin_year_id,t_infrastructure_budget.institute_id,t_infrastructure_budget.ac_year_id,"
 			+ "t_infrastructure_budget.infra_budget_title, t_infrastructure_budget.ex_int1,"
 			+ " t_infrastructure_budget.budget_allocated,t_infrastructure_budget.budget_utilized,"
 			+ " m_academic_year.academic_year,m_financial_year.fin_year FROM t_infrastructure_budget "

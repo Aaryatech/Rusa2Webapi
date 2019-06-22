@@ -10,7 +10,7 @@ import com.ats.rusasoftapi.model.budget.GetWasteMngtBudget;
 
 public interface GetWasteMngtBudgetRepo extends JpaRepository<GetWasteMngtBudget, Integer> {
 
-	@Query(value = " 	SELECT  t_waste_mngt_budget.waste_mngt_budget_id, t_waste_mngt_budget.ex_var1, t_waste_mngt_budget.ex_int1,"
+	@Query(value = " 	SELECT  t_waste_mngt_budget.waste_mngt_budget_id, t_waste_mngt_budget.ex_var1, t_waste_mngt_budget.ex_var2, t_waste_mngt_budget.ex_int1,"
 			+ " t_waste_mngt_budget.institute_id, t_waste_mngt_budget.fin_year_id,"
 			+ " t_waste_mngt_budget.ac_year_id, t_waste_mngt_budget.waste_mngt_budget_title"
 			+ ",t_waste_mngt_budget.budget_allocated, t_waste_mngt_budget.budget_utilized,"

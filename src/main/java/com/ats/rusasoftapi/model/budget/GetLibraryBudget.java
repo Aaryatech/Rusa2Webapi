@@ -22,7 +22,7 @@ public class GetLibraryBudget {
 	private String finYear;
 	private String exVar1;
 	private int exInt1;
-	
+	private String exVar2 ;
 	
 	public int getExInt1() {
 		return exInt1;
@@ -32,6 +32,13 @@ public class GetLibraryBudget {
 	}
 	public String getExVar1() {
 		return exVar1;
+	}
+	
+	public String getExVar2() {
+		return exVar2;
+	}
+	public void setExVar2(String exVar2) {
+		this.exVar2 = exVar2;
 	}
 	public void setExVar1(String exVar1) {
 		this.exVar1 = exVar1;
@@ -95,7 +102,7 @@ public class GetLibraryBudget {
 		return "GetLibraryBudget [libBudgetId=" + libBudgetId + ", finYearId=" + finYearId + ", acYearId=" + acYearId
 				+ ", instituteId=" + instituteId + ", libBudgetTitle=" + libBudgetTitle + ", budgetAllocated="
 				+ budgetAllocated + ", budgetUtilized=" + budgetUtilized + ", academicYear=" + academicYear
-				+ ", finYear=" + finYear + ", exVar1=" + exVar1 + ", exInt1=" + exInt1 + "]";
+				+ ", finYear=" + finYear + ", exVar1=" + exVar1 + ", exInt1=" + exInt1 + ", exVar2=" + exVar2 + "]";
 	}
 	
 }

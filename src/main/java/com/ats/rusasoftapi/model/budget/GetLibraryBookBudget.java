@@ -20,6 +20,7 @@ public class GetLibraryBookBudget {
 	private int expenditureOnEresourcesPurchase;
 
 	private String exVar1;
+	private String exVar2;
 	private String academicYear;
 	private String finYear;
 	
@@ -97,6 +98,13 @@ public class GetLibraryBookBudget {
 	public void setFinYear(String finYear) {
 		this.finYear = finYear;
 	}
+	
+	public String getExVar2() {
+		return exVar2;
+	}
+	public void setExVar2(String exVar2) {
+		this.exVar2 = exVar2;
+	}
 	@Override
 	public String toString() {
 		return "GetLibraryBookBudget [libraryBookBudgetId=" + libraryBookBudgetId + ", finYearId=" + finYearId
@@ -104,8 +112,7 @@ public class GetLibraryBookBudget {
 				+ ", expenditureOnBookPurchase=" + expenditureOnBookPurchase + ", expenditureOnJournalsPurchase="
 				+ expenditureOnJournalsPurchase + ", expenditureOnEjournalsPurchase=" + expenditureOnEjournalsPurchase
 				+ ", expenditureOnEresourcesPurchase=" + expenditureOnEresourcesPurchase + ", exVar1=" + exVar1
-				+ ", academicYear=" + academicYear + ", finYear=" + finYear + "]";
+				+ ", exVar2=" + exVar2 + ", academicYear=" + academicYear + ", finYear=" + finYear + "]";
 	}
-	
-	
+
 }
