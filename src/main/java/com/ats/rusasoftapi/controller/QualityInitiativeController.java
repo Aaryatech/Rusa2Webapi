@@ -16,15 +16,36 @@ import com.ats.rusasoftapi.instprofilerepo.InstituteQualityRepo;
 import com.ats.rusasoftapi.instprofilerepo.QualityInitiativeRepo;
 import com.ats.rusasoftapi.model.AccOfficer;
 import com.ats.rusasoftapi.model.Info;
+import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.instprofile.GetInstituteQuality;
 import com.ats.rusasoftapi.model.instprofile.InstituteQuality;
 import com.ats.rusasoftapi.model.instprofile.QualityInitiative;
 import com.ats.rusasoftapi.model.progdetail.GetStudAdmCatwise;
+import com.ats.rusasoftapi.mstrepo.SettingKeyValueRepo;
 
 @RestController
 public class QualityInitiativeController {
 	
 	@Autowired InstituteQualityRepo instituteQualityRepo;
+	
+	@Autowired SettingKeyValueRepo settingKeyValueRepo;
+	
+	@RequestMapping(value = { "/getSettingKeyValue" }, method = RequestMethod.POST)
+	public @ResponseBody SettingKeyValue getSettingKeyValue(@RequestParam String key) {
+
+		SettingKeyValue setting = null;
+
+		try {
+
+			setting = settingKeyValueRepo.findBySettingKeyAndDelStatus(key, 1);
+		} catch (Exception e) {
+			System.err.println("exce in /getSettingKeyValue " + e.getMessage());
+			e.printStackTrace();
+			setting=new SettingKeyValue();
+
+		}
+		return setting;
+	}
 	
 	@RequestMapping(value = { "/saveInstituteQuality" }, method = RequestMethod.POST)
 	public @ResponseBody InstituteQuality saveInstituteQuality(@RequestBody InstituteQuality instituteQual) {

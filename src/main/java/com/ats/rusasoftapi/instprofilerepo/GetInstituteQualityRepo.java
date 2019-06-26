@@ -17,6 +17,9 @@ public interface GetInstituteQualityRepo extends JpaRepository<GetInstituteQuali
 			"        t_institute_quality.quality_fromdt," + 
 			"        t_institute_quality.quality_todt," + 
 			"        t_institute_quality.quality_pcount," + 
+			"        t_institute_quality.is_applicable," + 
+			"        t_institute_quality.is_applied," + 
+			"        t_institute_quality. is_certi_obt ," + 
 		
 			"        case WHEN t_institute_quality.quality_initiative_id=0 THEN (SELECT t.ex_var1 FROM t_institute_quality t WHERE t.quality_id=t_institute_quality.quality_id) ELSE \n" + 
 			"        (SELECT m_quality_initiatives.quality_initiative_name FROM m_quality_initiatives WHERE m_quality_initiatives.quality_initiative_id=t_institute_quality.quality_initiative_id) end as quality_initiative_name" + 		
@@ -45,7 +48,9 @@ public interface GetInstituteQualityRepo extends JpaRepository<GetInstituteQuali
 	
 	/*--------------------------------------------------------------------------------------------------------------*/
 	@Query(value = " SELECT t_institute_quality.quality_id, t_institute_quality.quality_initiative_id,t_institute_quality.ex_var1,	t_institute_quality.quality_fromdt,t_institute_quality.quality_todt , "
-			+ "t_institute_quality.quality_pcount,"
+			+ "t_institute_quality.quality_pcount,  t_institute_quality.is_applicable, "  
+			+ "	  t_institute_quality.is_applied," 
+			+ "			  t_institute_quality. is_certi_obt , "
 			+ " m_quality_initiatives.quality_initiative_name "
 			+ " FROM t_institute_quality  LEFT JOIN m_quality_initiatives "
 			+ " ON t_institute_quality.quality_initiative_id=m_quality_initiatives.quality_initiative_id "
