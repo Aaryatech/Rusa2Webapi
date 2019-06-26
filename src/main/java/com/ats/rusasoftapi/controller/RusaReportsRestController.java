@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
+import com.ats.rusasoftapi.model.instprofile.InstStakeholderFeedback;
 import com.ats.rusasoftapi.model.report.AvgPerPlacement;
 import com.ats.rusasoftapi.model.report.AwrdRecgAgnstExtActivityReport;
 import com.ats.rusasoftapi.model.report.BudgetInfraAugmntn;
@@ -28,6 +29,7 @@ import com.ats.rusasoftapi.model.report.FullTimeTechrInstResrchGuide;
 import com.ats.rusasoftapi.model.report.FunctionalMou;
 import com.ats.rusasoftapi.model.report.ICtEnbldFaclitiesReport;
 import com.ats.rusasoftapi.model.report.InitivAddrsLoctnAdvDisadv;
+import com.ats.rusasoftapi.model.report.InstStakeholderFeedbackReport;
 import com.ats.rusasoftapi.model.report.IntelectulPropRightReport;
 import com.ats.rusasoftapi.model.report.IntrnetConnInfo;
 import com.ats.rusasoftapi.model.report.NoAwardRecogExtAct;
@@ -62,6 +64,7 @@ import com.ats.rusasoftapi.reportrepo.FullTimeTechrInstResrchGuideRepo;
 import com.ats.rusasoftapi.reportrepo.FunctionalMouRepo;
 import com.ats.rusasoftapi.reportrepo.ICtEnbldFaclitiesReportRepo;
 import com.ats.rusasoftapi.reportrepo.InitivAddrsLoctnAdvDisadvRepo;
+import com.ats.rusasoftapi.reportrepo.InstStakeholderFeedbackReportRepo;
 import com.ats.rusasoftapi.reportrepo.IntelectulPropRightReportRepo;
 import com.ats.rusasoftapi.reportrepo.IntrnetConnInfoRepo;
 import com.ats.rusasoftapi.reportrepo.NoAwardRecogExtActRepo;
@@ -853,4 +856,42 @@ public class RusaReportsRestController {
  		
 		return fileInternList;
  	}
+	
+	@Autowired InstStakeholderFeedbackReportRepo stkFedBkRepo;
+	@RequestMapping(value = { "/getAllFeedBackFrmStackHldr" }, method = RequestMethod.POST)
+	public @ResponseBody List<InstStakeholderFeedbackReport> getAllStakeByInstituteId(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<InstStakeholderFeedbackReport> libResp = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+		
+		try {
+			List<Integer> lastFiveYears=new ArrayList<>();
+			
+			
+			if (acYearList.contains("-5")) {
+				System.err.println("in -5");
+				acYrList =academicYearRepo.getLastFiveYears();
+				
+				for (int i = 0; i < acYrList.size(); i++) {
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+				 System.err.println("new id list" + acYearList.toString());
+			}else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+				
+			} 
+			
+			libResp = stkFedBkRepo.getAllStkHldrFb(instId, lastFiveYears);
+			System.err.println("lib are" + libResp.toString());
+
+		} catch (Exception e) {
+			System.err.println("Exce in getAllFeedBackFrmStackHldr   " + e.getMessage());
+			e.printStackTrace();
+		} 
+
+		return libResp;
+	}
+	
 }
