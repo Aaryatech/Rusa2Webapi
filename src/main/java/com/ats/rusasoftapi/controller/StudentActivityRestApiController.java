@@ -761,13 +761,13 @@ public class StudentActivityRestApiController {
 	@Autowired StudPerformFinalYrListRepo studPerfomlistRepo;
 	@RequestMapping(value = { "/getstudPassingPer"}, method = RequestMethod.POST)
 	public @ResponseBody List<StudPerformFinalYrList> getstudPassingPer(
-			@RequestParam("instituteId") int instituteId) {
+			@RequestParam("instituteId") int instituteId, @RequestParam("yearId") int yearId) {
 
 		List<StudPerformFinalYrList> list = new ArrayList<StudPerformFinalYrList>();
 
 		try {
 
-			list = studPerfomlistRepo.getStudPassingInfo(instituteId);
+			list = studPerfomlistRepo.getStudPassingInfo(instituteId, yearId);
 
 		} catch (Exception e) {
 

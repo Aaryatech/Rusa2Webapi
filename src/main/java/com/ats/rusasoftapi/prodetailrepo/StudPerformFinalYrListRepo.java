@@ -10,25 +10,26 @@ import com.ats.rusasoftapi.model.StudPerformFinalYrList;
 
 public interface StudPerformFinalYrListRepo extends JpaRepository<StudPerformFinalYrList, Integer> {
 	
-	@Query(value = "select \n" + 
-			"        stud.stud_perform_id, \n" + 
-			"        t.name_of_program as prog_name, \n" + 
-			"         m.program_name as prog_type, \n" + 
-			"         stud.no_stud_appear,\n" + 
-			"        stud.no_stud_pass,\n" + 
-			"        stud.passing_per,\n" + 
-			"        stud.del_status\n" + 
-			"        \n" + 
-			"from \n" + 
-			"        stud_perform_final_yr stud,\n" + 
-			"        t_program t,\n" + 
-			"        m_program_type m\n" + 
-			"where \n" + 
-			"        stud.prog_name=m.program_id and\n" + 
-			"        stud.prog_type=t.program_id and\n" + 
-			"        stud.inst_id=:instituteId and "
-			+ "stud.del_status=1 Order By stud.stud_perform_id Desc",nativeQuery=true)
-	List<StudPerformFinalYrList> getStudPassingInfo(@Param("instituteId") int instituteId);
+	@Query(value = "select " + 
+			"        stud.stud_perform_id, " + 
+			"        t.name_of_program as prog_name, " + 
+			"        m.program_name as prog_type, " + 
+			"        stud.no_stud_appear," + 
+			"        stud.no_stud_pass," + 
+			"        stud.passing_per," + 
+			"        stud.del_status" + 
+			"        " + 
+			"from " + 
+			"        stud_perform_final_yr stud," + 
+			"        t_program t," + 
+			"        m_program_type m " + 
+			"where " + 
+			"        stud.prog_name=m.program_id and" + 
+			"        stud.prog_type=t.program_id and" + 
+			"        stud.inst_id=:instituteId and "+
+			"        stud.ex_int1 =:yearId and "+
+			"        stud.del_status=1 Order By stud.stud_perform_id Desc",nativeQuery=true)
+	List<StudPerformFinalYrList> getStudPassingInfo(@Param("instituteId") int instituteId, @Param("yearId") int yearId);
 	
 	
 }

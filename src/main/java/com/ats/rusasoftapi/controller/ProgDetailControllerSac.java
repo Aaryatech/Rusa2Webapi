@@ -617,6 +617,26 @@ public class ProgDetailControllerSac {
 
 	}
 	
+
+	@RequestMapping(value = { "/getAlumniAssocActByIds" }, method = RequestMethod.POST)
+	public @ResponseBody AlumniAssocAct getAlumniAssocActByIds(@RequestParam("instituteId") int instituteId,@RequestParam("yId") int yId) {
+		AlumniAssocAct alumni = new AlumniAssocAct();
+		try {
+			alumni=almActRepo.findLastRecordByInstIdAndAcYearId(instituteId, yId);
+			alumni.setAlmAssocActId(0);
+			alumni.setAlumniMeetngAgnda(null);
+			alumni.setDateOfMeeting(null);
+			alumni.setNoAlumniReg(0);
+			alumni.setNoMemberAttended(0);
+			alumni.setTtlNoAlumniEnrolled(0);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return alumni;
+
+	}
+	
 	@RequestMapping(value = { "/editAlumniAssocActivityById" }, method = RequestMethod.POST)
 	public @ResponseBody AlumniAssocAct editAlumniAssocActivityById(@RequestParam("almniActivityId") int almniActivityId) {
 		AlumniAssocAct alm = new AlumniAssocAct();
