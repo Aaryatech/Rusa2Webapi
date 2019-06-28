@@ -28,6 +28,7 @@ import com.ats.rusasoftapi.model.report.ExtensionActivityReport;
 import com.ats.rusasoftapi.model.report.FacParticipationInBodies;
 import com.ats.rusasoftapi.model.report.FinancialSuppToProfMem;
 import com.ats.rusasoftapi.model.report.GenderEquityProg;
+import com.ats.rusasoftapi.model.report.GetAluminiEngagementReport;
 import com.ats.rusasoftapi.model.report.GetAvgStudYearwise;
 import com.ats.rusasoftapi.model.report.GetMissions;
 import com.ats.rusasoftapi.model.report.GetTeachersUsingICT;
@@ -49,6 +50,8 @@ import com.ats.rusasoftapi.model.report.PhdGuideReport;
 import com.ats.rusasoftapi.model.report.PlagarismCodeEthicsReport;
 import com.ats.rusasoftapi.model.report.QualInitiativeAssurance;
 import com.ats.rusasoftapi.model.report.RareBookManuscriptSpec;
+import com.ats.rusasoftapi.model.report.ReaddressalOfStudGrievennce;
+import com.ats.rusasoftapi.model.report.ResearchProjNoPerTeacher;
 import com.ats.rusasoftapi.model.report.SportsCulturalActivityComp;
 import com.ats.rusasoftapi.model.report.StakeHolderFBReport;
 import com.ats.rusasoftapi.model.report.StudEnrooledForProgramReport;
@@ -75,6 +78,7 @@ import com.ats.rusasoftapi.reportrepo.ExtensionActivityReportRepo;
 import com.ats.rusasoftapi.reportrepo.FacParticipationInBodiesRepo;
 import com.ats.rusasoftapi.reportrepo.FinancialSuppToProfMemRepo;
 import com.ats.rusasoftapi.reportrepo.GenderEquityProgRepo;
+import com.ats.rusasoftapi.reportrepo.GetAluminiEngagementReportRepo;
 import com.ats.rusasoftapi.reportrepo.GetAvgStudYearwiseRepo;
 import com.ats.rusasoftapi.reportrepo.GetMissionsRepo;
 import com.ats.rusasoftapi.reportrepo.GetTeachersUsingICTRepo;
@@ -96,6 +100,8 @@ import com.ats.rusasoftapi.reportrepo.PhdGuideReportReport;
 import com.ats.rusasoftapi.reportrepo.PlagarismCodeEthicsReportRepo;
 import com.ats.rusasoftapi.reportrepo.QualInitiativeAssuranceRepo;
 import com.ats.rusasoftapi.reportrepo.RareBookManuscriptSpecRepo;
+import com.ats.rusasoftapi.reportrepo.ReaddressalOfStudGrievennceRepo;
+import com.ats.rusasoftapi.reportrepo.ResearchProjNoPerTeacherRepo;
 import com.ats.rusasoftapi.reportrepo.SportsCulturalActivityCompRepo;
 import com.ats.rusasoftapi.reportrepo.StakeHolderFBReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudEnrooledForProgramReportRepo;
@@ -1303,47 +1309,7 @@ public class ReportApiController {
 
 	}
 
-	@Autowired
-	AluminiEngagementRepo aluminiEngagementRepo;
-
-	@RequestMapping(value = { "/getAluminiEngg" }, method = RequestMethod.POST)
-	public @ResponseBody List<AluminiEngagement> getAluminiEngg(@RequestParam int instId,
-			@RequestParam List<String> acYearList) {
-
-		List<AluminiEngagement> facPartInVarBodies = new ArrayList<>();
-		List<AcademicYear> acYrList = new ArrayList<>();
-
-		try {
-
-			List<Integer> lastFiveYears = new ArrayList<>();
-			if (acYearList.contains("-5")) {
-
-				acYrList = academicYearRepo.getLastFiveYears();
-
-				for (int i = 0; i < acYrList.size(); i++) {
-
-					System.err.println("acYrList" + acYrList.get(i).toString());
-					lastFiveYears.add(acYrList.get(i).getYearId());
-				}
-
-			} else {
-				System.err.println("in else ");
-				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
-
-			}
-			facPartInVarBodies = aluminiEngagementRepo.getAllAluminiEngg(instId, lastFiveYears);
-			System.err.println("List=" + facPartInVarBodies);
-
-		} catch (Exception e) {
-
-			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
-			e.printStackTrace();
-
-		}
-
-		return facPartInVarBodies;
-
-	}
+	
 
 	@Autowired
 	SportsCulturalActivityCompRepo sportsCulturalActivityCompRepo;
@@ -1962,5 +1928,167 @@ public class ReportApiController {
 		return facPartInVarBodies;
 
 	}
+	
+	
+	@Autowired
+	ResearchProjNoPerTeacherRepo researchProjNoPerTeacherRepo;
+
+	@RequestMapping(value = { "/getResearchProjectnoDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<ResearchProjNoPerTeacher> getResearchProjectnoDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<ResearchProjNoPerTeacher> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+
+			facPartInVarBodies = researchProjNoPerTeacherRepo.getNoOfProjPerFaculty(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	
+	@Autowired
+	ReaddressalOfStudGrievennceRepo readdressalOfStudGrievennceRepo;
+
+	@RequestMapping(value = { "/getStudReaddressalGrievienceDetails" }, method = RequestMethod.POST)
+	public @ResponseBody List<ReaddressalOfStudGrievennce> getStudReaddressalGrievienceDetails(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<ReaddressalOfStudGrievennce> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					// System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+
+			facPartInVarBodies = readdressalOfStudGrievennceRepo.getAllStudGrievanceReport(instId, lastFiveYears);
+
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	AluminiEngagementRepo aluminiEngagementRepo;
+
+	@RequestMapping(value = { "/getAluminiEngg" }, method = RequestMethod.POST)
+	public @ResponseBody List<AluminiEngagement> getAluminiEngg(@RequestParam int instId,
+			@RequestParam List<String> acYearList) {
+
+		List<AluminiEngagement> facPartInVarBodies = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+
+			List<Integer> lastFiveYears = new ArrayList<>();
+			if (acYearList.contains("-5")) {
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+			} else {
+				System.err.println("in else ");
+				lastFiveYears.add(Integer.parseInt((acYearList.get(0))));
+
+			}
+			facPartInVarBodies = aluminiEngagementRepo.getAllAluminiEngg(instId, lastFiveYears);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	@Autowired
+	GetAluminiEngagementReportRepo getAluminiEngagementReportRepo;
+	
+	@RequestMapping(value = { "/getAluminiEngagementDetails" }, method = RequestMethod.POST)
+	public @ResponseBody  GetAluminiEngagementReport getAluminiEngagementDetails(@RequestParam int instId
+			 ) {
+
+	GetAluminiEngagementReport facPartInVarBodies = new GetAluminiEngagementReport();
+		List<AcademicYear> acYrList = new ArrayList<>();
+
+		try {
+ 			facPartInVarBodies = getAluminiEngagementReportRepo.getAllAluminiEnggReportDetails(instId);
+
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+	
+	
+	
+	
 
 }
