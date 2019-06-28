@@ -341,7 +341,7 @@ public class IqacRestController {
 	public @ResponseBody Staff addNewStaff(@RequestBody Staff staff) {
 		
 		Staff staffRes= null;
-		
+		System.out.println("  LOg****:"+staff.toString());
 		if(staff.getFacultyId()==0) {
 			String passWord = com.getAlphaNumericString(7);
 			staff.setPassword(passWord);
