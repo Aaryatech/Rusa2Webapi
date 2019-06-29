@@ -1039,10 +1039,10 @@ public class ProgDetailControllerSac {
 		List<Program> progList = new ArrayList<>();
 
 		try {
-			progList = programRepo.findByDelStatusAndIsActiveAndInstituteIdOrderByProgramIdDesc( 1, 1,instId);	
+			progList = programRepo.getAllProgTypeAndProgram(instId);	
 			//System.err.println("Prog List-----------"+progList);
 		} catch (Exception e) {
-			System.err.println("Exce in getAllProgramTypeForSanctnIntake  " + e.getMessage());
+			System.err.println("Exce in getAllProgramTypeForSanctnIntake" + e.getMessage());
 			e.printStackTrace();
 		}
 
