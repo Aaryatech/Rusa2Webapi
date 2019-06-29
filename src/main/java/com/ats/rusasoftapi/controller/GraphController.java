@@ -62,8 +62,8 @@ public class GraphController {
 	}
 	
 	
-	@RequestMapping(value = { "/getGraph2" }, method = RequestMethod.POST)
-	public @ResponseBody List<TotSancIntakeProgwise> getGraph2(@RequestParam int instId) {
+	@RequestMapping(value = { "/getTotSancIntakeProgramwiseGraph" }, method = RequestMethod.POST)
+	public @ResponseBody List<TotSancIntakeProgwise> getTotSancIntakeProgramwiseGraph(@RequestParam int instId) {
 
 		List<TotSancIntakeProgwise> facPartInVarBodies = new ArrayList<>();
  
