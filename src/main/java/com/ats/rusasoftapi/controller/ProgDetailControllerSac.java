@@ -15,6 +15,7 @@ import com.ats.rusasoftapi.model.GovtScholarships;
 import com.ats.rusasoftapi.model.Info;
 import com.ats.rusasoftapi.model.NewCourseInfo;
 import com.ats.rusasoftapi.model.NewCourseInfoList;
+import com.ats.rusasoftapi.model.Program;
 import com.ats.rusasoftapi.model.progdetail.AlumniAssocAct;
 import com.ats.rusasoftapi.model.progdetail.AlumniDetail;
 import com.ats.rusasoftapi.model.progdetail.Cast;
@@ -31,6 +32,7 @@ import com.ats.rusasoftapi.model.progdetail.GetStudAdmLocwiseGrpByProg;
 import com.ats.rusasoftapi.model.progdetail.GetTrainPlace;
 import com.ats.rusasoftapi.model.progdetail.HigherEducDetail;
 import com.ats.rusasoftapi.model.progdetail.Location;
+import com.ats.rusasoftapi.model.progdetail.ProgSancIntake;
 import com.ats.rusasoftapi.model.progdetail.ProgramType;
 import com.ats.rusasoftapi.model.progdetail.RedressedStudGrievance;
 import com.ats.rusasoftapi.model.progdetail.StudAdmCatwise;
@@ -54,6 +56,7 @@ import com.ats.rusasoftapi.prodetailrepo.HigherEducDetailRepo;
 import com.ats.rusasoftapi.prodetailrepo.LocationRepo;
 import com.ats.rusasoftapi.prodetailrepo.NewCourseInfoListRepo;
 import com.ats.rusasoftapi.prodetailrepo.NewCourseInfoRepo;
+import com.ats.rusasoftapi.prodetailrepo.ProgSancIntakeRepo;
 import com.ats.rusasoftapi.prodetailrepo.ProgramTypeRepo;
 import com.ats.rusasoftapi.prodetailrepo.RedressedStudGrievanceRepo;
 import com.ats.rusasoftapi.prodetailrepo.StudAdmCatwiseRepo;
@@ -61,6 +64,7 @@ import com.ats.rusasoftapi.prodetailrepo.StudAdmLocwiseRepo;
 import com.ats.rusasoftapi.prodetailrepo.TrainPlacementRepo;
 import com.ats.rusasoftapi.prodetailrepo.ValueAddedCoursesRepo;
 import com.ats.rusasoftapi.repository.AlumniAssocActRepo;
+import com.ats.rusasoftapi.repository.ProgramRepository;
 
 @RestController
 public class ProgDetailControllerSac {
@@ -1022,5 +1026,66 @@ public class ProgDetailControllerSac {
 
 		return info;
 
+	}
+	
+	
+	
+	@Autowired
+	ProgramRepository programRepo;
+
+	@RequestMapping(value = { "/getAllProgramTypeForSanctnIntake" }, method = RequestMethod.POST)
+	public @ResponseBody List<Program> getAllProgramTypeForSanctnIntake(@RequestParam("instId") int instId) {
+
+		List<Program> progList = new ArrayList<>();
+
+		try {
+			progList = programRepo.findByDelStatusAndIsActiveAndInstituteIdOrderByProgramIdDesc( 1, 1,instId);	
+			//System.err.println("Prog List-----------"+progList);
+		} catch (Exception e) {
+			System.err.println("Exce in getAllProgramTypeForSanctnIntake  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return progList;
+	}
+	
+	
+	@Autowired
+	ProgSancIntakeRepo prgSancIntkRepo;
+
+	@RequestMapping(value = { "/savePrgIntkList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgSancIntake> savePrgIntkList(@RequestBody List<ProgSancIntake> prgIntkInsertList) {
+
+		List<ProgSancIntake> resList = new ArrayList<>();
+
+		try {
+			resList = prgSancIntkRepo.saveAll(prgIntkInsertList);
+			
+		} catch (Exception e) {
+			//System.err.println("Exce in savePrgIntkList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resList;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getAllSanctnIntakeList" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgSancIntake> getAllSanctnIntakeList(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		List<ProgSancIntake> intkList = new ArrayList<>();
+
+		try {
+
+			intkList = prgSancIntkRepo.findByInstIdAndAcYearIdAndDelStatus(instId, yearId);
+			//System.err.println("intkList-----------"+intkList);
+		} catch (Exception e) {
+			//System.err.println("Exce in getAllSanctnIntakeList  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return intkList;
 	}
 }
