@@ -66,20 +66,10 @@ public class GraphController {
 	public @ResponseBody List<TotSancIntakeProgwise> getGraph2(@RequestParam int instId) {
 
 		List<TotSancIntakeProgwise> facPartInVarBodies = new ArrayList<>();
-		List<AcademicYear> acYrList = new ArrayList<>();
-
+ 
 		try {
-
-			List<Integer> lastFiveYears = new ArrayList<>();
-
-			acYrList = academicYearRepo.getLastFiveYears();
-
-			for (int i = 0; i < acYrList.size(); i++) {
-				System.err.println("acYrList" + acYrList.get(i).toString());
-				lastFiveYears.add(acYrList.get(i).getYearId());
-			}
-
-			facPartInVarBodies = totSancIntakeProgwiseRepo.getGraph2Data(instId,lastFiveYears);
+ 
+			facPartInVarBodies = totSancIntakeProgwiseRepo.getGraph2Data(instId);
 			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
