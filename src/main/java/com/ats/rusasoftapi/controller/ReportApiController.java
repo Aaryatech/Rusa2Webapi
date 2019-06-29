@@ -143,7 +143,10 @@ public class ReportApiController {
 			setKey = settingKeyValueRepo.findBySettingKeyAndDelStatus("Report1", 1);
 			System.err.println("stk ids :" + setKey.toString());
 			String stkId = setKey.getStringValue();
-			progList = getNoOfProgramsRepo.getNoOfPrograms(instId, stkId);
+			
+			List<Integer> locIds = Stream.of(setKey.getStringValue().split(",")).map(Integer::parseInt)
+					.collect(Collectors.toList());
+			progList = getNoOfProgramsRepo.getNoOfPrograms(instId, locIds);
 			System.err.println("List=" + progList);
 
 		} catch (Exception e) {
