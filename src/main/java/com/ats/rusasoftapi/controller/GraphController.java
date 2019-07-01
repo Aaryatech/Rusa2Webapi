@@ -89,7 +89,7 @@ public class GraphController {
 	DashBoardCountsRepo dashBoardCountsRepo;
 
 	@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
-	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId) {
+	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int typeId) {
 
 		DashBoardCounts dash = new DashBoardCounts();
 
@@ -97,30 +97,34 @@ public class GraphController {
 
 		try {
 
-			temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
-			dash.setTotalfaculties(temp.getCount());
+			// typeId=1 for Principal 
 
-			temp = dashBoardCountsRepo.getNoOfFacultiesPHDForPrinci(instId);
-			dash.setTotalfacultieswithPHD(temp.getCount());
+			if (typeId == 1) {
+				temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
+				dash.setTotalfaculties(temp.getCount());
 
-			temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-			dash.setTotalstudent(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfFacultiesPHDForPrinci(instId);
+				dash.setTotalfacultieswithPHD(temp.getCount());
 
-			temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
-			dash.setNoofprogram(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+				dash.setTotalstudent(temp.getCount());
 
-			temp = dashBoardCountsRepo.getNoOfBudgetForPrinci(instId);
-			dash.setCurrfinyearbudget(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
+				dash.setNoofprogram(temp.getCount());
 
-			temp = dashBoardCountsRepo.getNoOfBookPubForPrinci(instId);
-			dash.setNoofbookpub(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfBudgetForPrinci(instId);
+				dash.setCurrfinyearbudget(temp.getCount());
 
-			temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
-			dash.setTotalresearchprojects(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfBookPubForPrinci(instId);
+				dash.setNoofbookpub(temp.getCount());
 
-			float x1 = dash.getTotalstudent() / dash.getTotalfaculties();
+				temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
+				dash.setTotalresearchprojects(temp.getCount());
 
-			dash.setRatio(x1);
+				float x1 = dash.getTotalstudent() / dash.getTotalfaculties();
+
+				dash.setRatio(x1);
+			}
 
 		} catch (Exception e) {
 
