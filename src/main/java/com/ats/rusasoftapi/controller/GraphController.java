@@ -14,11 +14,13 @@ import com.ats.rusasoftapi.graph.model.DashBoardCounts;
 import com.ats.rusasoftapi.graph.model.GetCountsForDash;
 import com.ats.rusasoftapi.graph.model.GetTotStudentPassedAndAppearInFinYr;
 import com.ats.rusasoftapi.graph.model.SancIntakeStudAdmittedGraph;
+import com.ats.rusasoftapi.graph.model.StudpassApperaedTaughByFac;
 import com.ats.rusasoftapi.graph.model.TeacherStudUsingLibrary;
 import com.ats.rusasoftapi.graph.model.TotSancIntakeProgwise;
 import com.ats.rusasoftapi.graphrepo.DashBoardCountsRepo;
 import com.ats.rusasoftapi.graphrepo.GetTotStudentPassedAndAppearInFinYrRepo;
 import com.ats.rusasoftapi.graphrepo.SancIntakeStudAdmittedGraphRepo;
+import com.ats.rusasoftapi.graphrepo.StudpassApperaedTaughByFacRepo;
 import com.ats.rusasoftapi.graphrepo.TeacherStudUsingLibraryRepo;
 import com.ats.rusasoftapi.graphrepo.TotSancIntakeProgwiseRepo;
 import com.ats.rusasoftapi.model.AcademicYear;
@@ -239,5 +241,34 @@ public class GraphController {
 		return facPartInVarBodies;
 
 	}
+	
+	
+	//***********************************Faculty************************************
+	
+	@Autowired
+	StudpassApperaedTaughByFacRepo studpassApperaedTaughByFacRepo;
+	
+	@RequestMapping(value = { "/getStudpassAppearedTaughByFacGraph" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudpassApperaedTaughByFac> getStudpassApperaedTaughByFacGraph(@RequestParam int instId,@RequestParam int facultyId) {
+
+		List<StudpassApperaedTaughByFac> facPartInVarBodies = new ArrayList<>();
+
+		try {
+
+			facPartInVarBodies = studpassApperaedTaughByFacRepo.getStudpassApperaedTaughByFacDet(instId,facultyId);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
+
+	
 
 }
