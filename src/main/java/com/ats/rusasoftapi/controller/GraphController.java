@@ -94,7 +94,7 @@ public class GraphController {
 	DashBoardCountsRepo dashBoardCountsRepo;
 
 	@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
-	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int isPrincipal,
+	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId,@RequestParam int facultyId,@RequestParam int deptId, @RequestParam int isPrincipal,
 			@RequestParam int isIqac, @RequestParam int isHod, @RequestParam int isFaculty,
 			@RequestParam int isLibrarian, @RequestParam int isAccOff, @RequestParam int isDean) {
 
@@ -104,8 +104,7 @@ public class GraphController {
 
 		try {
 
-			// typeId=1 for Principal
-
+		  
 			if (isPrincipal == 1 || isIqac == 1) {
 				temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
 				dash.setTotalfaculties(temp.getCount());
@@ -137,6 +136,19 @@ public class GraphController {
 				float x1 =(float) ( dash.getTotalstudent() /(float)  dash.getTotalfaculties());
 
 				dash.setRatio(x1);
+			}
+			
+			if(isHod==1) {
+				
+				temp = dashBoardCountsRepo.getNoOfFacultiesForHod(instId,deptId);
+				dash.setTotalfacultiesforHOD(temp.getCount());
+
+				temp = dashBoardCountsRepo.getNoOfStudentsForHod(instId,facultyId);
+				dash.setTotalstudentForHOD(temp.getCount());
+
+				temp = dashBoardCountsRepo.getNoOfProgramForHod(instId,facultyId);
+				dash.setNoofprogramForHOD(temp.getCount());
+				
 			}
 
 		} catch (Exception e) {

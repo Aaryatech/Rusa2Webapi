@@ -67,4 +67,39 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 			+ "    WHERE\n" + "        m_academic_year.is_current = 1\n" + ")", nativeQuery = true)
 	GetCountsForDash getNoOfResearchPubForPrinci(@Param("instId") int instId);
 
+	// for hod
+	// 1
+	@Query(value = "SELECT\n" + "  UUID() AS id,   COUNT(m_faculty.faculty_id) AS count,\n" + "    0 AS count1,\n"
+			+ "    0 AS data1,\n" + "    0 AS data2\n" + "FROM\n" + "    m_faculty\n" + "WHERE\n"
+			+ "    m_faculty.del_status = 1 AND m_faculty.is_active = 1 AND m_faculty.is_faculty = 1 AND m_faculty.is_blocked = 0 AND m_faculty.institute_id =:instId AND m_faculty.dept_id =:deptId ", nativeQuery = true)
+	GetCountsForDash getNoOfFacultiesForHod(@Param("instId") int instId, @Param("deptId") int deptId);
+
+	// 2
+
+	@Query(value = "SELECT UUID() AS id,\n" + 
+			"    SUM(\n" + 
+			"        t_program_student_location.loc_tot_student\n" + 
+			"    ) AS count,0 as count1,0 as data1,0 as data2\n" + 
+			"FROM\n" + 
+			"    t_program_student_location,\n" + 
+			"    t_program,\n" + 
+			"    m_institute,\n" + 
+			"    m_academic_year\n" + 
+			"WHERE\n" + 
+			"    t_program_student_location.program_id = t_program.program_id AND t_program.maker_user_id =:facultyId AND t_program_student_location.year_id = m_academic_year.year_id AND t_program.institute_id = m_institute.institute_id AND m_academic_year.is_current = 1 AND m_institute.institute_id =:instId AND t_program_student_location.del_status = 1 AND t_program_student_location.is_active = 1 AND t_program.del_status = 1 AND t_program.is_active = 1\n" + 
+			"GROUP BY\n" + 
+			"    t_program.maker_user_id", nativeQuery = true)
+	GetCountsForDash getNoOfStudentsForHod(@Param("instId") int instId, @Param("facultyId") int facultyId);
+
+	// 3
+
+	@Query(value = "SELECT\n" + "  UUID() AS id,   COUNT(t_program.program_id) AS count,\n" + "    0 AS count1,\n"
+			+ "    0 AS data1,\n" + "    0 AS data2\n" + "FROM\n" + "    t_program\n" + "WHERE\n"
+			+ "    t_program.del_status = 1 AND t_program.is_active = 1 AND t_program.maker_user_id =:facultyId AND t_program.institute_id =:instId\n"
+			+ "", nativeQuery = true)
+	GetCountsForDash getNoOfProgramForHod(@Param("instId") int instId, @Param("facultyId") int facultyId);
+
+	
+	
+	
 }
