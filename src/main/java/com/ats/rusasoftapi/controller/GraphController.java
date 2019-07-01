@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.graph.model.DashBoardCounts;
+import com.ats.rusasoftapi.graph.model.GetCountsForDash;
 import com.ats.rusasoftapi.graph.model.SancIntakeStudAdmittedGraph;
 import com.ats.rusasoftapi.graph.model.TotSancIntakeProgwise;
+import com.ats.rusasoftapi.graphrepo.DashBoardCountsRepo;
 import com.ats.rusasoftapi.graphrepo.SancIntakeStudAdmittedGraphRepo;
 import com.ats.rusasoftapi.graphrepo.TotSancIntakeProgwiseRepo;
 import com.ats.rusasoftapi.model.AcademicYear;
- import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
- 
+import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
+
 @RestController
 
 public class GraphController {
@@ -26,7 +29,7 @@ public class GraphController {
 
 	@Autowired
 	SancIntakeStudAdmittedGraphRepo sancIntakeStudAdmittedGraphRepo;
-	
+
 	@Autowired
 	TotSancIntakeProgwiseRepo totSancIntakeProgwiseRepo;
 
@@ -60,15 +63,14 @@ public class GraphController {
 		return facPartInVarBodies;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getTotSancIntakeProgramwiseGraph" }, method = RequestMethod.POST)
 	public @ResponseBody List<TotSancIntakeProgwise> getTotSancIntakeProgramwiseGraph(@RequestParam int instId) {
 
 		List<TotSancIntakeProgwise> facPartInVarBodies = new ArrayList<>();
- 
+
 		try {
- 
+
 			facPartInVarBodies = totSancIntakeProgwiseRepo.getGraph2Data(instId);
 			System.err.println("List=" + facPartInVarBodies);
 
@@ -80,6 +82,54 @@ public class GraphController {
 		}
 
 		return facPartInVarBodies;
+
+	}
+
+	@Autowired
+	DashBoardCountsRepo dashBoardCountsRepo;
+
+	@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
+	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId) {
+
+		DashBoardCounts dash = new DashBoardCounts();
+
+		GetCountsForDash temp = new GetCountsForDash();
+
+		try {
+
+			temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
+			dash.setTotalfaculties(temp.getCount());
+
+			temp = dashBoardCountsRepo.getNoOfFacultiesPHDForPrinci(instId);
+			dash.setTotalfacultieswithPHD(temp.getCount());
+
+			temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+			dash.setTotalstudent(temp.getCount());
+
+			temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
+			dash.setNoofprogram(temp.getCount());
+
+			temp = dashBoardCountsRepo.getNoOfBudgetForPrinci(instId);
+			dash.setCurrfinyearbudget(temp.getCount());
+
+			temp = dashBoardCountsRepo.getNoOfBookPubForPrinci(instId);
+			dash.setNoofbookpub(temp.getCount());
+
+			temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
+			dash.setTotalresearchprojects(temp.getCount());
+
+			float x1 = dash.getTotalstudent() / dash.getTotalfaculties();
+
+			dash.setRatio(x1);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getPrincipalDashCounts" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return dash;
 
 	}
 }
