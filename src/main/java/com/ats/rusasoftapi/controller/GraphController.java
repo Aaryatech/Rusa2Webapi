@@ -33,6 +33,9 @@ public class GraphController {
 	@Autowired
 	TotSancIntakeProgwiseRepo totSancIntakeProgwiseRepo;
 
+	
+	//****************************Principal & IQAC********************************
+	
 	@RequestMapping(value = { "/getGraph1" }, method = RequestMethod.POST)
 	public @ResponseBody List<SancIntakeStudAdmittedGraph> getGraph1(@RequestParam int instId) {
 
@@ -109,7 +112,13 @@ public class GraphController {
 				dash.setTotalfacultieswithPHD(temp.getCount());
 
 				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setTotalstudent(temp.getCount());
+				dash.setTotalstudent(temp.getCount()+temp.getCount1());
+				 
+				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+				dash.setMalestudent(temp.getCount1());
+				
+				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+				dash.setFemalestudent(temp.getCount());
 
 				temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
 				dash.setNoofprogram(temp.getCount());
@@ -121,9 +130,9 @@ public class GraphController {
 				dash.setNoofbookpub(temp.getCount());
 
 				temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
-				dash.setTotalresearchprojects(temp.getCount());
+				dash.setNoOfreserchpub(temp.getCount());
 
-				float x1 = dash.getTotalstudent() / dash.getTotalfaculties();
+				float x1 =(float) ( dash.getTotalstudent() /(float)  dash.getTotalfaculties());
 
 				dash.setRatio(x1);
 			}
@@ -138,4 +147,9 @@ public class GraphController {
 		return dash;
 
 	}
+	
+	//****************************HOD********************************
+
+	
+	
 }

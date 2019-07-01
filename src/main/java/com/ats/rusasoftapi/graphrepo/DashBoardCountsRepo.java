@@ -26,7 +26,7 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 
 	// 3
 	@Query(value = "SELECT  UUID() AS id, \n"
-			+ "    t_program_student_location.female_student as count,t_program_student_location.male_student as count1,0 as data1,0 as data2 \n"
+			+ "    COUNT(t_program_student_location.female_student) as count,COUNT(t_program_student_location.male_student) as count1,0 as data1,0 as data2 \n"
 			+ "FROM\n" + "    t_program_student_location\n" + "WHERE\n"
 			+ "    t_program_student_location.institute_id =:instId AND t_program_student_location.del_status = 1 AND t_program_student_location.is_active = 1 AND t_program_student_location.year_id=(SELECT m_academic_year.year_id FROM m_academic_year WHERE m_academic_year.is_current=1) ", nativeQuery = true)
 	GetCountsForDash getNoOfStudentForPrinci(@Param("instId") int instId);
@@ -41,7 +41,7 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 
 	// 5
 	@Query(value = "SELECT\n" + "    UUID() AS id,(\n" + "        t_academic_budget.budget_allocated\n"
-			+ "    ) AS COUNT,\n" + "    0 AS count1, 0 as data1,0 as data2 \n" + "FROM\n" + "    t_academic_budget\n"
+			+ "    ) AS count,\n" + "    0 AS count1, 0 as data1,0 as data2 \n" + "FROM\n" + "    t_academic_budget\n"
 			+ "WHERE\n"
 			+ "    t_academic_budget.institute_id =:instId AND t_academic_budget.del_status = 1 AND t_academic_budget.is_active = 1 AND t_academic_budget.fin_year_id =(\n"
 			+ "    SELECT\n" + "        m_financial_year.fin_year_id\n" + "    FROM\n" + "        m_financial_year\n"
@@ -49,7 +49,7 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 	GetCountsForDash getNoOfBudgetForPrinci(@Param("instId") int instId);
 	// 6
 
-	@Query(value = "SELECT\n" + "    UUID() AS id, COUNT(t_faculty_book.book_id) AS COUNT,\n"
+	@Query(value = "SELECT\n" + "    UUID() AS id, COUNT(t_faculty_book.book_id) AS count,\n"
 			+ "    0 AS count1,0 as data1,0 as data2 \n" + "FROM\n" + "    t_faculty_book,\n" + "    m_faculty\n"
 			+ "WHERE\n"
 			+ "    t_faculty_book.faculty_id = m_faculty.faculty_id AND t_faculty_book.del_status = 1 AND t_faculty_book.is_active = 1 AND m_faculty.institute_id =:instId AND t_faculty_book.year_id =(\n"
@@ -59,7 +59,7 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 
 	// 7
 
-	@Query(value = "SELECT\n" + "    UUID() AS id, COUNT(t_faculty_conference.conf_id) AS COUNT,\n"
+	@Query(value = "SELECT\n" + "    UUID() AS id, COUNT(t_faculty_conference.conf_id) AS count,\n"
 			+ "    0 AS count1,0 as data1,0 as data2 \n" + "FROM\n" + "    t_faculty_conference,\n" + "    m_faculty\n"
 			+ "WHERE\n"
 			+ "    t_faculty_conference.faculty_id = m_faculty.faculty_id AND t_faculty_conference.del_status = 1 AND t_faculty_conference.is_active = 1 AND m_faculty.institute_id =:instId AND t_faculty_conference.year_id =(\n"
