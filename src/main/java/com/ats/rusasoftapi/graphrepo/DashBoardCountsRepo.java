@@ -100,6 +100,43 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 	GetCountsForDash getNoOfProgramForHod(@Param("instId") int instId, @Param("facultyId") int facultyId);
 
 	
+	//for Librarian
 	
+	// 1
+		@Query(value = "SELECT\n" + 
+				"    UUID() AS id, m_library_info.soft_name AS data1, m_library_info.users_of_lms AS data2, m_library_info.avg_teacher AS count, m_library_info.avg_student AS count1\n" + 
+				"FROM\n" + 
+				"    m_library_info\n" + 
+				"WHERE\n" + 
+				"    m_library_info.institute_id =:instId AND m_library_info.del_status = 1 AND m_library_info.ac_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") ORDER BY m_library_info.lib_info_id  DESC LIMIT 1", nativeQuery = true)
+		GetCountsForDash getCountsForLibrarian(@Param("instId") int instId);
+
+		// 2
+		@Query(value = "SELECT\n" + 
+				"    UUID() AS id, 0 AS data1, 0 AS data2, m_library_info.ex_int1 AS count,0 AS count1\n" + 
+				"FROM\n" + 
+				"    m_library_info\n" + 
+				"WHERE\n" + 
+				"    m_library_info.institute_id =:instId AND m_library_info.del_status = 1 AND m_library_info.ac_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") ORDER BY m_library_info.lib_info_id  DESC LIMIT 1\n" + 
+				" ", nativeQuery = true)
+		GetCountsForDash getCountsForLibrarian1(@Param("instId") int instId);
+	
+	
+	
+		
 	
 }
