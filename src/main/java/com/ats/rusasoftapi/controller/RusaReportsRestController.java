@@ -76,11 +76,13 @@ import com.ats.rusasoftapi.reportrepo.ResrchProjectGrantsRepo;
 import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
 import com.ats.rusasoftapi.reportrepo.StudProgressionRepo;
+import com.ats.rusasoftapi.reportrepo.StudSupprtSchemGraphRepo;
 import com.ats.rusasoftapi.reportrepo.TeacExpFullTimFacRepo;
 import com.ats.rusasoftapi.reportrepo.TeacherAwardRecognitnRepo;
 import com.ats.rusasoftapi.reportrepo.TechrResrchPaprJournlInfoRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostOthrStateRepo;
 import com.ats.rusasoftapi.repository.FacAgnstSanctnPostRepo;
+import com.ats.rusasoftapi.model.report.StudSupprtSchemGraph;
 
 @RestController
 public class RusaReportsRestController {
@@ -894,4 +896,20 @@ public class RusaReportsRestController {
 		return libResp;
 	}
 	
+	
+	@Autowired StudSupprtSchemGraphRepo studSchmRepo;
+	@RequestMapping(value = { "/getAllStudSupprtSchemGraph" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudSupprtSchemGraph> StudSupprtSchemGraph(@RequestParam int instId) {
+		
+		List<StudSupprtSchemGraph> studSchmList = new ArrayList<StudSupprtSchemGraph>();
+		
+		try {
+		studSchmList=studSchmRepo.getAllStudSupprtSchemGraphByInstId(instId);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+		return studSchmList;
+		
+	}
 }
