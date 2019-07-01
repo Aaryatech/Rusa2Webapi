@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.graph.model.DashBoardCounts;
 import com.ats.rusasoftapi.graph.model.GetCountsForDash;
+import com.ats.rusasoftapi.graph.model.GetTotStudentPassedAndAppearInFinYr;
 import com.ats.rusasoftapi.graph.model.SancIntakeStudAdmittedGraph;
 import com.ats.rusasoftapi.graph.model.TotSancIntakeProgwise;
 import com.ats.rusasoftapi.graphrepo.DashBoardCountsRepo;
+import com.ats.rusasoftapi.graphrepo.GetTotStudentPassedAndAppearInFinYrRepo;
 import com.ats.rusasoftapi.graphrepo.SancIntakeStudAdmittedGraphRepo;
 import com.ats.rusasoftapi.graphrepo.TotSancIntakeProgwiseRepo;
 import com.ats.rusasoftapi.model.AcademicYear;
@@ -150,7 +152,29 @@ public class GraphController {
 	
 	//****************************HOD********************************
 	
+	@Autowired
+	GetTotStudentPassedAndAppearInFinYrRepo getTotStudentPassedAndAppearInFinYrRepo;
 	
+	@RequestMapping(value = { "/getTotStudentPassedAndAppearInFinYrGraphForHod" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTotStudentPassedAndAppearInFinYr> getTotStudentPassedAndAppearInFinYrGraphForHod(@RequestParam int instId,@RequestParam int facultyId) {
+
+		List<GetTotStudentPassedAndAppearInFinYr> facPartInVarBodies = new ArrayList<>();
+
+		try {
+
+			facPartInVarBodies = getTotStudentPassedAndAppearInFinYrRepo.getGetTotStudentPassedAndAppearInFinYrDet(instId,facultyId);
+			System.err.println("List=" + facPartInVarBodies);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getTotStudentPassedAndAppearInFinYrGraphForHod R2 " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return facPartInVarBodies;
+
+	}
 	
 
 	
