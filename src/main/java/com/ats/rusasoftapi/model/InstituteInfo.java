@@ -47,6 +47,18 @@ public class InstituteInfo {
 	private String exVar1; 
 	
 	private String exVar2;
+	
+	private int autonStatus;
+	
+	
+
+	public int getAutonStatus() {
+		return autonStatus;
+	}
+
+	public void setAutonStatus(int autonStatus) {
+		this.autonStatus = autonStatus;
+	}
 
 	public int getInfoDetailId() {
 		return infoDetailId;
@@ -201,7 +213,7 @@ public class InstituteInfo {
 				+ noCurrentAdmitedStnt + ", treasuryCode=" + treasuryCode + ", rusaIdNo=" + rusaIdNo + ", addDatetime="
 				+ addDatetime + ", editDatetime=" + editDatetime + ", editBy=" + editBy + ", addBy=" + addBy
 				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + "]";
+				+ ", exVar2=" + exVar2 + ", autonStatus=" + autonStatus + "]";
 	} 
 	
 
