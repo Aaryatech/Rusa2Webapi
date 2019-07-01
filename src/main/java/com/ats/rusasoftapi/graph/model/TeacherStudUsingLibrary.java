@@ -9,6 +9,8 @@ public class TeacherStudUsingLibrary {
 	@Id
 	private int acYearId;
 	
+	private String acYear;
+	
 	private int libInfoId;
 	
 	private int avgTeacher;
@@ -47,16 +49,25 @@ public class TeacherStudUsingLibrary {
 		this.avgStudent = avgStudent;
 	}
 
+	
+	
+	public String getAcYear() {
+		return acYear;
+	}
+
+	public void setAcYear(String acYear) {
+		this.acYear = acYear;
+	}
+
 	@Override
 	public String toString() {
-		return "TeacherStudUsingLibrary [acYearId=" + acYearId + ", libInfoId=" + libInfoId + ", avgTeacher="
-				+ avgTeacher + ", avgStudent=" + avgStudent + ", getAcYearId()=" + getAcYearId() + ", getLibInfoId()="
-				+ getLibInfoId() + ", getAvgTeacher()=" + getAvgTeacher() + ", getAvgStudent()=" + getAvgStudent()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+		return "TeacherStudUsingLibrary [acYearId=" + acYearId + ", acYear=" + acYear + ", libInfoId=" + libInfoId
+				+ ", avgTeacher=" + avgTeacher + ", avgStudent=" + avgStudent + ", getAcYearId()=" + getAcYearId()
+				+ ", getLibInfoId()=" + getLibInfoId() + ", getAvgTeacher()=" + getAvgTeacher() + ", getAvgStudent()="
+				+ getAvgStudent() + ", getAcYear()=" + getAcYear() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
-	
-	
+
+ 
 
 }
