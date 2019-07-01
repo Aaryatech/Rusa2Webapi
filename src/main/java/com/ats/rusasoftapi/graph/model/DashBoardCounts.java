@@ -1,54 +1,68 @@
 package com.ats.rusasoftapi.graph.model;
 
-
-
 public class DashBoardCounts {
-	
-	private int totalfaculties;                       //Principal,IQAC,HOD as Total Faculty Available
-	
-	
-	private int  totalfacultieswithPHD;               //Principal,IQAC
-	
-	private float ratio ;                             //Principal,IQAC
-	
-	private int totalstudent;                          //Principal,IQAC,HOD as Total Students Admitted
-	 
-	private int malestudent;                           //Principal,IQAC
-	
-	private int femalestudent;                          //Principal,IQAC
-	
-	
-	private int noofprogram;                           //Principal,IQAC,HOD as  Total Programs Added by Hod
-	
-	
-	private int noOfreserchpub;                         //Principal,IQAC,Faculty as No of Research Publication
-	
-	
-	private int noofbookpub;;                            //Principal,IQAC,Faculty as No of book Publication
-	
-	private int currfinyearbudget;                       //Principal,IQAC
-	
-	private String researchprojecttitle;                 //Faculty
-	
-	private int noofpatentsfilled;                        //Faculty
-	
-	private String  libraryusageperdayfaculty;            //Librarian
-	
-	private String  libraryusageperdaystudents;           //Librarian
-	
-	private int noofbooksinlibrary;                       //Librarian
-	
-	private String  LMSsoftwarename;                      //Librarian
-	
-	private String  noofLMSsoftwareusers;                  //Librarian
-	
-	private int totalresearchprojects;                     //Dean R&D
-	
-	private int totalnoofMOUs;                             //Dean R&D
-	
-	private int totallinkages;                             //Dean R&D
-	
-	private String  fundingfrom;                           //Dean R&D
+
+	// Principal,IQAC
+
+	private int totalfaculties;
+
+	private int totalfacultieswithPHD;
+
+	private float ratio;
+
+	private int totalstudent;
+
+	private int malestudent;
+
+	private int femalestudent;
+
+	private int noofprogram;
+
+	private int noOfreserchpub;
+
+	private int noofbookpub;;
+
+	private int currfinyearbudget;
+
+	// HOD
+
+	private int totalfacultiesforHOD;
+
+	private int totalstudentForHOD;
+
+	private int noofprogramForHOD;
+
+	// faculty
+
+	private String researchprojecttitle;
+
+	private int noofpatentsfilled;
+
+	private int noOfreserchpubforFaculty;
+
+	private int noofbookpubForFaculty;
+
+	// Librarian
+
+	private String libraryusageperdayfaculty;
+
+	private String libraryusageperdaystudents;
+
+	private int noofbooksinlibrary;
+
+	private String LMSsoftwarename;
+
+	private String noofLMSsoftwareusers;
+
+	// dean
+
+	private int totalresearchprojects;
+
+	private int totalnoofMOUs;
+
+	private int totallinkages;
+
+	private String fundingfrom;
 
 	public int getTotalfaculties() {
 		return totalfaculties;
@@ -218,33 +232,77 @@ public class DashBoardCounts {
 		this.femalestudent = femalestudent;
 	}
 
+	public int getTotalfacultiesforHOD() {
+		return totalfacultiesforHOD;
+	}
+
+	public void setTotalfacultiesforHOD(int totalfacultiesforHOD) {
+		this.totalfacultiesforHOD = totalfacultiesforHOD;
+	}
+
+	public int getTotalstudentForHOD() {
+		return totalstudentForHOD;
+	}
+
+	public void setTotalstudentForHOD(int totalstudentForHOD) {
+		this.totalstudentForHOD = totalstudentForHOD;
+	}
+
+	public int getNoofprogramForHOD() {
+		return noofprogramForHOD;
+	}
+
+	public void setNoofprogramForHOD(int noofprogramForHOD) {
+		this.noofprogramForHOD = noofprogramForHOD;
+	}
+
+	public int getNoOfreserchpubforFaculty() {
+		return noOfreserchpubforFaculty;
+	}
+
+	public void setNoOfreserchpubforFaculty(int noOfreserchpubforFaculty) {
+		this.noOfreserchpubforFaculty = noOfreserchpubforFaculty;
+	}
+
+	public int getNoofbookpubForFaculty() {
+		return noofbookpubForFaculty;
+	}
+
+	public void setNoofbookpubForFaculty(int noofbookpubForFaculty) {
+		this.noofbookpubForFaculty = noofbookpubForFaculty;
+	}
+
 	@Override
 	public String toString() {
 		return "DashBoardCounts [totalfaculties=" + totalfaculties + ", totalfacultieswithPHD=" + totalfacultieswithPHD
 				+ ", ratio=" + ratio + ", totalstudent=" + totalstudent + ", malestudent=" + malestudent
 				+ ", femalestudent=" + femalestudent + ", noofprogram=" + noofprogram + ", noOfreserchpub="
 				+ noOfreserchpub + ", noofbookpub=" + noofbookpub + ", currfinyearbudget=" + currfinyearbudget
-				+ ", researchprojecttitle=" + researchprojecttitle + ", noofpatentsfilled=" + noofpatentsfilled
-				+ ", libraryusageperdayfaculty=" + libraryusageperdayfaculty + ", libraryusageperdaystudents="
-				+ libraryusageperdaystudents + ", noofbooksinlibrary=" + noofbooksinlibrary + ", LMSsoftwarename="
-				+ LMSsoftwarename + ", noofLMSsoftwareusers=" + noofLMSsoftwareusers + ", totalresearchprojects="
-				+ totalresearchprojects + ", totalnoofMOUs=" + totalnoofMOUs + ", totallinkages=" + totallinkages
-				+ ", fundingfrom=" + fundingfrom + ", getTotalfaculties()=" + getTotalfaculties()
-				+ ", getTotalfacultieswithPHD()=" + getTotalfacultieswithPHD() + ", getRatio()=" + getRatio()
-				+ ", getTotalstudent()=" + getTotalstudent() + ", getNoofprogram()=" + getNoofprogram()
-				+ ", getNoOfreserchpub()=" + getNoOfreserchpub() + ", getNoofbookpub()=" + getNoofbookpub()
-				+ ", getCurrfinyearbudget()=" + getCurrfinyearbudget() + ", getResearchprojecttitle()="
-				+ getResearchprojecttitle() + ", getNoofpatentsfilled()=" + getNoofpatentsfilled()
-				+ ", getLibraryusageperdayfaculty()=" + getLibraryusageperdayfaculty()
+				+ ", totalfacultiesforHOD=" + totalfacultiesforHOD + ", totalstudentForHOD=" + totalstudentForHOD
+				+ ", noofprogramForHOD=" + noofprogramForHOD + ", researchprojecttitle=" + researchprojecttitle
+				+ ", noofpatentsfilled=" + noofpatentsfilled + ", noOfreserchpubforFaculty=" + noOfreserchpubforFaculty
+				+ ", noofbookpubForFaculty=" + noofbookpubForFaculty + ", libraryusageperdayfaculty="
+				+ libraryusageperdayfaculty + ", libraryusageperdaystudents=" + libraryusageperdaystudents
+				+ ", noofbooksinlibrary=" + noofbooksinlibrary + ", LMSsoftwarename=" + LMSsoftwarename
+				+ ", noofLMSsoftwareusers=" + noofLMSsoftwareusers + ", totalresearchprojects=" + totalresearchprojects
+				+ ", totalnoofMOUs=" + totalnoofMOUs + ", totallinkages=" + totallinkages + ", fundingfrom="
+				+ fundingfrom + ", getTotalfaculties()=" + getTotalfaculties() + ", getTotalfacultieswithPHD()="
+				+ getTotalfacultieswithPHD() + ", getRatio()=" + getRatio() + ", getTotalstudent()=" + getTotalstudent()
+				+ ", getNoofprogram()=" + getNoofprogram() + ", getNoOfreserchpub()=" + getNoOfreserchpub()
+				+ ", getNoofbookpub()=" + getNoofbookpub() + ", getCurrfinyearbudget()=" + getCurrfinyearbudget()
+				+ ", getResearchprojecttitle()=" + getResearchprojecttitle() + ", getNoofpatentsfilled()="
+				+ getNoofpatentsfilled() + ", getLibraryusageperdayfaculty()=" + getLibraryusageperdayfaculty()
 				+ ", getLibraryusageperdaystudents()=" + getLibraryusageperdaystudents() + ", getNoofbooksinlibrary()="
 				+ getNoofbooksinlibrary() + ", getLMSsoftwarename()=" + getLMSsoftwarename()
 				+ ", getNoofLMSsoftwareusers()=" + getNoofLMSsoftwareusers() + ", getTotalresearchprojects()="
 				+ getTotalresearchprojects() + ", getTotalnoofMOUs()=" + getTotalnoofMOUs() + ", getTotallinkages()="
 				+ getTotallinkages() + ", getFundingfrom()=" + getFundingfrom() + ", getMalestudent()="
-				+ getMalestudent() + ", getFemalestudent()=" + getFemalestudent() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ getMalestudent() + ", getFemalestudent()=" + getFemalestudent() + ", getTotalfacultiesforHOD()="
+				+ getTotalfacultiesforHOD() + ", getTotalstudentForHOD()=" + getTotalstudentForHOD()
+				+ ", getNoofprogramForHOD()=" + getNoofprogramForHOD() + ", getNoOfreserchpubforFaculty()="
+				+ getNoOfreserchpubforFaculty() + ", getNoofbookpubForFaculty()=" + getNoofbookpubForFaculty()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
-
-	 
 
 }
