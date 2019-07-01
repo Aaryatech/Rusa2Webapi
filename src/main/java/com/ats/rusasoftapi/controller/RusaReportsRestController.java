@@ -916,17 +916,18 @@ public class RusaReportsRestController {
 	}
 	
 	@Autowired ProgSanctnIntakeRepo prgSanctnIntkRepo;
-	@RequestMapping(value = { "/getAllProgSanctnIntakeGraph" }, method = RequestMethod.GET)
-	public @ResponseBody List<ProgSanctnIntake> getAllProgSanctnIntakeGraph() {
+	@RequestMapping(value = { "/getAllProgSanctnIntakeGraph" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgSanctnIntake> getAllProgSanctnIntakeGraph(@RequestParam int makerUserId) {
 		
 		List<ProgSanctnIntake> prgSanctnIntkList = new ArrayList<ProgSanctnIntake>();
 		
 		try {
-			prgSanctnIntkList=prgSanctnIntkRepo.getAllProgSanctnIntake();
+			prgSanctnIntkList=prgSanctnIntkRepo.getAllProgSanctnIntake(makerUserId);
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.getMessage();
 		}
 		return prgSanctnIntkList;
+		
 	}
 }
