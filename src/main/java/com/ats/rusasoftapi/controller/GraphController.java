@@ -89,7 +89,9 @@ public class GraphController {
 	DashBoardCountsRepo dashBoardCountsRepo;
 
 	@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
-	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int typeId) {
+	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int isPrincipal,
+			@RequestParam int isIqac, @RequestParam int isHod, @RequestParam int isFaculty,
+			@RequestParam int isLibrarian, @RequestParam int isAccOff, @RequestParam int isDean) {
 
 		DashBoardCounts dash = new DashBoardCounts();
 
@@ -97,9 +99,9 @@ public class GraphController {
 
 		try {
 
-			// typeId=1 for Principal 
+			// typeId=1 for Principal
 
-			if (typeId == 1) {
+			if (isPrincipal == 1 || isIqac == 1) {
 				temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
 				dash.setTotalfaculties(temp.getCount());
 
