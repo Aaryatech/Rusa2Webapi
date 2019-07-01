@@ -38,6 +38,7 @@ import com.ats.rusasoftapi.model.report.NoOfLinkages;
 import com.ats.rusasoftapi.model.report.PerNewCource;
 import com.ats.rusasoftapi.model.report.PerProgCbseElectiveCourse;
 import com.ats.rusasoftapi.model.report.ProgSanctnIntake;
+import com.ats.rusasoftapi.model.report.ProgTypStudPlacedGraph;
 import com.ats.rusasoftapi.model.report.ResrchProjectGrants;
 import com.ats.rusasoftapi.model.report.StudCompRatioReport;
 import com.ats.rusasoftapi.model.report.StudPrfrmInFinlYr;
@@ -74,6 +75,7 @@ import com.ats.rusasoftapi.reportrepo.NoOfLinkagesRepo;
 import com.ats.rusasoftapi.reportrepo.PerNewCourceRepo;
 import com.ats.rusasoftapi.reportrepo.PerProgCbseElectiveCourseRepo;
 import com.ats.rusasoftapi.reportrepo.ProgSanctnIntakeRepo;
+import com.ats.rusasoftapi.reportrepo.ProgTypStudPlacedGraphRepo;
 import com.ats.rusasoftapi.reportrepo.ResrchProjectGrantsRepo;
 import com.ats.rusasoftapi.reportrepo.StudCompRatioReportRepo;
 import com.ats.rusasoftapi.reportrepo.StudPrfrmInFinlYrRepo;
@@ -928,6 +930,22 @@ public class RusaReportsRestController {
 			e.getMessage();
 		}
 		return prgSanctnIntkList;
+		
+	}
+	
+	@Autowired ProgTypStudPlacedGraphRepo progStudGraphRepo;
+	@RequestMapping(value = { "/getAllProgTypStudPlacedGraph"}, method = RequestMethod.POST)
+	public @ResponseBody List<ProgTypStudPlacedGraph> getAllProgTypStudPlacedGraph(@RequestParam int makerUserId) {
+		
+		List<ProgTypStudPlacedGraph> list = new ArrayList<ProgTypStudPlacedGraph>();
+		
+		try {
+			list=progStudGraphRepo.getAllProgTypStudPlacedGraph(makerUserId);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+		return list;
 		
 	}
 }
