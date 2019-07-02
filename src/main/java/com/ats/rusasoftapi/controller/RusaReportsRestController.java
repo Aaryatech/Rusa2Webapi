@@ -904,6 +904,8 @@ public class RusaReportsRestController {
 	}
 	
 	/******************************Graph******************************/
+	
+	//Student Support Scheme
 	@Autowired StudSupprtSchemGraphRepo studSchmRepo;
 	@RequestMapping(value = { "/getAllStudSupprtSchemGraph" }, method = RequestMethod.POST)
 	public @ResponseBody List<StudSupprtSchemGraph> StudSupprtSchemGraph(@RequestParam int instId) {
@@ -920,6 +922,8 @@ public class RusaReportsRestController {
 		
 	}
 	
+	
+	// Hod Graph 1 
 	@Autowired ProgSanctnIntakeRepo prgSanctnIntkRepo;
 	@RequestMapping(value = { "/getAllProgSanctnIntakeGraph" }, method = RequestMethod.POST)
 	public @ResponseBody List<ProgSanctnIntake> getAllProgSanctnIntakeGraph(@RequestParam int makerUserId) {
@@ -936,6 +940,7 @@ public class RusaReportsRestController {
 		
 	}
 	
+	//Hod Graph 3
 	@Autowired ProgTypStudPlacedGraphRepo progStudGraphRepo;
 	@RequestMapping(value = { "/getAllProgTypStudPlacedGraph"}, method = RequestMethod.POST)
 	public @ResponseBody List<ProgTypStudPlacedGraph> getAllProgTypStudPlacedGraph(@RequestParam int makerUserId) {
