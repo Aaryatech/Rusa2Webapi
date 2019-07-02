@@ -24,7 +24,13 @@ import com.ats.rusasoftapi.graphrepo.StudpassApperaedTaughByFacRepo;
 import com.ats.rusasoftapi.graphrepo.TeacherStudUsingLibraryRepo;
 import com.ats.rusasoftapi.graphrepo.TotSancIntakeProgwiseRepo;
 import com.ats.rusasoftapi.model.AcademicYear;
+import com.ats.rusasoftapi.model.report.ProgSanctnIntake;
+import com.ats.rusasoftapi.model.report.ProgTypStudPlacedGraph;
+import com.ats.rusasoftapi.model.report.StudSupprtSchemGraph;
 import com.ats.rusasoftapi.mstrepo.AcademicYearRepo;
+import com.ats.rusasoftapi.reportrepo.ProgSanctnIntakeRepo;
+import com.ats.rusasoftapi.reportrepo.ProgTypStudPlacedGraphRepo;
+import com.ats.rusasoftapi.reportrepo.StudSupprtSchemGraphRepo;
 
 @RestController
 
@@ -41,6 +47,7 @@ public class GraphController {
 
 	// ****************************Principal & IQAC********************************
 
+	// Principal Graph1 Harsha
 	@RequestMapping(value = { "/getGraph1" }, method = RequestMethod.POST)
 	public @ResponseBody List<SancIntakeStudAdmittedGraph> getGraph1(@RequestParam int instId) {
 
@@ -72,6 +79,7 @@ public class GraphController {
 
 	}
 
+	// Principal Graph2 harsha
 	@RequestMapping(value = { "/getTotSancIntakeProgramwiseGraph" }, method = RequestMethod.POST)
 	public @ResponseBody List<TotSancIntakeProgwise> getTotSancIntakeProgramwiseGraph(@RequestParam int instId) {
 
@@ -92,12 +100,29 @@ public class GraphController {
 		return facPartInVarBodies;
 
 	}
-	
-	
-	
 
+	// Iqac Graph 3 Mahendra
+	@Autowired
+	StudSupprtSchemGraphRepo studSchmRepo;
+
+	@RequestMapping(value = { "/getAllStudSupprtSchemGraph" }, method = RequestMethod.POST)
+	public @ResponseBody List<StudSupprtSchemGraph> StudSupprtSchemGraph(@RequestParam int instId) {
+
+		List<StudSupprtSchemGraph> studSchmList = new ArrayList<StudSupprtSchemGraph>();
+
+		try {
+			studSchmList = studSchmRepo.getAllStudSupprtSchemGraphByInstId(instId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+		return studSchmList;
+
+	}
 
 	// ****************************HOD********************************
+
+	// HOD Graph2 Harsha
 
 	@Autowired
 	GetTotStudentPassedAndAppearInFinYrRepo getTotStudentPassedAndAppearInFinYrRepo;
@@ -124,12 +149,52 @@ public class GraphController {
 		return facPartInVarBodies;
 
 	}
-	
-	//******************************Librarian*******************************************
-	
+
+	// Hod Graph 1 Mahendra
+	@Autowired
+	ProgSanctnIntakeRepo prgSanctnIntkRepo;
+
+	@RequestMapping(value = { "/getAllProgSanctnIntakeGraph" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgSanctnIntake> getAllProgSanctnIntakeGraph(@RequestParam int makerUserId) {
+
+		List<ProgSanctnIntake> prgSanctnIntkList = new ArrayList<ProgSanctnIntake>();
+
+		try {
+			prgSanctnIntkList = prgSanctnIntkRepo.getAllProgSanctnIntake(makerUserId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+		return prgSanctnIntkList;
+
+	}
+
+	// Hod Graph 3 Mahendra
+	@Autowired
+	ProgTypStudPlacedGraphRepo progStudGraphRepo;
+
+	@RequestMapping(value = { "/getAllProgTypStudPlacedGraph" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProgTypStudPlacedGraph> getAllProgTypStudPlacedGraph(@RequestParam int makerUserId) {
+
+		List<ProgTypStudPlacedGraph> list = new ArrayList<ProgTypStudPlacedGraph>();
+
+		try {
+			list = progStudGraphRepo.getAllProgTypStudPlacedGraph(makerUserId);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+		return list;
+
+	}
+
+	// ******************************Librarian*******************************************
+
+	// LIb graph1 harsha
+
 	@Autowired
 	TeacherStudUsingLibraryRepo teacherStudUsingLibraryRepo;
-	
+
 	@RequestMapping(value = { "/getGraphForNoofTeacherStudUsingLib" }, method = RequestMethod.POST)
 	public @ResponseBody List<TeacherStudUsingLibrary> getGraphForNoofTeacherStudUsingLib(@RequestParam int instId) {
 
@@ -160,21 +225,23 @@ public class GraphController {
 		return facPartInVarBodies;
 
 	}
-	
-	
-	//***********************************Faculty************************************
-	
+
+	// ***********************************Faculty************************************
+
+	// Faculty graph1 harsha
+
 	@Autowired
 	StudpassApperaedTaughByFacRepo studpassApperaedTaughByFacRepo;
-	
+
 	@RequestMapping(value = { "/getStudpassAppearedTaughByFacGraph" }, method = RequestMethod.POST)
-	public @ResponseBody List<StudpassApperaedTaughByFac> getStudpassApperaedTaughByFacGraph(@RequestParam int instId,@RequestParam int facultyId) {
+	public @ResponseBody List<StudpassApperaedTaughByFac> getStudpassApperaedTaughByFacGraph(@RequestParam int instId,
+			@RequestParam int facultyId) {
 
 		List<StudpassApperaedTaughByFac> facPartInVarBodies = new ArrayList<>();
 
 		try {
 
-			facPartInVarBodies = studpassApperaedTaughByFacRepo.getStudpassApperaedTaughByFacDet(instId,facultyId);
+			facPartInVarBodies = studpassApperaedTaughByFacRepo.getStudpassApperaedTaughByFacDet(instId, facultyId);
 			System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
@@ -188,108 +255,110 @@ public class GraphController {
 
 	}
 
-	
-	
-	//**********************************All dashboard Counts**********************************
-		@Autowired
-		DashBoardCountsRepo dashBoardCountsRepo;
+	// **********************************All dashboard
+	// Counts**********************************
+	@Autowired
+	DashBoardCountsRepo dashBoardCountsRepo;
 
-		@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
-		public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int facultyId,
-				@RequestParam int deptId, @RequestParam int isPrincipal, @RequestParam int isIqac, @RequestParam int isHod,
-				@RequestParam int isFaculty, @RequestParam int isLibrarian, @RequestParam int isAccOff,
-				@RequestParam int isDean) {
+	@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
+	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int facultyId,
+			@RequestParam int deptId, @RequestParam int isPrincipal, @RequestParam int isIqac, @RequestParam int isHod,
+			@RequestParam int isFaculty, @RequestParam int isLibrarian, @RequestParam int isAccOff,
+			@RequestParam int isDean) {
 
-			DashBoardCounts dash = new DashBoardCounts();
+		DashBoardCounts dash = new DashBoardCounts();
 
-			GetCountsForDash temp = new GetCountsForDash();
+		GetCountsForDash temp = new GetCountsForDash();
 
-			try {
+		try {
 
-				if (isPrincipal == 1 || isIqac == 1) {
-					temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
-					dash.setTotalfaculties(temp.getCount());
+			if (isPrincipal == 1 || isIqac == 1) {
+				// harsha
 
-					temp = dashBoardCountsRepo.getNoOfFacultiesPHDForPrinci(instId);
-					dash.setTotalfacultieswithPHD(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
+				dash.setTotalfaculties(temp.getCount());
 
-					temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-					dash.setTotalstudent(temp.getCount() + temp.getCount1());
+				temp = dashBoardCountsRepo.getNoOfFacultiesPHDForPrinci(instId);
+				dash.setTotalfacultieswithPHD(temp.getCount());
 
-					temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-					dash.setMalestudent(temp.getCount1());
+				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+				dash.setTotalstudent(temp.getCount() + temp.getCount1());
 
-					temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-					dash.setFemalestudent(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+				dash.setMalestudent(temp.getCount1());
 
-					temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
-					dash.setNoofprogram(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+				dash.setFemalestudent(temp.getCount());
 
-					temp = dashBoardCountsRepo.getNoOfBudgetForPrinci(instId);
-					dash.setCurrfinyearbudget(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
+				dash.setNoofprogram(temp.getCount());
 
-					temp = dashBoardCountsRepo.getNoOfBookPubForPrinci(instId);
-					dash.setNoofbookpub(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfBudgetForPrinci(instId);
+				dash.setCurrfinyearbudget(temp.getCount());
 
-					temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
-					dash.setNoOfreserchpub(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfBookPubForPrinci(instId);
+				dash.setNoofbookpub(temp.getCount());
 
-					float x1 = (float) (dash.getTotalstudent() / (float) dash.getTotalfaculties());
+				temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
+				dash.setNoOfreserchpub(temp.getCount());
 
-					dash.setRatio(x1);
-				}
+				float x1 = (float) (dash.getTotalstudent() / (float) dash.getTotalfaculties());
 
-				if (isHod == 1) {
+				dash.setRatio(x1);
+			}
 
-					temp = dashBoardCountsRepo.getNoOfFacultiesForHod(instId, deptId);
-					dash.setTotalfacultiesforHOD(temp.getCount());
+			if (isHod == 1) {
+				// harsha
 
-					temp = dashBoardCountsRepo.getNoOfStudentsForHod(instId, facultyId);
-					dash.setTotalstudentForHOD(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfFacultiesForHod(instId, deptId);
+				dash.setTotalfacultiesforHOD(temp.getCount());
 
-					temp = dashBoardCountsRepo.getNoOfProgramForHod(instId, facultyId);
-					dash.setNoofprogramForHOD(temp.getCount());
+				temp = dashBoardCountsRepo.getNoOfStudentsForHod(instId, facultyId);
+				dash.setTotalstudentForHOD(temp.getCount());
 
-				}
-
-				if (isLibrarian == 1) {
-
-					temp = dashBoardCountsRepo.getCountsForLibrarian(instId);
-					dash.setLibraryusageperdayfaculty((String.valueOf(temp.getCount())));
-					dash.setLibraryusageperdaystudents(String.valueOf(temp.getCount1()));
-					dash.setLMSsoftwarename(temp.getData1());
-					dash.setNoofLMSsoftwareusers(temp.getData2());
-
-					temp = dashBoardCountsRepo.getCountsForLibrarian1(instId);
-					dash.setNoofbooksinlibrary(temp.getCount());
-	  
-				}
-				
-				
-				if(isFaculty==1) {
-					temp=dashBoardCountsRepo.getCurrentResrchProjrectTitle(instId);	//Research Project Title
-					dash.setResearchprojecttitle(temp.getData1()); 
-					
-					temp=dashBoardCountsRepo.getNoResrchPubDetail(instId); 		//No. of Research Publication
-					dash.setNoOfreserchpubforFaculty(temp.getCount());
-					
-					temp=dashBoardCountsRepo.getNoBookPublished(instId);		//No. of Research Publication
-					dash.setNoofbookpubForFaculty(temp.getCount());
-					
-					temp=dashBoardCountsRepo.getNoPatentFiled(instId);			// No. of Patent Filed
-					dash.setNoofpatentsfilled(temp.getCount());
-				}
-
-			} catch (Exception e) {
-
-				System.err.println("Exce in getPrincipalDashCounts" + e.getMessage());
-				e.printStackTrace();
+				temp = dashBoardCountsRepo.getNoOfProgramForHod(instId, facultyId);
+				dash.setNoofprogramForHOD(temp.getCount());
 
 			}
 
-			return dash;
+			if (isLibrarian == 1) {
+				// harsha
+
+				temp = dashBoardCountsRepo.getCountsForLibrarian(instId);
+				dash.setLibraryusageperdayfaculty((String.valueOf(temp.getCount())));
+				dash.setLibraryusageperdaystudents(String.valueOf(temp.getCount1()));
+				dash.setLMSsoftwarename(temp.getData1());
+				dash.setNoofLMSsoftwareusers(temp.getData2());
+
+				temp = dashBoardCountsRepo.getCountsForLibrarian1(instId);
+				dash.setNoofbooksinlibrary(temp.getCount());
+
+			}
+
+			if (isFaculty == 1) {
+				// mahendra
+				temp = dashBoardCountsRepo.getCurrentResrchProjrectTitle(instId); // Research Project Title
+				dash.setResearchprojecttitle(temp.getData1());
+
+				temp = dashBoardCountsRepo.getNoResrchPubDetail(instId); // No. of Research Publication
+				dash.setNoOfreserchpubforFaculty(temp.getCount());
+
+				temp = dashBoardCountsRepo.getNoBookPublished(instId); // No. of Research Publication
+				dash.setNoofbookpubForFaculty(temp.getCount());
+
+				temp = dashBoardCountsRepo.getNoPatentFiled(instId); // No. of Patent Filed
+				dash.setNoofpatentsfilled(temp.getCount());
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in getPrincipalDashCounts" + e.getMessage());
+			e.printStackTrace();
 
 		}
-	
+
+		return dash;
+
+	}
 
 }

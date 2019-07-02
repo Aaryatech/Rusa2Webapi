@@ -903,59 +903,9 @@ public class RusaReportsRestController {
 		return libResp;
 	}
 	
-	/******************************Graph******************************/
-	
-	//Student Support Scheme
-	@Autowired StudSupprtSchemGraphRepo studSchmRepo;
-	@RequestMapping(value = { "/getAllStudSupprtSchemGraph" }, method = RequestMethod.POST)
-	public @ResponseBody List<StudSupprtSchemGraph> StudSupprtSchemGraph(@RequestParam int instId) {
-		
-		List<StudSupprtSchemGraph> studSchmList = new ArrayList<StudSupprtSchemGraph>();
-		
-		try {
-		studSchmList=studSchmRepo.getAllStudSupprtSchemGraphByInstId(instId);
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.getMessage();
-		}
-		return studSchmList;
-		
-	}
+ 	
 	
 	
-	// Hod Graph 1 
-	@Autowired ProgSanctnIntakeRepo prgSanctnIntkRepo;
-	@RequestMapping(value = { "/getAllProgSanctnIntakeGraph" }, method = RequestMethod.POST)
-	public @ResponseBody List<ProgSanctnIntake> getAllProgSanctnIntakeGraph(@RequestParam int makerUserId) {
-		
-		List<ProgSanctnIntake> prgSanctnIntkList = new ArrayList<ProgSanctnIntake>();
-		
-		try {
-			prgSanctnIntkList=prgSanctnIntkRepo.getAllProgSanctnIntake(makerUserId);
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.getMessage();
-		}
-		return prgSanctnIntkList;
-		
-	}
-	
-	//Hod Graph 3
-	@Autowired ProgTypStudPlacedGraphRepo progStudGraphRepo;
-	@RequestMapping(value = { "/getAllProgTypStudPlacedGraph"}, method = RequestMethod.POST)
-	public @ResponseBody List<ProgTypStudPlacedGraph> getAllProgTypStudPlacedGraph(@RequestParam int makerUserId) {
-		
-		List<ProgTypStudPlacedGraph> list = new ArrayList<ProgTypStudPlacedGraph>();
-		
-		try {
-			list=progStudGraphRepo.getAllProgTypStudPlacedGraph(makerUserId);
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.getMessage();
-		}
-		return list;
-		
-	}
 	
 	 
 }
