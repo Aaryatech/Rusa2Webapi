@@ -2,21 +2,16 @@ package com.ats.rusasoftapi.graph.model;
 
 import java.util.List;
 
-import javax.persistence.Transient;
-
+ 
 public class BudgetResponse {
 	
-	@Transient
-	List<AllBudgetGraph> libRes;
+ 	List<AllBudgetGraph> libRes;
  	
-	@Transient
-	List<AllBudgetGraph> bookRes;
+ 	List<AllBudgetGraph> bookRes;
 	
-	@Transient
-	List<AllBudgetGraph> infraRes;
+ 	List<AllBudgetGraph> infraRes;
 	
-	@Transient
-	List<AllBudgetGraph> academicRes;
+ 	List<AllBudgetGraph> academicRes;
 
 	
 	public List<AllBudgetGraph> getLibRes() {

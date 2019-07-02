@@ -10,7 +10,7 @@ public class DashBoardCounts {
 
 	private float ratio;
 
-	private int totalstudent;
+	private int totalstudent; // as transgender Student
 
 	private int malestudent;
 

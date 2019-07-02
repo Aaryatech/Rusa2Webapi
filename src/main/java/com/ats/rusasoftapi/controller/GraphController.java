@@ -308,7 +308,7 @@ public class GraphController {
 
 			BudgetResponse res=new BudgetResponse();
 			
-			List<AllBudgetGraph> facPartInVarBodies = new ArrayList<>();
+			List<AllBudgetGraph> allBudgGraph = new ArrayList<>();
 			List<AcademicYear> acYrList = new ArrayList<>();
 
 			try {
@@ -322,17 +322,17 @@ public class GraphController {
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
 
-				facPartInVarBodies = allBudgetGraphRepo.getLibraryBudget(instId, lastFiveYears);
-				res.setLibRes(facPartInVarBodies);
+				allBudgGraph = allBudgetGraphRepo.getLibraryBudget(instId, lastFiveYears);
+				res.setLibRes(allBudgGraph);
 				
-				facPartInVarBodies = allBudgetGraphRepo.getBookBudget(instId, lastFiveYears);
-				res.setBookRes(facPartInVarBodies);
+				allBudgGraph = allBudgetGraphRepo.getBookBudget(instId, lastFiveYears);
+				res.setBookRes(allBudgGraph);
 				
-				facPartInVarBodies = allBudgetGraphRepo.getInfrastructureBudget(instId, lastFiveYears);
-				res.setInfraRes(facPartInVarBodies);
+				allBudgGraph = allBudgetGraphRepo.getInfrastructureBudget(instId, lastFiveYears);
+				res.setInfraRes(allBudgGraph);
 				
-				facPartInVarBodies = allBudgetGraphRepo.getAcademicBudget(instId, lastFiveYears);
-				res.setAcademicRes(facPartInVarBodies);
+				allBudgGraph = allBudgetGraphRepo.getAcademicBudget(instId, lastFiveYears);
+				res.setAcademicRes(allBudgGraph);
 				
 				
 				
@@ -403,8 +403,11 @@ public class GraphController {
 
 				temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
 				dash.setNoOfreserchpub(temp.getCount());
+				
+				
+				int y1=dash.getTotalstudent()+dash.getFemalestudent()+dash.getMalestudent();
 
-				float x1 = (float) (dash.getTotalstudent() / (float) dash.getTotalfaculties());
+				float x1 = (float) (y1 / (float) dash.getTotalfaculties());
 
 				dash.setRatio(x1);
 			}
