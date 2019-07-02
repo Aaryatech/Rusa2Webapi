@@ -92,91 +92,10 @@ public class GraphController {
 		return facPartInVarBodies;
 
 	}
+	
+	
+	
 
-	@Autowired
-	DashBoardCountsRepo dashBoardCountsRepo;
-
-	@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
-	public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int facultyId,
-			@RequestParam int deptId, @RequestParam int isPrincipal, @RequestParam int isIqac, @RequestParam int isHod,
-			@RequestParam int isFaculty, @RequestParam int isLibrarian, @RequestParam int isAccOff,
-			@RequestParam int isDean) {
-
-		DashBoardCounts dash = new DashBoardCounts();
-
-		GetCountsForDash temp = new GetCountsForDash();
-
-		try {
-
-			if (isPrincipal == 1 || isIqac == 1) {
-				temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
-				dash.setTotalfaculties(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfFacultiesPHDForPrinci(instId);
-				dash.setTotalfacultieswithPHD(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setTotalstudent(temp.getCount() + temp.getCount1());
-
-				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setMalestudent(temp.getCount1());
-
-				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setFemalestudent(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
-				dash.setNoofprogram(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfBudgetForPrinci(instId);
-				dash.setCurrfinyearbudget(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfBookPubForPrinci(instId);
-				dash.setNoofbookpub(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
-				dash.setNoOfreserchpub(temp.getCount());
-
-				float x1 = (float) (dash.getTotalstudent() / (float) dash.getTotalfaculties());
-
-				dash.setRatio(x1);
-			}
-
-			if (isHod == 1) {
-
-				temp = dashBoardCountsRepo.getNoOfFacultiesForHod(instId, deptId);
-				dash.setTotalfacultiesforHOD(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfStudentsForHod(instId, facultyId);
-				dash.setTotalstudentForHOD(temp.getCount());
-
-				temp = dashBoardCountsRepo.getNoOfProgramForHod(instId, facultyId);
-				dash.setNoofprogramForHOD(temp.getCount());
-
-			}
-
-			if (isLibrarian == 1) {
-
-				temp = dashBoardCountsRepo.getCountsForLibrarian(instId);
-				dash.setLibraryusageperdayfaculty((String.valueOf(temp.getCount())));
-				dash.setLibraryusageperdaystudents(String.valueOf(temp.getCount1()));
-				dash.setLMSsoftwarename(temp.getData1());
-				dash.setNoofLMSsoftwareusers(temp.getData2());
-
-				temp = dashBoardCountsRepo.getCountsForLibrarian1(instId);
-				dash.setNoofbooksinlibrary(temp.getCount());
-  
-			}
-
-		} catch (Exception e) {
-
-			System.err.println("Exce in getPrincipalDashCounts" + e.getMessage());
-			e.printStackTrace();
-
-		}
-
-		return dash;
-
-	}
 
 	// ****************************HOD********************************
 
@@ -269,6 +188,108 @@ public class GraphController {
 
 	}
 
+	
+	
+	//**********************************All dashboard Counts**********************************
+		@Autowired
+		DashBoardCountsRepo dashBoardCountsRepo;
+
+		@RequestMapping(value = { "/getPrincipalDashCounts" }, method = RequestMethod.POST)
+		public @ResponseBody DashBoardCounts getPrincipalDashCounts(@RequestParam int instId, @RequestParam int facultyId,
+				@RequestParam int deptId, @RequestParam int isPrincipal, @RequestParam int isIqac, @RequestParam int isHod,
+				@RequestParam int isFaculty, @RequestParam int isLibrarian, @RequestParam int isAccOff,
+				@RequestParam int isDean) {
+
+			DashBoardCounts dash = new DashBoardCounts();
+
+			GetCountsForDash temp = new GetCountsForDash();
+
+			try {
+
+				if (isPrincipal == 1 || isIqac == 1) {
+					temp = dashBoardCountsRepo.getNoOfFacultiesForPrinci(instId);
+					dash.setTotalfaculties(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfFacultiesPHDForPrinci(instId);
+					dash.setTotalfacultieswithPHD(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+					dash.setTotalstudent(temp.getCount() + temp.getCount1());
+
+					temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+					dash.setMalestudent(temp.getCount1());
+
+					temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
+					dash.setFemalestudent(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
+					dash.setNoofprogram(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfBudgetForPrinci(instId);
+					dash.setCurrfinyearbudget(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfBookPubForPrinci(instId);
+					dash.setNoofbookpub(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfResearchPubForPrinci(instId);
+					dash.setNoOfreserchpub(temp.getCount());
+
+					float x1 = (float) (dash.getTotalstudent() / (float) dash.getTotalfaculties());
+
+					dash.setRatio(x1);
+				}
+
+				if (isHod == 1) {
+
+					temp = dashBoardCountsRepo.getNoOfFacultiesForHod(instId, deptId);
+					dash.setTotalfacultiesforHOD(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfStudentsForHod(instId, facultyId);
+					dash.setTotalstudentForHOD(temp.getCount());
+
+					temp = dashBoardCountsRepo.getNoOfProgramForHod(instId, facultyId);
+					dash.setNoofprogramForHOD(temp.getCount());
+
+				}
+
+				if (isLibrarian == 1) {
+
+					temp = dashBoardCountsRepo.getCountsForLibrarian(instId);
+					dash.setLibraryusageperdayfaculty((String.valueOf(temp.getCount())));
+					dash.setLibraryusageperdaystudents(String.valueOf(temp.getCount1()));
+					dash.setLMSsoftwarename(temp.getData1());
+					dash.setNoofLMSsoftwareusers(temp.getData2());
+
+					temp = dashBoardCountsRepo.getCountsForLibrarian1(instId);
+					dash.setNoofbooksinlibrary(temp.getCount());
+	  
+				}
+				
+				
+				if(isFaculty==1) {
+					temp=dashBoardCountsRepo.getCurrentResrchProjrectTitle(instId);	//Research Project Title
+					dash.setResearchprojecttitle(temp.getData1()); 
+					
+					temp=dashBoardCountsRepo.getNoResrchPubDetail(instId); 		//No. of Research Publication
+					dash.setNoOfreserchpubforFaculty(temp.getCount());
+					
+					temp=dashBoardCountsRepo.getNoBookPublished(instId);		//No. of Research Publication
+					dash.setNoofbookpubForFaculty(temp.getCount());
+					
+					temp=dashBoardCountsRepo.getNoPatentFiled(instId);			// No. of Patent Filed
+					dash.setNoofpatentsfilled(temp.getCount());
+				}
+
+			} catch (Exception e) {
+
+				System.err.println("Exce in getPrincipalDashCounts" + e.getMessage());
+				e.printStackTrace();
+
+			}
+
+			return dash;
+
+		}
 	
 
 }

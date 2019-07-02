@@ -952,33 +952,5 @@ public class RusaReportsRestController {
 		
 	}
 	
-	@Autowired
-	TempDashBoardGraphRepo tempDashRepo;
-	@RequestMapping(value = { "/getTtlStudPassedForAppearSubject" }, method = RequestMethod.POST)
-	public @ResponseBody DashBoardCounts getTtlStudPassedForAppearSubject(@RequestParam int instId) {
-		
-		DashBoardCounts dash = new DashBoardCounts();
-
-		GetCountsForDash temp = new GetCountsForDash();
-			try {
-				
-				temp=tempDashRepo.getCurrentResrchProjrectTitle(instId);	//Research Project Title
-				dash.setResearchprojecttitle(temp.getData1()); 
-				
-				temp=tempDashRepo.getNoResrchPubDetail(instId); 		//No. of Research Publication
-				dash.setNoOfreserchpubforFaculty(temp.getCount());
-				
-				temp=tempDashRepo.getNoBookPublished(instId);		//No. of Research Publication
-				dash.setNoofbookpubForFaculty(temp.getCount());
-				
-				temp=tempDashRepo.getNoPatentFiled(instId);			// No. of Patent Filed
-				dash.setNoofpatentsfilled(temp.getCount());
-			}catch (Exception e) {
-				// TODO: handle exception
-				e.getMessage();
-			}
-		
-		return dash;
-		
-	}
+	 
 }
