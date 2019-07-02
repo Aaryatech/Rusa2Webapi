@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.graph.model.DashBoardCounts;
+import com.ats.rusasoftapi.graph.model.GetCountsForDash;
+import com.ats.rusasoftapi.graphrepo.TempDashBoardGraphRepo;
 import com.ats.rusasoftapi.model.AcademicYear;
 import com.ats.rusasoftapi.model.SettingKeyValue;
 import com.ats.rusasoftapi.model.instprofile.InstStakeholderFeedback;
@@ -900,7 +903,7 @@ public class RusaReportsRestController {
 		return libResp;
 	}
 	
-	
+	/******************************Graph******************************/
 	@Autowired StudSupprtSchemGraphRepo studSchmRepo;
 	@RequestMapping(value = { "/getAllStudSupprtSchemGraph" }, method = RequestMethod.POST)
 	public @ResponseBody List<StudSupprtSchemGraph> StudSupprtSchemGraph(@RequestParam int instId) {
@@ -946,6 +949,36 @@ public class RusaReportsRestController {
 			e.getMessage();
 		}
 		return list;
+		
+	}
+	
+	@Autowired
+	TempDashBoardGraphRepo tempDashRepo;
+	@RequestMapping(value = { "/getTtlStudPassedForAppearSubject" }, method = RequestMethod.POST)
+	public @ResponseBody DashBoardCounts getTtlStudPassedForAppearSubject(@RequestParam int instId) {
+		
+		DashBoardCounts dash = new DashBoardCounts();
+
+		GetCountsForDash temp = new GetCountsForDash();
+			try {
+				
+				temp=tempDashRepo.getCurrentResrchProjrectTitle(instId);	//Research Project Title
+				dash.setResearchprojecttitle(temp.getData1()); 
+				
+				temp=tempDashRepo.getNoResrchPubDetail(instId); 		//No. of Research Publication
+				dash.setNoOfreserchpubforFaculty(temp.getCount());
+				
+				temp=tempDashRepo.getNoBookPublished(instId);		//No. of Research Publication
+				dash.setNoofbookpubForFaculty(temp.getCount());
+				
+				temp=tempDashRepo.getNoPatentFiled(instId);			// No. of Patent Filed
+				dash.setNoofpatentsfilled(temp.getCount());
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.getMessage();
+			}
+		
+		return dash;
 		
 	}
 }
