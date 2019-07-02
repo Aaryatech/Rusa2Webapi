@@ -7,21 +7,15 @@ import javax.persistence.Id;
 public class AllBudgetGraph {
 	
 	@Id
-	private int acYearId;
+	private int finYearId;
 	
 	private String budgetAllocated;
 	
 	private String budgetUtilized;
 	
-	private String academicYear;
+	private String finYear;
 
-	public int getAcYearId() {
-		return acYearId;
-	}
-
-	public void setAcYearId(int acYearId) {
-		this.acYearId = acYearId;
-	}
+	 
 
 	public String getBudgetAllocated() {
 		return budgetAllocated;
@@ -39,25 +33,22 @@ public class AllBudgetGraph {
 		this.budgetUtilized = budgetUtilized;
 	}
 
-	public String getAcademicYear() {
-		return academicYear;
+	 
+	public int getFinYearId() {
+		return finYearId;
 	}
 
-	public void setAcademicYear(String academicYear) {
-		this.academicYear = academicYear;
+	public void setFinYearId(int finYearId) {
+		this.finYearId = finYearId;
 	}
 
-	@Override
-	public String toString() {
-		return "AllBudgetGraph [acYearId=" + acYearId + ", budgetAllocated=" + budgetAllocated + ", budgetUtilized="
-				+ budgetUtilized + ", academicYear=" + academicYear + ", getAcYearId()=" + getAcYearId()
-				+ ", getBudgetAllocated()=" + getBudgetAllocated() + ", getBudgetUtilized()=" + getBudgetUtilized()
-				+ ", getAcademicYear()=" + getAcademicYear() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+	public String getFinYear() {
+		return finYear;
 	}
-	
-	
-	
-	
 
+	public void setFinYear(String finYear) {
+		this.finYear = finYear;
+	}
+
+	 
 }

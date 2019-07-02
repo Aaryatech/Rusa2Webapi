@@ -309,29 +309,20 @@ public class GraphController {
 			BudgetResponse res=new BudgetResponse();
 			
 			List<AllBudgetGraph> allBudgGraph = new ArrayList<>();
-			List<AcademicYear> acYrList = new ArrayList<>();
-
+ 
 			try {
+ 
 
-				List<Integer> lastFiveYears = new ArrayList<>();
-
-				acYrList = academicYearRepo.getLastFiveYears();
-
-				for (int i = 0; i < acYrList.size(); i++) {
-					System.err.println("acYrList" + acYrList.get(i).toString());
-					lastFiveYears.add(acYrList.get(i).getYearId());
-				}
-
-				allBudgGraph = allBudgetGraphRepo.getLibraryBudget(instId, lastFiveYears);
+				allBudgGraph = allBudgetGraphRepo.getLibraryBudget(instId);
 				res.setLibRes(allBudgGraph);
 				
-				allBudgGraph = allBudgetGraphRepo.getBookBudget(instId, lastFiveYears);
+				allBudgGraph = allBudgetGraphRepo.getBookBudget(instId);
 				res.setBookRes(allBudgGraph);
 				
-				allBudgGraph = allBudgetGraphRepo.getInfrastructureBudget(instId, lastFiveYears);
+				allBudgGraph = allBudgetGraphRepo.getInfrastructureBudget(instId);
 				res.setInfraRes(allBudgGraph);
 				
-				allBudgGraph = allBudgetGraphRepo.getAcademicBudget(instId, lastFiveYears);
+				allBudgGraph = allBudgetGraphRepo.getAcademicBudget(instId);
 				res.setAcademicRes(allBudgGraph);
 				
 				
