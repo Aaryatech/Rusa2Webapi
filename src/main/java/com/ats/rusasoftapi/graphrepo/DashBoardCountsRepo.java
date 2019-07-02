@@ -26,10 +26,28 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 	GetCountsForDash getNoOfFacultiesPHDForPrinci(@Param("instId") int instId);
 
 	// 3
-	@Query(value = "SELECT  UUID() AS id, \n"
-			+ "    COUNT(t_program_student_location.female_student) as count,COUNT(t_program_student_location.male_student) as count1,0 as data1,0 as data2 \n"
-			+ "FROM\n" + "    t_program_student_location\n" + "WHERE\n"
-			+ "    t_program_student_location.institute_id =:instId AND t_program_student_location.del_status = 1 AND t_program_student_location.is_active = 1 AND t_program_student_location.year_id=(SELECT m_academic_year.year_id FROM m_academic_year WHERE m_academic_year.is_current=1) ", nativeQuery = true)
+	@Query(value = "SELECT\n" + 
+			"    UUID() AS id, SUM(\n" + 
+			"        t_program_student_location.female_student\n" + 
+			"    ) AS count,\n" + 
+			"    SUM(\n" + 
+			"        t_program_student_location.male_student\n" + 
+			"    ) AS count1,\n" + 
+			"    SUM(\n" + 
+			"        t_program_student_location.trans_student\n" + 
+			"    ) AS data1,\n" + 
+			"    0 AS data2\n" + 
+			"FROM\n" + 
+			"    t_program_student_location\n" + 
+			"WHERE\n" + 
+			"    t_program_student_location.institute_id =:instId AND t_program_student_location.del_status = 1 AND t_program_student_location.is_active = 1 AND t_program_student_location.year_id =(\n" + 
+			"    SELECT\n" + 
+			"        m_academic_year.year_id\n" + 
+			"    FROM\n" + 
+			"        m_academic_year\n" + 
+			"    WHERE\n" + 
+			"        m_academic_year.is_current = 1\n" + 
+			") ", nativeQuery = true)
 	GetCountsForDash getNoOfStudentForPrinci(@Param("instId") int instId);
 
 	// 4

@@ -1,0 +1,72 @@
+package com.ats.rusasoftapi.graph.model;
+
+import java.util.List;
+
+import javax.persistence.Transient;
+
+public class BudgetResponse {
+	
+	@Transient
+	List<AllBudgetGraph> libRes;
+ 	
+	@Transient
+	List<AllBudgetGraph> bookRes;
+	
+	@Transient
+	List<AllBudgetGraph> infraRes;
+	
+	@Transient
+	List<AllBudgetGraph> academicRes;
+
+	
+	public List<AllBudgetGraph> getLibRes() {
+		return libRes;
+	}
+
+	public void setLibRes(List<AllBudgetGraph> libRes) {
+		this.libRes = libRes;
+	}
+
+	public List<AllBudgetGraph> getBookRes() {
+		return bookRes;
+	}
+
+	public void setBookRes(List<AllBudgetGraph> bookRes) {
+		this.bookRes = bookRes;
+	}
+
+	public List<AllBudgetGraph> getInfraRes() {
+		return infraRes;
+	}
+
+	public void setInfraRes(List<AllBudgetGraph> infraRes) {
+		this.infraRes = infraRes;
+	}
+
+	public List<AllBudgetGraph> getAcademicRes() {
+		return academicRes;
+	}
+
+	public void setAcademicRes(List<AllBudgetGraph> academicRes) {
+		this.academicRes = academicRes;
+	}
+
+	@Override
+	public String toString() {
+		return "BudgetResponse [libRes=" + libRes + ", bookRes=" + bookRes + ", infraRes=" + infraRes + ", academicRes="
+				+ academicRes + ", getLibRes()=" + getLibRes() + ", getBookRes()=" + getBookRes() + ", getInfraRes()="
+				+ getInfraRes() + ", getAcademicRes()=" + getAcademicRes() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

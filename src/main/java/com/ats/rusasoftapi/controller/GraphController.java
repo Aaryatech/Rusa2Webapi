@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.graph.model.AllBudgetGraph;
+import com.ats.rusasoftapi.graph.model.BudgetResponse;
 import com.ats.rusasoftapi.graph.model.DashBoardCounts;
 import com.ats.rusasoftapi.graph.model.GetCountsForDash;
 import com.ats.rusasoftapi.graph.model.GetTotStudentPassedAndAppearInFinYr;
@@ -18,6 +20,7 @@ import com.ats.rusasoftapi.graph.model.SancIntakeStudAdmittedGraph;
 import com.ats.rusasoftapi.graph.model.StudpassApperaedTaughByFac;
 import com.ats.rusasoftapi.graph.model.TeacherStudUsingLibrary;
 import com.ats.rusasoftapi.graph.model.TotSancIntakeProgwise;
+import com.ats.rusasoftapi.graphrepo.AllBudgetGraphRepo;
 import com.ats.rusasoftapi.graphrepo.DashBoardCountsRepo;
 import com.ats.rusasoftapi.graphrepo.GetTotStudentPassedAndAppearInFinYrRepo;
 import com.ats.rusasoftapi.graphrepo.NoOfResearchPubGraphDeanRepo;
@@ -294,6 +297,64 @@ public class GraphController {
 			return facPartInVarBodies;
 
 		}
+		
+		//******************************Budget Graphs*******************************
+		
+		@Autowired
+		AllBudgetGraphRepo allBudgetGraphRepo;
+
+		@RequestMapping(value = { "/getAllBugetsGraph" }, method = RequestMethod.POST)
+		public @ResponseBody  BudgetResponse  getAllBugetsGraph(@RequestParam int instId) {
+
+			BudgetResponse res=new BudgetResponse();
+			
+			List<AllBudgetGraph> facPartInVarBodies = new ArrayList<>();
+			List<AcademicYear> acYrList = new ArrayList<>();
+
+			try {
+
+				List<Integer> lastFiveYears = new ArrayList<>();
+
+				acYrList = academicYearRepo.getLastFiveYears();
+
+				for (int i = 0; i < acYrList.size(); i++) {
+					System.err.println("acYrList" + acYrList.get(i).toString());
+					lastFiveYears.add(acYrList.get(i).getYearId());
+				}
+
+				facPartInVarBodies = allBudgetGraphRepo.getLibraryBudget(instId, lastFiveYears);
+				res.setLibRes(facPartInVarBodies);
+				
+				facPartInVarBodies = allBudgetGraphRepo.getBookBudget(instId, lastFiveYears);
+				res.setBookRes(facPartInVarBodies);
+				
+				facPartInVarBodies = allBudgetGraphRepo.getInfrastructureBudget(instId, lastFiveYears);
+				res.setInfraRes(facPartInVarBodies);
+				
+				facPartInVarBodies = allBudgetGraphRepo.getAcademicBudget(instId, lastFiveYears);
+				res.setAcademicRes(facPartInVarBodies);
+				
+				
+				
+
+			} catch (Exception e) {
+
+				System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
+				e.printStackTrace();
+
+			}
+
+			return res;
+
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 	// **********************************All dashboard
@@ -323,7 +384,7 @@ public class GraphController {
 				dash.setTotalfacultieswithPHD(temp.getCount());
 
 				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setTotalstudent(temp.getCount() + temp.getCount1());
+				dash.setTotalstudent(Integer.parseInt(temp.getData1()));
 
 				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
 				dash.setMalestudent(temp.getCount1());
