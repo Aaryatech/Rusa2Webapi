@@ -66,12 +66,12 @@ public class GraphController {
 			acYrList = academicYearRepo.getLastFiveYears();
 
 			for (int i = 0; i < acYrList.size(); i++) {
-				System.err.println("acYrList" + acYrList.get(i).toString());
+				//System.err.println("acYrList" + acYrList.get(i).toString());
 				lastFiveYears.add(acYrList.get(i).getYearId());
 			}
 
 			facPartInVarBodies = sancIntakeStudAdmittedGraphRepo.getGraph1Data(instId, lastFiveYears);
-			System.err.println("List=" + facPartInVarBodies);
+			//System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -93,7 +93,7 @@ public class GraphController {
 		try {
 
 			facPartInVarBodies = totSancIntakeProgwiseRepo.getGraph2Data(instId);
-			System.err.println("List=" + facPartInVarBodies);
+			//System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -142,7 +142,7 @@ public class GraphController {
 
 			facPartInVarBodies = getTotStudentPassedAndAppearInFinYrRepo
 					.getGetTotStudentPassedAndAppearInFinYrDet(instId, facultyId);
-			System.err.println("List=" + facPartInVarBodies);
+			//System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -213,12 +213,12 @@ public class GraphController {
 			acYrList = academicYearRepo.getLastFiveYears();
 
 			for (int i = 0; i < acYrList.size(); i++) {
-				System.err.println("acYrList" + acYrList.get(i).toString());
+				//System.err.println("acYrList" + acYrList.get(i).toString());
 				lastFiveYears.add(acYrList.get(i).getYearId());
 			}
 
 			facPartInVarBodies = teacherStudUsingLibraryRepo.getTeacherStudUsingLibraryDet(instId, lastFiveYears);
-			System.err.println("List=" + facPartInVarBodies);
+			//System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -247,7 +247,7 @@ public class GraphController {
 		try {
 
 			facPartInVarBodies = studpassApperaedTaughByFacRepo.getStudpassApperaedTaughByFacDet(instId, facultyId);
-			System.err.println("List=" + facPartInVarBodies);
+			//System.err.println("List=" + facPartInVarBodies);
 
 		} catch (Exception e) {
 
@@ -280,12 +280,12 @@ public class GraphController {
 				acYrList = academicYearRepo.getLastFiveYears();
 
 				for (int i = 0; i < acYrList.size(); i++) {
-					System.err.println("acYrList" + acYrList.get(i).toString());
+					//System.err.println("acYrList" + acYrList.get(i).toString());
 					lastFiveYears.add(acYrList.get(i).getYearId());
 				}
 
 				facPartInVarBodies = noOfResearchPubGraphDeanRepo.getNoOfResearchPubGraphDeanDet(instId, lastFiveYears);
-				System.err.println("List=" + facPartInVarBodies);
+				//System.err.println("List=" + facPartInVarBodies);
 
 			} catch (Exception e) {
 
@@ -325,9 +325,6 @@ public class GraphController {
 				allBudgGraph = allBudgetGraphRepo.getAcademicBudget(instId);
 				res.setAcademicRes(allBudgGraph);
 				
-				
-				
-
 			} catch (Exception e) {
 
 				System.err.println("Exce in facPartInVarBodies R2 " + e.getMessage());
@@ -340,14 +337,6 @@ public class GraphController {
 		}
 		
 		
-		
-		
-		
-		
-		
-		
-
-
 	// **********************************All dashboard
 	// Counts**********************************
 	@Autowired
