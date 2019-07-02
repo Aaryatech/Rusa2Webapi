@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.rusasoftapi.graph.model.BudgetGraphDash;
 import com.ats.rusasoftapi.graph.model.DashBoardCounts;
 import com.ats.rusasoftapi.graph.model.GetCountsForDash;
 import com.ats.rusasoftapi.graphrepo.TempDashBoardGraphRepo;
@@ -904,8 +905,78 @@ public class RusaReportsRestController {
 	}
 	
  	
+	/****************************************Budget Graph**************************************/	
 	
+	@Autowired TempDashBoardGraphRepo tempDashRepo;
 	
-	
+	@RequestMapping(value = { "/getBudgetInfrastructureDetail" }, method = RequestMethod.POST)
+	public @ResponseBody List<BudgetGraphDash> getBudgetInfrastructureDetail(@RequestParam int instId) {
+
+		List<BudgetGraphDash> budgtList = new ArrayList<>();
+		BudgetGraphDash budget = new BudgetGraphDash();
+		GetCountsForDash temp = new GetCountsForDash();
+			
+			try {
+				temp=tempDashRepo.getBudgetInfrastructureDetail(instId);
+				budget=new BudgetGraphDash();
+			
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				 
+				temp=tempDashRepo.getBudgetPhysicalDetail(instId);
+				
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				
+				temp=tempDashRepo.getAcadMicSupprtFaclityBudgt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=tempDashRepo.getLibraryFacilityBudgt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=tempDashRepo.getBooksBudgt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=tempDashRepo.getGreenInitivativAndWasteMgnt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+				
+				budgtList.add(budget);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+			return budgtList;
+	}
 	 
 }
