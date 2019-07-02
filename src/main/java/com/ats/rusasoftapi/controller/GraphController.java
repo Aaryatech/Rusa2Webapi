@@ -391,6 +391,31 @@ public class GraphController {
 				dash.setNoofpatentsfilled(temp.getCount());
 			}
 
+			
+			if (isDean == 1) {
+				// harsha
+				
+				temp = dashBoardCountsRepo.getResearchProjForDean(instId); 
+				dash.setTotalresearchprojects(temp.getCount());
+
+				temp = dashBoardCountsRepo.getTotalMouForDean(instId);  
+				dash.setTotalnoofMOUs(temp.getCount());
+
+				temp = dashBoardCountsRepo.getInstColLinkageForDean(instId);  
+				int a=temp.getCount();
+				temp = dashBoardCountsRepo.getInstColLinkageStudForDean(instId);  
+				int b=temp.getCount();
+ 				dash.setTotallinkages(a+b);
+				
+				
+ 				temp = dashBoardCountsRepo.getFundinGovtForDean(instId);  
+				int c=temp.getCount();
+				temp = dashBoardCountsRepo.getFundinNonGovtForDean(instId);  
+				int d=temp.getCount();
+ 				dash.setFundingfrom(String.valueOf(c+d));
+ 				
+			}
+
 		} catch (Exception e) {
 
 			System.err.println("Exce in getPrincipalDashCounts" + e.getMessage());

@@ -8,6 +8,7 @@ import com.ats.rusasoftapi.graph.model.GetCountsForDash;
 
 public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Integer> {
 
+	//*************************************Harsha*********************************************
 	// For princi Dash
 
 	// 1
@@ -135,10 +136,134 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 				" ", nativeQuery = true)
 		GetCountsForDash getCountsForLibrarian1(@Param("instId") int instId);
 		
+	//Dean Counts 
+		
+		//1
+		@Query(value = "SELECT\n" + 
+				"    UUID() AS id, COUNT(t_faculty_project.proj_id) AS count,\n" + 
+				"    0 AS count1,\n" + 
+				"    0 AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_faculty_project,\n" + 
+				"    m_faculty\n" + 
+				"WHERE\n" + 
+				"    t_faculty_project.del_status = 1 AND t_faculty_project.is_active = 1 AND t_faculty_project.year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") AND t_faculty_project.faculty_id = m_faculty.faculty_id AND m_faculty.institute_id =:instId ", nativeQuery = true)
+		GetCountsForDash getResearchProjForDean(@Param("instId") int instId);
+		
+		//2
+		@Query(value = "SELECT\n" + 
+				"    UUID() AS id, COUNT(t_inst_research_dev_mous.inst_reasearch_dev_mou_id) AS count,\n" + 
+				"    0 AS count1,\n" + 
+				"    0 AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_inst_research_dev_mous\n" + 
+				"     \n" + 
+				"WHERE\n" + 
+				"    t_inst_research_dev_mous.del_status = 1 AND t_inst_research_dev_mous.is_active = 1 AND t_inst_research_dev_mous.ac_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") AND t_inst_research_dev_mous.inst_id =:instId", nativeQuery = true)
+		GetCountsForDash getTotalMouForDean(@Param("instId") int instId);
+		
+		//3
+		@Query(value = "SELECT\n" + 
+				"     UUID() AS id,COUNT(\n" + 
+				"        t_faculty_stud_linkage.faculty_stud_linkage_id\n" + 
+				"    ) AS count,\n" + 
+				"    0 AS count1,\n" + 
+				"    0 AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_faculty_stud_linkage\n" + 
+				"WHERE\n" + 
+				"    t_faculty_stud_linkage.del_status = 1 AND t_faculty_stud_linkage.is_active = 1 AND t_faculty_stud_linkage.ac_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") AND t_faculty_stud_linkage.inst_id =:instId", nativeQuery = true)
+		GetCountsForDash getInstColLinkageForDean(@Param("instId") int instId);
+		
+		@Query(value = "SELECT\n" + 
+				"    UUID() AS id, COUNT(\n" + 
+				"        t_institute_linkage.link_id\n" + 
+				"    ) AS count,\n" + 
+				"    0 AS count1,\n" + 
+				"    0 AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_institute_linkage\n" + 
+				"WHERE\n" + 
+				"    t_institute_linkage.del_status = 1 AND t_institute_linkage.is_active = 1 AND t_institute_linkage.year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") AND t_institute_linkage.institute_id=:instId ", nativeQuery = true)
+		GetCountsForDash getInstColLinkageStudForDean(@Param("instId") int instId);
 		
 		
+		//4
+		
+		@Query(value = "SELECT\n" + 
+				"    UUID() AS id, SUM(\n" + 
+				"        govt_scholarships.ex_int1\n" + 
+				"    ) AS count,\n" + 
+				"    0 AS count1,\n" + 
+				"    0 AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    govt_scholarships\n" + 
+				"WHERE\n" + 
+				"    govt_scholarships.del_status = 1 AND govt_scholarships.is_active = 1 AND govt_scholarships.ac_year_id=(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") AND govt_scholarships.inst_id=:instId ", nativeQuery = true)
+		GetCountsForDash getFundinGovtForDean(@Param("instId") int instId);
 		
 		
+		@Query(value = "SELECT\n" + 
+				"    UUID() AS id, SUM(\n" + 
+				"        t_institute_schemes.ex_int1\n" + 
+				"    ) AS count,\n" + 
+				"    0 AS count1,\n" + 
+				"    0 AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_institute_schemes\n" + 
+				"WHERE\n" + 
+				"    t_institute_schemes.del_status = 1 AND t_institute_schemes.is_active = 1 AND t_institute_schemes.year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_academic_year.year_id\n" + 
+				"    FROM\n" + 
+				"        m_academic_year\n" + 
+				"    WHERE\n" + 
+				"        m_academic_year.is_current = 1\n" + 
+				") AND t_institute_schemes.institute_id=:instId ", nativeQuery = true)
+		GetCountsForDash getFundinNonGovtForDean(@Param("instId") int instId);
+		
+		 
 		
 	
 	//****************************Mahendra************************************************
