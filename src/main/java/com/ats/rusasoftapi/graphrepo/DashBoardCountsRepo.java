@@ -382,6 +382,7 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 		GetCountsForDash getGreenInitivativAndWasteMgntCurr(@Param("instId") int instId);
 		
 		
+	 
 		
 	
 	//****************************Mahendra************************************************
