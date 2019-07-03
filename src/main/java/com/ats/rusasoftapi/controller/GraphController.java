@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.rusasoftapi.graph.model.AllBudgetGraph;
+import com.ats.rusasoftapi.graph.model.BudgetGraphDash;
 import com.ats.rusasoftapi.graph.model.BudgetResponse;
 import com.ats.rusasoftapi.graph.model.DashBoardCounts;
 import com.ats.rusasoftapi.graph.model.GetCountsForDash;
@@ -337,6 +338,8 @@ public class GraphController {
 		}
 		
 		
+		
+		
 	// **********************************All dashboard
 	// Counts**********************************
 	@Autowired
@@ -470,5 +473,152 @@ public class GraphController {
 		return dash;
 
 	}
+	
+	
+//Mahendra
+	@RequestMapping(value = { "/getBudgetInfrastructureDetail" }, method = RequestMethod.POST)
+	public @ResponseBody List<BudgetGraphDash> getBudgetInfrastructureDetail(@RequestParam int instId) {
+
+		List<BudgetGraphDash> budgtList = new ArrayList<>();
+		BudgetGraphDash budget = new BudgetGraphDash();
+		GetCountsForDash temp = new GetCountsForDash();
+			
+			try {
+				temp=dashBoardCountsRepo.getBudgetInfrastructureDetail(instId);
+				budget=new BudgetGraphDash();
+			
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				 
+				temp=dashBoardCountsRepo.getBudgetPhysicalDetail(instId);
+				
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				
+				temp=dashBoardCountsRepo.getAcadMicSupprtFaclityBudgt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=dashBoardCountsRepo.getLibraryFacilityBudgt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=dashBoardCountsRepo.getBooksBudgt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=dashBoardCountsRepo.getGreenInitivativAndWasteMgnt(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+				
+				budgtList.add(budget);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+			return budgtList;
+	}
+	
+	
+	
+	//Harsha
+	
+	@RequestMapping(value = { "/getBudgetInfrastructureDetailCurr" }, method = RequestMethod.POST)
+	public @ResponseBody List<BudgetGraphDash> getBudgetInfrastructureDetailCurr(@RequestParam int instId) {
+
+		List<BudgetGraphDash> budgtList = new ArrayList<>();
+		BudgetGraphDash budget = new BudgetGraphDash();
+		GetCountsForDash temp = new GetCountsForDash();
+			
+			try {
+				temp=dashBoardCountsRepo.getBudgetInfrastructureDetailCurr(instId);
+				budget=new BudgetGraphDash();
+			
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				 
+				temp=dashBoardCountsRepo.getBudgetPhysicalDetailCurr(instId);
+				
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				
+				temp=dashBoardCountsRepo.getAcadMicSupprtFaclityBudgtCurr(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=dashBoardCountsRepo.getLibraryFacilityBudgtCurr(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=dashBoardCountsRepo.getBooksBudgtCurr(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+			
+				budgtList.add(budget);
+				
+				temp=dashBoardCountsRepo.getGreenInitivativAndWasteMgntCurr(instId);
+				budget=new BudgetGraphDash();
+				
+				budget.setAllocAmt(temp.getCount());
+				budget.setBudgetTitle(temp.getData1());
+				budget.setUtilAmt(temp.getCount1());
+				
+				budgtList.add(budget);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.getMessage();
+		}
+			return budgtList;
+	}
+	
 
 }

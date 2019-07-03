@@ -281,7 +281,107 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 				") AND t_institute_schemes.institute_id=:instId ", nativeQuery = true)
 		GetCountsForDash getFundinNonGovtForDean(@Param("instId") int instId);
 		
-		 
+		//New
+		
+		@Query(value="SELECT\n" + 
+				"    UUID() AS id, \n" + 
+				"        t_infrastructure_budget.budget_allocated\n" + 
+				"     AS count,\n" + 
+				"     \n" + 
+				"        t_infrastructure_budget.budget_utilized\n" + 
+				"     AS count1,\n" + 
+				"    'Infrastructure Budget' AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_infrastructure_budget\n" + 
+				"WHERE\n" + 
+				"    t_infrastructure_budget.institute_id =:instId AND t_infrastructure_budget.del_status = 1 AND t_infrastructure_budget.is_active = 1 AND t_infrastructure_budget.fin_year_id = (SELECT m_financial_year.fin_year_id FROM m_financial_year WHERE m_financial_year.is_current_fy=1)",nativeQuery=true)
+		GetCountsForDash getBudgetInfrastructureDetailCurr(@Param("instId") int instId);
+
+		
+		@Query(value="SELECT\n" + 
+				"    UUID() AS id, t_physical_facility_budget.budget_allocated AS count, t_physical_facility_budget.budget_utilized AS count1, 'Physical Facility Budget' AS data1, 0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_physical_facility_budget\n" + 
+				"WHERE\n" + 
+				"    t_physical_facility_budget.institute_id =:instId AND t_physical_facility_budget.del_status = 1 AND t_physical_facility_budget.is_active = 1 AND t_physical_facility_budget.fin_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_financial_year.fin_year_id\n" + 
+				"    FROM\n" + 
+				"        m_financial_year\n" + 
+				"    WHERE\n" + 
+				"        m_financial_year.is_current_fy = 1\n" + 
+				")",nativeQuery=true)
+		GetCountsForDash getBudgetPhysicalDetailCurr(@Param("instId") int instId);
+
+
+		@Query(value="SELECT\n" + 
+				"    UUID() AS id, t_academic_budget.budget_allocated AS count, \n" + 
+				"        t_academic_budget.budget_utilized\n" + 
+				"     AS count1,\n" + 
+				"    'Academic Facilities Budget' AS data1,\n" + 
+				"    0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_academic_budget\n" + 
+				"WHERE\n" + 
+				"    t_academic_budget.institute_id =:instId AND t_academic_budget.del_status = 1 AND t_academic_budget.is_active = 1 AND t_academic_budget.fin_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_financial_year.fin_year_id\n" + 
+				"    FROM\n" + 
+				"        m_financial_year\n" + 
+				"    WHERE\n" + 
+				"        m_financial_year.is_current_fy = 1\n" + 
+				")",nativeQuery=true)
+		GetCountsForDash getAcadMicSupprtFaclityBudgtCurr(@Param("instId")int instId);
+
+
+		@Query(value="SELECT\n" + 
+				"    UUID() AS id, t_library_budget.budget_allocated AS count, t_library_budget.budget_utilized AS count1, 'Library Budget' AS data1, 0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_library_budget\n" + 
+				"WHERE\n" + 
+				"    t_library_budget.institute_id =:instId AND t_library_budget.del_status = 1 AND t_library_budget.is_active = 1 AND t_library_budget.fin_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_financial_year.fin_year_id\n" + 
+				"    FROM\n" + 
+				"        m_financial_year\n" + 
+				"    WHERE\n" + 
+				"        m_financial_year.is_current_fy = 1\n" + 
+				")",nativeQuery=true)
+		GetCountsForDash getLibraryFacilityBudgtCurr(@Param("instId") int instId);
+
+		@Query(value="SELECT\n" + 
+				"    UUID() AS id, t_library_book_budget.ex_int2 AS count, t_library_book_budget.expenditure_on_book_purchase AS count1, 'Books Budget' AS data1, 0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_library_book_budget\n" + 
+				"WHERE\n" + 
+				"    t_library_book_budget.institute_id =:instId AND t_library_book_budget.del_status = 1 AND t_library_book_budget.is_active = 1 AND t_library_book_budget.fin_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_financial_year.fin_year_id\n" + 
+				"    FROM\n" + 
+				"        m_financial_year\n" + 
+				"    WHERE\n" + 
+				"        m_financial_year.is_current_fy = 1\n" + 
+				")",nativeQuery=true)
+		GetCountsForDash getBooksBudgtCurr(@Param("instId") int instId);
+
+
+		@Query(value="SELECT\n" + 
+				"    UUID() AS id, t_waste_mngt_budget.budget_allocated AS COUNT, t_waste_mngt_budget.budget_utilized AS count1, 'Green Initiatives' AS data1, 0 AS data2\n" + 
+				"FROM\n" + 
+				"    t_waste_mngt_budget\n" + 
+				"WHERE\n" + 
+				"    t_waste_mngt_budget.institute_id =:instId AND t_waste_mngt_budget.del_status = 1 AND t_waste_mngt_budget.is_active = 1 AND t_waste_mngt_budget.fin_year_id =(\n" + 
+				"    SELECT\n" + 
+				"        m_financial_year.fin_year_id\n" + 
+				"    FROM\n" + 
+				"        m_financial_year\n" + 
+				"    WHERE\n" + 
+				"        m_financial_year.is_current_fy = 1\n" + 
+				")",nativeQuery=true)
+		GetCountsForDash getGreenInitivativAndWasteMgntCurr(@Param("instId") int instId);
+		
+		
 		
 	
 	//****************************Mahendra************************************************
@@ -364,4 +464,94 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 		GetCountsForDash getNoPatentFiled(@Param("instId") int instId);	
 		
 	
+		
+
+		@Query(value="SELECT " + 
+				"	UUID() AS id, " + 
+				"	SUM(t_infrastructure_budget.budget_allocated) as count," + 	//allocated_amt
+				"	SUM(t_infrastructure_budget.budget_utilized) as count1," + 	//utillized_amt
+				"	'Infrastructure Budget' as data1,"+	//budget_title
+				"   0 as data2 " + 		
+				"FROM " + 
+				"	t_infrastructure_budget " + 
+				"WHERE " + 
+				"	t_infrastructure_budget.institute_id=:instId AND " + 
+				"	t_infrastructure_budget.del_status=1 AND " + 
+				"   t_infrastructure_budget.is_active=1" + 
+				"	ORDER BY t_infrastructure_budget.infra_budget_id DESC LIMIT 5",nativeQuery=true)
+		GetCountsForDash getBudgetInfrastructureDetail(@Param("instId") int instId);
+
+		
+		@Query(value="SELECT " + 
+				"	UUID() AS id, " + 
+				"	SUM(t_physical_facility_budget.budget_allocated) as count," + //allocated_amt
+				"	SUM(t_physical_facility_budget.budget_utilized) as count1," + //utillized_amt
+				"	'Physical Facility Budget' as data1," + //budget_title
+				"   0 as data2 " + 		
+				"FROM " + 
+				"	t_physical_facility_budget " + 
+				"WHERE " + 
+				"	t_physical_facility_budget.institute_id=:instId AND " + 
+				"	t_physical_facility_budget.del_status=1 AND " + 
+				"    t_physical_facility_budget.is_active=1" + 
+				"	ORDER BY t_physical_facility_budget.physical_facility_budget_id DESC LIMIT 5",nativeQuery=true)
+		GetCountsForDash getBudgetPhysicalDetail(@Param("instId") int instId);
+
+
+		@Query(value="SELECT UUID() AS id," + 
+				"	SUM(t_academic_budget.budget_allocated) as count," + //allocated_amt
+				"	SUM(t_academic_budget.budget_utilized) as count1," + //utillized_amt
+				"	'Academic Facilities Budget' as data1, " + //budget_title
+				"   0 as data2 " + 	
+				"FROM " + 
+				"	t_academic_budget " + 
+				"WHERE " + 
+				"	t_academic_budget.institute_id=2 AND " + 
+				"	t_academic_budget.del_status=1 AND t_academic_budget.is_active=1" + 
+				"	ORDER BY t_academic_budget.academic_budget_id DESC LIMIT 5",nativeQuery=true)
+		GetCountsForDash getAcadMicSupprtFaclityBudgt(@Param("instId")int instId);
+
+
+		@Query(value="SELECT UUID() AS id," + 
+				"	SUM(t_library_budget.budget_allocated) as count," + 
+				"	SUM(t_library_budget.budget_utilized) as count1," + 
+				"	'Library Budget' as data1, " + 
+				"   0 as data2 " + 	
+				"FROM " + 
+				"	t_library_budget " + 
+				"WHERE " + 
+				"	t_library_budget.institute_id=:instId AND " + 
+				"	t_library_budget.del_status=1 AND " + 
+				"   t_library_budget.is_active=1" + 
+				"	ORDER BY t_library_budget.lib_budget_id DESC LIMIT 5",nativeQuery=true)
+		GetCountsForDash getLibraryFacilityBudgt(@Param("instId") int instId);
+
+		@Query(value="SELECT UUID() AS id," + 
+				"	SUM(t_library_book_budget.ex_int2) as count," + 
+				"    SUM(t_library_book_budget.expenditure_on_book_purchase) as count1," + 
+				"    'Books Budget' as data1," + 
+				"    0 as data2 " + 
+				"FROM " + 
+				"	t_library_book_budget " + 
+				"WHERE " + 
+				"	t_library_book_budget.institute_id=:instId AND " + 
+				"	t_library_book_budget.del_status=1 AND " + 
+				"    t_library_book_budget.is_active=1" + 
+				"	ORDER BY t_library_book_budget.library_book_budget_id DESC LIMIT 5",nativeQuery=true)
+		GetCountsForDash getBooksBudgt(@Param("instId") int instId);
+
+
+		@Query(value="SELECT UUID() AS id," + 
+				"	SUM(t_waste_mngt_budget.budget_allocated) as count," + 
+				"	SUM(t_waste_mngt_budget.budget_utilized) as count1," + 
+				"	'Green Initiatives' as data1, " + 
+				"   0 as data2 " + 	
+				"FROM " + 
+				"	t_waste_mngt_budget " + 
+				"WHERE " + 
+				"	t_waste_mngt_budget.institute_id=:instId AND " + 
+				"	t_waste_mngt_budget.del_status=1 AND " + 
+				"    t_waste_mngt_budget.is_active=1" + 
+				"	ORDER BY t_waste_mngt_budget.waste_mngt_budget_id DESC LIMIT 5",nativeQuery=true)
+		GetCountsForDash getGreenInitivativAndWasteMgnt(@Param("instId") int instId);
 }
