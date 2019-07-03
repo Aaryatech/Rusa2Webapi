@@ -97,6 +97,8 @@ public class MasterApiController {
 	
 	@Autowired
 	StaffRepo staffRepo;
+	
+	
 
 	@RequestMapping(value = { "/checkUniqueField" }, method = RequestMethod.POST)
 	public @ResponseBody Info checkUniqueField(@RequestParam String inputValue, @RequestParam int valueType,
