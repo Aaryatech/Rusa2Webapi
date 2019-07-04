@@ -784,18 +784,17 @@ public class MasterApiController {
 			if (institute.getInstituteId() == 0) {
 				insResp = instituteRepo.saveAndFlush(institute);
 
-				System.err.println("New Isntitute Insert  New Principal");
-
-				Principal princi = new Principal();
-
-				princi.setEmail(insResp.getEmail());
-				princi.setInstituteId(insResp.getInstituteId());
-				princi.setPhoneNo(insResp.getContactNo());
-				princi.setPrincipalId(0);
-				princi.setPrincipalName(insResp.getPrincipalName());
-				princi.setIsEnroll(0);
-				pincipalRepo.saveAndFlush(princi);
-
+				/*
+				 * System.err.println("New Isntitute Insert  New Principal");
+				 * 
+				 * Principal princi = new Principal();
+				 * 
+				 * princi.setEmail(insResp.getEmail());
+				 * princi.setInstituteId(insResp.getInstituteId());
+				 * princi.setPhoneNo(insResp.getContactNo()); princi.setPrincipalId(0);
+				 * princi.setPrincipalName(insResp.getPrincipalName()); princi.setIsEnroll(0);
+				 * pincipalRepo.saveAndFlush(princi);
+				 */
 				//
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -1025,32 +1024,28 @@ public class MasterApiController {
 
 			for (int i = 0; i < instIdList.size(); i++) {
 
-				UserLogin user = new UserLogin();
+				//UserLogin user = new UserLogin();
 
 				String userName = getAlphaNumericString(7);
 				String pass = getAlphaNumericString(7);
 				System.err.println("username  " + userName + "\n  pass  " + pass);
 
-				user.setExInt1(0);
-				user.setExInt2(0);
-				user.setExVar1("Na");
-				user.setExVar2("Na");
-				user.setIsBlock(1);
-				user.setPass(pass);
-
-				Principal princi = pincipalRepo.findByInstituteId(instIdList.get(i));
-
-				user.setRegPrimaryKey(princi.getPrincipalId());// principla primary key
-				System.err.println("prinId----------"+princi);
-
-				user.setExInt2(instIdList.get(i)); //
-				user.setRoleId(2);// 2 for Principal
-				user.setUserName(princi.getEmail());
-				user.setUserType(1);// 2 for Principal user Default
-
-				UserLogin userRes = userServiceRepo.save(user);
-
-				Institute insResp = null;
+				/*
+				 * user.setExInt1(0); user.setExInt2(0); user.setExVar1("Na");
+				 * user.setExVar2("Na"); user.setIsBlock(1); user.setPass(pass);
+				 * 
+				 * Principal princi = pincipalRepo.findByInstituteId(instIdList.get(i));
+				 * 
+				 * user.setRegPrimaryKey(princi.getPrincipalId());// principla primary key
+				 * System.err.println("prinId----------"+princi);
+				 * 
+				 * user.setExInt2(instIdList.get(i)); // user.setRoleId(2);// 2 for Principal
+				 * user.setUserName(princi.getEmail()); user.setUserType(1);// 2 for Principal
+				 * user Default
+				 * 
+				 * UserLogin userRes = userServiceRepo.save(user);
+				 * 
+				 */				Institute insResp = null;
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
@@ -1068,10 +1063,15 @@ public class MasterApiController {
 				insResp.setExInt2(1); // is approved
 				instituteRepo.save(insResp);
 
-				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
-						princi.getEmail(), userRes.getPass());
+				//Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
+						//princi.getEmail(), userRes.getPass());
 
-				Info smsRes = EmailUtility.sendMsg(princi.getEmail(), userRes.getPass(), princi.getPhoneNo());
+				//Info smsRes = EmailUtility.sendMsg(princi.getEmail(), userRes.getPass(), princi.getPhoneNo());
+
+				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, staff.getEmail(), mailsubject,
+						staff.getEmail(), staff.getPassword());
+
+				Info smsRes = EmailUtility.sendMsg(staff.getEmail(), staff.getPassword(), staff.getContactNo());
 
 				final String emailSMTPserver = "smtp.gmail.com";
 				final String emailSMTPPort = "587";
@@ -1110,7 +1110,7 @@ public class MasterApiController {
 					mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
 					mimeMessage.setSubject(subject);
 					mimeMessage.setText(mes);
-					mimeMessage.setText(" User Name " + userRes.getUserName() + "\n Password " + userRes.getPass());
+					mimeMessage.setText(" User Name " + staff.getEmail() + "\n Password " + staff.getPassword());
 
 					// Transport.send(mimeMessage);
 				} catch (Exception e) {
