@@ -1041,6 +1041,7 @@ public class MasterApiController {
 				Principal princi = pincipalRepo.findByInstituteId(instIdList.get(i));
 
 				user.setRegPrimaryKey(princi.getPrincipalId());// principla primary key
+				System.err.println("prinId----------"+princi);
 
 				user.setExInt2(instIdList.get(i)); //
 				user.setRoleId(2);// 2 for Principal
@@ -1064,6 +1065,7 @@ public class MasterApiController {
 
 				insResp.setCheckerUserId(aprUserId);
 				insResp.setCheckerDatetime(curDateTime);
+				insResp.setExInt2(1); // is approved
 				instituteRepo.save(insResp);
 
 				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, princi.getEmail(), mailsubject,
