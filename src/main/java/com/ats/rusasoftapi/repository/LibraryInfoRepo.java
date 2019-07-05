@@ -29,6 +29,6 @@ public interface LibraryInfoRepo extends JpaRepository<LibraryInfo, Integer> {
 
 	LibraryInfo findByInstituteIdAndAcYearIdAndDelStatus(int instituteId, int acadYear, int del);
 
-	@Query(value="SELECT * FROM m_library_info WHERE institute_id=:instituteId AND del_status=1 ORDER BY lib_info_id LIMIT 1",nativeQuery=true)
+	@Query(value="SELECT * FROM m_library_info WHERE institute_id=:instituteId AND del_status=1 ORDER BY lib_info_id DESC LIMIT 1",nativeQuery=true)
 	LibraryInfo getLastYerRecord(@Param("instituteId") int instituteId);
 }

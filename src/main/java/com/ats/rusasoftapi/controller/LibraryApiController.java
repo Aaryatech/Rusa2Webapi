@@ -526,25 +526,16 @@ public class LibraryApiController {
 	public @ResponseBody LibraryInfo getlibBasicInfo(@RequestParam int instituteId, @RequestParam int acadYear) {
 		
 		LibraryInfo lib = null;
-		LibraryInfo libInfo = null;
-		int lastYear =acadYear;
+	
 		try {
 			
 			lib = libInfoRepo.findByInstituteIdAndAcYearIdAndDelStatus(instituteId, acadYear, 1);
 			
-		     // System.out.println("Lib List="+lib);
-		     libInfo=libInfoRepo.getLastYerRecord(instituteId);
-		    if(libInfo!=null){ 
-				     if(lib==null) {
-				    	 System.err.println("null found");
-				    	 do {
-				    		 		    	
-				    	 lastYear = lastYear-1;
-				    	 System.err.println("ly" +lastYear);
-				    	 lib = libInfoRepo.findByInstituteIdAndAcYearIdAndDelStatus(instituteId, lastYear, 1);
-				    	 }while(lib==null);
-			    		
-		    	 
+		    if(lib==null){ 
+				    
+				    	 //System.err.println("null found");				    		 		    	
+				    	
+				    	  lib = libInfoRepo.getLastYerRecord(instituteId);
 				    		
 				    		lib.setLibInfoId(0);
 				    		lib.setUsersOfLms(0);
@@ -552,11 +543,9 @@ public class LibraryApiController {
 				    		lib.setAvgTeacher(0);
 				    		lib.setNoCompLan(0);
 				    		lib.setExInt1(0);
-				    		lib.setExVar1(null);
-				    	
-		
+				    		lib.setExVar1(null);		
 				     }
-		    }
+		   
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
