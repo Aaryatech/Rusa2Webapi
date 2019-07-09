@@ -627,13 +627,16 @@ public class ProgDetailControllerSac {
 		AlumniAssocAct alumni = new AlumniAssocAct();
 		try {
 			alumni=almActRepo.findLastRecordByInstIdAndAcYearId(instituteId, yId);
+			if(alumni!=null) {
 			alumni.setAlmAssocActId(0);
 			alumni.setAlumniMeetngAgnda(null);
 			alumni.setDateOfMeeting(null);
 			alumni.setNoAlumniReg(0);
 			alumni.setNoMemberAttended(0);
 			alumni.setTtlNoAlumniEnrolled(0);
-			
+			}else {
+				 alumni = new AlumniAssocAct();
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

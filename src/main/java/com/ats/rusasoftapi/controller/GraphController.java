@@ -427,16 +427,16 @@ public class GraphController {
 
 			if (isFaculty == 1) {
 				// mahendra
-				temp = dashBoardCountsRepo.getCurrentResrchProjrectTitle(instId); // Research Project Title
+				temp = dashBoardCountsRepo.getCurrentResrchProjrectTitle(instId, facultyId); // Research Project Title
 				dash.setResearchprojecttitle(temp.getData1());
 
-				temp = dashBoardCountsRepo.getNoResrchPubDetail(instId); // No. of Research Publication
+				temp = dashBoardCountsRepo.getNoResrchPubDetail(instId, facultyId); // No. of Research Publication
 				dash.setNoOfreserchpubforFaculty(temp.getCount());
 
-				temp = dashBoardCountsRepo.getNoBookPublished(instId); // No. of Research Publication
+				temp = dashBoardCountsRepo.getNoBookPublished(instId, facultyId); // No. of Book Publication
 				dash.setNoofbookpubForFaculty(temp.getCount());
 
-				temp = dashBoardCountsRepo.getNoPatentFiled(instId); // No. of Patent Filed
+				temp = dashBoardCountsRepo.getNoPatentFiled(instId, facultyId); // No. of Patent Filed
 				dash.setNoofpatentsfilled(temp.getCount());
 			}
 
