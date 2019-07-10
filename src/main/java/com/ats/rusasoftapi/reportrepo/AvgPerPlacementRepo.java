@@ -29,9 +29,9 @@ public interface AvgPerPlacementRepo extends JpaRepository<AvgPerPlacement, Inte
 			"stud_perform_final_yr.prog_type=t_program.program_id AND " + 
 			"stud_perform_final_yr.ex_int1=m_academic_year.year_id AND " + 
 			"stud_perform_final_yr.inst_id=m_institute.institute_id AND " + 
-			"t_traning_placement.program_name=:prgName AND " + 
 			"t_traning_placement.institute_id=:instId AND " + 
-			"t_traning_placement.year_id IN (:lastFiveYears)",nativeQuery=true)
+			"t_traning_placement.year_id IN (:lastFiveYears) AND "+
+			"t_traning_placement.program_name=:prgName",nativeQuery=true)
 	List<AvgPerPlacement> getAllAvgPerPlacement(@Param("instId") int instId, @Param("lastFiveYears") List<Integer> lastFiveYears, @Param("prgName") String prgName);
 
 }
