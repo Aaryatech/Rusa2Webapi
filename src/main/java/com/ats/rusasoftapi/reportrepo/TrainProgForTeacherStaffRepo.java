@@ -22,7 +22,7 @@ public interface TrainProgForTeacherStaffRepo extends JpaRepository<TrainProgFor
 			"        FROM\n" + 
 			"            t_institute_training\n" + 
 			"        WHERE\n" + 
-			"            t_institute_training.institute_id = m_institute.institute_id AND t_institute_training.year_id = m_academic_year.year_id AND t_institute_training.del_status = 1 AND t_institute_training.is_active = 1 AND t_institute_training.training_type = 0\n" + 
+			"            t_institute_training.institute_id = m_institute.institute_id AND t_institute_training.year_id = m_academic_year.year_id AND t_institute_training.del_status = 1 AND t_institute_training.is_active = 1 AND t_institute_training.training_type = 1\n" + 
 			"    ),\n" + 
 			"    0\n" + 
 			"    ) AS prof_dev_count,\n" + 
@@ -33,7 +33,7 @@ public interface TrainProgForTeacherStaffRepo extends JpaRepository<TrainProgFor
 			"        FROM\n" + 
 			"            t_institute_training\n" + 
 			"        WHERE\n" + 
-			"            t_institute_training.institute_id = m_institute.institute_id AND t_institute_training.year_id = m_academic_year.year_id AND t_institute_training.del_status = 1 AND t_institute_training.is_active = 1 AND t_institute_training.training_type = 1\n" + 
+			"            t_institute_training.institute_id = m_institute.institute_id AND t_institute_training.year_id = m_academic_year.year_id AND t_institute_training.del_status = 1 AND t_institute_training.is_active = 1 AND t_institute_training.training_type = 2\n" + 
 			"    ),\n" + 
 			"    0\n" + 
 			"    ) AS adm_dev_count\n" + 
