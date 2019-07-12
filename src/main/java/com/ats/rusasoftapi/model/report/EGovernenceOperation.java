@@ -92,13 +92,8 @@ public class EGovernenceOperation {
 	public String toString() {
 		return "EGovernenceOperation [id=" + id + ", yesnoId=" + yesnoId + ", yesnoTitle=" + yesnoTitle
 				+ ", academicYear=" + academicYear + ", instituteName=" + instituteName + ", yesnoDynamicTitle="
-				+ yesnoDynamicTitle + ", instYesnoResponse=" + instYesnoResponse + ", yesnoValue=" + yesnoValue
-				+ ", getId()=" + getId() + ", getYesnoId()=" + getYesnoId() + ", getYesnoTitle()=" + getYesnoTitle()
-				+ ", getAcademicYear()=" + getAcademicYear() + ", getInstituteName()=" + getInstituteName()
-				+ ", getYesnoDynamicTitle()=" + getYesnoDynamicTitle() + ", getInstYesnoResponse()="
-				+ getInstYesnoResponse() + ", getYesnoValue()=" + getYesnoValue() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ yesnoDynamicTitle + ", instYesnoResponse=" + instYesnoResponse + ", yesnoValue=" + yesnoValue + "]";
 	}
- 
+
 
 }

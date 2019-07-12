@@ -466,12 +466,13 @@ public class RusaReportsRestController {
 	
 	@Autowired InitivAddrsLoctnAdvDisadvRepo initivRepo;
 	@RequestMapping(value = { "/getInitivAddrsLoctnAdvDisadv" }, method = RequestMethod.POST)
-	public @ResponseBody List<InitivAddrsLoctnAdvDisadv> getInitivAddrsLoctnAdvDisadv(@RequestParam int instId) {
+	public @ResponseBody List<InitivAddrsLoctnAdvDisadv> getInitivAddrsLoctnAdvDisadv(@RequestParam int instId,
+			@RequestParam int acYearId ) {
  		List<InitivAddrsLoctnAdvDisadv> initiaveList = new ArrayList<InitivAddrsLoctnAdvDisadv>();
  		 		
  		try {
  			
- 			initiaveList = initivRepo.getAllInitivAddrsLoctnAdvDisadv(instId);
+ 			initiaveList = initivRepo.getAllInitivAddrsLoctnAdvDisadv(instId, acYearId);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
