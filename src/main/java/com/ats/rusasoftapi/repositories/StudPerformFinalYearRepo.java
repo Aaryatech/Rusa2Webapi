@@ -28,4 +28,8 @@ public interface StudPerformFinalYearRepo extends JpaRepository<StudPerformFinal
 	@Query(value="UPDATE stud_perform_final_yr SET del_status=0  WHERE stud_perform_id IN (:studInfoList)",nativeQuery=true)
 	int deletetSelStudInfo(@Param("studInfoList") List<String> studInfoList);
 
+
+
+	StudPerformFinalYr findByInstIdAndExInt1AndDelStatus(int instituteId, int yearId, int del);
+
 }

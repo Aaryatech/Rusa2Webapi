@@ -525,6 +525,24 @@ public class ProgDetailControllerSac {
 
 	}
 
+	@RequestMapping(value = { "/getHigherEduDetailByAcdYr" }, method = RequestMethod.POST)
+	public @ResponseBody HigherEducDetail getHigherEduDetailByAcdYr(@RequestParam int instId,
+			@RequestParam int yearId) {
+
+		HigherEducDetail highEd = new HigherEducDetail();
+
+		try {
+
+			highEd = higherEducDetailRepo.findByInstituteIdAndYearIdAndDelStatus(instId, yearId, 1);
+			
+		} catch (Exception e) {
+			System.err.println("Exce in getHigherEduDetailByAcdYr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return highEd;
+
+	}
 	@RequestMapping(value = { "/getHigherEducDetail" }, method = RequestMethod.POST)
 	public @ResponseBody HigherEducDetail getHigherEducDetail(@RequestParam int eduDetailId) {
 
@@ -591,6 +609,7 @@ public class ProgDetailControllerSac {
 		return highEdList;
 
 	}
+	
 
 	/***************************************Alumni Association Activity**********************************/
 	

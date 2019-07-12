@@ -758,6 +758,28 @@ public class StudentActivityRestApiController {
 		return save;
 
 	}
+
+	
+	@RequestMapping(value = { "/getstudPassingPerByAcdYrId"}, method = RequestMethod.POST)
+	public @ResponseBody StudPerformFinalYr getstudPassingPerByAcdYrId(
+			@RequestParam("instituteId") int instituteId, @RequestParam("yearId") int yearId) {
+
+		StudPerformFinalYr studPerfrmDtl = new StudPerformFinalYr();
+
+		try {
+
+			studPerfrmDtl = studPerfomRepo.findByInstIdAndExInt1AndDelStatus(instituteId, yearId, 1);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return studPerfrmDtl;
+
+	}
+	
+	
 	@Autowired StudPerformFinalYrListRepo studPerfomlistRepo;
 	@RequestMapping(value = { "/getstudPassingPer"}, method = RequestMethod.POST)
 	public @ResponseBody List<StudPerformFinalYrList> getstudPassingPer(
