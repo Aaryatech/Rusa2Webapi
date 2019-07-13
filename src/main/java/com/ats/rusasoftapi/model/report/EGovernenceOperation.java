@@ -17,8 +17,7 @@ public class EGovernenceOperation {
 	
 	private String instituteName;
 	
-	private String yesnoDynamicTitle;
-	
+ 	
 	private String instYesnoResponse;
 	
 	private int yesnoValue;
@@ -63,14 +62,7 @@ public class EGovernenceOperation {
 		this.instituteName = instituteName;
 	}
 
-	public String getYesnoDynamicTitle() {
-		return yesnoDynamicTitle;
-	}
-
-	public void setYesnoDynamicTitle(String yesnoDynamicTitle) {
-		this.yesnoDynamicTitle = yesnoDynamicTitle;
-	}
-
+	 
 	public String getInstYesnoResponse() {
 		return instYesnoResponse;
 	}
@@ -91,9 +83,14 @@ public class EGovernenceOperation {
 	@Override
 	public String toString() {
 		return "EGovernenceOperation [id=" + id + ", yesnoId=" + yesnoId + ", yesnoTitle=" + yesnoTitle
-				+ ", academicYear=" + academicYear + ", instituteName=" + instituteName + ", yesnoDynamicTitle="
-				+ yesnoDynamicTitle + ", instYesnoResponse=" + instYesnoResponse + ", yesnoValue=" + yesnoValue + "]";
+				+ ", academicYear=" + academicYear + ", instituteName=" + instituteName + ", instYesnoResponse="
+				+ instYesnoResponse + ", yesnoValue=" + yesnoValue + ", getId()=" + getId() + ", getYesnoId()="
+				+ getYesnoId() + ", getYesnoTitle()=" + getYesnoTitle() + ", getAcademicYear()=" + getAcademicYear()
+				+ ", getInstituteName()=" + getInstituteName() + ", getInstYesnoResponse()=" + getInstYesnoResponse()
+				+ ", getYesnoValue()=" + getYesnoValue() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
+	 
 
 }
