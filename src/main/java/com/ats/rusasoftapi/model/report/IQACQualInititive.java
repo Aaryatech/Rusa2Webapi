@@ -13,7 +13,7 @@ public class IQACQualInititive {
 	 
 	private  String instituteName;
 	
-	private  int qStatus;
+	private  String qStatus;
 
 	public int getQualityInitiativeId() {
 		return qualityInitiativeId;
@@ -39,11 +39,11 @@ public class IQACQualInititive {
 		this.instituteName = instituteName;
 	}
 
-	public int getqStatus() {
+	public String getqStatus() {
 		return qStatus;
 	}
 
-	public void setqStatus(int qStatus) {
+	public void setqStatus(String qStatus) {
 		this.qStatus = qStatus;
 	}
 
