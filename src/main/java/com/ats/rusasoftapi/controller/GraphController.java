@@ -393,8 +393,11 @@ public class GraphController {
 				int y1=dash.getTotalstudent()+dash.getFemalestudent()+dash.getMalestudent();
 
 				float x1 = (float) (y1 / (float) dash.getTotalfaculties());
+				
+				  float valueRounded = Math.round(x1);
+				
 
-				dash.setRatio(x1);
+				dash.setRatio(valueRounded);
 			}
 
 			if (isHod == 1) {
