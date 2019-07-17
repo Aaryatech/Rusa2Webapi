@@ -64,8 +64,11 @@ public class InstituteMstController {
 	}
 
 	@Autowired InstituteMasterRepo instituteMasterRepo;
+	
+	
 	@Autowired
 	InstituteRepo instituteRepo;
+	
 	@RequestMapping(value = { "/checkAisheCodeDuplication" }, method = RequestMethod.POST)
 	public @ResponseBody String checkAisheCodeDuplication(@RequestParam String aisheCode) {
 String response=null;
@@ -98,6 +101,24 @@ String response=null;
 
 		} catch (Exception e) {
 			System.err.println("Exce in getting  getInstituteMasterByAishe @ InstituteMstController " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return instMaster;
+	}
+	
+	
+	 
+	@RequestMapping(value = { "/getInstituteMasterByAisheForChangePrincipal" }, method = RequestMethod.POST)
+	public @ResponseBody Institute getInstituteMasterByAisheForChangePrincipal(@RequestParam String aisheCode) {
+
+		Institute instMaster = null;
+
+		try {
+			instMaster = instituteRepo.findByAisheCodeAndDelStatusAndIsActiveAndExInt2(aisheCode,1,1,1);
+
+		} catch (Exception e) {
+			System.err.println("Exce in getting  getInstituteMasterByAisheForChangePrincipal @ InstituteMstController " + e.getMessage());
 			e.printStackTrace();
 
 		}

@@ -35,6 +35,11 @@ public interface InstituteRepo extends JpaRepository<Institute, Integer> {
 	int delPendingInst(int instId);
 	
 	Institute findByAisheCodeAndDelStatus(String aisheCode,int delStatus);
-	
+
+	Institute findByAisheCode(String aisheCode);
+
+	Institute findByAisheCodeAndDelStatusAndIsActiveAndExInt2(String aisheCode, int i, int j, int k);
+
+ 	
 	
 }
