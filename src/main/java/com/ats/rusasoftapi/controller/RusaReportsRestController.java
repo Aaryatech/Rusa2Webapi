@@ -170,14 +170,10 @@ public class RusaReportsRestController {
  	@RequestMapping(value = { "/getFacultyAgnstSanctionPostOthrState" }, method = RequestMethod.POST)
 	public @ResponseBody List<FacAgnstSanctnPostOthrState> getFacultyAgnstSanctionPostOthrState(@RequestParam int instId,
 			@RequestParam int acYear) {
- 		List<FacAgnstSanctnPostOthrState> facList = new ArrayList<FacAgnstSanctnPostOthrState>();
- 		SettingKeyValue setKey=new SettingKeyValue();
+ 		List<FacAgnstSanctnPostOthrState> facList = new ArrayList<FacAgnstSanctnPostOthrState>(); 		
  		try {
- 			setKey=settingKeyValueRepo.findBySettingKeyAndDelStatus("PHD",1);
-			System.err.println("stk ids :"+setKey.toString());
-			int stkId=setKey.getIntValue();
-			 			
-			facList = facOthrStateRepo.getAllFacultyAgnstSanctionPostOthrState(instId, acYear, stkId);
+ 						 			
+			facList = facOthrStateRepo.getAllFacultyAgnstSanctionPostOthrState(instId, acYear);
  			
  		}catch(Exception e) {
  			System.err.println(e.getMessage());
