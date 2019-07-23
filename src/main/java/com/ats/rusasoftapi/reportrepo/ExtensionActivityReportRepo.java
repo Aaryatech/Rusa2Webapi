@@ -12,26 +12,52 @@ public interface ExtensionActivityReportRepo extends JpaRepository<ExtensionActi
 
 	@Query(value="SELECT\n" + 
 			"        t_extension_activity.inst_extension_act_id,\n" + 
-			"        m_extension_activity.activity_title,\n" + 
+			"        CASE \n" + 
+			"        	WHEN t_extension_activity.extension_activity_id=0 THEN t_extension_activity.t_activity_title \n" + 
+			"            ELSE m_extension_activity.activity_title END AS t_activity_title,\n" + 
 			"        t_extension_activity.no_of_stud_participated,\n" + 
 			"        t_extension_activity.no_of_faculty_participated,\n" + 
 			"        t_extension_activity.no_of_stud_in_inst,\n" + 
 			"        m_academic_year.academic_year,\n" + 
 			"        m_institute.institute_name,\n" + 
-			"        ( (t_extension_activity.no_of_stud_participated/ t_extension_activity.no_of_stud_in_inst)*100) as result      \n" + 
+			"        ( (t_extension_activity.no_of_stud_participated/ t_extension_activity.no_of_stud_in_inst)*100) as result           \n" + 
 			"    FROM\n" + 
 			"        t_extension_activity,\n" + 
 			"        m_institute,\n" + 
-			"        m_academic_year ,m_extension_activity\n" + 
+			"        m_academic_year ,\n" + 
+			"        m_extension_activity     \n" + 
 			"    WHERE\n" + 
-			"        m_institute.institute_id = t_extension_activity.inst_id \n" + 
-			"        AND t_extension_activity.ac_year_id = m_academic_year.year_id \n" + 
-			"        AND t_extension_activity.inst_id =:instId \n" + 
-			"        AND t_extension_activity.ac_year_id IN(\n" + 
-			"            :lastFiveYears \n" + 
-			"        ) \n" + 
-			"        AND t_extension_activity.del_status = 1 \n" + 
-			"        AND t_extension_activity.is_active = 1 AND m_extension_activity.extension_activity_id=t_extension_activity.extension_activity_id",nativeQuery=true)
+			"        m_institute.institute_id = t_extension_activity.inst_id          \n" + 
+			"        AND t_extension_activity.ac_year_id = m_academic_year.year_id          \n" + 
+			"        AND t_extension_activity.inst_id =:instId        \n" + 
+			"        AND t_extension_activity.ac_year_id IN(:lastFiveYears)          \n" + 
+			"        AND t_extension_activity.del_status = 1          \n" + 
+			"        AND t_extension_activity.is_active = 1 \n" + 
+			"        AND m_extension_activity.extension_activity_id=t_extension_activity.extension_activity_id",nativeQuery=true)
 	List<ExtensionActivityReport> getAllExtensionActivity (@Param("instId")int instId,@Param("lastFiveYears") List<Integer> lastFiveYears);
 	
 }
+
+/***************************23/07/2019***************************/
+/*SELECT\n" + 
+"        t_extension_activity.inst_extension_act_id,\n" + 
+"        m_extension_activity.activity_title AS t_activity_title,\n" + 
+"        t_extension_activity.no_of_stud_participated,\n" + 
+"        t_extension_activity.no_of_faculty_participated,\n" + 
+"        t_extension_activity.no_of_stud_in_inst,\n" + 
+"        m_academic_year.academic_year,\n" + 
+"        m_institute.institute_name,\n" + 
+"        ( (t_extension_activity.no_of_stud_participated/ t_extension_activity.no_of_stud_in_inst)*100) as result      \n" + 
+"    FROM\n" + 
+"        t_extension_activity,\n" + 
+"        m_institute,\n" + 
+"        m_academic_year ,m_extension_activity\n" + 
+"    WHERE\n" + 
+"        m_institute.institute_id = t_extension_activity.inst_id \n" + 
+"        AND t_extension_activity.ac_year_id = m_academic_year.year_id \n" + 
+"        AND t_extension_activity.inst_id =:instId \n" + 
+"        AND t_extension_activity.ac_year_id IN(\n" + 
+"            :lastFiveYears \n" + 
+"        ) \n" + 
+"        AND t_extension_activity.del_status = 1 \n" + 
+"        AND t_extension_activity.is_active = 1 AND m_extension_activity.extension_activity_id=t_extension_activity.extension_activity_id*/
