@@ -370,12 +370,8 @@ public class GraphController {
 
 				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
 				dash.setTotalstudent(Integer.parseInt(temp.getData1()));
-
-				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setMalestudent(temp.getCount1());
-
-				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setFemalestudent(temp.getCount());
+  				dash.setMalestudent(temp.getCount1());
+  				dash.setFemalestudent(temp.getCount());
 
 				temp = dashBoardCountsRepo.getNoOfProgramForPrinci(instId);
 				dash.setNoofprogram(temp.getCount());
