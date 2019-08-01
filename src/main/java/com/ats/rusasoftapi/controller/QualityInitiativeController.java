@@ -90,7 +90,7 @@ public class QualityInitiativeController {
 
 		try {
 			instQuality = getInstituteQualityRepo.getInstituteQualityById(qualityId);
-			
+			//System.err.println("Inst Qty"+instQuality);
 		} catch (Exception e) {
 			System.err.println("Exce in getInstituteQualityById  " + e.getMessage());
 			e.printStackTrace();
