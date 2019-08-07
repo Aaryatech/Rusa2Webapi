@@ -369,7 +369,7 @@ public class GraphController {
 				dash.setTotalfacultieswithPHD(temp.getCount());
 
 				temp = dashBoardCountsRepo.getNoOfStudentForPrinci(instId);
-				dash.setTotalstudent(Integer.parseInt(temp.getData1()));
+				//dash.setTotalstudent(Integer.parseInt(temp.getData1()));////found  incorrrect on 07-08-2019
   				dash.setMalestudent(temp.getCount1());
   				dash.setFemalestudent(temp.getCount());
 
@@ -387,6 +387,7 @@ public class GraphController {
 				
 				
 				int y1=dash.getTotalstudent()+dash.getFemalestudent()+dash.getMalestudent();
+				dash.setTotalstudent(y1);//sachin corrected it on 07-08-2019
 
 				float x1 = (float) (y1 / (float) dash.getTotalfaculties());
 				
