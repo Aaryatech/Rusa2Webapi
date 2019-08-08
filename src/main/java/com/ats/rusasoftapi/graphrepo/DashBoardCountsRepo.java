@@ -389,7 +389,29 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 		//For Total Student Passed And Student Appeared for Subject Taughted By Facilty
 		
 		//Research Project Title
-		@Query(value="SELECT " + 
+		@Query(value="SELECT\n" + 
+				"        UUID() AS id,\n" + 
+				"     	0 as count,\n" + 
+				"        0 as count1,\n" + 
+				"        count(t_faculty_project.proj_id) as data1,\n" + 
+				"        0 as data2  \n" + 
+				"    FROM\n" + 
+				"        t_faculty_project,\n" + 
+				"        m_academic_year,\n" + 
+				"        m_faculty  \n" + 
+				"    WHERE\n" + 
+				"        t_faculty_project.faculty_id=m_faculty.faculty_id \n" + 
+				"        AND     t_faculty_project.year_id=m_academic_year.year_id \n" + 
+				"        AND     t_faculty_project.del_status=1 \n" + 
+				"        AND     m_academic_year.is_current=1 \n" + 
+				"        AND     m_faculty.institute_id=:instId\n" + 
+				"        AND    t_faculty_project.faculty_id=:facultyId\n" + 
+				"    ORDER BY\n" + 
+				"        t_faculty_project.proj_id DESC LIMIT 1", nativeQuery=true)
+		GetCountsForDash getCurrentResrchProjrectTitle(@Param("instId") int instId,@Param("facultyId") int facultyId);
+
+		/*
+		 SELECT " + 
 				"	UUID() AS id,0 as count, " + 
 				"    0 as count1, " + 
 				"    t_faculty_project.proj_name as data1," + 
@@ -404,9 +426,8 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 				"    m_faculty.institute_id=:instId AND" + 
 				"    t_faculty_project.faculty_id=:facultyId " + 
 				" ORDER BY " + 
-				"	t_faculty_project.proj_id DESC LIMIT 1 ", nativeQuery=true)
-		GetCountsForDash getCurrentResrchProjrectTitle(@Param("instId") int instId,@Param("facultyId") int facultyId);
-
+				"	t_faculty_project.proj_id DESC LIMIT 1 */	//Mahendra 	08/08/2019		
+		
 		
 		//No. of Research Publication
 		@Query(value="SELECT" + 
@@ -432,7 +453,7 @@ public interface DashBoardCountsRepo extends JpaRepository<GetCountsForDash, Int
 		GetCountsForDash getNoResrchPubDetail(@Param("instId") int instId,@Param("facultyId") int facultyId);
 
 
-		//No. of Research Publication
+		//No. of Book Publication
 		
 		@Query(value="SELECT" + 
 				"        UUID() AS id," + 
