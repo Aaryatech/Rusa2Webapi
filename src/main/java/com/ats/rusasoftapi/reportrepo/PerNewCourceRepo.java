@@ -14,7 +14,7 @@ public interface PerNewCourceRepo extends JpaRepository<PerNewCource, Integer> {
 			"FROM new_course_info,m_institute,m_academic_year " + 
 			"WHERE new_course_info.inst_id=m_institute.institute_id AND new_course_info.del_status=1 and new_course_info.is_active=1 " + 
 			"AND new_course_info.introduce_from=m_academic_year.year_id " + 
-			"AND m_institute.institute_id=2 AND m_academic_year.year_id in(:lastFiveYears) " + 
+			"AND m_institute.institute_id=:instId AND m_academic_year.year_id in(:lastFiveYears) " + 
 			"UNION all  SELECT UUID() as id2, COUNT(*) as no_courses_in_last5, m_institute.institute_name,  m_academic_year.academic_year "+
 			"FROM new_course_info,m_institute,m_academic_year " + 
 			"WHERE new_course_info.inst_id=m_institute.institute_id AND new_course_info.del_status=1 and new_course_info.is_active=1 " + 

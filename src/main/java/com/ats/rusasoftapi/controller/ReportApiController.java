@@ -402,7 +402,7 @@ public class ReportApiController {
 			@RequestParam int catId, @RequestParam List<String> acYearList) {
 
 		List<AdmissionsAgainstCategory> facPartInVarBodies = new ArrayList<AdmissionsAgainstCategory>();
-		List<AcademicYear> acYrList = new ArrayList<>();
+		List<AcademicYear> acYrList = new ArrayList<AcademicYear>();
 
 		try {
 
