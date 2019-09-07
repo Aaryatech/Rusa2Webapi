@@ -13,7 +13,7 @@ public interface AdmissionsAgainstCategoryRepo extends JpaRepository<AdmissionsA
 
 	
 	@Query(value="SELECT\n" + 
-			"    m_cast.cast_name,\n" + 
+			"    UUID() as id, m_cast.cast_name,\n" + 
 			"    m_cast.cast_id,\n" + 
 			"    t_program_student_category.student_cat_id,\n" + 
 			"    t_program_student_category.cat_tot_student,\n" + 
