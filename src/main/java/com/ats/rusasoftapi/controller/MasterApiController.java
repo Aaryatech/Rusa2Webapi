@@ -457,9 +457,14 @@ public class MasterApiController {
 
 	}
 
-	static String senderEmail = "atsinfosoft@gmail.com";
-	static String senderPassword = "atsinfosoft@123";
-	static String mailsubject = " RUSA Login Credentials ";
+	//static String senderEmail = "atsinfosoft@gmail.com";
+	//static String senderPassword = "atsinfosoft@123";
+	//static String mailsubject = " RUSA Login Credentials ";
+	
+	static String senderEmail ="techrusa1@gmail.com";// "atsinfosoft@gmail.com";
+	static String senderPassword ="@Rusamah";// "atsinfosoft@123";
+	static String mailsubject = " RUSA Software Login Credentials ";
+
 
 	@RequestMapping(value = { "/saveHod" }, method = RequestMethod.POST)
 	public @ResponseBody Hod saveInstitute(@RequestBody Hod hod) {
@@ -1073,50 +1078,42 @@ public class MasterApiController {
 
 				Info smsRes = EmailUtility.sendMsg(staff.getEmail(), staff.getPassword(), staff.getContactNo());
 
-				final String emailSMTPserver = "smtp.gmail.com";
-				final String emailSMTPPort = "587";
-				final String mailStoreType = "imaps";
-				final String username = "atsinfosoft@gmail.com";
-				final String password = "atsinfosoft@123";
-
-				// System.out.println("username" + username);
-				// System.out.println("password" + password);
-
-				Properties props = new Properties();
-				props.put("mail.smtp.host", "smtp.gmail.com");
-				props.put("mail.smtp.socketFactory.port", "465");
-				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-				props.put("mail.smtp.auth", "true");
-				props.put("mail.smtp.port", "587");
-
-				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				});
-
-				try {
-					Store mailStore = session.getStore(mailStoreType);
-					mailStore.connect(emailSMTPserver, username, password);
-
-					String mes = " Hello Sir/Madam ";
-
-					String address = "atsinfosoft@gmail.com";// address of to
-
-					String subject = " Login Credentials For RUSA Login  ";
-
-					Message mimeMessage = new MimeMessage(session);
-					mimeMessage.setFrom(new InternetAddress(username));
-					mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
-					mimeMessage.setSubject(subject);
-					mimeMessage.setText(mes);
-					mimeMessage.setText(" User Name " + staff.getEmail() + "\n Password " + staff.getPassword());
-
-					// Transport.send(mimeMessage);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
+				/*
+				 * final String emailSMTPserver = "smtp.gmail.com"; final String emailSMTPPort =
+				 * "587"; final String mailStoreType = "imaps"; final String username =
+				 * "atsinfosoft@gmail.com"; final String password = "atsinfosoft@123";
+				 * 
+				 * // System.out.println("username" + username); //
+				 * System.out.println("password" + password);
+				 * 
+				 * Properties props = new Properties(); props.put("mail.smtp.host",
+				 * "smtp.gmail.com"); props.put("mail.smtp.socketFactory.port", "465");
+				 * props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				 * props.put("mail.smtp.auth", "true"); props.put("mail.smtp.port", "587");
+				 * 
+				 * Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+				 * protected PasswordAuthentication getPasswordAuthentication() { return new
+				 * PasswordAuthentication(username, password); } });
+				 * 
+				 * try { Store mailStore = session.getStore(mailStoreType);
+				 * mailStore.connect(emailSMTPserver, username, password);
+				 * 
+				 * String mes = " Hello Sir/Madam ";
+				 * 
+				 * String address = "atsinfosoft@gmail.com";// address of to
+				 * 
+				 * String subject = " Login Credentials For RUSA Login  ";
+				 * 
+				 * Message mimeMessage = new MimeMessage(session); mimeMessage.setFrom(new
+				 * InternetAddress(username));
+				 * mimeMessage.setRecipients(Message.RecipientType.TO,
+				 * InternetAddress.parse(address)); mimeMessage.setSubject(subject);
+				 * mimeMessage.setText(mes); mimeMessage.setText(" User Name " +
+				 * staff.getEmail() + "\n Password " + staff.getPassword());
+				 * 
+				 * // Transport.send(mimeMessage); } catch (Exception e) { e.printStackTrace();
+				 * }
+				 */
 			}
 
 			if (res > 0) {

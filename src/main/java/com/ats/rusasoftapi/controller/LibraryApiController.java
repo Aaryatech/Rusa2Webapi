@@ -66,9 +66,9 @@ public class LibraryApiController {
 	@Autowired
 	RareBookRepo rarebookrepo;
 
-	static String senderEmail = "atsinfosoft@gmail.com";
-	static String senderPassword = "atsinfosoft@123";
-	static String mailsubject = " RUSA Login Credentials ";
+	static String senderEmail ="techrusa1@gmail.com";// "atsinfosoft@gmail.com";
+	static String senderPassword ="@Rusamah";// "atsinfosoft@123";
+	static String mailsubject = " RUSA Software Login Credentials ";
 
 	
 	
