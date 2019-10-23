@@ -26,7 +26,7 @@ public interface MExtActListRepo extends JpaRepository<MExtActList, Integer> {
 			"    t_extension_activity.ex_int1,\n" + 
 			"    t_extension_activity.ex_var1,\n" + 
 			"    t_extension_activity.ex_int2,\n" + 
-			"    t_extension_activity.ex_var2,\n" + 
+			"    t_extension_activity.ex_var2, t_extension_activity.from_date, t_extension_activity.to_date,\n" + 
 			"CASE \n" + 
 			"	WHEN t_extension_activity.extension_activity_id=0\n" + 
 			"    THEN (SELECT t.t_activity_title\n" + 

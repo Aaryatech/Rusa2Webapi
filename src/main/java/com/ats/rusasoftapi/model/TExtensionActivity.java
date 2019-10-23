@@ -1,10 +1,14 @@
 package com.ats.rusasoftapi.model;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "t_extension_activity")
@@ -28,6 +32,11 @@ public class TExtensionActivity {
 	private String exVar1;
 	private int exInt2;
 	private String exVar2;
+	
+	private Date fromDate;
+	private Date toDate;
+	
+	
 	public int getInstExtensionActId() {
 		return instExtensionActId;
 	}
@@ -132,6 +141,24 @@ public class TExtensionActivity {
 	public void setExVar2(String exVar2) {
 		this.exVar2 = exVar2;
 	}
+	
+	@JsonFormat(locale = "ENGLISH", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getFromDate() {
+		return fromDate;
+	}
+	
+	
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+	
+	@JsonFormat(locale = "ENGLISH", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getToDate() {
+		return toDate;
+	}
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
 	@Override
 	public String toString() {
 		return "TExtensionActivity [instExtensionActId=" + instExtensionActId + ", extensionActivityId="
@@ -140,8 +167,20 @@ public class TExtensionActivity {
 				+ noOfStudInInst + ", noOfFacultyParticipated=" + noOfFacultyParticipated + ", noOfFacultyInInst="
 				+ noOfFacultyInInst + ", delStatus=" + delStatus + ", isActive=" + isActive + ", makerUserId="
 				+ makerUserId + ", makerDatetime=" + makerDatetime + ", exInt1=" + exInt1 + ", exVar1=" + exVar1
-				+ ", exInt2=" + exInt2 + ", exVar2=" + exVar2 + "]";
+				+ ", exInt2=" + exInt2 + ", exVar2=" + exVar2 + ", fromDate=" + fromDate + ", toDate=" + toDate
+				+ ", getInstExtensionActId()=" + getInstExtensionActId() + ", getExtensionActivityId()="
+				+ getExtensionActivityId() + ", getInstId()=" + getInstId() + ", getAcYearId()=" + getAcYearId()
+				+ ", gettActivityTitle()=" + gettActivityTitle() + ", getNoOfStudParticipated()="
+				+ getNoOfStudParticipated() + ", getNoOfStudInInst()=" + getNoOfStudInInst()
+				+ ", getNoOfFacultyParticipated()=" + getNoOfFacultyParticipated() + ", getNoOfFacultyInInst()="
+				+ getNoOfFacultyInInst() + ", getDelStatus()=" + getDelStatus() + ", getIsActive()=" + getIsActive()
+				+ ", getMakerUserId()=" + getMakerUserId() + ", getMakerDatetime()=" + getMakerDatetime()
+				+ ", getExInt1()=" + getExInt1() + ", getExVar1()=" + getExVar1() + ", getExInt2()=" + getExInt2()
+				+ ", getExVar2()=" + getExVar2() + ", getFromDate()=" + getFromDate() + ", getToDate()=" + getToDate()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
+	 
 	
 	
 
