@@ -150,7 +150,7 @@ public class RestApiController {
 			// info.setMsg(" Matched");
 			System.err.println("User otp is" + otp1);
 			if(flag==1) {
-				Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
+				Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification ");
 
 			}
 			else if(flag==2){

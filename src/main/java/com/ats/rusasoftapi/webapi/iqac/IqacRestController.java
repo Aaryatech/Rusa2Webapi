@@ -67,10 +67,14 @@ public class IqacRestController {
 	
 	@Autowired NewDeanListRepo newDeanListRepo;
 	
-	static String senderEmail = "atsinfosoft@gmail.com";
-	static	String senderPassword = "atsinfosoft@123";
-	static String mailsubject = " RUSA Login Credentials ";
-		
+	//static String senderEmail = "atsinfosoft@gmail.com";
+	//static	String senderPassword = "atsinfosoft@123";
+	//static String mailsubject = " RUSA Login Credentials ";
+	
+	static String senderEmail ="techrusa1@gmail.com";// "atsinfosoft@gmail.com";
+	static String senderPassword ="@Rusamah";// "atsinfosoft@123";
+	static String mailsubject = " RUSA Software Login Credentials ";
+	
 	@RequestMapping(value = { "/chkUniqueValues" }, method = RequestMethod.POST)
 	public @ResponseBody Info chkUniqueFields(@RequestParam String inputValue, @RequestParam int valueType,
 			@RequestParam int tableId, @RequestParam int isEditCall, @RequestParam int primaryKey) {
