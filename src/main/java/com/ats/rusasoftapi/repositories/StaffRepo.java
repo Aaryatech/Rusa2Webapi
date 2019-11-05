@@ -60,6 +60,9 @@ public interface StaffRepo extends JpaRepository<Staff, Integer> {
 
 	Staff findByDelStatusAndIsActiveAndContactNo(int delStatus, int isActive, String contact);
 	
+	Staff findByDelStatusAndIsActiveAndContactNoAndFacultyId(int delStatus, int isActive, String contact,int facultyId);
+
+	
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE m_faculty SET contact_no=:no  WHERE faculty_id =:id", nativeQuery = true)

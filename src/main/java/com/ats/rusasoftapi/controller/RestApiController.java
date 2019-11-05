@@ -48,9 +48,9 @@ public class RestApiController {
 	@Autowired
 	LoginLogRepo logRepo;
 
-	static String senderEmail = "atsinfosoft@gmail.com";
-	static String senderPassword = "atsinfosoft@123";
-	static String mailsubject = " RUSA Otp  Verification ";
+	static String senderEmail ="techrusa1@gmail.com";// "atsinfosoft@gmail.com";
+	static String senderPassword ="@Rusamah";// "atsinfosoft@123";
+	static String mailsubject = " RUSA OTP  Verification ";
 	static String otp1 = null;
 	
 	//blockUser
@@ -180,7 +180,7 @@ public class RestApiController {
 	/***********************************Update Contact No*******************************/
 	
 	@RequestMapping(value = { "/changeContctNo" }, method = RequestMethod.POST)
-	public @ResponseBody Info changeContctNo(@RequestParam String contact) {
+	public @ResponseBody Info changeContctNo(@RequestParam String contact,@RequestParam int facultyId) {
 
 		OTPVerification.setConNumber(null);
 		OTPVerification.setEmailId(null);
@@ -191,7 +191,7 @@ public class RestApiController {
 		Info info = new Info();
 		
 
-		Staff userDetail = staffRepo.findByDelStatusAndIsActiveAndContactNo(1, 1, contact);
+		Staff userDetail = staffRepo.findByDelStatusAndIsActiveAndContactNoAndFacultyId(1, 1, contact,facultyId);
 
 		if (userDetail != null) {
 			OTPVerification.setUserId(userDetail.getFacultyId());
@@ -205,7 +205,7 @@ public class RestApiController {
 			otp1 = String.valueOf(otp);
 			// info.setMsg(" Matched");
 			System.err.println("User otp is" + otp1);
-			Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
+			Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification ");
 
 			//Info inf = EmailUtility.sendOtp(otp1, conNumber, "RUSA OTP Verification \t");
 
@@ -491,7 +491,7 @@ System.err.println("Matched " +pass);
 		 
 			System.err.println("User otp is" + otp1);
 			  
-			Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword,emailID, mailsubject,
+			Info emailRes = EmailUtility.sendEmailOTP(senderEmail, senderPassword,emailID, mailsubject,
 					emailID, otp1);
 			System.err.println("User emailRes" + emailRes.getMsg());
 
@@ -556,7 +556,7 @@ System.err.println("Matched " +pass);
 			otp1 = String.valueOf(otp);
 			// info.setMsg(" Matched");
 			System.err.println("User otp is" + otp1);
-			Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword,emailId1, mailsubject,
+			Info emailRes = EmailUtility.sendEmailOTP(senderEmail, senderPassword,emailId1, mailsubject,
 					emailId1, otp1);
 			System.err.println("User emailRes" + emailRes.getMsg());
 
